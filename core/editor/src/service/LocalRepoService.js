@@ -4,6 +4,7 @@ import NeCollection from './NeCollection.js'
 export default class LocalRepoService {
   constructor () {
     this.collection = new NeCollection('ridge.repo.db')
+    this.currentAppId = null
     this.appServices = {}
   }
 

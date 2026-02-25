@@ -11,6 +11,7 @@ const useStore = create((set, get) => ({
   appList: [],
   loadingAppFiles: true,
   currentAppName: '',
+  currentAppId: '',
   currentAppFilesTree: [],
 
   openApp: async id => {
@@ -21,6 +22,7 @@ const useStore = create((set, get) => ({
       localRepoService.setCurrentApp(id, appService)
       await appService.updateAppFileTree()
       set({
+        currentAppId: id,
         currentAppName: appInfo.name,
         currentAppFilesTree: appService.getAppFileTree()
       })

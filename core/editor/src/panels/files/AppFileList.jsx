@@ -22,6 +22,7 @@ import { STORE_TEMPLATE } from '../../utils/template.js'
 import './file-list.less'
 
 import appStore from '../../store/app.store.js'
+import editorStore from '../../store/editor.store.js'
 import AppListPanel from '../apps/AppListPanel.jsx'
 const { Text, Paragraph } = Typography
 
@@ -50,6 +51,8 @@ const AppFileList = () => {
   const initAppStore = appStore((state) => state.initAppStore)
   const createFolder = appStore((state) => state.createFolder)
   const fileRename = appStore((state) => state.fileRename)
+
+  const openFile = editorStore(state => state.openFile)
 
   // 存储节点映射
   const nodeMap = useRef({})
