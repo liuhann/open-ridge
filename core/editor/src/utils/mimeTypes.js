@@ -9,6 +9,7 @@ MimeType.set('.jpeg', 'image/jpeg')
 MimeType.set('.jpg', 'image/jpeg')
 MimeType.set('.png', 'image/png')
 MimeType.set('.svg', 'image/svg+xml')
+MimeType.set('.webp', 'image/webp')
 MimeType.set('.zip', 'application/zip')
 MimeType.set('.mid', 'audio/midi')
 MimeType.set('.mp4a', 'audio/mp4')
@@ -27,3 +28,4 @@ MimeType.set('.avi', 'video/x-msvideo')
 export const getByMimeType = ext => {
   return MimeType.get('.' + ext) || ('application/' + ext)
 }
+·

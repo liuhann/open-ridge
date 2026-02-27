@@ -11,6 +11,8 @@ const editorStore = create((set, get) => ({
   imagePreviewVisible: false,
   imagePreviewSrc: '',
 
+  currentEditNodeId: '',
+
   editorComposite: null,
   openedFileContentMap: new Map(),
   pageTransformMap: new Map(),
@@ -24,10 +26,18 @@ const editorStore = create((set, get) => ({
   },
 
   selectElement: async element => {
-
+    set({
+      currentEditNodeId: element.getId()
+    })
   },
 
   selectPage: async () => {
+    set({
+      currentEditNodeId: ''
+    })
+  },
+
+  updateElementConfig: (id, config) => {
 
   },
 

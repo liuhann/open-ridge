@@ -23,6 +23,7 @@ export default class ApplicationService {
     this.collection = new NeCollection('ridge.app.' + appId)
     this.store = Localforge.createInstance({ name: 'ridge-store-' + appId })
     this.dataUrls = {}
+    this.dataUrlByPath = new Map()
     this.fileTree = null
   }
 
@@ -54,25 +55,31 @@ export default class ApplicationService {
   async updateAppFileTree () {
     trace('Update File Tree')
     const files = await this.getFiles()
-    this.updateFileBlobUrls(files)
     this.fileTree = getFileTree(files)
+
+    await this.updateFileBlobUrls(files)
   }
 
-  // 更新工作区间所有文件类型的二进制
+  // 更新工作区间图片资源信息
   async updateFileBlobUrls (files) {
-    const updateUrls = {}
     for (const file of files) {
-      if (file.type !== 'page' && file.type !== 'directory') {
-        // 非页面和文件夹
-        if (this.dataUrls[file.id]) {
-          updateUrls[file.id] = this.dataUrls[file.id]
-        } else {
-          const dataUrl = await this.store.getItem(file.id)
-          updateUrls[file.id] = dataUrl
+      if (file.type === 'page') { // 页面内容缓存
+        const dataUrl = await this.store.getItem(file.key)
+        if (dataUrl) {
+          file.textContent = await dataURLToString(dataUrl)
+        }
+      } else if (file.mimeType) {
+        if (file.mimeType.indexOf('image') > -1) {
+          const dataUrl = await this.store.getItem(file.key)
+          if (dataUrl) {
+            file.url = dataUrl
+          }
+        } else if (file.mimeType.indexOf('text') > -1) {
+          const dataUrl = await this.store.getItem(file.key)
+          file.textContent = await dataURLToString(dataUrl)
         }
       }
     }
-    this.dataUrls = updateUrls
   }
 
   async createDirectory (parent, name) {
@@ -194,7 +201,6 @@ export default class ApplicationService {
      * 保存页面配置
      */
   async savePageContent (id, content) {
-    // await this.collection.patch({ id }, {})
     await this.store.setItem(id, content)
   }
 
@@ -473,6 +479,10 @@ export default class ApplicationService {
     } else {
       return await dataURLtoBlob(dataUrl)
     }
+  }
+
+  getBlobUrl () {
+
   }
 
   async getFileContentByPath (filePath) {

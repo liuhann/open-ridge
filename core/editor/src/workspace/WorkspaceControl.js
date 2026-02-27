@@ -68,7 +68,7 @@ export default class WorkSpaceControl {
   }
 
   updateMovable () {
-    this.moveable.updateTarget()
+    this.moveable.updateRect()
   }
 
   fitByWidth () {

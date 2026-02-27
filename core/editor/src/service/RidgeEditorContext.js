@@ -8,6 +8,8 @@ import { cloneDeep, isEqual } from 'lodash'
 import { getNodeListConfig } from '../workspace/editorUtils.js'
 import EditorComposite from '../workspace/EditorComposite.js'
 import { ensureLeading } from '../utils/string.js'
+
+import { localRepoService } from '../store/app.store.js'
 // import PreviewComposite from '../workspace/PreviewComposite.js'
 
 // import { appService } from '../store/app.store.js'
@@ -574,14 +576,7 @@ class RidgeEditorContext extends RidgeContext {
     if (packageName != null) { // 包含包名说明来自外部
       return super.loadComposite(packageName, path)
     } else if (path != null) {
-      const file = await this.services.appService.getFileByPath(path)
-      if (file) {
-        const jsonData = await this.services.appService.getFile(file.id)
-        if (jsonData) {
-          return jsonData.content
-        }
-      }
-      return null
+      return localRepoService.getCurrentAppService().getPageContentByPath(path)
     }
   }
 
@@ -657,13 +652,7 @@ class RidgeEditorContext extends RidgeContext {
   getBlobUrl (url, packageName) {
     if (url.startsWith('composite://') && packageName == null) {
       const protocolPath = url.substring('composite://'.length)
-
-      const file = this.services.appService.getFileByPath(ensureLeading(protocolPath))
-      if (file) {
-        return this.services.appService.getDataUrl(file.id)
-      } else {
-        return super.getBlobUrl(url, packageName)
-      }
+      return localRepoService.getCurrentAppService().getBlobUrl(ensureLeading(protocolPath))
     } else {
       return super.getBlobUrl(url, packageName)
     }
