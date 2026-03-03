@@ -1,6 +1,5 @@
 import Selecto from 'selecto'
 import { createMoveable } from './moveable'
-import { isAncestor } from '../utils/isAncestor.js'
 import Mousetrap from 'mousetrap'
 // import html2canvas from 'html2canvas'
 
@@ -8,7 +7,6 @@ import EditorComposite from './EditorComposite.js'
 import debug from 'debug'
 import { fitRectIntoBounds } from '../utils/rectUtils'
 
-import { getNodeListConfig } from './editorUtils.js'
 const RIDGE_ELEMENT = '.ridge-editor-element'
 
 const trace = debug('ridge:workspace')
@@ -275,20 +273,11 @@ export default class WorkSpaceControl {
         return
       }
       const style = {}
-      const matched = transform.match(/[0-9.]+/g)
       style.x = drag.translate[0]
       style.y = drag.translate[1]
       style.width = Math.round(width)
       style.height = Math.round(height)
-      // const tbc = target.getBoundingClientRect()
-      // console.log('resize', style, target.style.width, target.style.height)
 
-      // if (Math.abs(style.height - target.clientHeight) > 10) {
-      //   style.height = target.clientHeight
-      // }
-      // if (Math.abs(style.width - target.clientWidth) > 10) {
-      //   style.width = target.clientWidth
-      // }
       target.ridgeNode.updateStyleConfig(style)
       this.editorStore.getState().updateNodeRect(style)
     })

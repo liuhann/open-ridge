@@ -39,28 +39,23 @@ export default class ApplicationService {
     return filterTree(this.fileTree, filter)
   }
 
-  getFileByPath (path) {
-    const filtered = filterTree(this.fileTree, f => f.path === path)
-    if (filtered.length > 0) {
-      return filtered[0]
-    } else {
+  getFile (id) {
+    if (id == null) {
       return null
     }
-  }
-
-  getAppFileTree () {
-    return this.fileTree
+    const filtered = filterTree(this.fileTree, f => (f.path === id || f.id === id))
+    return filtered[0]
   }
 
   async updateAppFileTree () {
     trace('Update File Tree')
     const files = await this.getFiles()
-    await this.updateFileContents(files)
+    await this.cacheLoacalFileContents(files)
     this.fileTree = getFileTree(files)
   }
 
   // 更新工作区间图片资源信息
-  async updateFileContents (files) {
+  async cacheLoacalFileContents (files) {
     for (const file of files) {
       if (file.mimeType) {
         if (file.mimeType.indexOf('image') > -1) {
@@ -304,11 +299,6 @@ export default class ApplicationService {
     return files
   }
 
-  // 根据id获取文件
-  async getFileById (id) {
-    return this.filterFiles(file => file.id === id)[0]
-  }
-
   /**
    * 确保当前目录存在
    * @param {*} filePath
@@ -344,42 +334,11 @@ export default class ApplicationService {
     return false
   }
 
-  async updateDataUrl () {
-    const images = await this.getByMimeType('image')
-    for (const image of images) {
-      this.dataUrls[image.id] = image.dataUrl
-    }
-  }
-
-  getDataUrl (path) {
-    let file = null
-    if (path.startsWith('/')) {
-      file = this.getFileByPath(path)
-    } else {
-      file = this.getFileById(path)
-    }
+  getFileUrl (path) {
+    const file = this.getFile(path)
 
     if (file) {
       return file.url
-    } else {
-      return null
-    }
-  }
-
-  async getFileContent (file) {
-    const dataUrl = await this.store.getItem(file.key)
-
-    if (file.mimeType && file.mimeType.indexOf('text') > -1) {
-      return await dataURLToString(dataUrl)
-    } else {
-      return await dataURLtoBlob(dataUrl)
-    }
-  }
-
-  async getFileContentByPath (filePath) {
-    const file = this.getFileByPath(filePath)
-    if (file) {
-      return await this.getFileContent(file)
     } else {
       return null
     }

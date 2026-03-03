@@ -577,7 +577,7 @@ class RidgeEditorContext extends RidgeContext {
     if (packageName != null) { // 包含包名说明来自外部
       return super.loadComposite(packageName, path)
     } else if (path != null) {
-      const file = localRepoService.getCurrentAppService().getFileByPath(removeUrlProtocol(path) + '.json')
+      const file = localRepoService.getCurrentAppService().getFile(removeUrlProtocol(path) + '.json')
       if (file && file.json) {
         return file.json
       }
@@ -655,7 +655,7 @@ class RidgeEditorContext extends RidgeContext {
    */
   getBlobUrl (url, packageName) {
     if (url.startsWith('composite://') && packageName == null) {
-      return localRepoService.getCurrentAppService().getDataUrl(removeUrlProtocol(url))
+      return localRepoService.getCurrentAppService().getFileUrl(removeUrlProtocol(url))
     } else {
       return super.getBlobUrl(url, packageName)
     }

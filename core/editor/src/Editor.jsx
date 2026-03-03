@@ -98,7 +98,14 @@ const Editor = () => {
             {pageOpened && <ConfigPanel />}
           </div>
         </div>
-        <div />
+        <ImagePreview
+          src={imagePreviewSrc} visible={imagePreviewVisible} onVisibleChange={() => {
+
+          }}
+        />
+        <DialogCodeEdit
+          ref={codeEditorRef}
+        />
       </div>
 
       <div
@@ -111,15 +118,6 @@ const Editor = () => {
           <div className='preview-view-port' />
         </div>
       </div>
-
-      <ImagePreview
-        src={imagePreviewSrc} visible={imagePreviewVisible} onVisibleChange={() => {
-
-        }}
-      />
-      <DialogCodeEdit
-        ref={codeEditorRef}
-      />
     </>
   )
 }

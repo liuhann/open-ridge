@@ -24,7 +24,7 @@ const useStore = create((set, get) => ({
       set({
         currentAppId: id,
         currentAppName: appInfo.name,
-        currentAppFilesTree: appService.getAppFileTree()
+        currentAppFilesTree: appService.getFileTree()
       })
     }
   },
@@ -84,7 +84,7 @@ const useStore = create((set, get) => ({
 
     await appService.updateAppFileTree()
     set({
-      currentAppFilesTree: appService.getAppFileTree()
+      currentAppFilesTree: appService.getFileTree()
     })
   },
 

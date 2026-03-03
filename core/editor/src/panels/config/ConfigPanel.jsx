@@ -273,7 +273,6 @@ const ConfigPanel = () => {
 
   useEffect(() => {
     if (currentEditNodeId) {
-      console.log('update Rect', currentEditNodeRect)
       componentPropFormApi.current.setValue('style', currentEditNodeRect, {
         notNotify: true
       })
@@ -298,9 +297,13 @@ const ConfigPanel = () => {
 
   // 组件属性表单项修改  组件样式和属性变动
   const componentPropValueChange = (values, field) => {
-    if (values.id === this.componentView.config.id) {
-      updateElementConfig(values)
+    console.log('currentEditNodeId', currentEditNodeId, values, field)
+    if (currentEditNodeId === values.id) {
+      updateElementConfig(values, field)
     }
+    // if (values.id === this.componentView.config.id) {
+    //   updateElementConfig(values)
+    // }
   }
 
   const componentEventValueChange = (values, field) => {
