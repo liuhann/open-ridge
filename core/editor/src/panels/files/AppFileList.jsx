@@ -3,7 +3,6 @@ import React, { useState, useEffect, useRef } from 'react'
 import { Button, Tree, Dropdown, Typography, Toast, Upload, Spin, Modal, Space, Divider, Breadcrumb, Input } from '@douyinfe/semi-ui'
 import context from '../../service/RidgeEditorContext.js'
 import { mapTree } from './buildFileTree.js'
-import DialogRename from './DialogRename.jsx'
 import DialogCreate from './DialogCreate.jsx'
 import { stringToBlob } from '../../utils/blob.js'
 import IconFileCode from '../../icons/IconFileCode.jsx'
@@ -50,7 +49,6 @@ const AppFileList = () => {
 
   const currentAppFilesTree = appStore((state) => state.currentAppFilesTree)
   const setCurrentAppName = appStore((state) => state.setCurrentAppName)
-  const initAppStore = appStore((state) => state.initAppStore)
   const createFolder = appStore((state) => state.createFolder)
   const fileRename = appStore((state) => state.fileRename)
 
@@ -58,11 +56,6 @@ const AppFileList = () => {
 
   // 存储节点映射
   const nodeMap = useRef({})
-
-  // 挂载时初始化
-  useEffect(() => {
-    initAppStore()
-  }, [])
 
   const getAppTreeData = (treeData) => {
     const fileTree = mapTree(treeData, file => {
@@ -561,14 +554,8 @@ const AppFileList = () => {
   return (
     <>
       <div className='file-actions panel-actions'>
-        <Breadcrumb
-          style={{ flex: 1 }} showTooltip={{
-            width: 80
-          }}
-        >
-          <Breadcrumb.Item onClick={onRootListClick} icon={<ProiconsHome />}>全部应用</Breadcrumb.Item>
-          {currentAppName && <Breadcrumb.Item>{currentAppName}</Breadcrumb.Item>}
-        </Breadcrumb>
+        <Text>{currentAppName}</Text>
+        <Button theme='borderless' type='tertiary' icon={<i className='bi bi-box-arrow-right' />} />
         {currentAppName && RenderCreateDropDown()}
         {currentAppName && RenderShareDropDown()}
       </div>
@@ -582,40 +569,38 @@ const AppFileList = () => {
           setState(prev => ({ ...prev, dialogCreateShow: false }))
         }}
       />
-      {currentAppName &&
-        <Tree
-          className='file-tree'
-          showFilteredOnly
-          filterTreeNode
-          draggable
-          renderLabel={renderFullLabel}
-          treeData={getAppTreeData(currentAppFilesTree)}
-          onDragStart={(target) => {
-            if (target.node && target.node.type === 'page') {
-              context.draggingComposite = target.node
-            } else {
-              context.draggingComposite = null
-            }
-          }}
-          onDrop={({ node, dragNode, dropPosition, dropToGap }) => {
-            move(node, dragNode, dropToGap)
-          }}
-          onDoubleClick={(ev, node) => {
-            onOpenClicked(node)
-          }}
-          onChangeWithObject
-          onSelect={(key, selected, node) => {
-            onNodeSelect(node)
-          }}
-          onClick={() => {
-            console.log('clicked')
-          }}
-          onChange={(node) => {
-            // setState(prev => ({ ...prev, selectedNodeKey: key }))
-          }}
-        />}
-      {!currentAppName && <AppListPanel />}
-      {RenderAppImportDialog()}
+      <div>{RenderCreateDropDown()}</div>
+      <Tree
+        className='file-tree'
+        showFilteredOnly
+        filterTreeNode
+        draggable
+        renderLabel={renderFullLabel}
+        treeData={getAppTreeData(currentAppFilesTree)}
+        onDragStart={(target) => {
+          if (target.node && target.node.type === 'page') {
+            context.draggingComposite = target.node
+          } else {
+            context.draggingComposite = null
+          }
+        }}
+        onDrop={({ node, dragNode, dropPosition, dropToGap }) => {
+          move(node, dragNode, dropToGap)
+        }}
+        onDoubleClick={(ev, node) => {
+          onOpenClicked(node)
+        }}
+        onChangeWithObject
+        onSelect={(key, selected, node) => {
+          onNodeSelect(node)
+        }}
+        onClick={() => {
+          console.log('clicked')
+        }}
+        onChange={(node) => {
+          // setState(prev => ({ ...prev, selectedNodeKey: key }))
+        }}
+      />
     </>
   )
 }

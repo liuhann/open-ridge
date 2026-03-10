@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import './app-list.less'
-import { Button, Modal } from '@douyinfe/semi-ui'
+import { Button, Modal, Typography } from '@douyinfe/semi-ui'
 import { FileList } from '../../components/FileList/FileList.jsx'
 import CreateAppDialog from './CreateAppDialog.jsx'
 import appStore from '../../store/app.store.js'
 import selectZipFile from '../../utils/selectFileUpload.js'
+
+const { Text } = Typography
 
 const AppListPanel = () => {
   const [createDialogVisible, setCreateDialogVisible] = useState(false)
@@ -14,10 +16,12 @@ const AppListPanel = () => {
   const importAppFile = appStore((state) => state.importAppFile)
 
   return (
-    <div className='app-list-panel'>
-      <div className='action-bar'>
+    <>
+      <div className='file-actions panel-actions'>
+        <Text>应用管理</Text>
         <Button
-          theme='outline' type='primary' onClick={() => {
+          theme='outline' type='primary'
+          onClick={() => {
             setCreateDialogVisible(true)
           }}
         >新增应用
@@ -62,7 +66,8 @@ const AppListPanel = () => {
           }
         ]}
       />
-    </div>
+    </>
+
   )
 }
 

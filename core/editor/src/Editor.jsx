@@ -8,12 +8,15 @@ import EditMenuBar from './panels/menu/EditMenuBar.jsx'
 import WorkSpaceControl from './workspace/WorkspaceControl'
 
 import editorStore from './store/editor.store.js'
+import appStore from './store/app.store.js'
 import { ReactComposite } from 'ridgejs'
 
 import './editor.less'
 import PreviewMenuBar from './panels/menu/PreviewMenuBar.jsx'
 import AppFileList from './panels/files/AppFileList.jsx'
+import AppListPanel from './panels/apps/AppListPanel.jsx'
 import ridgeEditorContext from './service/RidgeEditorContext.js'
+import LeftNav from './panels/left-nav/LeftNav.jsx'
 
 const Editor = () => {
   const workspaceRef = useRef(null)
@@ -30,7 +33,13 @@ const Editor = () => {
   const imagePreviewSrc = editorStore((state) => state.imagePreviewSrc)
   const setWorkspaceControl = editorStore((state) => state.setWorkspaceControl)
 
+  const currentAppName = appStore((state) => state.currentAppName)
+  const initAppStore = appStore((state) => state.initAppStore)
+
   useEffect(() => {
+    // 挂载时初始化
+    initAppStore()
+
     const workspaceControl = new WorkSpaceControl()
     workspaceControl.init({
       workspaceEl: workspaceRef.current,
@@ -53,7 +62,7 @@ const Editor = () => {
     document.addEventListener('mousemove', ev => {
       if (leftResizingRef.current) {
         if (ev.clientX > 250) {
-          setLeftReisizeWidth(ev.clientX)
+          setLeftReisizeWidth(ev.clientX - 40)
         }
       }
     })
@@ -69,12 +78,14 @@ const Editor = () => {
           display: isPreview ? 'none' : ''
         }}
       >
+        <LeftNav />
         <div
           style={{
             width: leftReisizeWidth + 'px'
           }}
         >
-          <AppFileList />
+          {currentAppName && <AppFileList />}
+          {!currentAppName && <AppListPanel />}
         </div>
         <div
           className='left-resizer'
@@ -92,8 +103,8 @@ const Editor = () => {
             <div ref={workspaceRef} className='workspace'>
               <div className='view-port' ref={viewPortContainerRef} />
               {
-                    !pageOpened && <div className='no-open-file'><ReactComposite app='ridge-editor-app' path='Welcome' /></div>
-                }
+                !pageOpened && <div className='no-open-file'><ReactComposite app='ridge-editor-app' path='Welcome' /></div>
+              }
             </div>
             {pageOpened && <ConfigPanel />}
           </div>
