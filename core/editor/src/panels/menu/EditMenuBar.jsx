@@ -14,6 +14,7 @@ const EditorMenuBar = () => {
   const zoom = editorStore(state => state.zoom)
   const zoomChange = editorStore(state => state.zoomChange)
   const closePage = editorStore(state => state.closePage)
+  const switchPage = editorStore(state => state.switchPage)
 
   const onTabClose = async tabKey => {
     if (unsavedPages.indexOf(tabKey) > -1) {
@@ -30,7 +31,7 @@ const EditorMenuBar = () => {
   }
 
   const switchToPage = tabKey => {
-
+    switchPage(tabKey)
   }
 
   const savePage = () => {

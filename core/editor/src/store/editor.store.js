@@ -95,7 +95,7 @@ const editorStore = create((set, get) => ({
 
   // 打开页面
   openPage: async page => {
-    const { currentOpenPageId, unmountWorkspace, closeCurrentPage, openedFileContentMap, pageTransformMap, workspaceControl, openedPages } = get()
+    const { currentOpenPageId, unmountWorkspace, openedFileContentMap, pageTransformMap, workspaceControl, openedPages } = get()
     if (currentOpenPageId === page.id) {
       return
     }
@@ -160,32 +160,6 @@ const editorStore = create((set, get) => ({
     })
   },
 
-  // 关闭打开的页面
-  closeCurrentPage: (keep) => {
-    const { currentOpenPageId, openedFileContentMap, editorComposite, pageTransformMap, setPageOpened, workspaceControl, openedPages, closePage } = get()
-
-    if (editorComposite) {
-      editorComposite.unmount()
-    }
-    workspaceControl.disable()
-
-    if (keep) {
-      openedFileContentMap.set(currentOpenPageId, editorComposite.exportPageJSON())
-      pageTransformMap.set(currentOpenPageId, workspaceControl.getTransform())
-    } else {
-      closePage(currentOpenPageId)
-    }
-
-    set({
-      currentOpenPageId: null,
-      editorComposite: null
-    })
-
-    if (openedFileContentMap.length === 0) {
-      setPageOpened(false)
-    }
-  },
-
   // 关闭所有页面
   closeAllPages: () => {
     get().closeCurrentPage(false)
@@ -200,14 +174,55 @@ const editorStore = create((set, get) => ({
     })
   },
 
+  // 切换到另一页面
+  switchPage: async id => {
+    const { currentOpenPageId, unmountWorkspace, openedFileContentMap, pageTransformMap, workspaceControl } = get()
+    if (currentOpenPageId === id) {
+      return
+    }
+
+    // 关闭之前打开的页面 （非当前页面）
+    if (currentOpenPageId) {
+      unmountWorkspace()
+    }
+
+    if (openedFileContentMap.get(id)) { // 之前打开过
+      const pageObject = openedFileContentMap.get(id)
+      const editorComposite = await workspaceControl.loadPage(pageObject)
+      const transform = pageTransformMap.get(id)
+      if (transform) {
+        workspaceControl.setTransform(transform)
+      } else {
+        workspaceControl.setTransform({})
+      }
+      set({
+        currentOpenPageId: id,
+        editorComposite
+      })
+    }
+  },
+
   // 关闭页面
   closePage: (id) => {
-    const { openedFileContentMap, openedPages } = get()
+    const { openedFileContentMap, openedPages, currentOpenPageId, unmountWorkspace } = get()
 
+    if (currentOpenPageId === id) {
+      unmountWorkspace()
+    }
     openedFileContentMap.delete(id)
-    set({
-      openedPages: openedPages.filter(p => p.id !== id)
-    })
+
+    const leftOpenedPages = openedPages.filter(p => p.id !== id)
+
+    if (leftOpenedPages.length === 0) {
+      set({
+        openedPages: [],
+        currentOpenPageId: null
+      })
+    } else {
+      // 打开其他页面
+      // const openPage
+
+    }
   },
 
   openCode: async file => {

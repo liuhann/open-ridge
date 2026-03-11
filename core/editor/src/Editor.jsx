@@ -28,13 +28,15 @@ const Editor = () => {
   const [collapseLeft, setCollapseLeft] = useState(false)
 
   const isPreview = editorStore((state) => state.isPreview)
-  const pageOpened = editorStore((state) => state.pageOpened)
+  const openedPages = editorStore((state) => state.openedPages)
   const imagePreviewVisible = editorStore((state) => state.imagePreviewVisible)
   const imagePreviewSrc = editorStore((state) => state.imagePreviewSrc)
   const setWorkspaceControl = editorStore((state) => state.setWorkspaceControl)
 
   const currentAppName = appStore((state) => state.currentAppName)
   const initAppStore = appStore((state) => state.initAppStore)
+
+  const pageOpened = openedPages.length > 0
 
   useEffect(() => {
     // 挂载时初始化
