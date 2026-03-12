@@ -106,6 +106,7 @@ const useStore = create((set, get) => ({
   },
 
   fileRename: async (fileId, name) => {
+    const appService = localRepoService.getCurrentAppService()
     const renamed = await appService.rename(fileId, name)
     if (renamed === 1) {
       await get().initAppStore()

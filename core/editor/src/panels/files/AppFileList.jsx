@@ -66,7 +66,7 @@ const AppFileList = () => {
         } else if (file.mimeType.indexOf('audio') > -1) {
           file.icon = (<i className='bi bi-file-earmark-music' />)
         } else if (file.mimeType.indexOf('image') > -1) {
-          file.icon = FILE_IMAGE
+          file.icon = <i className='bi bi-file-earmark-image' />
         } else {
           file.icon = <i className='bi bi-file-earmark' />
         }
@@ -74,30 +74,28 @@ const AppFileList = () => {
       file.label = file.name
 
       if (file.type === 'page') {
-        file.label = basename(file.name, '.json')
+        // file.label = basename(file.name, '.json')
       }
 
-      if (file.label.endsWith('.svg')) {
-        file.icon = FILE_IMAGE
-      }
       if (file.label.endsWith('.md')) {
         file.icon = FILE_MARKDOWN
       }
       if (file.label.endsWith('.js')) {
-        file.icon = FILE_JS
+        file.icon = <i className='bi bi-file-earmark-code' />
       }
       if (file.label.endsWith('.json')) {
-        file.icon = FILE_JSON
+        file.icon = <i className='bi bi-filetype-json' />
       }
       if (file.type === 'page') {
-        file.icon = FILE_COMPOSITE
+        file.icon = <i className='bi bi-file-earmark-richtext' />
       }
       if (file.type === 'directory') {
-        file.icon = FILE_FOLDER
+        file.icon = <i className='bi bi-folder2' />
       }
 
       return {
         path: file.parentPath + '/' + file.name,
+        raw: file,
         icon: file.icon,
         label: file.label,
         id: file.id,
@@ -367,24 +365,25 @@ const AppFileList = () => {
     )
     return (
       <div className={'tree-label' + (currentOpenId === data.key ? ' opened' : '')}>
-        {currentRename && currentRename.key === data.key && <Input
-          onKeyPress={async ({ key }) => {
-            if (key === 'Enter') {
-              const result = await fileRename(currentRename.key, currentRename.value)
-              if (result === -1) {
-                Toast.error('文件名称冲突')
-              } else {
-                setCurrentRename(null)
+        {currentRename && currentRename.key === data.key &&
+          <Input
+            onKeyPress={async ({ key }) => {
+              if (key === 'Enter') {
+                const result = await fileRename(currentRename.key, currentRename.value)
+                if (result === -1) {
+                  Toast.error('文件名称冲突')
+                } else {
+                  setCurrentRename(null)
+                }
               }
-            }
-          }}
-          value={currentRename.value} onChange={val => {
-            setCurrentRename({
-              ...currentRename,
-              value: val
-            })
-          }}
-                                                            />}
+            }}
+            value={currentRename.value} onChange={val => {
+              setCurrentRename({
+                ...currentRename,
+                value: val
+              })
+            }}
+          />}
         <Text
           onClick={() => {
             if (currentSelected && currentSelected.key === data.key && currentSelectedTime && new Date().getTime() - currentSelectedTime > 1000) {
@@ -553,7 +552,7 @@ const AppFileList = () => {
   const confirmExitToAppList = async () => {
     if (openedPages.length) {
       await Modal.confirm({
-        title: '离开应用', 
+        title: '离开应用',
         content: '确认离开应用并且关闭当前所有打开的页面'
       })
       await closeAllPages()
@@ -580,11 +579,12 @@ const AppFileList = () => {
           setState(prev => ({ ...prev, dialogCreateShow: false }))
         }}
       />
-      <div>{RenderCreateDropDown()}</div>
+      <div className='file-tool-bar'>{RenderCreateDropDown()}</div>
       <Tree
         className='file-tree'
         showFilteredOnly
-        filterTreeNode
+        directory
+        // filterTreeNode
         draggable
         renderLabel={renderFullLabel}
         treeData={getAppTreeData(currentAppFilesTree)}

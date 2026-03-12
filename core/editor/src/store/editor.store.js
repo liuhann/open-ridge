@@ -4,10 +4,10 @@ import { localRepoService } from './app.store'
 import { cloneDeep } from 'ridgejs/src/utils/object'
 
 const editorStore = create((set, get) => ({
-
   // 状态 驱动展示
   isPreview: false,
   currentOpenPageId: null,
+  lastOpenPageId: null,
   zoom: 100,
   openedPages: [],
   unsavedPages: [],
@@ -76,14 +76,15 @@ const editorStore = create((set, get) => ({
       currentEditNodeRect: rect
     })
   },
+
   openFile: async id => {
     const appService = localRepoService.getCurrentAppService()
 
     if (appService) {
       const file = await appService.getFile(id)
-      if (file) {
+      if (file && file.mimeType) {
         if (file.type === 'page') {
-          get().openPage(file)
+          get().openPage(id, file)
         } else if (file.mimeType.startsWith('text/')) {
           get().openCode(file)
         } else if (file.mimeType.startsWith('image/')) {
@@ -94,25 +95,27 @@ const editorStore = create((set, get) => ({
   },
 
   // 打开页面
-  openPage: async page => {
+  openPage: async (id, page) => {
     const { currentOpenPageId, unmountWorkspace, openedFileContentMap, pageTransformMap, workspaceControl, openedPages } = get()
-    if (currentOpenPageId === page.id) {
+    if (currentOpenPageId === id) {
       return
     }
-
     // 关闭之前打开的页面 （非当前页面）
     if (currentOpenPageId) {
       unmountWorkspace()
     }
 
-    let pageObject = cloneDeep(page.json)
-    if (openedPages.find(p => p.id === page.id) && openedFileContentMap.get(page.id)) { // 之前打开过
-      pageObject = openedFileContentMap.get(page.id)
+    let pageObject = null
+
+    if (openedPages.find(p => p.id === id) && openedFileContentMap.get(id)) { // 之前打开过
+      pageObject = openedFileContentMap.get(id)
+    } else if (page) {
+      pageObject = cloneDeep(page.json)
     }
 
     const editorComposite = await workspaceControl.loadPage(pageObject)
 
-    const transform = pageTransformMap.get(page.id)
+    const transform = pageTransformMap.get(id)
     if (transform) {
       workspaceControl.setTransform(transform)
     } else {
@@ -120,14 +123,14 @@ const editorStore = create((set, get) => ({
     }
 
     set({
-      currentOpenPageId: page.id,
-      openedPages: openedPages.find(p => p.id === page.id)
+      lastOpenPageId: currentOpenPageId,
+      currentOpenPageId: id,
+      openedPages: openedPages.find(p => p.id === id)
         ? openedPages
         : [...openedPages, {
             id: page.id,
             name: page.name
           }],
-      pageOpened: true,
       editorComposite
     })
   },
@@ -181,6 +184,10 @@ const editorStore = create((set, get) => ({
       return
     }
 
+    set({
+      lastOpenPageId: currentOpenPageId
+    })
+
     // 关闭之前打开的页面 （非当前页面）
     if (currentOpenPageId) {
       unmountWorkspace()
@@ -203,26 +210,34 @@ const editorStore = create((set, get) => ({
   },
 
   // 关闭页面
-  closePage: (id) => {
-    const { openedFileContentMap, openedPages, currentOpenPageId, unmountWorkspace } = get()
-
-    if (currentOpenPageId === id) {
-      unmountWorkspace()
-    }
-    openedFileContentMap.delete(id)
+  closePage: async (id) => {
+    const { openedFileContentMap, openedPages, currentOpenPageId, unmountWorkspace, lastOpenPageId, openPage } = get()
 
     const leftOpenedPages = openedPages.filter(p => p.id !== id)
-
-    if (leftOpenedPages.length === 0) {
-      set({
-        openedPages: [],
-        currentOpenPageId: null
-      })
+    openedFileContentMap.delete(id)
+    if (currentOpenPageId === id) { // 关闭当前页
+      unmountWorkspace()
+      if (leftOpenedPages.length === 0) {
+        set({
+          currentOpenPageId: null
+        })
+      } else {
+        if (lastOpenPageId && leftOpenedPages.find(p => p.id === lastOpenPageId)) {
+          await openPage(lastOpenPageId)
+        } else {
+          await openPage(leftOpenedPages[0].id)
+        }
+      }
     } else {
-      // 打开其他页面
-      // const openPage
-
+      if (lastOpenPageId === id) {
+        set({
+          lastOpenPageId: null
+        })
+      }
     }
+    set({
+      openedPages: leftOpenedPages
+    })
   },
 
   openCode: async file => {

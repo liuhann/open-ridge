@@ -29,7 +29,7 @@ export default ({
 
   return (
     <Modal
-      title={ title || '新增..' }
+      title={title || '新增..'}
       visible={show}
       onOk={() => {
         if (nameValid) {
@@ -47,7 +47,7 @@ export default ({
         labelAlign='right'
         labelWidth={80}
       >
-        <Form.Input disabled label='所在目录' initValue={'/'} />
+        <Form.Input disabled label='所在目录' initValue='/' />
         <Form.Input
           value={value}
           validateStatus={nameValid ? '' : 'error'}
