@@ -4,11 +4,9 @@ const PAGE_JSON_TEMPLATE = {
   version: VERSION,
   style: Object.assign({
     width: 1290,
-    height: 960,
-    classNames: []
+    height: 960
   }),
   properties: {},
-  cssFiles: [],
   jsFiles: [],
   elements: []
 }

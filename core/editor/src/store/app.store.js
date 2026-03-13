@@ -3,6 +3,8 @@ import { create } from 'zustand'
 import { alphabetid } from '../utils/string'
 import LocalRepoService from '../service/LocalRepoService'
 import ApplicationService from '../service/ApplicationService'
+import { stringToBlob } from '../utils/blob'
+import { trim, camelCase } from '../utils/string'
 
 const localRepoService = new LocalRepoService()
 
@@ -96,20 +98,51 @@ const useStore = create((set, get) => ({
   },
 
   createFolder: async (parentId, name) => {
+    const appService = localRepoService.getCurrentAppService()
     try {
       await appService.createDirectory(parentId, name)
-      await get().initAppStore()
+      await appService.updateAppFileTree()
       return true
     } catch (e) {
       return false
     }
   },
 
+  createFile: async (parentId, name, fileContent, mimeType) => {
+    const appService = localRepoService.getCurrentAppService()
+
+    await appService.createFile(parentId, name, stringToBlob(fileContent, mimeType))
+    set({
+      currentAppFilesTree: appService.getFileTree()
+    })
+  },
+
+  getFilePath: async (fileId) => {
+    const appService = localRepoService.getCurrentAppService()
+    const file = appService.getFile(fileId)
+    if (file) {
+      return file.path
+    }
+  },
+
+  checkNewNameValid: (id, newName) => {
+    const appService = localRepoService.getCurrentAppService()
+    return appService.checkNewNameValid(id, newName)
+  },
+
+  checkCreateNameValid: (pid, name) => {
+    const appService = localRepoService.getCurrentAppService()
+    return appService.filterFiles(file => file.parent === pid && camelCase(trim(name)) === camelCase(trim(file.name))).length === 0
+  },
+
   fileRename: async (fileId, name) => {
     const appService = localRepoService.getCurrentAppService()
     const renamed = await appService.rename(fileId, name)
     if (renamed === 1) {
-      await get().initAppStore()
+      await appService.updateAppFileTree()
+      set({
+        currentAppFilesTree: appService.getFileTree()
+      })
     }
     return renamed
   }

@@ -5,6 +5,12 @@
   padding: 2px 8px;
   height: 40px;
   align-items: center;
+
+  .app-name-exit {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
   .semi-breadcrumb-item svg {
     width: 16px;
     height: 16px;
@@ -41,7 +47,16 @@
   display: flex;
   padding: 4px;
   padding-bottom: 0;
-  font-size: 16px;
+  font-size: 18px;
+  .file-btns {
+    width: 100%;
+    justify-content: flex-end;
+    display: flex;
+    gap: 6px;
+    i.bi {
+      font-size: 16px;
+    }
+  }
 }
 
 .tree-loading {
@@ -74,10 +89,15 @@
       color: var(--semi-color-text-1);
       font-size: 18px;
     }
+
+    .semi-input-wrapper-default {
+      height: 24px;
+      line-height: 24px;
+    }
     input.semi-input {
       padding-left: 4px;
       line-height: 24px;
-      height: 28px;
+      height: 24px;
     }
     i.bi {
       margin-right: 6px;

@@ -140,7 +140,7 @@ export default class ApplicationService {
    */
   async updateFileContent (key, content) {
     trace('updateFileContent', key, content)
-    const file = this.filterFiles(file => file.id === key)[0]
+    const file = this.getFile(key)
     if (file) {
       file.textContent = content
       await this.store.setItem(key, await stringToDataUrl(content, file.mimeType))
@@ -183,12 +183,17 @@ export default class ApplicationService {
     return 1
   }
 
-  async checkNewNameValid (parentId, newName) {
-    const nameDuplicated = await this.collection.findOne({
-      parent: parentId,
-      name: newName
-    })
-    return nameDuplicated
+  checkNewNameValid (id, newName) {
+    const file = this.getFile(id)
+
+    if (file) {
+      const same = this.filterFiles(node => node.parent === file.parent && node.id !== id && node.name === newName)
+      if (same.length > 0) {
+        return false
+      } else {
+        return true
+      }
+    }
   }
 
   /**
