@@ -8,26 +8,25 @@ export default class LocalRepoService {
     this.appServices = {}
     this.currentAppId = window.localStorage.getItem('ridge-current-app-id')
   }
-  
 
   // 保存App内容
-  async saveApp(id, name, blob) {
-      const existed = await this.collection.findOne({ id })
+  async saveApp (id, name, blob) {
+    const existed = await this.collection.findOne({ id })
 
-      if (!existed) {
-        await this.collection.insert({
-          id,
-          name
-        })
-      } else {
-         await this.collection.update({
-          id
-        }, {
-          name
-        })
-      }
-      await this.store.setItem(id, blob)
-  },
+    if (!existed) {
+      await this.collection.insert({
+        id,
+        name
+      })
+    } else {
+      await this.collection.update({
+        id
+      }, {
+        name
+      })
+    }
+    await this.store.setItem(id, blob)
+  }
 
   // 持久化保存当前App
   async persistanceApp (id, name) {

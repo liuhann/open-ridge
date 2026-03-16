@@ -1,6 +1,5 @@
 // src/store/useStore.js
 import { create } from 'zustand'
-import { appService } from './app.store'
 const workSpaceStore = create((set, get) => {
   return {
     fileOpened: false,
