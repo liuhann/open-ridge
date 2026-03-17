@@ -3,7 +3,7 @@ import { VERSION } from 'ridgejs'
 const PAGE_JSON_TEMPLATE = {
   version: VERSION,
   style: Object.assign({
-    width: 1290,
+    width: 1280,
     height: 960
   }),
   properties: {},

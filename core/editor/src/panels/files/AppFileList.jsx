@@ -5,10 +5,7 @@ import context from '../../service/RidgeEditorContext.js'
 import { mapTree } from './buildFileTree.js'
 import DialogCreate from './DialogCreate.jsx'
 import { stringToBlob } from '../../utils/blob.js'
-import { UilShare } from '../../icons/UilShare.jsx'
 import { GravityUiAbbrZip } from '../../icons/GravityUiAbbrZip.jsx'
-import { CarbonRun } from '../../icons/CarbonRun.jsx'
-import { IxImport } from '../../icons/IxImport.jsx'
 import { FILE_MARKDOWN } from '../../icons/icons.js'
 import { STORE_TEMPLATE } from '../../utils/template.js'
 import './file-list.less'
@@ -33,9 +30,12 @@ const AppFileList = () => {
   const currentAppFilesTree = appStore((state) => state.currentAppFilesTree)
   const exitToAppList = appStore((state) => state.exitToAppList)
   const fileRename = appStore((state) => state.fileRename)
+  const deleteFile = appStore((state) => state.deleteFile)
 
+  const currentOpenPageId = editorStore(state => state.currentOpenPageId)
   const openFile = editorStore(state => state.openFile)
   const openedPages = editorStore(state => state.openedPages)
+  const closeAllPages = editorStore(state => state.closeAllPages)
 
   // 存储节点映射
   const nodeMap = useRef({})
@@ -132,22 +132,12 @@ const AppFileList = () => {
   }
 
   const onRemoveClicked = async (data) => {
-    const openedFileMap = context.getOpenedFileMap()
-
-    if (openedFileMap.has(data.id)) {
-      Toast.warning('此页面在工作区已经打开，请先关闭再删除页面')
-      return
-    }
-
     Modal.confirm({
       zIndex: 10001,
-      title: '确认删除',
-      content: '删除后文件无法找回，推荐您可先通过导出进行备份',
+      title: '删除后文件无法找回,是否确认',
+      content: '推荐您可先通过导出先进行备份',
       onOk: async () => {
-        const { appService } = context.services
-        await appService.deleteFile(data.key)
-        setState(prev => ({ ...prev, selectedNodeKey: null }))
-        loadAndUpdateFileTree()
+        await deleteFile(data.key)
         Toast.success('已经成功删除 ' + data.label)
       }
     })
@@ -199,39 +189,6 @@ const AppFileList = () => {
   const onFileExportClick = (data) => {
     const { appService } = context.services
     appService.exportFileArchive(data.key)
-  }
-
-  const exportApp = async (isArchive) => {
-    if (state.exportToastId) {
-      return
-    }
-    const id = Toast.info({
-      content: '正在导出应用，请稍侯...',
-      duration: 0,
-      onClose: () => {
-        setState(prev => ({ ...prev, exportToastId: null }))
-      }
-    })
-    setState(prev => ({ ...prev, exportToastId: id }))
-    const { appService } = context.services
-    if (isArchive) {
-      await appService.exportAppArchive()
-    } else {
-      await context.services.distributeService.distributeApp()
-    }
-    Toast.close(id)
-    setState(prev => ({ ...prev, exportToastId: null }))
-  }
-
-  const newEmptyApp = () => {
-    Modal.confirm({
-      title: '新增应用',
-      content: '确认新增应用？ 现有工作区间内容将会被清除。如果需要内容，您可以先整体导出应用内容',
-      onOk: () => {
-        const { appService } = context.services
-        appService.reset()
-      }
-    })
   }
 
   const confirmFileRename = async () => {
@@ -305,7 +262,8 @@ const AppFileList = () => {
           />}
         <Text
           onClick={() => {
-            if (currentSelected && currentSelected.key === data.key && currentSelectedTime && new Date().getTime() - currentSelectedTime > 1000) {
+            const now = new Date().getTime()
+            if (currentSelected && currentSelected.key === data.key && currentSelectedTime && now - currentSelectedTime > 1000 && now - currentSelectedTime < 3000) {
               setCurrentRename({
                 key: data.key,
                 value: currentSelected.label
@@ -323,57 +281,6 @@ const AppFileList = () => {
           <Button className='more-button' size='small' theme='borderless' type='tertiary' icon={<i className='bi bi-three-dots-vertical' />} />
         </Dropdown>
       </div>
-    )
-  }
-
-  const RenderAppImportDialog = () => {
-    const { dialogImportShow } = state
-    return (
-      <Modal
-        width={560}
-        title='导入/导出项目'
-        visible={dialogImportShow}
-        okText='关闭'
-        hasCancel={false}
-        onCancel={() => {
-          setState(prev => ({ ...prev, dialogImportShow: false }))
-        }}
-        onOk={() => {
-          setState(prev => ({ ...prev, dialogImportShow: false }))
-        }}
-      >
-        <Paragraph>项目整体导入</Paragraph>
-        <Text type='danger'>选择导入后，现有工作目录会被替换，建议先通过导出方式提前备份</Text>
-        <Space style={{
-          padding: '10px 0'
-        }}
-        >
-          <Upload
-            action='none' showUploadList={false} uploadTrigger='custom' accept='.zip' onFileChange={async files => {
-              await onUploadAppArchive(files[0])
-              window.location.reload()
-            }}
-          >
-            <Button theme='light'>
-              选择项目文件(zip)
-            </Button>
-          </Upload>
-        </Space>
-
-        <Paragraph>导出为压缩文件</Paragraph>
-        <Space style={{
-          padding: '10px 0'
-        }}
-        >
-          <Button
-            theme='light' onClick={() => {
-              exportApp()
-            }}
-          >
-            导出
-          </Button>
-        </Space>
-      </Modal>
     )
   }
 
@@ -424,47 +331,6 @@ const AppFileList = () => {
     )
   }
 
-  const RenderShareDropDown = () => {
-    return (
-      <Dropdown
-        trigger='hover'
-        closeOnEsc
-        clickToHide
-        keepDOM
-        position='bottomLeft'
-        render={
-          <Dropdown.Menu className='app-files-dropdown'>
-            <Dropdown.Item
-              icon={<CarbonRun />} onClick={() => {
-                exportApp(false)
-              }}
-            >导出运行包
-            </Dropdown.Item>
-            <Dropdown.Divider title='项目导入/导出' />
-            <Dropdown.Item
-              icon={<GravityUiAbbrZip />} onClick={() => {
-                exportApp(true)
-              }}
-            >导出为压缩包
-            </Dropdown.Item>
-            <Dropdown.Item icon={<IxImport />}>
-              <Upload
-                action='none' showUploadList={false} uploadTrigger='custom' accept='.zip' onFileChange={async files => {
-                  await onUploadAppArchive(files[0])
-                  window.location.reload()
-                }}
-              >
-                导入压缩包
-              </Upload>
-            </Dropdown.Item>
-          </Dropdown.Menu>
-        }
-      >
-        <Button theme='borderless' type='tertiary' icon={<UilShare />} />
-      </Dropdown>
-    )
-  }
-
   const onNodeSelect = async node => {
     if (currentSelected && node.id === currentSelected.id) {
       return
@@ -478,13 +344,17 @@ const AppFileList = () => {
 
   const confirmExitToAppList = async () => {
     if (openedPages.length) {
-      await Modal.confirm({
+      Modal.confirm({
         title: '离开应用',
-        content: '确认离开应用并且关闭当前所有打开的页面'
+        content: '确认离开应用并且关闭当前所有打开的页面',
+        onOk: async () => {
+          await closeAllPages()
+          exitToAppList()
+        }
       })
-      await closeAllPages()
+    } else {
+      exitToAppList()
     }
-    exitToAppList()
   }
 
   // 渲染逻辑

@@ -42,10 +42,13 @@ export default class ApplicationService {
     return filtered[0]
   }
 
-  async updateAppFileTree () {
+  async updateAppFileTree (updateContent = true) {
     trace('Update File Tree')
     const files = await this.getFiles()
-    await this.cacheLoacalFileContents(files)
+
+    if (updateContent) {
+      await this.cacheLoacalFileContents(files)
+    }
     this.fileTree = getFileTree(files)
   }
 
@@ -91,6 +94,8 @@ export default class ApplicationService {
       type: 'directory'
     }
     const dir = await this.collection.insert(dirObject)
+
+    await this.updateAppFileTree(false)
     return dir
   }
 
@@ -118,13 +123,16 @@ export default class ApplicationService {
       mtype = getByMimeType(extname(name))
     }
 
-    return await this.collection.insert({
+    const inserted = await this.collection.insert({
       id,
       mimeType: mtype,
       size: blob.size,
       name,
       parent: parentId
     })
+
+    this.updateAppFileTree()
+    return inserted
   }
 
   /**
@@ -258,6 +266,8 @@ export default class ApplicationService {
         }
       }
       await this.collection.remove({ id: file.id })
+
+      await this.updateAppFileTree(false)
       return true
     } else {
       return false

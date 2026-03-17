@@ -1,10 +1,10 @@
 // src/store/useStore.js
 import { create } from 'zustand'
-import { alphabetid } from '../utils/string'
+import { alphabetid , trim, camelCase } from '../utils/string'
 import LocalRepoService from '../service/LocalRepoService'
 import ApplicationService from '../service/ApplicationService'
 import { stringToBlob } from '../utils/blob'
-import { trim, camelCase } from '../utils/string'
+
 import helloZipApp from '../ridge-app-hello-1.0.0.zip'
 
 const localRepoService = new LocalRepoService()
@@ -17,14 +17,39 @@ const useStore = create((set, get) => ({
   currentAppId: '',
   currentAppFilesTree: [],
 
+  appService: null,
+
+  initAppStore: async () => {
+    const { importAppFile, openApp } = get()
+
+    const appList = await localRepoService.getLocalAppList()
+    set({
+      loadingAppFiles: true,
+      appList
+    })
+
+    if (appList.length === 0) { // 无应用默认创建
+      if (!localRepoService.importedHello()) {
+        await importAppFile(helloZipApp)
+        window.localStorage.setItem('ridge-imported-hello', true)
+      }
+    }
+    const currentAppId = await localRepoService.getCurrentAppId()
+
+    if (currentAppId) {
+      openApp(currentAppId)
+    }
+  },
   openApp: async id => {
     const appInfo = await localRepoService.getApp(id)
 
     if (appInfo) {
       const appService = localRepoService.getAppService(id)
       localRepoService.setCurrentApp(id, appService)
+
       await appService.updateAppFileTree()
       set({
+        appService,
         currentAppId: id,
         currentAppName: appInfo.name,
         currentAppFilesTree: appService.getFileTree()
@@ -67,36 +92,6 @@ const useStore = create((set, get) => ({
     })
   },
 
-  initAppStore: async () => {
-    const { importAppFile } = get()
-
-    const appList = await localRepoService.getLocalAppList()
-    set({
-      loadingAppFiles: true,
-      appList
-    })
-
-    if (appList.length === 0) { // 无应用默认创建
-      if (!localRepoService.importedHello()) {
-        await importAppFile(helloZipApp)
-        window.localStorage.setItem('ridge-imported-hello', true)
-      }
-    }
-    const currentAppId = await localRepoService.getCurrentAppId()
-
-    if (currentAppId) {
-      const appInfo = await localRepoService.getApp(currentAppId)
-      set({
-        currentAppName: appInfo.name
-      })
-      const appService = localRepoService.getAppService(currentAppId)
-      await appService.updateAppFileTree()
-      set({
-        currentAppFilesTree: appService.getFileTree()
-      })
-    }
-  },
-
   updateAppList: async () => {
     const appList = localRepoService.getLocalAppList()
     set({
@@ -119,6 +114,15 @@ const useStore = create((set, get) => ({
     const appService = localRepoService.getCurrentAppService()
 
     await appService.createFile(parentId, name, stringToBlob(fileContent, mimeType))
+    set({
+      currentAppFilesTree: appService.getFileTree()
+    })
+  },
+
+  deleteFile: async (fileId) => {
+    const { appService } = get()
+    await appService.deleteFile(fileId)
+
     set({
       currentAppFilesTree: appService.getFileTree()
     })

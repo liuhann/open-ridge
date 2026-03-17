@@ -42,7 +42,7 @@ export default ({
   const onCreateConfirm = async () => {
     try {
       if (type === 'page') {
-        await createFile(parentId, value + suffix(), PAGE_JSON_TEMPLATE)
+        await createFile(parentId, value + suffix(), JSON.stringify(PAGE_JSON_TEMPLATE))
       } else if (type === 'folder') {
         await createFolder(parentId, value)
       } else if (type === 'js') {

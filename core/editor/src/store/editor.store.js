@@ -12,6 +12,7 @@ const editorStore = create((set, get) => ({
   openedPages: [],
   unsavedPages: [],
   pageOpened: false,
+
   collapseLeft: false,
   imagePreviewVisible: false,
   imagePreviewSrc: '',
@@ -123,7 +124,6 @@ const editorStore = create((set, get) => ({
     }
 
     set({
-      lastOpenPageId: currentOpenPageId,
       currentOpenPageId: id,
       openedPages: openedPages.find(p => p.id === id)
         ? openedPages
@@ -164,14 +164,10 @@ const editorStore = create((set, get) => ({
   },
 
   // 关闭所有页面
-  closeAllPages: () => {
-    get().closeCurrentPage(false)
-
-    const { openedFileContentMap, openedPages } = get()
-
-    for (const page of openedPages) {
-      openedFileContentMap.delete(page.id)
-    }
+  closeAllPages: async () => {
+    const { openedFileContentMap, unmountWorkspace } = get()
+    unmountWorkspace()
+    openedFileContentMap.clear()
     set({
       openedPages: []
     })
@@ -183,10 +179,6 @@ const editorStore = create((set, get) => ({
     if (currentOpenPageId === id) {
       return
     }
-
-    set({
-      lastOpenPageId: currentOpenPageId
-    })
 
     // 关闭之前打开的页面 （非当前页面）
     if (currentOpenPageId) {
@@ -211,7 +203,7 @@ const editorStore = create((set, get) => ({
 
   // 关闭页面
   closePage: async (id) => {
-    const { openedFileContentMap, openedPages, currentOpenPageId, unmountWorkspace, lastOpenPageId, openPage } = get()
+    const { openedFileContentMap, openedPages, currentOpenPageId, unmountWorkspace, openPage } = get()
 
     const leftOpenedPages = openedPages.filter(p => p.id !== id)
     openedFileContentMap.delete(id)
@@ -222,17 +214,7 @@ const editorStore = create((set, get) => ({
           currentOpenPageId: null
         })
       } else {
-        if (lastOpenPageId && leftOpenedPages.find(p => p.id === lastOpenPageId)) {
-          await openPage(lastOpenPageId)
-        } else {
-          await openPage(leftOpenedPages[0].id)
-        }
-      }
-    } else {
-      if (lastOpenPageId === id) {
-        set({
-          lastOpenPageId: null
-        })
+        await openPage(leftOpenedPages[0].id)
       }
     }
     set({
