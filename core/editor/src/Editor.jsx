@@ -32,6 +32,7 @@ const Editor = () => {
   const imagePreviewVisible = editorStore((state) => state.imagePreviewVisible)
   const imagePreviewSrc = editorStore((state) => state.imagePreviewSrc)
   const setWorkspaceControl = editorStore((state) => state.setWorkspaceControl)
+  const closeImagePreview = editorStore((state) => state.closeImagePreview)
   const initStore = editorStore((state) => state.initStore)
 
   const currentAppName = appStore((state) => state.currentAppName)
@@ -118,8 +119,10 @@ const Editor = () => {
           </div>
         </div>
         <ImagePreview
-          src={imagePreviewSrc} visible={imagePreviewVisible} onVisibleChange={() => {
-
+          src={imagePreviewSrc} visible={imagePreviewVisible} onVisibleChange={visible => {
+            if (!visible) {
+              closeImagePreview()
+            }
           }}
         />
         <DialogCodeEdit

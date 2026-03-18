@@ -30,7 +30,6 @@ export default forwardRef((props, pref) => {
 
   const saveCode = editorStore(state => state.saveCode)
 
-
   // 根据当前打开文件id初始化文件内容
   const initEditor = async (file) => {
     const div = ref.current

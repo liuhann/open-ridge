@@ -238,6 +238,20 @@ const editorStore = create((set, get) => ({
     codeEditorRef?.current?.openFile(file)
   },
 
+  openImage: file => {
+    set({
+      imagePreviewSrc: file.url,
+      imagePreviewVisible: true
+    })
+  },
+
+  closeImagePreview: () => {
+    set({
+      imagePreviewSrc: '',
+      imagePreviewVisible: false
+    })
+  },
+
   saveCode: async (id, code) => {
     const appService = localRepoService.getCurrentAppService()
 
