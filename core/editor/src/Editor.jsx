@@ -32,6 +32,7 @@ const Editor = () => {
   const imagePreviewVisible = editorStore((state) => state.imagePreviewVisible)
   const imagePreviewSrc = editorStore((state) => state.imagePreviewSrc)
   const setWorkspaceControl = editorStore((state) => state.setWorkspaceControl)
+  const initStore = editorStore((state) => state.initStore)
 
   const currentAppName = appStore((state) => state.currentAppName)
   const initAppStore = appStore((state) => state.initAppStore)
@@ -42,6 +43,11 @@ const Editor = () => {
     // 挂载时初始化
     initAppStore()
 
+    initStore({
+      workspaceRef,
+      viewPortContainerRef,
+      codeEditorRef
+    })
     const workspaceControl = new WorkSpaceControl()
     workspaceControl.init({
       workspaceEl: workspaceRef.current,

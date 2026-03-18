@@ -20,9 +20,11 @@ const APP_PACKAGE_JSON = {
 
 const STORE_TEMPLATE = `
 export default {
-  name: 'Hello',
+  name: 'Store',
   state: {
     name: 'World' //姓名
+  },
+  actions: {
   }
 }
 `

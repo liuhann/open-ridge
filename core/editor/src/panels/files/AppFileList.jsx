@@ -219,6 +219,19 @@ const AppFileList = () => {
     )
     MORE_MENUS.push(
       <Dropdown.Item
+        key='rename'
+        icon={<i className='bi bi-input-cursor-text' />}
+        onClick={() => {
+          setCurrentRename({
+            key: data.key,
+            value: label
+          })
+        }}
+      >重命名
+      </Dropdown.Item>
+    )
+    MORE_MENUS.push(
+      <Dropdown.Item
         key='export'
         icon={<i style={{ fontSize: '16px' }} className='bi bi-file-zip' />} onClick={() => {
           onFileExportClick(data)
@@ -236,19 +249,6 @@ const AppFileList = () => {
           onRemoveClicked(data)
         }}
       >删除
-      </Dropdown.Item>
-    )
-    MORE_MENUS.push(
-      <Dropdown.Item
-        key='rename'
-        icon={<i className='bi bi-trash3' />}
-        onClick={() => {
-          setCurrentRename({
-            key: data.key,
-            value: label
-          })
-        }}
-      >重命名
       </Dropdown.Item>
     )
     return (
@@ -275,7 +275,7 @@ const AppFileList = () => {
               clickToHide
               render={<Dropdown.Menu>{MORE_MENUS}</Dropdown.Menu>}
             > <Text>{label}</Text>
-          </Dropdown>}
+            </Dropdown>}
         {/* <Text
           onClick={() => {
             const now = new Date().getTime()

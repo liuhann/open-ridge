@@ -1,4 +1,4 @@
-import React, { useRef, useState, forwardRef, useImperativeHandle } from 'react'
+import React, { useRef, useState, forwardRef, useImperativeHandle, useEffect } from 'react'
 import { SideSheet, Spin, Tabs, TabPane, Modal, Toast } from '@douyinfe/semi-ui'
 import editorStore from '../../store/editor.store.js'
 // import context from '../../service/RidgeEditorContext.js'
@@ -27,6 +27,9 @@ export default forwardRef((props, pref) => {
 
   const [contents, setContents] = useState({}) // 保存打开的多个Tabs内编辑的代码文本内容，用于切换时保存、切换回来时恢复
   const [changes, setChanges] = useState({}) // 每个文档改动标记，用于标识当前文档是否有改动
+
+  const saveCode = editorStore(state => state.saveCode)
+
 
   // 根据当前打开文件id初始化文件内容
   const initEditor = async (file) => {
@@ -94,21 +97,18 @@ export default forwardRef((props, pref) => {
   const handleSave = async (file) => {
     const id = file.id
     const code = ref.current.editorComposite.state.doc.toString()
-    const result = await context.onCodeEditComplete(id, code)
 
-    if (result) {
-      // 保存成功后，清除修改标记
-      setContents(Object.assign({}, contents, {
-        [id]: null
-      }))
-      // 保存成功后，清除修改标记
-      setChanges(Object.assign({}, changes, {
-        [id]: null
-      }))
-      Toast.success('保存成功')
-    } else {
-      Toast.error('保存失败，请检查保存内容格式是否正确、文件是否已经被删除')
-    }
+    await saveCode(id, code)
+
+    // 保存成功后，清除修改标记
+    setContents(Object.assign({}, contents, {
+      [id]: null
+    }))
+    // 保存成功后，清除修改标记
+    setChanges(Object.assign({}, changes, {
+      [id]: null
+    }))
+    Toast.success('保存成功')
   }
 
   // 外部方法：打开文件

@@ -4,7 +4,7 @@ import { localRepoService } from './app.store'
 import { cloneDeep } from 'ridgejs/src/utils/object'
 
 const editorStore = create((set, get) => ({
-  // 状态 驱动展示
+  // 页面编辑状态
   isPreview: false,
   currentOpenPageId: null,
   zoom: 100,
@@ -29,6 +29,16 @@ const editorStore = create((set, get) => ({
   pageTransformMap: new Map(),
   codeEditorRef: null,
   workspaceControl: null,
+
+  initStore: ({
+    workspaceRef,
+    viewPortContainerRef,
+    codeEditorRef
+  }) => {
+    set({
+      codeEditorRef
+    })
+  },
 
   setWorkspaceControl: workspaceControl => {
     set({
@@ -224,7 +234,14 @@ const editorStore = create((set, get) => ({
   },
 
   openCode: async file => {
+    const { codeEditorRef } = get()
+    codeEditorRef?.current?.openFile(file)
+  },
 
+  saveCode: async (id, code) => {
+    const appService = localRepoService.getCurrentAppService()
+
+    await appService.updateFileContent(id, code)
   },
 
   zoomChange: () => {
