@@ -19,7 +19,7 @@ const AppListPanel = () => {
   return (
     <>
       <div className='file-actions panel-actions'>
-        <Text>应用管理</Text>
+        <Text type='tertiary'>应用管理</Text>
         <Button
           theme='outline' type='primary'
           onClick={() => {

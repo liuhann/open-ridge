@@ -12,11 +12,13 @@ import appStore from './store/app.store.js'
 import { ReactComposite } from 'ridgejs'
 
 import './editor.less'
+import './panels/common.less'
 import PreviewMenuBar from './panels/menu/PreviewMenuBar.jsx'
 import AppFileList from './panels/files/AppFileList.jsx'
 import AppListPanel from './panels/apps/AppListPanel.jsx'
 import ridgeEditorContext from './service/RidgeEditorContext.js'
 import LeftNav from './panels/left-nav/LeftNav.jsx'
+import PreviewPanel from './panels/preview/PreviewPanel.jsx'
 
 const Editor = () => {
   const workspaceRef = useRef(null)
@@ -24,8 +26,10 @@ const Editor = () => {
   const viewPortContainerRef = useRef(null)
 
   const [leftResizing, setLeftResizing] = useState(false)
-  const [leftReisizeWidth, setLeftReisizeWidth] = useState(360)
+  const [leftReisizeWidth, setLeftReisizeWidth] = useState(300)
   const [collapseLeft, setCollapseLeft] = useState(false)
+
+  const [currentPanel, setCurrentPanel] = useState('app')
 
   const isPreview = editorStore((state) => state.isPreview)
   const openedPages = editorStore((state) => state.openedPages)
@@ -71,7 +75,7 @@ const Editor = () => {
     document.addEventListener('mousemove', ev => {
       if (leftResizingRef.current) {
         if (ev.clientX > 250) {
-          setLeftReisizeWidth(ev.clientX - 40)
+          setLeftReisizeWidth(ev.clientX - 50)
         }
       }
     })
@@ -80,6 +84,19 @@ const Editor = () => {
     })
   }, [])
 
+  const LeftPanel = () => {
+    if (currentPanel === 'app') {
+      if (currentAppName) {
+        return <AppFileList />
+      } else {
+        return <AppListPanel />
+      }
+    } else if (currentPanel === 'preview') {
+      return <PreviewPanel />
+    } else if (currentPanel === 'component') {
+      
+    }
+  }
   return (
     <>
       <div
@@ -87,14 +104,16 @@ const Editor = () => {
           display: isPreview ? 'none' : ''
         }}
       >
-        <LeftNav />
+        <LeftNav onChange={val => {
+          setCurrentPanel(val)
+        }}
+        />
         <div
           style={{
             width: leftReisizeWidth + 'px'
           }}
         >
-          {currentAppName && <AppFileList />}
-          {!currentAppName && <AppListPanel />}
+          <LeftPanel />
         </div>
         <div
           className='left-resizer'

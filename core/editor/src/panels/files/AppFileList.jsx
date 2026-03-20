@@ -345,12 +345,10 @@ const AppFileList = () => {
 
   // 渲染逻辑
   return (
-    <>
-      <div className='file-actions'>
-        <div className='app-name-exit'>
-          <Text>应用文件</Text>
-          <Button type='danger' onClick={confirmExitToAppList} theme='borderless' icon={<i className='bi bi-box-arrow-right' />} />
-        </div>
+    <div className='left-panel'>
+      <div className='panel-title'>
+        <Text type='tertiary'>应用文件</Text>
+        <Button type='tertiary' onClick={confirmExitToAppList} theme='borderless' icon={<i className='bi bi-box-arrow-right' />} />
         {/* {currentAppName && RenderShareDropDown()} */}
       </div>
       <DialogCreate
@@ -392,7 +390,7 @@ const AppFileList = () => {
           console.log('clicked')
         }}
       />
-    </>
+    </div>
   )
 }
 

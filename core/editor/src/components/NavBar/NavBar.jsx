@@ -6,6 +6,7 @@ const NavBar = ({
   active = 0,
   iconSize,
   size = 'default',
+  onChange,
   navs,
   bottoms
 }) => {
@@ -13,7 +14,13 @@ const NavBar = ({
     <div className={moduleStyle.nav} style={style}>
       <div className={moduleStyle.navList}>
         {navs && navs.map((n, index) => {
-          return <Button theme={active === index ? 'solid' : 'borderless'} type={active === index ? 'primary' : 'tertiary'} key={index} size={size} icon={n.icon} iconSize={iconSize || size} />
+          return (
+            <Button
+              onClick={() => {
+                onChange && onChange(n, index)
+              }} theme={active === index ? 'solid' : 'borderless'} type={active === index ? 'primary' : 'tertiary'} key={index} size={size} icon={n.icon} iconSize={iconSize || size}
+            />
+          )
         })}
       </div>
       {bottoms && bottoms.map((n, index) => {
