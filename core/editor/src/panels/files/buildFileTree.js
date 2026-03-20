@@ -31,11 +31,11 @@ export const filterTree = (treeData, filterCb) => {
   const result = []
 
   treeData.forEach(node => {
+    if (node.children) {
+      node.children = filterTree(node.children, filterCb)
+    }
     if (filterCb(node)) {
       result.push(node)
-    }
-    if (node.children) {
-      result.push(...filterTree(node.children, filterCb))
     }
   })
   return result

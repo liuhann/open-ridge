@@ -94,7 +94,6 @@ const Editor = () => {
     } else if (currentPanel === 'preview') {
       return <PreviewPanel />
     } else if (currentPanel === 'component') {
-      
     }
   }
   return (

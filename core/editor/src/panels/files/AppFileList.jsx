@@ -59,7 +59,7 @@ const AppFileList = () => {
         file.icon = <i class='bi bi-braces' />
       }
       if (file.type === 'page') {
-        file.icon = <i class='bi bi-layout-text-window-reverse' />
+        file.icon = <i className='bi bi-layout-text-window-reverse' />
       }
       if (file.type === 'directory') {
         file.icon = <i className='bi bi-folder2' />
