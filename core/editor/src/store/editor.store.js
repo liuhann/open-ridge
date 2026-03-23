@@ -87,17 +87,18 @@ const editorStore = create((set, get) => ({
   },
 
   openFile: async id => {
+    const { openPage, openCode, openImage} = get()
     const appService = localRepoService.getCurrentAppService()
 
     if (appService) {
       const file = await appService.getFile(id)
       if (file && file.mimeType) {
         if (file.type === 'page') {
-          get().openPage(id, file)
+          openPage(id, file)
         } else if (file.mimeType.startsWith('text/')) {
-          get().openCode(file)
+          openCode(file)
         } else if (file.mimeType.startsWith('image/')) {
-          get().openImage(file)
+          openImage(file)
         }
       }
     }

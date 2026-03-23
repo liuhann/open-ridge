@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 
 import { Button, Tree, Dropdown, Typography, Toast, Upload, Modal, Input } from '@douyinfe/semi-ui'
-import context from '../../service/RidgeEditorContext.js'
 import { mapTree } from './buildFileTree.js'
 import DialogCreate from './DialogCreate.jsx'
 import './file-list.less'
@@ -20,19 +19,23 @@ const AppFileList = () => {
   const [currentDir, setCurrentDir] = useState('/')
   const [currentDirId, setCurrentDirId] = useState(-1)
   const [currentRename, setCurrentRename] = useState(null)
+  const [treeData, setTreeData] = useState([])
 
   const currentAppName = appStore((state) => state.currentAppName)
-
   const currentAppFilesTree = appStore((state) => state.currentAppFilesTree)
   const exitToAppList = appStore((state) => state.exitToAppList)
   const renameFile = appStore((state) => state.renameFile)
   const uploadFile = appStore((state) => state.uploadFile)
   const moveFile = appStore((state) => state.moveFile)
-  const openFile = editorStore(state => state.openFile)
   const deleteFile = appStore((state) => state.deleteFile)
 
+  const openFile = editorStore(state => state.openFile)
   const openedPages = editorStore(state => state.openedPages)
   const closeAllPages = editorStore(state => state.closeAllPages)
+
+  useEffect(() => {
+    setTreeData(getAppTreeData(currentAppFilesTree))
+  }, [currentAppFilesTree])
 
   const getAppTreeData = (treeData) => {
     const fileTree = mapTree(treeData, file => {
@@ -92,7 +95,7 @@ const AppFileList = () => {
 
   const onFileUpload = async (files) => {
     for (const file of files) {
-      const result = await uploadFile(currentSelected, file)
+      const result = await uploadFile(currentDirId, file)
       if (result) {
         Toast.success('文件上传完成')
       } else {
@@ -171,7 +174,7 @@ const AppFileList = () => {
     <Dropdown.Item key='upload' icon={<i class='bi bi-upload' />}>
       <Upload
         action='none'
-        multiple showUploadList={false} uploadTrigger='custom' onFileChange={files => {
+        multiple showUploadList={false} uploadTrigger='custom' onChange={files => {
           onFileUpload(files)
         }} accept={ACCEPT_FILES}
       >
@@ -257,10 +260,11 @@ const AppFileList = () => {
               }}
             />
           : <>
-            <Text>{label}</Text>
+            <Text ellipsis>{label}</Text>
             <Dropdown
               className='app-files-dropdown'
               trigger='click'
+              keepDOM
               position='bottomRight'
               clickToHide
               render={<Dropdown.Menu>{MORE_MENUS}</Dropdown.Menu>}
@@ -286,26 +290,43 @@ const AppFileList = () => {
 
   const RenderCreateDropDown = () => {
     return (
-      <Dropdown
-        trigger='click'
-        closeOnEsc
-        clickToHide
-        keepDOM
-        position='bottomLeft'
-        render={
-          <Dropdown.Menu className='app-files-dropdown'>
-            {CREATE_MENUS}
-          </Dropdown.Menu>
-        }
-      >
-        <Button
-          style={{
-            marginLeft: '12px',
-            marginTop: '6px'
-          }} colorful theme='outline' type='primary' icon={<i className='bi bi-plus-lg' />}
-        >创建
-        </Button>
-      </Dropdown>
+      <>
+        <Dropdown
+          trigger='click'
+          closeOnEsc
+          clickToHide
+          keepDOM
+          position='bottomLeft'
+          render={
+            <Dropdown.Menu className='app-files-dropdown'>
+              {CREATE_MENUS}
+            </Dropdown.Menu>
+          }
+        >
+          <Button
+            style={{
+              marginLeft: '12px',
+              marginTop: '6px'
+            }} colorful theme='outline' type='primary' icon={<i className='bi bi-plus-lg' />}
+          >创建
+          </Button>
+        </Dropdown>
+        <Upload
+          action='none'
+          multiple showUploadList={false} uploadTrigger='custom' onFileChange={files => {
+            onFileUpload(files)
+          }} accept={ACCEPT_FILES}
+        >
+          <Button
+            style={{
+              marginLeft: '12px',
+              marginTop: '6px'
+            }}
+          >
+            上传文件
+          </Button>
+        </Upload>
+      </>
     )
   }
 
@@ -362,32 +383,20 @@ const AppFileList = () => {
       />
       {RenderCreateDropDown()}
       <Tree
+        autoExpandParent
         className='file-tree'
         showFilteredOnly
         draggable
         renderLabel={renderFullLabel}
-        treeData={getAppTreeData(currentAppFilesTree)}
-        onDragStart={(target) => {
-          if (target.node && target.node.type === 'page') {
-            context.draggingComposite = target.node
-          } else {
-            context.draggingComposite = null
-          }
-        }}
+        treeData={treeData}
         onDrop={({ node, dragNode, dropPosition, dropToGap }) => {
           move(node, dragNode, dropToGap)
         }}
         onDoubleClick={(ev, node) => {
           onOpenClicked(node)
         }}
-        onContextMenu={(e, node) => {
-          onNodeSelect(node)
-        }}
         onSelect={(key, selected, node) => {
           onNodeSelect(node)
-        }}
-        onClick={() => {
-          console.log('clicked')
         }}
       />
     </div>

@@ -32,7 +32,7 @@ export const filterTree = (treeData, filterCb) => {
 
   treeData.forEach(node => {
     if (node.children) {
-      node.children = filterTree(node.children, filterCb)
+      result.push(...filterTree(node.children, filterCb))
     }
     if (filterCb(node)) {
       result.push(node)
@@ -41,16 +41,14 @@ export const filterTree = (treeData, filterCb) => {
   return result
 }
 
-export const mapTree = (treeData, map, parentPath = '/') => {
+export const mapTree = (treeData, map) => {
   const result = []
 
   treeData.forEach(node => {
-    const mapped = map(Object.assign(node, {
-      parentPath
-    }))
+    const mapped = map(Object.assign({}, node))
     if (mapped) {
       if (node.children) {
-        mapped.children = mapTree(node.children, map, parentPath + '/' + node.name)
+        mapped.children = mapTree(node.children, map)
       }
       result.push(mapped)
     }
@@ -70,6 +68,7 @@ export const buildFileTree = (file, dir, files, each) => {
 
     treeNode.children = children.map(child => buildFileTree(child, treeNode, files, each)).sort(sortFile)
   }
+  // Object.freeze(treeNode)
   each && each(treeNode)
   return treeNode
 }

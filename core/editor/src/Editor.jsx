@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, useCallback } from 'react'
+import React, { useEffect, useRef, useState, useCallback, useMemo } from 'react'
 
 import { ImagePreview } from '@douyinfe/semi-ui'
 
@@ -84,18 +84,19 @@ const Editor = () => {
     })
   }, [])
 
-  const LeftPanel = () => {
-    if (currentPanel === 'app') {
-      if (currentAppName) {
-        return <AppFileList />
-      } else {
-        return <AppListPanel />
+  const LeftPanel = useMemo(() => {
+    return () => {
+      if (currentPanel === 'app') {
+        return currentAppName ? <AppFileList /> : <AppListPanel />
+      } else if (currentPanel === 'preview') {
+        return <PreviewPanel />
+      } else if (currentPanel === 'component') {
+        return null
       }
-    } else if (currentPanel === 'preview') {
-      return <PreviewPanel />
-    } else if (currentPanel === 'component') {
+      return null
     }
-  }
+  }, [currentPanel, currentAppName]) // 仅依赖变化时重新创建
+
   return (
     <>
       <div

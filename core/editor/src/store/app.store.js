@@ -114,11 +114,15 @@ const useStore = create((set, get) => ({
 
   uploadFile: async (parentId, file) => {
     const appService = localRepoService.getCurrentAppService()
-    await appService.createFile(parentId, file.name, file)
-
-    set({
-      currentAppFilesTree: appService.getFileTree()
-    })
+    try {
+      await appService.createFile(parentId, file.name, file)
+      set({
+        currentAppFilesTree: appService.getFileTree()
+      })
+      return true
+    } catch (e) {
+      return false
+    }
   },
 
   createFile: async (parentId, name, fileContent, mimeType) => {

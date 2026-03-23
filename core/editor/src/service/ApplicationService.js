@@ -3,6 +3,7 @@ import debug from 'debug'
 import Localforge from 'localforage'
 import { blobToDataUrl, dataURLtoBlob, dataURLToString, stringToDataUrl, saveAs } from '../utils/blob.js'
 import { getFileTree, filterTree, mapTree } from '../panels/files/buildFileTree.js'
+// import { buildTree, filterTree, mapTree } from '../utils/tree.js'
 import { basename, dirname, extname, nanoid } from '../utils/string.js'
 import { getByMimeType } from '../utils/mimeTypes.js'
 import JSZip from 'jszip'
@@ -49,7 +50,11 @@ export default class ApplicationService {
     if (updateContent) {
       await this.cacheLoacalFileContents(files)
     }
-    this.fileTree = getFileTree(files)
+    this.fileTree = getFileTree(files, file => {
+      if (file.json && file.json.version && file.json.elements) {
+        file.type = 'page'
+      }
+    })
   }
 
   // 更新工作区间图片资源信息
@@ -66,10 +71,6 @@ export default class ApplicationService {
           if (file.mimeType === 'text/json') {
             try {
               file.json = JSON.parse(file.textContent)
-
-              if (file.json.version && file.json.elements) { // 页面类型处理
-                file.type = 'page'
-              }
             } catch (e) {}
           }
         }
