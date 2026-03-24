@@ -222,7 +222,7 @@ const convertToValidVariableName = str => {
    * @param {String|Object} componentPath 组件路径（如 antd/Button、{packageName: 'antd', path: 'Button'}）
    * @returns {Object} { packageName, componentPath }
    */
-const extractComponentPath = (componentPath) => {
+const extractPackageAndPath = (componentPath) => {
   let packageName = ''
   let path = ''
 
@@ -252,7 +252,7 @@ const extractComponentPath = (componentPath) => {
 }
 
 export {
-  extractComponentPath,
+  extractPackageAndPath,
   cleanMultiSlash,
   hasUrlProtocol,
   addFileExtension,
