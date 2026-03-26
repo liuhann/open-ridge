@@ -27,7 +27,7 @@ const Editor = () => {
   const viewPortContainerRef = useRef(null)
 
   const [leftResizing, setLeftResizing] = useState(false)
-  const [leftReisizeWidth, setLeftReisizeWidth] = useState(300)
+  const [leftReisizeWidth, setLeftReisizeWidth] = useState(340)
   const [collapseLeft, setCollapseLeft] = useState(false)
 
   const [currentPanel, setCurrentPanel] = useState('app')
