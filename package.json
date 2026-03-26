@@ -6,28 +6,16 @@
     "editor": "npm run start --workspace=ridge-editor",
     "runtime": "npm run runtime --workspace=ridgejs",
     "build-all": "npm run build --workspace=ridgejs && npm run build --workspace=ridgejs-editor",
-    "postinstall": "patch-package",
-    "build-editor": "npm run build --workspace=ridge-editor",
-    "sync": "sh ./scripts/sync.sh C:/Work/ridge C:/Work/github.io core/runtime core/tools core/externals"
+    "build-editor": "npm run build --workspace=ridge-editor"
   },
   "workspaces": [
-    "components/*",
-    "server/*",
-    "core/*"
+    "packages/*"
   ],
-  "author": "",
+  "author": "LiuHan",
   "license": "ISC",
-  "devDependencies": {
-    "lerna": "^8.1.2",
-    "patch-package": "^8.0.0",
-    "raw-loader": "^4.0.2",
-    "standard": "^17.0.0"
-  },
   "browserslist": [
     "last 1 chrome version",
     "last 1 firefox version"
   ],
-  "dependencies": {
-    "mini-css-extract-plugin": "^2.10.0"
-  }
+  "dependencies": {}
 }

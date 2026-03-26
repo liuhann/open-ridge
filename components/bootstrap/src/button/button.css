@@ -1,8 +1,0 @@
-.btn:hover {
-    --bs-btn-hover-bg: var(--bs-btn-bg)!important;
-    --bs-btn-hover-border-color: var(--bs-btn-border-color)!important;
-}
-
-button {
-  touch-action: none;
-}
