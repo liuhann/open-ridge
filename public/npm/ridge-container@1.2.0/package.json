@@ -6,7 +6,8 @@
   "icon": "icons/TablerLayout.svg",
   "scripts": {
     "dev": "webpack --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js"
+    "build": "webpack --config webpack.prod.js",
+    "meta": "node ./scripts/merge-meta-glob.js"
   },
   "files": [
     "dist",

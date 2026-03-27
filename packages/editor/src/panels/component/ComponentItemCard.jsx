@@ -1,0 +1,83 @@
+// components/ComponentItemCard.jsx
+import React, { useState } from 'react';
+import { Tooltip, Typography } from '@douyinfe/semi-ui';
+import { getDisplayName, getInitial, getIconUrl } from './componentUtils';
+
+const { Text } = Typography;
+
+const ComponentItemCard = ({ item, onItemClick }) => {
+  const displayName = getDisplayName(item);
+  const description = item.description || '无描述';
+  const iconUrl = getIconUrl(item);
+  const tags = item.tags || [];
+  const [isHovered, setIsHovered] = useState(false);
+
+  const handleCardClick = () => {
+    if (onItemClick) {
+      onItemClick(item);
+    }
+  };
+
+  return (
+    <Tooltip
+      content={
+        <div className='component-item-tooltip'>
+          <div className='tooltip-header'>
+            {iconUrl && (
+              <img src={iconUrl} alt={displayName} className='tooltip-thumbnail' />
+            )}
+            <div>
+              <h3 className='tooltip-title'>{displayName}</h3>
+            </div>
+          </div>
+          {description && (
+            <Text className='tooltip-description'>{description}</Text>
+          )}
+          {tags.length > 0 && (
+            <div className='tooltip-tags'>
+              {tags.slice(0, 3).map((tag, idx) => (
+                <span key={idx} className='tooltip-tag'>{tag}</span>
+              ))}
+            </div>
+          )}
+        </div>
+      }
+      position='top'
+      showArrow
+      mouseEnterDelay={300}
+      className='component-item-tooltip-wrapper'
+    >
+      <div
+        className='component-item-card'
+        onClick={handleCardClick}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+      >
+        <div className='component-item-image'>
+          {iconUrl ? (
+            <img 
+              src={iconUrl} 
+              alt={displayName} 
+              onError={(e) => {
+                e.target.style.display = 'none';
+                e.target.parentElement.innerHTML = `<div class="default-item-icon">${getInitial(displayName)}</div>`;
+              }}
+            />
+          ) : (
+            <div className='default-item-icon'>
+              {getInitial(displayName)}
+            </div>
+          )}
+        </div>
+
+        <div className='component-item-content'>
+          <Text strong className='component-item-name'>
+            {displayName}
+          </Text>
+        </div>
+      </div>
+    </Tooltip>
+  );
+};
+
+export default ComponentItemCard;

@@ -1,6 +1,6 @@
 // const svgToMiniDataURI = require('mini-svg-data-uri');
 module.exports = {
-  mode: 'production',
+  entry: './src/index.js',
   module: {
     rules: [{
       test: /\.vue$/,
@@ -13,18 +13,13 @@ module.exports = {
           presets: [['@babel/preset-env', {
             targets: {
               browsers: [
-                'last 1 chrome version',
-                'last 1 firefox version',
-                'last 1 safari version'
+                '> 0.2%',        // 市场份额大于 0.2% 的浏览器
+                'last 2 versions', // 每个浏览器最近 2 个版本
+                'not dead'       // 还在维护的浏览器
               ]
             }
           }], '@babel/preset-react'],
-          plugins: ['@babel/plugin-proposal-class-properties', '@babel/plugin-proposal-optional-chaining', [
-            'babel-plugin-react-scoped-css',
-            {
-              include: '.scoped.(sa|sc|c)ss$'
-            }
-          ]]
+          plugins: []
         }
       }]
     }, {
@@ -110,6 +105,11 @@ module.exports = {
   },
   resolve: {
     extensions: ['.jsx', '.js', '.tsx', '.ts', '.vue']
+  },
+  externals: {
+    react: 'React',
+    debug: 'debug',
+    'react-dom': 'ReactDOM'
   },
   plugins: []
 }

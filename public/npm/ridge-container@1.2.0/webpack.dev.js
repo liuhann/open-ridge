@@ -9,7 +9,7 @@ module.exports = merge(common, {
     path: path.resolve(__dirname, 'dist'),
     filename: 'ridge-container.umd.js',
     library: {
-      name: 'RidgeContainers',
+      name: 'RidgeContainer',
       type: 'umd'
     },
     globalObject: 'this'

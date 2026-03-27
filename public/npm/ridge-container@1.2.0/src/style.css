@@ -3,17 +3,6 @@
   border: 2px dashed var(--semi-color-primary);
   background-color: rgba(255, 255, 255, .1);
   color: var(--semi-color-primary-hover);
-  /* display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-  z-index: 999;
-  left: 0;
-  top: 0;
-  font-size: 12px;
-  opacity: .85; */
 }
 
 .full-shadow {

@@ -10,50 +10,12 @@ const toCSSLength = (value) => {
     : `${parseFloat(str) || 0}px`
 }
 
-function isTouchSupported () {
-  return (
-    'TouchEvent' in window || // 标准方法
-    'ontouchstart' in window || // 兼容性检查
-    navigator.maxTouchPoints > 0 // 检测物理触摸点
-  )
-}
-
 export default class FlexBoxContainer extends BaseContainer {
   mounted () {
-    this._doOnClick = this.doOnClick.bind(this)
-    this._doOnMouseDown = this.doOnMouseDown.bind(this)
-    if (this.el) {
-      this.el.addEventListener('click', this._doOnClick)
-
-      this.el.onpointerdown = this._doOnMouseDown
-      // if (isTouchSupported()) {
-      //   this.el.addEventListener('touchstart', () => {
-      //     console.log('touch start')
-      //     this._doOnMouseDown()
-      //   })
-      // } else {
-      //   this.el.addEventListener('mousedown', () => {
-      //     console.log('mouse down')
-      //     this._doOnMouseDown()
-      //   })
-      // }
-    }
   }
 
   // 销毁时触发
   destroy () {
-    if (this.el) {
-      this.el.removeEventListener('click', this._doOnClick)
-      this.el.removeEventListener('mousedown', this._doOnMouseDown)
-    }
-  }
-
-  doOnMouseDown () {
-    this.props.onMouseDown && this.props.onMouseDown()
-  }
-
-  doOnClick () {
-    this.props.onClick && this.props.onClick()
   }
 
   getContainerStyle () {
