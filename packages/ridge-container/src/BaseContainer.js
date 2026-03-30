@@ -20,10 +20,15 @@ export default class BaseContainer {
   destroy () {
     if (Array.isArray(this.children)) {
       for (const childNode of this.children) {
-        childNode.unmount()
+        // 安全判断：防止组件未加载完成时报错
+        if (childNode && typeof childNode.unmount === 'function') {
+          childNode.unmount()
+        }
       }
     }
-    this.el.innerHTML = ''
+    if (this.el) {
+      this.el.innerHTML = ''
+    }
   }
 
   // 子节点移除后触发
@@ -43,6 +48,8 @@ export default class BaseContainer {
 
   // 挂载子节点：  但是像Tab容器这样，可以延迟挂载
   async mountChildNode (childNode, div) {
+    // 安全挂载：防止组件未初始化
+    if (!childNode || !div) return
     await childNode.mount(div)
   }
 
@@ -65,6 +72,9 @@ export default class BaseContainer {
     if (this.children) {
       const mountings = []
       for (const childNode of this.children) {
+        // 安全过滤：防止空节点
+        if (!childNode) continue
+
         try {
           const div = document.createElement('div')
           const childWrapper = this.getChildWrapper ? this.getChildWrapper() : this.containerEl
@@ -82,8 +92,13 @@ export default class BaseContainer {
   }
 
   unmountChildren () {
+    if (!this.children) return
+
     for (const child of this.children) {
-      child.unmount()
+      // 安全卸载
+      if (child && typeof child.unmount === 'function') {
+        child.unmount()
+      }
     }
   }
 
@@ -95,8 +110,12 @@ export default class BaseContainer {
    * 增加子节点
    */
   appendChild (childNode, { x, y }, index) {
+    // 安全判断：防止组件未加载完成
+    if (!childNode || !childNode.el) return
+
     const shadowNode = this.containerEl.querySelector('[shadow-for="' + childNode.getId() + '"]')
     const el = childNode.el
+
     if (shadowNode) {
       this.containerEl.replaceChild(el, shadowNode)
     } else {
@@ -117,7 +136,10 @@ export default class BaseContainer {
    * 更新子节点次序
    **/
   updateChildList (childList) {
+    if (!childList) return
+
     for (const childNode of childList) {
+      if (!childNode.el) continue
       this.containerEl.appendChild(childNode.el)
       this.updateChildStyle(childNode)
     }
@@ -131,6 +153,8 @@ export default class BaseContainer {
 
   // 拖拽上浮
   onDragOver (node) {
+    if (!node) return
+
     let existedNode = null
     if (node) {
       existedNode = this.containerEl.querySelector('[shadow-for="' + node.getId() + '"]')
@@ -184,6 +208,7 @@ export default class BaseContainer {
 
   // 删除子节点
   removeChild (node) {
+    if (!node || !node.el) return
     if (node.el.parentElement === this.containerEl) {
       this.containerEl.removeChild(node.el)
     }
@@ -195,6 +220,9 @@ export default class BaseContainer {
    * @param  {ElementWrapper} wrapper 封装类
    */
   updateChildStyle (childNode, div) {
+    // 安全判断：防止节点未初始化
+    if (!childNode) return
+
     const el = div || childNode.el
     if (el) {
       const style = Object.assign({}, this.getChildStyle(childNode, el))
@@ -233,9 +261,12 @@ export default class BaseContainer {
     }
 
     // 联动更新所有子节点
-    if (this.forceUpdateChildren) {
+    if (this.forceUpdateChildren && this.children) {
       for (const childNode of this.children) {
-        childNode.forceUpdate()
+        // 安全更新：防止组件未加载完成
+        if (childNode && typeof childNode.forceUpdate === 'function') {
+          childNode.forceUpdate()
+        }
       }
     }
     this.updated && this.updated()

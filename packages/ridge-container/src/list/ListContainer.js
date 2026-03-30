@@ -1,7 +1,3 @@
-import createDebug from 'debug'
-
-const debug = createDebug('container:list')
-
 function hasScrollbar (el) {
   return (
     el.scrollHeight > el.clientHeight ||
@@ -133,7 +129,6 @@ class ListContainer {
     const { dataSource, gap, horizontalDivide, verticalDivide, template, fixedHeight, fixedWidth, onItemClick, selected, itemClassNames = [], selectedClassNames = [] } = this.props
 
     const that = this
-    debug('renderListItems', dataSource)
     await template.load(true)
     if (this.items == null) {
       this.items = []
@@ -207,10 +202,8 @@ class ListContainer {
           }
         }
       }
-      debug('renderListItems Finsished', dataSource)
       while (this.items.length > dataSource.length) {
         const pop = this.items.pop()
-        debug('remove ', pop, dataSource)
         const el = pop.el
         pop.unmount()
         if (el && el.parentElement === this.containerEl) {

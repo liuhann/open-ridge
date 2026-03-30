@@ -45,6 +45,9 @@ export default class FlexBoxContainer extends BaseContainer {
     // 任何子元素自动大小，则溢出就是自动
     if (Array.isArray(this.props.children)) {
       for (const childNode of this.props.children) {
+        // 安全判断：防止节点未初始化
+        if (!childNode.config || !childNode.config.style) continue
+
         if (childNode.config.style.autoSize === true) {
           containerStyle.overflow = 'auto'
         }
@@ -55,28 +58,8 @@ export default class FlexBoxContainer extends BaseContainer {
           containerStyle.overflowY = 'auto'
         }
       }
-
-      // 如果所有子节点都设置为固定主轴长度， 那么主轴方向自动出滚动条   否则内容必然会被遮盖
-      /*
-      if (this.props.children.find(node => node.config.style.flex) == null) {
-        if (direction === 'column') {
-          containerStyle.overflowY = 'auto'
-          containerStyle.overflowX = 'hidden'
-        } else {
-          containerStyle.overflowY = 'hidden'
-          containerStyle.overflowX = 'auto'
-        }
-      }
-      */
     }
 
-    // if (this.el.style.flex) {
-    //   if (direction === 'row') {
-    //     containerStyle.overflowX = 'hidden'
-    //   } else {
-    //     containerStyle.overflowY = 'hidden'
-    //   }
-    // }
     Object.assign(containerStyle, rectStyle)
     return containerStyle
   }
@@ -114,6 +97,9 @@ export default class FlexBoxContainer extends BaseContainer {
   }
 
   childSelected (node) {
+    // 安全判断：防止组件未加载完成
+    if (!node || !node.config || !node.config.style || !node.el) return
+
     const configStyle = node.config.style
     // 调整实际宽度
     if (!configStyle.flex && !configStyle.autoSize) {
@@ -129,6 +115,10 @@ export default class FlexBoxContainer extends BaseContainer {
 
   getChildStyle (node, el) {
     const style = this.getResetStyle()
+
+    // 安全判断：防止节点未初始化
+    if (!node || !node.config) return style
+
     const configStyle = Object.assign({}, node.config.style, node.style)
 
     if (!configStyle.visible) {
