@@ -507,8 +507,7 @@ export default class WorkSpaceControl {
 
   }
 
-
-  onWorkspaceDrop(ev) {
+  onWorkspaceDrop (ev) {
     if (!this.enabled) return
     ev.preventDefault()
 
@@ -518,7 +517,7 @@ export default class WorkSpaceControl {
     const y = Math.floor((ev.pageY - rbcr.y) / this.zoom)
 
     // ✅ 从 DragStore 拿拖拽数据
-    const dragData = DragStore.consumeDragData()
+    const dragData = DragStore.getDragData()
     if (!dragData) return
 
     const doDropComposite = async (compositeInfo) => {
@@ -570,16 +569,11 @@ export default class WorkSpaceControl {
       doDropComposite(dragData)
     } else {
       // ✅ 组件创建：先留白
-      this.currentComposite.createElement({
-        pa
+      const node = this.currentComposite.createElement({
+        path: dragData.packageName + '/' + dragData.componentName
       })
-      const ridgeNode = context.createElement(dragData, {
-        x,
-        y
-      })
-
-      this.placeElementAt(ridgeNode.el, ev.pageX, ev.pageY)
-      this.moveable.target = ridgeNode.el
+      this.placeElementAt(node.el, ev.pageX, ev.pageY)
+      this.moveable.target = node.el
     }
   }
 
@@ -625,7 +619,6 @@ export default class WorkSpaceControl {
     } else {
       this.putElementToRoot(el, x, y)
     }
-    context.onElementMoveEnd(el)
 
     this.ensureDragPlacement(null)
     this.moveable.updateTarget()
@@ -800,74 +793,79 @@ export default class WorkSpaceControl {
    * @param {boolean} updateDragOver 是否更新dragOver状态
    * @returns {Element} 可放置的容器DOM Element
    */
-  getDroppableTarget (dragEl, pointPos, updateDragOver) {
-    // 拖拽元素不可以放入其他元素内
+  getDroppableTarget (dragEl, pointPos, updateDragOver = true) {
+  // 1. 修复：返回 null 而非 []
     if (dragEl && dragEl.ridgeNode && !dragEl.ridgeNode.canDroppedOnElement()) {
-      return []
+      return null
     }
+
     let droppableElements = []
     for (const selector of this.selectorDropableTarget) {
-      droppableElements = droppableElements.concat(Array.from(document.querySelectorAll(selector)))
+      droppableElements = droppableElements.concat(
+        Array.from(document.querySelectorAll(selector))
+      )
     }
 
-    // 从所有可放置容器中过滤 符合的可放置容器列表
+    const zoom = this.zoom || 1
     const filtered = Array.from(droppableElements).filter(el => {
       if (!el.ridgeNode) return false
+      if (!el.ridgeNode.isDroppable()) return false
 
-      if (!el.ridgeNode.isDroppable()) {
-        return false
-      }
+      // 2. 修复：禁止拖拽元素把自己当容器
+      if (dragEl === el) return false
+      if (dragEl && dragEl.contains(el)) return false
+      if (el.contains(dragEl)) return true
+
       const { x, y, width, height } = el.getBoundingClientRect()
-      // Exclude: droppables in the dragging element
-      // 容器判断 isDroppable为false
-      if (el.invoke && el.invoke('isDroppable', [dragEl]) === false) {
-        return false
-      }
 
-      if (dragEl) { // 现有元素拖拽
-        if (dragEl.contains(el)) { // 拖拽节点包含了可放置容器
-          return false
-        }
-        return pointPos.x > x && pointPos.x < (x + width) && pointPos.y > y && pointPos.y < (y + height) && el !== dragEl && el.closest('[ridge-id]') !== dragEl
-      } else { // 新元素拖拽放置
-        return pointPos.x > x && pointPos.x < (x + width) && pointPos.y > y && pointPos.y < (y + height)
-      }
+      // 3. 修复：鼠标坐标必须除以 zoom
+      const mouseX = pointPos.x / zoom
+      const mouseY = pointPos.y / zoom
+      const elemX = x / zoom
+      const elemY = y / zoom
+      const elemW = width / zoom
+      const elemH = height / zoom
+
+      return (
+        mouseX > elemX &&
+      mouseX < elemX + elemW &&
+      mouseY > elemY &&
+      mouseY < elemY + elemH
+      )
     })
 
     let target = null
     if (filtered.length === 1) {
       target = filtered[0]
     } else if (filtered.length > 1) {
-      // find inner'est element
+    // 4. 修复：嵌套容器 → 取 最内层 + 最高层级
       const sorted = filtered.sort((a, b) => {
-        if (a.contains(b)) {
-          return 1
-        } else if (b.contains(a)) {
-          return -1
-        } else {
-          return (a.style.zIndex > b.style.zIndex) ? 1 : -1
-        }
+        if (a.contains(b)) return -1 // a 包含 b → b 更内层，排前面
+        if (b.contains(a)) return 1 // b 包含 a → a 更内层，排前面
+
+        // 5. 修复：取真实计算样式 zIndex
+        const za = Number(getComputedStyle(a).zIndex) || 0
+        const zb = Number(getComputedStyle(b).zIndex) || 0
+        return zb - za
       })
       target = sorted[0]
     }
 
     this.ensureDragPlacement(target)
 
-    if (target) { // 存在目标的可拖拽元素
-      // 拖拽更新位置
-      if (updateDragOver) {
-        try {
-          target.ridgeNode && target.ridgeNode.invoke('onDragOver', dragEl ? [dragEl.ridgeNode] : [])
-        } catch (e) {
-          console.error('Container dragOver Error', target, e)
-        }
-
-        droppableElements.forEach(el => {
-          if (el !== target) {
-            el.ridgeNode && el.ridgeNode.invoke('onDragOut', dragEl ? [dragEl.ridgeNode] : [])
-          }
-        })
+    // 6. 修复：updateDragOver 默认 true
+    if (target && updateDragOver) {
+      try {
+        target.ridgeNode?.invoke('onDragOver', dragEl ? [dragEl.ridgeNode] : [])
+      } catch (e) {
+        console.error('Container dragOver Error', target, e)
       }
+
+      droppableElements.forEach(el => {
+        if (el !== target) {
+          el.ridgeNode?.invoke('onDragOut', dragEl ? [dragEl.ridgeNode] : [])
+        }
+      })
     }
 
     return target

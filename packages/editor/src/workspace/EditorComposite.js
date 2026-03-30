@@ -35,10 +35,14 @@ class EditorComposite extends Composite {
   }
 
   createElement (config) {
-    return new EditorElement({
+    const div = document.createElement('div')
+    const element = new EditorElement({
       composite: this,
       config
     })
+    element.mount(div)
+    this.appendChild(element)
+    return element
   }
 
   getClassNames () {

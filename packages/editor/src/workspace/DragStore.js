@@ -1,13 +1,13 @@
 class DragStore {
-  constructor() {
+  constructor () {
     this.payload = null
   }
 
-  startDrag(data) {
+  startDrag (data) {
     this.payload = data
   }
 
-  getDragData() {
+  getDragData () {
     const data = this.payload
     this.payload = null // 一次性的
     return data
