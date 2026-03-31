@@ -570,6 +570,7 @@ export default class WorkSpaceControl {
     } else {
       // ✅ 组件创建：先留白
       const node = this.currentComposite.createElement({
+        meta: dragData.item,
         path: dragData.packageName + '/' + dragData.componentName
       })
       this.placeElementAt(node.el, ev.pageX, ev.pageY)

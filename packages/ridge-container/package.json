@@ -11,7 +11,8 @@
   },
   "files": [
     "dist",
-    "icons"
+    "icons",
+    "components-metadata.json"
   ],
   "author": "Ridge System",
   "license": "MIT"

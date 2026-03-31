@@ -126,7 +126,7 @@ class Loader {
       }
       if (Array.isArray(packageConfig.dist)) {
         for (const distPath of packageConfig.dist) {
-          await this.loadScript(distPath)
+          await this.loadScript(`${packageConfig.module}/${distPath}`)
         }
       } else if (typeof packageConfig.dist === 'string') {
         await this.loadScript(packageConfig.dist)

@@ -75,11 +75,11 @@
   {
     "module": "ridge-container",
     "version": "1.2.0",
-    "root": "RidgeContainers",
+    "root": "RidgeContainer",
     "title": "布局组件",
-    "icon": "ridge-container@1.2.0/icons/GlyphsPolyGrid1.svg",
+    "icon": "ridge-container/icons/GlyphsPolyGrid1.svg",
     "dist": ["dist/ridge-container.umd.min.js"],
-    "meta": "ridge-container@1.2.0/components-metadata.json",
+    "meta": "ridge-container/components-metadata.json",
     "category": "container",
     "type": "container",
     "description": "容器组件"

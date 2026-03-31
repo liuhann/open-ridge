@@ -34,14 +34,47 @@ class EditorComposite extends Composite {
     }
   }
 
-  createElement (config) {
+  createElement ({ path, meta }) {
     const div = document.createElement('div')
+    // 从meta生成元素配置
+    const elementConfig = {
+      title: meta?.title || meta?.name || '未命名组件',
+      path,
+      id: nanoid(10),
+      style: {
+        position: 'absolute',
+        visible: true,
+        x: 0,
+        y: 0,
+        width: meta?.visualConfig?.preferredWidth || 240,
+        height: meta?.visualConfig?.preferredHeight || 160
+      },
+      styleEx: {},
+      propEx: {},
+      events: {},
+      visible: true,
+      locked: false,
+      full: false
+    }
+
     const element = new EditorElement({
       composite: this,
-      config
+      config: elementConfig
     })
     element.mount(div)
     this.appendChild(element)
+    // 避免名称重复
+    const existingNodes = this.getNodes()
+    let nameLoop = 1
+    let title = elementConfig.title
+
+    while (existingNodes.find(n => n.config.title === title)) {
+      title = elementConfig.title + '_' + nameLoop
+      nameLoop++
+    }
+    element.config.title = title
+
+    this.nodes[element.getId()] = element
     return element
   }
 

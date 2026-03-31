@@ -1,6 +1,18 @@
+const path = require('path')
 // const svgToMiniDataURI = require('mini-svg-data-uri');
 module.exports = {
   entry: './src/index.js',
+  output: {
+    path: path.resolve(__dirname, './dist'),
+    filename: 'ridge-container.umd.min.js',
+    library: {
+      name: 'RidgeContainer',
+      type: 'umd'
+      // export: 'default'
+    },
+    globalObject: 'this',
+    clean: true
+  },
   module: {
     rules: [{
       test: /\.vue$/,
