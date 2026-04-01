@@ -11,8 +11,6 @@ import {
 } from '../utils/pseudo.js'
 import { isObject, isObjectsEqual } from '../utils/is.js'
 
-const debug = debugGen('ridge:element')
-
 export default class Element extends BaseNode {
   constructor ({
     config,
@@ -296,6 +294,7 @@ export default class Element extends BaseNode {
       this.el.classList.remove('ridge-runtime-hidden')
     }
     this.parent?.updateChildStyle(this)
+    this.styleUpdated()
   }
 
   updateChildStyle (child) {

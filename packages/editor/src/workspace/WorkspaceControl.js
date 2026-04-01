@@ -10,7 +10,7 @@ import debug from 'debug'
 import { fitRectIntoBounds } from '../utils/rectUtils'
 import { loader } from 'ridgejs'
 
-const RIDGE_ELEMENT = '.ridge-editor-element'
+export const RIDGE_ELEMENT = '.ridge-editor-element'
 const trace = debug('ridge:workspace')
 
 /**

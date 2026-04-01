@@ -20,6 +20,12 @@ export default class EditorElement extends Element {
     }
   }
 
+  updateConfig (config, fieldToUpdate) {
+    Object.assign(this.config, cloneDeep(config))
+    this.updateProps()
+    this.updateStyle()
+  }
+
   // ========================================================================
   // 编辑态样式：锁定 / 隐藏
   // ========================================================================
@@ -43,6 +49,7 @@ export default class EditorElement extends Element {
     }
   }
 
+  // 样式更新后触发： 增加一些class便于workspace使用
   styleUpdated () {
     if (!this.el) return
     this.el.classList.add('ridge-editor-element')

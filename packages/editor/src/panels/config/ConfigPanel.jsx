@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState, useCallback } from 'react'
 import { Tabs, TabPane } from '@douyinfe/semi-ui'
 import ObjectForm from '../../form/ObjectForm.jsx'
 import debug from 'debug'
 
 import editorStore from '../../store/editor.store.js'
+import componentStore from '../../store/component.store.js'
 import { getCompositePropertiesDef, getCompositeEventsDef } from '../../workspace/editorUtils.js'
 import { localRepoService } from '../../store/app.store.js'
 const trace = debug('editor:config-panel')
@@ -147,6 +148,8 @@ const ConfigPanel = () => {
   const pagePropFormApi = useRef(null)
   const pageEventFormApi = useRef(null)
 
+  const [loadingDefinitions, setLoadingDefinitions] = useState(false) // 新增：加载状态
+
   const [pagePropsFields, setPagePropFields] = useState([]) // 页面属性
   const [pageEventFields, setPageEventFields] = useState([]) // 页面事件
   const [nodePropFields, setNodePropFields] = useState([]) // 当前节点属性
@@ -158,59 +161,81 @@ const ConfigPanel = () => {
   const updatePageConfig = editorStore(state => state.updatePageConfig)
   const currentEditNodeRect = editorStore(state => state.currentEditNodeRect)
 
-  const updateElementFields = currentEditNodeId => {
-    // 节点基本样式 （title/visible)
-    const nodePropFields = []
-    const nodeEventFields = []
+  const getLibComponent = componentStore(state => state.getLibComponent)
 
-    nodePropFields.push(...COMPONENT_BASIC_FIELDS)
+  const updateElementFields = useCallback(async (nodeId) => {
+    if (!nodeId || !editorComposite) return
 
-    const element = editorComposite.getNode(currentEditNodeId)
+    const element = editorComposite.getNode(nodeId)
+    if (!element) return
 
-    if (element) {
-      if (element.getParent() && element.getParent() !== editorComposite && element.getParent().componentDefinition) {
-        nodePropFields.push({
-          type: 'divider',
-          label: '来自父-' + element.getParent().componentDefinition.title
-        })
-        nodePropFields.push(...(element.getParent().componentDefinition?.childProps || []))
-        nodePropFields.push({
-          type: 'divider'
-        })
+    setLoadingDefinitions(true)
+
+    try {
+      const nodePropFields = []
+      const nodeEventFields = []
+
+      nodePropFields.push(...COMPONENT_BASIC_FIELDS)
+
+      // 修改：只从element.config?.path加载，不考虑element.componentDefinition缓存
+      let componentDefinition = null
+      if (element.config?.path) {
+        try {
+          componentDefinition = await getLibComponent(`${element.config.path}`)
+        } catch (error) {
+          console.warn(`加载组件定义失败: ${element.config.path}`, error)
+        }
+      }
+
+      const parent = element.getParent()
+      if (parent && parent !== editorComposite) {
+      // 修改：只从parent.config?.path加载父组件定义
+        let parentDefinition = null
+        if (parent.config?.path) {
+          try {
+            parentDefinition = await getLibComponent(`${parent.config.path}`)
+          // 注意：不保存到parent.componentDefinition
+          } catch (error) {
+            console.warn(`加载父组件定义失败: ${parent.config.path}`, error)
+          }
+        }
+
+        if (parentDefinition) {
+          nodePropFields.push({
+            type: 'divider',
+            label: '来自父-' + parentDefinition.title
+          })
+          nodePropFields.push(...(parentDefinition?.childProps || []))
+          nodePropFields.push({
+            type: 'divider'
+          })
+        }
       } else {
         nodePropFields.push(...COMPONENT_ROOT_FIELDS)
-        if (element.componentDefinition) {
-          if (element.componentDefinition.hideable !== false) { // 定义 hideable = false时，不显示隐藏选项
+        if (componentDefinition) {
+          if (componentDefinition.visualConfig?.hideable !== false) {
             nodePropFields.push(FIELD_VISIBLE)
           }
-          if (element.componentDefinition.fullScreenable === true && element.getParent() === element.editorComposite) { // 定义 fullScreenable = true 时，组件可以全屏， 用于一些容器
+          if (componentDefinition.visualConfig?.fullScreenable === true && parent === editorComposite) {
             nodePropFields.push(FIELD_FULL_SCREEN)
           }
         }
       }
 
-      // 能加载到节点定义
-      if (element.componentDefinition) {
-        for (const prop of element.componentDefinition.props ?? []) {
+      // 修改：使用加载到的组件定义
+      if (componentDefinition) {
+        for (const prop of componentDefinition.properties ?? []) {
           if (!prop.name) continue
-          const field = {
-            componentName: element.componentDefinition.name,
-            packageName: element.componentDefinition.packageName
-          }
-          if (prop.connect) {
-            Object.assign(field, prop, {
-              field: 'props.' + prop.name,
-              fieldEx: 'propEx.' + prop.name
-            })
-          } else {
-            Object.assign(field, prop, {
-              field: 'props.' + prop.name
-            })
-          }
+          const field = {}
+          Object.assign(field, prop, {
+            field: 'props.' + prop.name,
+            fieldEx: 'propEx.' + prop.name
+          })
+
           nodePropFields.push(field)
         }
 
-        for (const event of element.componentDefinition.events ?? []) {
+        for (const event of componentDefinition.events ?? []) {
           const control = {
             label: event.label,
             type: 'function',
@@ -220,12 +245,9 @@ const ConfigPanel = () => {
           nodeEventFields.push(control)
         }
 
-        if (element.componentDefinition.componentPath === 'ridge-container/composite' && element.el.composite && element.el.composite.config) {
-          // 获取Compsite定义属性，同时如果原为connect，这里也增加connect
+        if (componentDefinition.componentPath === 'ridge-container/composite' && element.el.composite && element.el.composite.config) {
           nodePropFields.push(...getCompositePropertiesDef(element.el.composite).map(p => {
             const [, name] = p.field.split('.')
-            // if (p.connect) {
-            // }
             p.fieldEx = 'propEx.' + name
             p.field = 'props.' + name
             return p
@@ -233,21 +255,23 @@ const ConfigPanel = () => {
           nodeEventFields.push(...getCompositeEventsDef(element.el.composite))
         }
       }
-      componentPropFormApi.current.reset()
+
+      componentPropFormApi.current?.reset()
       setNodePropFields(nodePropFields)
-      setNodeEventFields(nodePropFields)
+      setNodeEventFields(nodeEventFields)
 
       for (const key of ['title', 'props', 'propEx', 'style', 'styleEx', 'id', 'visible', 'full']) {
-        componentPropFormApi.current.setValue(key, element.config[key], {
+        componentPropFormApi.current?.setValue(key, element.config[key], {
           notNotify: true
         })
       }
-      componentEventFormApi.current.setValue('events', element.config.events, {
+      componentEventFormApi.current?.setValue('events', element.config.events, {
         notNotify: true
       })
+    } finally {
+      setLoadingDefinitions(false)
     }
-  }
-
+  }, [editorComposite, getLibComponent])
   const updatePageFields = () => {
     setPagePropFields([...PAGE_FIELDS, ...getCompositePropertiesDef(editorComposite)])
     setPageEventFields([...PAGE_EVNETS, ...getCompositeEventsDef(editorComposite)])
