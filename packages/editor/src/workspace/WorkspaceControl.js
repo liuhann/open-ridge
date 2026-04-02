@@ -10,6 +10,15 @@ import debug from 'debug'
 import { fitRectIntoBounds } from '../utils/rectUtils'
 import { loader } from 'ridgejs'
 
+import {
+  isElementMovable,
+  isElementSelectable,
+  isElementResizable,
+  getElementRectConfig,
+  screenToViewport,
+  getElementCenter
+} from './workspaceUtils.js'
+
 export const RIDGE_ELEMENT = '.ridge-editor-element'
 const trace = debug('ridge:workspace')
 
@@ -21,13 +30,11 @@ export default class WorkSpaceControl {
   init ({
     workspaceEl,
     viewPortEl,
-    editorStore,
-    context
+    editorStore
   }) {
     this.workspaceEl = workspaceEl
     this.viewPortEl = viewPortEl
     this.editorStore = editorStore
-    this.context = context
     this.zoom = 1
     this.selectorDropableTarget = ['.ridge-container', '.ridge-droppable']
 
@@ -199,7 +206,6 @@ export default class WorkSpaceControl {
    */
   initMoveable () {
     const sm = this
-    const { context } = this
 
     this.moveable = createMoveable({
       target: [],
@@ -212,7 +218,7 @@ export default class WorkSpaceControl {
       }
       const el = ev.target
 
-      if (el.ridgeNode && el.ridgeNode.parent && el.ridgeNode.parent !== context.editorComposite) { // 非根节点
+      if (el.ridgeNode && el.ridgeNode.parent && el.ridgeNode.parent !== this.currentComposite) { // 非根节点
         this.moveable.dragMill = new Date().getTime()
       }
     })
@@ -598,7 +604,6 @@ export default class WorkSpaceControl {
    */
   placeElementAt (el, x, y) {
     trace('placeElementAt:', el, { x, y })
-    const { context } = this
     // 获取可放置的容器
     const targetEl = this.getDroppableTarget(el, {
       x,
@@ -612,7 +617,7 @@ export default class WorkSpaceControl {
       const bcr = el.getBoundingClientRect()
       const pbcr = targetEl.getBoundingClientRect()
 
-      context.editorComposite.removeChild(el.ridgeNode)
+      this.currentComposite.removeChild(el.ridgeNode)
       targetParent.appendChild(el.ridgeNode, {
         x: Math.floor((bcr.x - pbcr.x) / this.zoom),
         y: Math.floor((bcr.y - pbcr.y) / this.zoom)
@@ -637,15 +642,19 @@ export default class WorkSpaceControl {
     const bcr = el.getBoundingClientRect()
     if (x == null || y == null || (x > bcr.x && x < (bcr.x + bcr.width) && y > bcr.y && y < (bcr.y + bcr.height))) {
       // 计算位置
-      el.ridgeNode.updateStyleConfig({
-        x: Math.floor((bcr.x - rbcr.x) / this.zoom),
-        y: Math.floor((bcr.y - rbcr.y) / this.zoom)
+      el.ridgeNode.updateConfig({
+        style: {
+          x: Math.floor((bcr.x - rbcr.x) / this.zoom),
+          y: Math.floor((bcr.y - rbcr.y) / this.zoom)
+        }
       })
     } else {
       // 计算位置
-      el.ridgeNode.updateStyleConfig({
-        x: Math.floor((x - rbcr.x - bcr.width / 2) / this.zoom),
-        y: Math.floor((y - rbcr.y - bcr.height / 2) / this.zoom)
+      el.ridgeNode.updateConfig({
+        style: {
+          x: Math.floor((x - rbcr.x - bcr.width / 2) / this.zoom),
+          y: Math.floor((y - rbcr.y - bcr.height / 2) / this.zoom)
+        }
       })
     }
     this.moveable.updateTarget()
@@ -656,18 +665,20 @@ export default class WorkSpaceControl {
    * @param {*} el
    * @param {*} event
    */
+  // 修改 onElementDragStart 方法
   onElementDragStart (el) {
-    const { context } = this
-    if (el.ridgeNode && el.ridgeNode.parent && el.ridgeNode.parent !== context.editorComposite) {
-      // 当节点放置容器内时，首先脱离节点并将其放置到根的同样位置
+    if (el.ridgeNode && el.ridgeNode.parent &&
+        el.ridgeNode.parent !== this.currentComposite) { // 非根节点
       const rectConfig = this.getElementRectConfig(el)
-
       el.ridgeNode.parent.removeChild(el.ridgeNode)
-      context.editorComposite.appendChild(el.ridgeNode)
+      this.currentComposite.appendChild(el.ridgeNode)
 
-      context.services.outlinePanel.updateOutline()
+      // 更新大纲面板
+      this.editorStore.getState().outlinePanel?.updateOutline?.()
 
-      el.ridgeNode.updateStyleConfig(rectConfig)
+      el.ridgeNode.updateConfig({
+        style: rectConfig
+      })
     }
   }
 
