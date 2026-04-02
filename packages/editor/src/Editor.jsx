@@ -19,7 +19,7 @@ import ridgeEditorContext from './service/RidgeEditorContext.js'
 import LeftNav from './panels/left-nav/LeftNav.jsx'
 import PreviewPanel from './panels/preview/PreviewPanel.jsx'
 import ComponentRegistryPanel from './panels/component/ComponentRegistryPanel.jsx'
-import componentStore from './store/component.store.js'
+import componentRegistry from './service/ComponentRegistry.js'
 
 const Editor = () => {
   const workspaceRef = useRef(null)
@@ -46,10 +46,10 @@ const Editor = () => {
 
   const pageOpened = openedPages.length > 0
 
-  useEffect(() => {
+  useEffect(async () => {
     // 挂载时初始化
+    componentRegistry.init()
     initAppStore()
-
     initStore({
       workspaceRef,
       viewPortContainerRef,
@@ -93,7 +93,7 @@ const Editor = () => {
       } else if (currentPanel === 'preview') {
         return <PreviewPanel />
       } else if (currentPanel === 'component') {
-        return <ComponentRegistryPanel componentStore={componentStore} />
+        return <ComponentRegistryPanel />
       }
       return null
     }

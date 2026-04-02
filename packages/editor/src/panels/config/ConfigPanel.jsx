@@ -4,9 +4,8 @@ import ObjectForm from '../../form/ObjectForm.jsx'
 import debug from 'debug'
 
 import editorStore from '../../store/editor.store.js'
-import componentStore from '../../store/component.store.js'
+import componentRegistry from '../../service/ComponentRegistry.js'
 import { getCompositePropertiesDef, getCompositeEventsDef } from '../../workspace/editorUtils.js'
-import { localRepoService } from '../../store/app.store.js'
 const trace = debug('editor:config-panel')
 
 const COMPONENT_BASIC_FIELDS = [{
@@ -161,8 +160,6 @@ const ConfigPanel = () => {
   const updatePageConfig = editorStore(state => state.updatePageConfig)
   const currentEditNodeRect = editorStore(state => state.currentEditNodeRect)
 
-  const getLibComponent = componentStore(state => state.getLibComponent)
-
   const updateElementFields = useCallback(async (nodeId) => {
     if (!nodeId || !editorComposite) return
 
@@ -178,10 +175,13 @@ const ConfigPanel = () => {
       nodePropFields.push(...COMPONENT_BASIC_FIELDS)
 
       // 修改：只从element.config?.path加载，不考虑element.componentDefinition缓存
-      let componentDefinition = null
+      let componentMeta = element.getComponentMeta()
       if (element.config?.path) {
         try {
-          componentDefinition = await getLibComponent(`${element.config.path}`)
+          componentMeta = await componentRegistry.getLibComponent(`${element.config.path}`)
+          if (componentMeta) {
+            element.setComponentMeta(componentMeta)
+          }
         } catch (error) {
           console.warn(`加载组件定义失败: ${element.config.path}`, error)
         }
@@ -190,41 +190,42 @@ const ConfigPanel = () => {
       const parent = element.getParent()
       if (parent && parent !== editorComposite) {
       // 修改：只从parent.config?.path加载父组件定义
-        let parentDefinition = null
+        let parentComponentMeta = parent.getComponentMeta()
         if (parent.config?.path) {
           try {
-            parentDefinition = await getLibComponent(`${parent.config.path}`)
+            parentComponentMeta = await componentRegistry.getLibComponent(`${parent.config.path}`)
+            parent.setComponentMeta(parentComponentMeta)
           // 注意：不保存到parent.componentDefinition
           } catch (error) {
             console.warn(`加载父组件定义失败: ${parent.config.path}`, error)
           }
         }
 
-        if (parentDefinition) {
+        if (parentComponentMeta) {
           nodePropFields.push({
             type: 'divider',
-            label: '来自父-' + parentDefinition.title
+            label: '来自父-' + parentComponentMeta.title
           })
-          nodePropFields.push(...(parentDefinition?.childProps || []))
+          nodePropFields.push(...(parentComponentMeta?.childProps || []))
           nodePropFields.push({
             type: 'divider'
           })
         }
       } else {
         nodePropFields.push(...COMPONENT_ROOT_FIELDS)
-        if (componentDefinition) {
-          if (componentDefinition.visualConfig?.hideable !== false) {
+        if (componentMeta) {
+          if (componentMeta.visualConfig?.hideable !== false) {
             nodePropFields.push(FIELD_VISIBLE)
           }
-          if (componentDefinition.visualConfig?.fullScreenable === true && parent === editorComposite) {
+          if (componentMeta.visualConfig?.fullScreenable === true && parent === editorComposite) {
             nodePropFields.push(FIELD_FULL_SCREEN)
           }
         }
       }
 
       // 修改：使用加载到的组件定义
-      if (componentDefinition) {
-        for (const prop of componentDefinition.properties ?? []) {
+      if (componentMeta) {
+        for (const prop of componentMeta.properties ?? []) {
           if (!prop.name) continue
           const field = {}
           Object.assign(field, prop, {
@@ -235,7 +236,7 @@ const ConfigPanel = () => {
           nodePropFields.push(field)
         }
 
-        for (const event of componentDefinition.events ?? []) {
+        for (const event of componentMeta.events ?? []) {
           const control = {
             label: event.label,
             type: 'function',
@@ -245,7 +246,7 @@ const ConfigPanel = () => {
           nodeEventFields.push(control)
         }
 
-        if (componentDefinition.componentPath === 'ridge-container/composite' && element.el.composite && element.el.composite.config) {
+        if (componentMeta.componentPath === 'ridge-container/composite' && element.el.composite && element.el.composite.config) {
           nodePropFields.push(...getCompositePropertiesDef(element.el.composite).map(p => {
             const [, name] = p.field.split('.')
             p.fieldEx = 'propEx.' + name
@@ -271,7 +272,7 @@ const ConfigPanel = () => {
     } finally {
       setLoadingDefinitions(false)
     }
-  }, [editorComposite, getLibComponent])
+  }, [editorComposite])
   const updatePageFields = () => {
     setPagePropFields([...PAGE_FIELDS, ...getCompositePropertiesDef(editorComposite)])
     setPageEventFields([...PAGE_EVNETS, ...getCompositeEventsDef(editorComposite)])

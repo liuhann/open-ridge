@@ -2,9 +2,8 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { Button, Empty, Spin, Typography } from '@douyinfe/semi-ui'
 import { IconArrowLeft, IconRefresh, IconSearch } from '@douyinfe/semi-icons'
-import { loader } from 'ridgejs'
 import { CATEGORIES, getDisplayName } from './componentUtils'
-
+import componentRegistry from '../../service/ComponentRegistry'
 import ComponentLibCard from './ComponentLibCard.jsx'
 import ComponentItemCard from './ComponentItemCard.jsx'
 import CategoryHeader from './CategoryHeader.jsx'
@@ -12,7 +11,7 @@ import './ComponentRegistryPanel.less'
 
 const { Text } = Typography
 
-const ComponentRegistryPanel = ({ componentStore, onComponentItemClick }) => {
+const ComponentRegistryPanel = () => {
   const [currentView, setCurrentView] = useState('libs')
   const [currentLib, setCurrentLib] = useState(null)
   const [libComponents, setLibComponents] = useState([])
@@ -21,20 +20,25 @@ const ComponentRegistryPanel = ({ componentStore, onComponentItemClick }) => {
   const [componentData, setComponentData] = useState([])
   const [componentLibMeta, setComponentLibMeta] = useState({})
 
-  const registry = componentStore(state => state.registry)
-  const loadLib = componentStore(state => state.loadLib)
-  const init = componentStore(state => state.init)
+  // 移除原来的 zustand 状态
+  const [registry, setRegistry] = useState([])
 
   useEffect(() => {
-    init()
-  }, [init])
-
-  useEffect(() => {
-    if (Array.isArray(registry)) {
-      const filteredRegistry = registry.filter(item => item.category !== 'base')
-      setComponentData(filteredRegistry)
+    // 初始化组件注册表
+    const initRegistry = async () => {
+      try {
+        await componentRegistry.init()
+        const reg = componentRegistry.getRegistry()
+        const filteredRegistry = reg.filter(item => item.category !== 'base')
+        setRegistry(reg)
+        setComponentData(filteredRegistry)
+      } catch (err) {
+        console.error('初始化组件注册表失败:', err)
+      }
     }
-  }, [registry])
+
+    initRegistry()
+  }, [])
 
   const groupedData = componentData.reduce((acc, item) => {
     if (!acc[item.category]) {
@@ -55,7 +59,8 @@ const ComponentRegistryPanel = ({ componentStore, onComponentItemClick }) => {
     setCurrentLib(libItem)
 
     try {
-      const componentLibMeta = await loadLib(libItem.module)
+      // 使用单例服务加载库
+      const componentLibMeta = await componentRegistry.loadLib(libItem.module)
 
       const mockComponents = componentLibMeta.components
 
@@ -78,15 +83,6 @@ const ComponentRegistryPanel = ({ componentStore, onComponentItemClick }) => {
 
   const handleLibClick = (libItem) => {
     loadLibComponents(libItem)
-  }
-
-  const handleComponentClick = (componentItem) => {
-    if (onComponentItemClick) {
-      onComponentItemClick({
-        ...componentItem,
-        sourceLib: currentLib
-      })
-    }
   }
 
   const renderLibsView = () => (
@@ -200,7 +196,7 @@ const ComponentRegistryPanel = ({ componentStore, onComponentItemClick }) => {
                           <ComponentItemCard
                             packageName={componentLibMeta.name}
                             item={component}
-                            onItemClick={handleComponentClick}
+                            onItemClick={() => {}}
                           />
                         </div>
                       ))}

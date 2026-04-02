@@ -52,6 +52,13 @@ export default class Element extends BaseNode {
     }
   }
 
+  getStyle () {
+    return {
+      ...this.config.style,
+      ...this.style
+    }
+  }
+
   getScopedData () {
     const parent = this.getParent()
     const parentScopes = parent?.getScopedData() || []
@@ -202,13 +209,26 @@ export default class Element extends BaseNode {
     this.updateProps()
   }
 
+  // 删除 forceUpdateStyle 和 forceUpdateProperty 方法
+  // 用统一的 forceUpdate 替代
   forceUpdate () {
-    this.forceUpdateStyle()
-    this.forceUpdateProperty()
+    this.updateStyle()
+    this.updateProps()
   }
 
+  // 修改：更新属性时使用计算后的值
   updateProps (props) {
-    if (props) Object.assign(this.properties, props)
+    if (props) {
+      // 如果有传入props，直接合并到config.props（用于编辑态设置固定值）
+      Object.assign(this.config.props, props)
+    }
+
+    // 计算运行时属性
+    const runtimeProps = this.computeRuntimeProperties()
+
+    // 合并到this.properties
+    Object.assign(this.properties, runtimeProps)
+
     if (this.renderer && this.el?.getAttribute('ridge-mount') === 'mounted') {
       this.preparePropsBeforeRender()
       this.renderer.updateProps(this.getProperties())
@@ -280,11 +300,13 @@ export default class Element extends BaseNode {
     }
   }
 
-  // ========================================================================
-  // DOM / 样式
-  // ========================================================================
+  // 修改：更新样式时使用计算后的值
   updateStyle () {
     if (!this.el) return
+
+    // 计算运行时样式
+    this.style = this.computeRuntimeStyle()
+
     this.el.classList.add('ridge-element')
     this.el.setAttribute('component', this.config.path || '')
 
@@ -293,6 +315,7 @@ export default class Element extends BaseNode {
     } else {
       this.el.classList.remove('ridge-runtime-hidden')
     }
+
     this.parent?.updateChildStyle(this)
     this.styleUpdated()
   }
@@ -348,5 +371,46 @@ export default class Element extends BaseNode {
     this.mounteds.forEach(fn => fn(this))
     this.el?.setAttribute('ridge-mount', 'mounted')
     this.removeStatus()
+  }
+
+  // 新增：计算运行时样式（合并固定和动态）
+  computeRuntimeStyle () {
+    const runtimeStyle = { ...this.config.style }
+
+    // 合并动态样式（styleEx）
+    if (this.config.styleEx) {
+      const store = this.composite.store
+      if (store) {
+        for (const [key, expr] of Object.entries(this.config.styleEx)) {
+          if (expr) {
+            try {
+              runtimeStyle[key] = store.getStoreValue(expr, this.getScopedData())
+            } catch (e) {}
+          }
+        }
+      }
+    }
+
+    return runtimeStyle
+  }
+
+  // 新增：计算运行时属性
+  computeRuntimeProperties () {
+    const runtimeProps = { ...this.config.props }
+
+    // 合并动态属性（propEx）
+    if (this.config.propEx) {
+      const store = this.composite.store
+      if (store) {
+        for (const [key, expr] of Object.entries(this.config.propEx)) {
+          if (expr) {
+            try {
+              runtimeProps[key] = store.getStoreValue(expr, this.getScopedData())
+            } catch (e) {}
+          }
+        }
+      }
+    }
+    return runtimeProps
   }
 }

@@ -1,9 +1,34 @@
 import { Element } from 'ridgejs'
 import cloneDeep from 'lodash/cloneDeep.js'
 import { nanoid } from '../utils/string'
-import context from '../service/RidgeEditorContext.js'
+import merge from 'lodash/merge'
 
 export default class EditorElement extends Element {
+  constructor ({ config, composite, componentMeta }) {
+    // 在构造函数中接收 componentMeta
+    super({ config, composite })
+    if (componentMeta) {
+      this.setComponentMeta(componentMeta)
+    }
+  }
+
+  // ========================================================================
+  // 设置组件元数据
+  // ========================================================================
+  setComponentMeta (componentMeta) {
+    this.componentMeta = componentMeta
+  }
+
+  // 获取组件元数据
+  getComponentMeta () {
+    return this.componentMeta
+  }
+
+  // 检查是否已加载组件元数据
+  isMetaLoaded () {
+    return !!this.componentMeta
+  }
+
   // ========================================================================
   // 编辑态属性
   // ========================================================================
@@ -12,23 +37,27 @@ export default class EditorElement extends Element {
       __isEdit: true,
       __el: this.el,
       __composite: this.composite,
-      width: this.style?.width,
-      height: this.style?.height,
       ...this.config.props,
       ...this.properties,
       children: this.children
     }
   }
 
-  updateConfig (config, fieldToUpdate) {
-    Object.assign(this.config, cloneDeep(config))
+  updateConfig (config) {
+    merge(this.config, config)
+    this.style = { ...this.config.style }
+    this.properties = { ...this.config.props }
+    this.updateEditStyle()
     this.updateProps()
-    this.updateStyle()
+    this.updateEditorStyle()
   }
 
-  // ========================================================================
-  // 编辑态样式：锁定 / 隐藏
-  // ========================================================================
+  updateEditorStyle () {
+    if (!this.el) return
+    this.updateEditStyle()
+    this.parent?.updateChildStyle(this)
+  }
+
   updateEditStyle () {
     if (!this.el) return
 
@@ -45,11 +74,10 @@ export default class EditorElement extends Element {
     }
 
     if (this.config.locked || !this.config.visible) {
-      context.workspaceControl?.selectElements([])
+      // context.workspaceControl?.selectElements([])
     }
   }
 
-  // 样式更新后触发： 增加一些class便于workspace使用
   styleUpdated () {
     if (!this.el) return
     this.el.classList.add('ridge-editor-element')
@@ -57,18 +85,12 @@ export default class EditorElement extends Element {
     this.el.classList.toggle('ridge-is-slot', !!this.isSlot)
   }
 
-  // ========================================================================
-  // 异步安全：容器判断
-  // ========================================================================
   isContainer () {
     return this.getPropDefinations().some(p =>
       p.name === 'children' || p.type === 'slot'
     )
   }
 
-  // ========================================================================
-  // 拖放核心（异步安全）
-  // ========================================================================
   isDroppable () {
     const props = this.getPropDefinations()
     const slotLen = props.filter(p => p.type === 'slot').length
@@ -79,23 +101,29 @@ export default class EditorElement extends Element {
   }
 
   canDroppedOnElement () {
-    return this.componentDefinition?.portalled !== true
+    return this.componentMeta?.portalled !== true
   }
 
-  // ========================================================================
-  // 属性定义（异步安全）
-  // ========================================================================
   getPropDefinations () {
-    return this.componentDefinition?.props || []
+    return this.componentMeta?.props || []
   }
 
   getPropDefination (name) {
     return this.getPropDefinations().find(p => p.name === name) || null
   }
 
-  // ========================================================================
-  // 子节点管理
-  // ========================================================================
+  // 移除原来的 load 方法，由外部处理加载
+  async load (includeChildren = false) {
+    // 这个方法不再加载组件元数据，只处理子节点
+    if (includeChildren && this.config.props.children) {
+      for (const id of this.config.props.children) {
+        const child = this.composite.getNode(id)
+        child && await child.load(true)
+      }
+    }
+    return true
+  }
+
   appendChild (node, { x, y } = {}, rect) {
     this.children ||= []
     let order = -1
@@ -179,7 +207,7 @@ export default class EditorElement extends Element {
   }
 
   // ========================================================================
-  // 样式更新（已修复 this.config.style 不存在报错）
+  // 样式更新
   // ========================================================================
   updateStyleConfig (style) {
     if (!this.config.style) {
@@ -211,14 +239,11 @@ export default class EditorElement extends Element {
 
     const cloned = new EditorElement({
       composite: this.composite,
-      componentDefinition: this.componentDefinition,
+      componentMeta: this.componentMeta, // 传递 componentMeta
       config: cfg
     })
 
-    // 异步加载
-    if (!cloned.componentDefinition && cloned.config.path) {
-      cloned.load().catch(() => {})
-    }
+    // 注意：clone 时不异步加载，componentMeta 已经传递
 
     if (this.children) {
       cloned.children = this.children.map(child => {
@@ -240,7 +265,7 @@ export default class EditorElement extends Element {
     const json = cloneDeep(this.config)
     json.props.children = this.children?.map(c => c.getId()) || []
     json.slots = this.getSlotElements()
-    if (this.componentDefinition?.portalled) {
+    if (this.componentMeta?.portalled) {
       json.style.portalled = true
     }
     return json
