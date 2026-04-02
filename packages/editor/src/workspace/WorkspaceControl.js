@@ -288,8 +288,7 @@ export default class WorkSpaceControl {
       style.width = Math.round(width)
       style.height = Math.round(height)
 
-      target.ridgeNode.updateStyleConfig(style)
-      this.editorStore.getState().updateNodeRect(style)
+      target.ridgeNode.updateConfig({ style })
     })
 
     this.moveable.on('resizeEnd', ({
@@ -299,7 +298,8 @@ export default class WorkSpaceControl {
       delta,
       transform
     }) => {
-      target.ridgeNode.forceUpdate()
+      // target.ridgeNode.forceUpdate()
+      this.editorStore.getState().updateNodeRect(target.ridgeNode.config.style)
       this.selectElements([target])
     })
 
@@ -313,7 +313,7 @@ export default class WorkSpaceControl {
         if (!sm.isTargetMovable(target)) {
           return
         }
-        if (target.ridgeNode.parent === context.editorComposite) {
+        if (target.ridgeNode.parent === this.currentComposite) {
           target.style.transform = transform
         }
       })
@@ -321,7 +321,7 @@ export default class WorkSpaceControl {
     this.moveable.on('dragGroupEnd', (payload) => {
       payload.events.forEach(({ target }) => {
         // TODO 目前仅支持根节点？？
-        if (target.ridgeNode.parent === context.editorComposite) {
+        if (target.ridgeNode.parent === this.currentComposit) {
           const bcr = target.getBoundingClientRect()
           this.putElementToRoot(target, bcr.left + bcr.width / 2, bcr.top + bcr.height / 2)
         }
@@ -351,7 +351,8 @@ export default class WorkSpaceControl {
       payload.events.forEach(({ target }) => {
         if (!target.ridgeNode.config.parent) {
           const bcr = target.getBoundingClientRect()
-          context.updateComponentConfig(target.ridgeNode, {
+
+          target.ridgeNode.updateConfig({
             style: {
               x: bcr.left + bcr.width / 2,
               y: bcr.top + bcr.height / 2
@@ -489,19 +490,18 @@ export default class WorkSpaceControl {
   }
 
   onWorkspaceDragOver (ev) {
-    const { context } = this
     if (!this.enabled) {
       return
     }
-    if (context.draggingComponent) {
+    if (DragStore.getDragData()) {
       if (this.selected.length) {
         this.selectElements([])
       }
       ev.dataTransfer.dropEffect = 'move'
 
       this.checkDropTargetStatus({
-        width: context.draggingComponent.width,
-        height: context.draggingComponent.height,
+        width: 100,
+        height: 100,
         clientX: ev.clientX,
         clientY: ev.clientY
       })
@@ -523,7 +523,7 @@ export default class WorkSpaceControl {
     const y = Math.floor((ev.pageY - rbcr.y) / this.zoom)
 
     // ✅ 从 DragStore 拿拖拽数据
-    const dragData = DragStore.getDragData()
+    const dragData = DragStore.consumeDragData()
     if (!dragData) return
 
     const doDropComposite = async (compositeInfo) => {
@@ -626,6 +626,7 @@ export default class WorkSpaceControl {
       this.putElementToRoot(el, x, y)
     }
 
+    this.selectElements([el])
     this.ensureDragPlacement(null)
     this.moveable.updateTarget()
   }
@@ -648,6 +649,7 @@ export default class WorkSpaceControl {
           y: Math.floor((bcr.y - rbcr.y) / this.zoom)
         }
       })
+      this.editorStore.getState().updateNodeRect(el.ridgeNode.config.style)
     } else {
       // 计算位置
       el.ridgeNode.updateConfig({
@@ -656,6 +658,7 @@ export default class WorkSpaceControl {
           y: Math.floor((y - rbcr.y - bcr.height / 2) / this.zoom)
         }
       })
+      this.editorStore.getState().updateNodeRect(el.ridgeNode.config.style)
     }
     this.moveable.updateTarget()
   }
@@ -669,7 +672,7 @@ export default class WorkSpaceControl {
   onElementDragStart (el) {
     if (el.ridgeNode && el.ridgeNode.parent &&
         el.ridgeNode.parent !== this.currentComposite) { // 非根节点
-      const rectConfig = this.getElementRectConfig(el)
+      const rectConfig = getElementRectConfig(el)
       el.ridgeNode.parent.removeChild(el.ridgeNode)
       this.currentComposite.appendChild(el.ridgeNode)
 
@@ -682,27 +685,12 @@ export default class WorkSpaceControl {
     }
   }
 
-  getElementRectConfig (el) {
-    const beforeRect = el.getBoundingClientRect()
-    const rbcr = this.viewPortEl.getBoundingClientRect()
-
-    return {
-      position: 'absolute',
-      visible: true,
-      x: (beforeRect.x - rbcr.x) / this.zoom,
-      y: (beforeRect.y - rbcr.y) / this.zoom,
-      width: beforeRect.width / this.zoom,
-      height: beforeRect.height / this.zoom
-    }
-  }
-
   /**
    * 设置选择元素，包含选择“空”的情况
    * @param {*} elements
    * @param {*} disableClickThrough 选择后是否可以直接选择当前节点的下级节点, 从面板发起的选择一般不允许向下选择
    */
   selectElements (elements, disableClickThrough) {
-    const { editorStore } = this
     this.disableClickThrough = disableClickThrough
 
     // 去除之前选中状态
@@ -711,33 +699,33 @@ export default class WorkSpaceControl {
     })
 
     if (elements && elements.length > 0) {
-      this.selected = elements.filter(el => this.isTargetSelectable(el))
+      this.selected = elements.filter(el => isElementSelectable(el))
     } else {
       this.selected = []
     }
 
     if (this.selected.length > 1) {
-      // 多个的时候 只选择到根元素
-      this.selected = this.selected.filter(el => el.parentElement.classList.contains('ridge-composite'))
+      this.selected = this.selected.filter(el =>
+        el.parentElement?.classList?.contains('ridge-composite')
+      )
     }
 
     if (this.selected.length === 1 && this.selected[0].ridgeNode) {
       const el = this.selected[0]
 
       // 节点可用宽高小于配置宽高时
-      if (el.ridgeNode.config.style.width && el.style.width && el.style.width.indexOf('px') > -1 && parseInt(el.style.width) !== el.offsetWidth) {
+      if (el.ridgeNode.config.style.width && el.style.width &&
+          el.style.width.indexOf('px') > -1 &&
+          parseInt(el.style.width) !== el.offsetWidth) {
         el.style.width = el.offsetWidth + 'px'
         el.ridgeNode.config.style.width = el.offsetWidth
       }
 
-      editorStore.getState().selectElement(this.selected[0].ridgeNode)
-      // context.onElementSelected(this.selected[0].ridgeNode)
+      this.editorStore.getState().selectElement(this.selected[0].ridgeNode)
     } else if (elements.length === 1 && elements[0].ridgeNode) {
-      editorStore.getState().selectElement(elements[0].ridgeNode)
-      // context.onElementSelected(elements[0].ridgeNode)
+      this.editorStore.getState().selectElement(elements[0].ridgeNode)
     } else if (this.selected.length === 0) {
-      editorStore.getState().selectPage()
-      // context.onPageSelected()
+      this.editorStore.getState().selectPage()
       this.selected = []
       this.moveable.target = null
     }
@@ -747,6 +735,7 @@ export default class WorkSpaceControl {
     } else {
       this.moveable.target = this.selected
     }
+
     this.setSelectedStatus()
     this.moveable.updateTarget()
   }
@@ -764,32 +753,18 @@ export default class WorkSpaceControl {
   }
 
   isTargetMovable (el) {
-    const { classList } = el
-    if (!this.dragActive || classList.contains('ridge-is-locked') || classList.contains('ridge-is-full')) {
+    if (!this.dragActive || !isElementMovable(el)) {
       return false
-    } else {
-      return true
     }
+    return true
   }
 
   isTargetSelectable (el) {
-    const { classList } = el
-    if (classList.contains('ridge-is-hidden') || classList.contains('ridge-is-locked')) {
-      return false
-    } else {
-      return true
-    }
+    return isElementSelectable(el)
   }
 
   isTargetResizable (el) {
-    const { classList } = el
-    if (classList.contains('ridge-is-locked') || classList.contains('ridge-is-hidden')) {
-      return false
-    } else if (classList.contains('ridge-is-slot')) {
-      return el.ridgeNode.isResizable()
-    } else {
-      return true
-    }
+    return isElementResizable(el)
   }
 
   unSelectElements (elements) {
@@ -925,9 +900,9 @@ export default class WorkSpaceControl {
       appName: 'local',
       path,
       appService,
-      config: pageContent,
-      loader
+      config: pageContent
     })
+
     await editorComposite.mount(this.viewPortEl)
 
     if (!this.enabled) {
@@ -938,119 +913,94 @@ export default class WorkSpaceControl {
     return editorComposite
   }
 
+  // 修改键盘事件处理
   initKeyBind () {
-    const { context } = this
     Mousetrap.bind('del', () => {
-      if (!this.enabled) {
-        return
-      }
-      if (!this.dragActive) {
-        return
-      }
+      if (!this.enabled || !this.dragActive) return
+
       if (Array.isArray(this.moveable.target)) {
         for (const el of this.moveable.target) {
-          context.onElementRemoved(el)
+          this.onElementRemoved(el)
         }
       } else if (this.moveable.target) {
-        context.onElementRemoved(this.moveable.target)
+        this.onElementRemoved(this.moveable.target)
       }
       this.moveable.target = null
     })
 
-    Mousetrap.bind('right', () => {
-      if (!this.enabled) {
-        return
-      }
-      if (this.selected) {
-        for (const el of this.selected) {
-          const ridgeNode = context.getNode(el)
-          ridgeNode.updateStyleConfig({
-            x: ridgeNode.config.style.x + 1
-          })
-        }
-        this.moveable.updateTarget()
-      }
-    })
-
-    Mousetrap.bind('left', () => {
-      if (!this.enabled) {
-        return
-      }
-      if (this.selected) {
-        for (const el of this.selected) {
-          const ridgeNode = context.getNode(el)
-          ridgeNode.updateStyleConfig({
-            x: ridgeNode.config.style.x - 1
-          })
-        }
-        this.moveable.updateTarget()
-      }
-    })
-    Mousetrap.bind('up', () => {
-      if (!this.enabled) {
-        return
-      }
-      if (this.selected) {
-        for (const el of this.selected) {
-          const ridgeNode = context.getNode(el)
-          ridgeNode.updateStyleConfig({
-            y: ridgeNode.config.style.y - 1
-          })
-        }
-        this.moveable.updateTarget()
-      }
-    })
-    Mousetrap.bind('down', () => {
-      if (!this.enabled) {
-        return
-      }
-      if (this.selected) {
-        for (const el of this.selected) {
-          const ridgeNode = context.getNode(el)
-          ridgeNode.updateStyleConfig({
-            y: ridgeNode.config.style.y + 1
-          })
-        }
-        this.moveable.updateTarget()
-      }
-    })
+    Mousetrap.bind('right', () => this.moveSelectedElement({ x: 1 }))
+    Mousetrap.bind('left', () => this.moveSelectedElement({ x: -1 }))
+    Mousetrap.bind('up', () => this.moveSelectedElement({ y: -1 }))
+    Mousetrap.bind('down', () => this.moveSelectedElement({ y: 1 }))
 
     Mousetrap.bind('ctrl+c', () => {
-      if (!this.enabled) {
-        return
-      }
+      if (!this.enabled) return
       if (this.selected) {
-        context.onCopyNodes(this.selected.map(el => el.ridgeNode))
+        this.onCopyNodes(this.selected.map(el => el.ridgeNode))
       } else {
-        context.onCopyNodes([])
+        this.onCopyNodes([])
       }
     })
 
     Mousetrap.bind('ctrl+s', e => {
-      if (!this.enabled) {
-        return
-      }
+      if (!this.enabled) return
       e.preventDefault()
-      context.saveCurrentPage()
+      this.saveCurrentPage()
     })
 
     Mousetrap.bind('ctrl+v', e => {
-      if (!this.enabled) {
-        return
-      }
+      if (!this.enabled) return
       e.preventDefault()
-      context.onPasteNodes()
+      this.onPasteNodes()
     })
 
     this.workspaceEl.onwheel = (event) => {
-      if (!this.enabled) {
-        return
-      }
+      if (!this.enabled) return
       event.preventDefault()
       let targetZoom = this.zoom + (event.deltaY > 0 ? -1 : 1) * 0.01
       targetZoom = Math.min(Math.max(0.1, targetZoom), 2)
-      context.services?.menuBar?.setZoom(targetZoom)
       this.setZoom(targetZoom)
     }
+  }
+
+  // 新增：移动选中元素的方法
+  moveSelectedElement (delta) {
+    if (!this.selected) return
+
+    for (const el of this.selected) {
+      const ridgeNode = el.ridgeNode
+      if (!ridgeNode) continue
+
+      const newStyle = { ...ridgeNode.config.style }
+      if (delta.x) newStyle.x = (newStyle.x || 0) + delta.x
+      if (delta.y) newStyle.y = (newStyle.y || 0) + delta.y
+
+      ridgeNode.updateStyleConfig(newStyle)
+    }
+    this.moveable.updateTarget()
+  }
+
+  // 新增：需要实现的方法（可能需要从其他地方移过来）
+  onElementRemoved (element) {
+    // 实现删除元素的逻辑
+    const ridgeNode = element.ridgeNode
+    if (ridgeNode && ridgeNode.parent) {
+      ridgeNode.parent.removeChild(ridgeNode)
+    }
+  }
+
+  onCopyNodes (nodes) {
+    // 实现复制逻辑
+    console.log('Copy nodes:', nodes)
+  }
+
+  onPasteNodes () {
+    // 实现粘贴逻辑
+    console.log('Paste nodes')
+  }
+
+  saveCurrentPage () {
+    // 实现保存逻辑
+    console.log('Save current page')
   }
 }

@@ -41,20 +41,22 @@ class EditorComposite extends Composite {
       title: meta?.title || meta?.name || '未命名组件',
       path,
       id: nanoid(10),
+      editor: {
+        hidden: false,
+        locked: false
+      },
       style: {
-        position: 'absolute',
+        // 下列属性是
         visible: true,
         x: 0,
         y: 0,
+        full: false,
         width: meta?.visualConfig?.preferredWidth || 240,
         height: meta?.visualConfig?.preferredHeight || 160
       },
       styleEx: {},
       propEx: {},
-      events: {},
-      visible: true,
-      locked: false,
-      full: false
+      events: {}
     }
 
     const element = new EditorElement({

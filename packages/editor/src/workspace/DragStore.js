@@ -1,17 +1,44 @@
+// DragStore.js
 class DragStore {
   constructor () {
-    this.payload = null
+    this.data = null
   }
 
-  startDrag (data) {
-    this.payload = data
+  /**
+   * 设置拖拽数据
+   * @param {any} data - 拖拽数据
+   */
+  setDragData (data) {
+    this.data = data
   }
 
-  getDragData () {
-    const data = this.payload
-    this.payload = null // 一次性的
+  /**
+   * 获取并消费拖拽数据
+   * @returns {any} 拖拽数据
+   */
+  consumeDragData () {
+    const data = this.data
+    this.data = null // 消费后清空
     return data
+  }
+
+  /**
+   * 检查是否有拖拽数据
+   * @returns {boolean}
+   */
+  getDragData () {
+    return this.data
+  }
+
+  /**
+   * 清空拖拽数据
+   */
+  clear () {
+    this.data = null
   }
 }
 
-export default new DragStore()
+// 创建单例实例
+const dragStore = new DragStore()
+
+export default dragStore

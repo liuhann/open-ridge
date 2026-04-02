@@ -19,7 +19,7 @@ const ComponentItemCard = ({ packageName, item, onItemClick }) => {
   }
 
   const handleDragStart = () => {
-    DragStore.startDrag({
+    DragStore.setDragData({
       type: 'component',
       packageName,
       componentName: item.name,

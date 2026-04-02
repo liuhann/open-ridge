@@ -82,7 +82,7 @@ const editorStore = create((set, get) => ({
       unsavedPages: [...unsavedPages, currentOpenPageId]
     })
     set({
-      currentEditNodeRect: rect
+      currentEditNodeRect: { ...rect }
     })
   },
 
