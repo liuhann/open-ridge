@@ -178,7 +178,7 @@ const ConfigPanel = () => {
       let componentMeta = element.getComponentMeta()
       if (element.config?.path) {
         try {
-          componentMeta = await componentRegistry.getLibComponent(`${element.config.path}`)
+          componentMeta = await componentRegistry.getComponentMeta(`${element.config.path}`)
           if (componentMeta) {
             element.setComponentMeta(componentMeta)
           }
@@ -193,7 +193,7 @@ const ConfigPanel = () => {
         let parentComponentMeta = parent.getComponentMeta()
         if (parent.config?.path) {
           try {
-            parentComponentMeta = await componentRegistry.getLibComponent(`${parent.config.path}`)
+            parentComponentMeta = await componentRegistry.getComponentMeta(`${parent.config.path}`)
             parent.setComponentMeta(parentComponentMeta)
           // 注意：不保存到parent.componentDefinition
           } catch (error) {

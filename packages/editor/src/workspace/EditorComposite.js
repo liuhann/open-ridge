@@ -184,12 +184,12 @@ class EditorComposite extends Composite {
 
   async mounted () {
     this.el.ondblclick = (e) => {
-      const closestComposite = e.target.closest('.ridge-composite')
-      if (!ridgeEditorContext.isPreviewMode() && closestComposite &&
-        !closestComposite.classList.contains('viewport-container') && // 非根Composite
-        closestComposite.hasAttribute('composite-id')) { // 有composite-id属性
-        ridgeEditorContext.openFileByPath(closestComposite.getAttribute('composite-id'))
-      }
+      // const closestComposite = e.target.closest('.ridge-composite')
+      // if (!ridgeEditorContext.isPreviewMode() && closestComposite &&
+      //   !closestComposite.classList.contains('viewport-container') && // 非根Composite
+      //   closestComposite.hasAttribute('composite-id')) { // 有composite-id属性
+      //   ridgeEditorContext.openFileByPath(closestComposite.getAttribute('composite-id'))
+      // }
     }
   }
 

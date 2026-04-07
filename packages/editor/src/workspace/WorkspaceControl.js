@@ -174,7 +174,7 @@ export default class WorkSpaceControl {
 
   setWorkSpaceMovable () {
     this.workspaceMovable = createMoveable({
-      target: this.workspaceEl,
+      target: this.getWorkspaceEl(),
       className: 'workspace-movable'
     })
 
@@ -879,6 +879,10 @@ export default class WorkSpaceControl {
 
   getViewPortEl () {
     return document.querySelector('.view-port')
+  }
+
+  getWorkspaceEl () {
+    return document.querySelector('.workspace')
   }
 
   async loadPage (pageContent, path, appService) {

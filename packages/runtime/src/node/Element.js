@@ -90,6 +90,10 @@ export default class Element extends BaseNode {
       this.setStatus('loaded')
     }
 
+    if (this.loadMeta) {
+      await this.loadMeta()
+    }
+
     // 同时加载子节点（貌似没必要？）
     if (includeChildren && this.config.props.children) {
       for (const id of this.config.props.children) {

@@ -23,7 +23,7 @@ class ComponentRegistry {
     this.initialized = true
   }
 
-  async loadLib (libName) {
+  async loadLibMeta (libName) {
     // 如果已加载，直接返回缓存的元数据
     if (this.loadedLibs.has(libName)) {
       return this.loadedLibs.get(libName)
@@ -57,7 +57,7 @@ class ComponentRegistry {
     return meta
   }
 
-  async getLibComponent (componentPath) {
+  async getComponentMeta (componentPath) {
     if (!componentPath || !componentPath.includes('/')) {
       throw new Error(`无效的组件路径格式: ${componentPath}`)
     }
@@ -94,7 +94,7 @@ class ComponentRegistry {
     }
 
     // 加载库
-    await this.loadLib(libName)
+    await this.loadLibMeta(libName)
 
     // 再次尝试从缓存获取
     const libCache = this.loadedComponents.get(libName)

@@ -1,6 +1,7 @@
 import { Element } from 'ridgejs'
 import cloneDeep from 'lodash/cloneDeep.js'
 import { nanoid } from '../utils/string'
+import componentRegistry from '../service/ComponentRegistry'
 import merge from 'lodash/merge'
 
 export default class EditorElement extends Element {
@@ -174,6 +175,17 @@ export default class EditorElement extends Element {
     this.config.props.children = children.map(c => c.getId())
     this.properties.children = children
     this.updateProps()
+  }
+
+  async loadMeta () {
+    if (!this.componentMeta) {
+      try {
+        const componentMeta = await componentRegistry.getComponentMeta(`${this.config.path}`)
+        if (componentMeta) {
+          this.componentMeta = componentMeta
+        }
+      } catch (e) {}
+    }
   }
 
   // ========================================================================

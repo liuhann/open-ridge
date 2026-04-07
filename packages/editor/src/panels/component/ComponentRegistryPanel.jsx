@@ -60,7 +60,7 @@ const ComponentRegistryPanel = () => {
 
     try {
       // 使用单例服务加载库
-      const componentLibMeta = await componentRegistry.loadLib(libItem.module)
+      const componentLibMeta = await componentRegistry.loadLibMeta(libItem.module)
 
       const mockComponents = componentLibMeta.components
 
