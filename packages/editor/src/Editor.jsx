@@ -1,6 +1,14 @@
 import React, { useEffect, useRef, useState } from 'react'
-
-import { ImagePreview, Tabs, TabPane, Spin } from '@douyinfe/semi-ui'
+import {
+  ImagePreview,
+  Tabs,
+  TabPane,
+  Spin,
+  ResizeGroup,
+  ResizeItem,
+  ResizeHandler
+} from '@douyinfe/semi-ui'
+import { IconSidebar } from '@douyinfe/semi-icons'
 
 import ConfigPanel from './panels/config/ConfigPanel.jsx'
 import DialogCodeEdit from './panels/files/DialogCodeEdit.jsx'
@@ -25,11 +33,9 @@ const Editor = () => {
   const codeEditorRef = useRef(null)
   const viewPortContainerRef = useRef(null)
 
-  const [leftResizing, setLeftResizing] = useState(false)
-  const [leftReisizeWidth, setLeftReisizeWidth] = useState(340)
   const [collapseLeft, setCollapseLeft] = useState(false)
-
   const [currentPanel, setCurrentPanel] = useState('app')
+  const [leftContentWidth, setLeftContentWidth] = useState(340) // 存储左侧宽度
 
   const openedPages = editorStore((state) => state.openedPages)
   const imagePreviewVisible = editorStore((state) => state.imagePreviewVisible)
@@ -39,120 +45,142 @@ const Editor = () => {
   const handleWheel = editorStore((state) => state.handleWheel)
   const initStore = editorStore((state) => state.initStore)
 
-  // 🔥 这里加入 isReady
   const currentAppName = appStore((state) => state.currentAppName)
-  const isReady = appStore((state) => state.isReady) // 👈 新增
+  const isReady = appStore((state) => state.isReady)
   const initAppStore = appStore((state) => state.initAppStore)
 
   const appTab = isReady ? (currentAppName ? 'file-list' : 'app-list') : 'loading'
   const pageOpened = openedPages.length > 0
 
-  // 🔥 修复 async 直接写在 useEffect 里（错误写法）
-  useEffect(async () => {
-    await componentRegistry.init()
-    await initAppStore()
-    initStore({
-      workspaceRef,
-      viewPortContainerRef,
-      codeEditorRef
-    })
-    const workspaceControl = new WorkSpaceControl()
-    workspaceControl.init({
-      workspaceEl: workspaceRef.current,
-      viewPortEl: viewPortContainerRef.current,
-      editorStore
-    })
-    setWorkspaceControl(workspaceControl)
+  useEffect(() => {
+    const initialize = async () => {
+      await componentRegistry.init()
+      await initAppStore()
+      initStore({
+        workspaceRef,
+        viewPortContainerRef,
+        codeEditorRef
+      })
+      const workspaceControl = new WorkSpaceControl()
+      workspaceControl.init({
+        workspaceEl: workspaceRef.current,
+        viewPortEl: viewPortContainerRef.current,
+        editorStore
+      })
+      setWorkspaceControl(workspaceControl)
+    }
+    initialize()
   }, [])
 
-  const leftResizingRef = useRef(leftResizing)
+  // 监听wheel事件
   useEffect(() => {
-    leftResizingRef.current = leftResizing
-  }, [leftResizing])
-
-  useEffect(() => {
-    const onMouseMove = (ev) => {
-      if (leftResizingRef.current) {
-        if (ev.clientX > 250) {
-          setLeftReisizeWidth(ev.clientX - 50)
-        }
-      }
-    }
-    const onMouseUp = () => setLeftResizing(false)
-
-    document.addEventListener('mousemove', onMouseMove)
-    document.addEventListener('mouseup', onMouseUp)
     document.addEventListener('wheel', handleWheel, { passive: false })
     return () => {
-      document.removeEventListener('mousemove', onMouseMove)
-      document.removeEventListener('mouseup', onMouseUp)
       document.removeEventListener('wheel', handleWheel)
     }
   }, [])
 
   return (
-    <div
-      className='editor-root'
-    >
+    <div className='editor-root'>
       <LeftNav onChange={val => setCurrentPanel(val)} />
 
-      <div className='left-content' style={{ width: leftReisizeWidth + 'px' }}>
-        <Tabs
-          renderTabBar={null}
-          activeKey={currentPanel}
-          onChange={setCurrentPanel}
-          tabPosition='none' // 纵向标签
-          style={{ height: '100%' }}
+      {/* 使用 ResizeGroup 替换手动拖拽实现 */}
+      <ResizeGroup direction='horizontal' className='editor-resize-group'>
+        {/* 左侧内容区域 */}
+        <ResizeItem
+          defaultSize={leftContentWidth + 'px'}
+          min='280px'
+          max='600px'
+          onResize={(size) => {
+            setLeftContentWidth(parseInt(size))
+          }}
+          style={{
+            display: collapseLeft ? 'none' : 'block',
+            height: '100%',
+            overflow: 'hidden'
+          }}
         >
-          {/* 应用 → 文件列表 / 应用列表 自动切换 */}
-          <TabPane tab='应用' itemKey='app'>
+          <div className='left-content'>
             <Tabs
-              activeKey={appTab}
+              renderTabBar={null}
+              activeKey={currentPanel}
+              onChange={setCurrentPanel}
+              tabPosition='none'
               style={{ height: '100%' }}
             >
-              <TabPane tab='组件' itemKey='loading'>
-                <Spin spinning size='middle' tip='应用读取中' style={{ minHeight: '600px', height: '100%', width: '100%' }} />
+              {/* 应用 → 文件列表 / 应用列表 自动切换 */}
+              <TabPane tab='应用' itemKey='app'>
+                <Tabs
+                  activeKey={appTab}
+                  style={{ height: '100%' }}
+                >
+                  <TabPane tab='组件' itemKey='loading'>
+                    <Spin
+                      spinning
+                      size='middle'
+                      tip='应用读取中'
+                      style={{
+                        minHeight: '600px',
+                        height: '100%',
+                        width: '100%'
+                      }}
+                    />
+                  </TabPane>
+                  <TabPane tab='组件' itemKey='file-list'>
+                    <AppFileList />
+                  </TabPane>
+                  <TabPane tab='应用' itemKey='app-list'>
+                    <AppListPanel />
+                  </TabPane>
+                </Tabs>
               </TabPane>
-              <TabPane tab='组件' itemKey='file-list'>
-                <AppFileList />
+
+              {/* 组件库 */}
+              <TabPane tab='组件' itemKey='component'>
+                <ComponentRegistryPanel />
               </TabPane>
-              <TabPane tab='应用' itemKey='app-list'>
-                <AppListPanel />
+
+              {/* 预览 */}
+              <TabPane tab='预览' itemKey='preview'>
+                <PreviewPanel />
               </TabPane>
             </Tabs>
-          </TabPane>
-
-          {/* 组件库 */}
-          <TabPane tab='组件' itemKey='component'>
-            <ComponentRegistryPanel />
-          </TabPane>
-
-          {/* 预览 */}
-          <TabPane tab='预览' itemKey='preview'>
-            <PreviewPanel />
-          </TabPane>
-        </Tabs>
-      </div>
-
-      <div
-        className='left-resizer'
-        style={{ width: collapseLeft ? '0' : '4px' }}
-        onMouseDown={e => {
-          e.preventDefault()
-          setLeftResizing(true)
-        }}
-      />
-
-      <div className='editor-content'>
-        <EditMenuBar />
-        <div className='workspace-panel'>
-          <div ref={workspaceRef} className='workspace'>
-            <div className='view-port' isViewPort ref={viewPortContainerRef} />
-            {!pageOpened && <div className='no-open-file'><ReactComposite app='ridge-editor-app' path='Welcome' /></div>}
           </div>
-          {pageOpened && <ConfigPanel />}
-        </div>
-      </div>
+        </ResizeItem>
+
+        {/* 拖拽手柄 */}
+        <ResizeHandler style={{
+          width: 4,
+          background: 'var(--semi-color-bg-0)',
+          zIndex: 99
+        }}
+        />
+
+        {/* 右侧编辑区域 */}
+        <ResizeItem
+          min='400px'
+          style={{
+            height: '100%',
+            overflow: 'hidden',
+            flex: 1
+          }}
+        >
+          <div className='editor-content'>
+            <EditMenuBar />
+            <div className='workspace-panel'>
+              <div ref={workspaceRef} className='workspace'>
+                <div className='view-port' isViewPort ref={viewPortContainerRef} />
+                {!pageOpened && (
+                  <div className='no-open-file'>
+                    <ReactComposite app='ridge-editor-app' path='Welcome' />
+                  </div>
+                )}
+              </div>
+              {pageOpened && <ConfigPanel />}
+            </div>
+          </div>
+        </ResizeItem>
+      </ResizeGroup>
 
       <ImagePreview
         src={imagePreviewSrc}

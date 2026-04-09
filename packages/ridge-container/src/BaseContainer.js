@@ -83,13 +83,13 @@ export default class BaseContainer {
   // 添加子节点
   appendChild (childNode, { x, y } = {}, index) {
     if (!childNode?.el) return
+    const el = childNode.el
 
-    const { el, containerEl } = childNode
-    const refNode = containerEl.childNodes[index]
-
-    refNode
-      ? containerEl.insertBefore(el, refNode)
-      : containerEl.appendChild(el)
+    if (index > -1 && this.containerEl.childNodes[index]) {
+      this.containerEl.insertBefore(el, this.containerEl.childNodes[index])
+    } else {
+      this.containerEl.appendChild(el)
+    }
 
     this.onChildAppended(childNode, { x, y })
     this.updateChildStyle(childNode)

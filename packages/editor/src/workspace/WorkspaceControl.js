@@ -30,15 +30,9 @@ const trace = debug('ridge:workspace')
  */
 export default class WorkSpaceControl {
   init ({
-    workspaceEl,
-    viewPortEl,
     editorStore
   }) {
     console.log('init workspace introl')
-    if (this.workspaceEl) return
-
-    this.workspaceEl = workspaceEl
-    this.viewPortEl = viewPortEl
     this.editorStore = editorStore
     this.zoom = 1
     this.selectorDropableTarget = ['.ridge-container', '.ridge-droppable']
@@ -50,7 +44,7 @@ export default class WorkSpaceControl {
 
     this.dragActive = true
     this.selected = []
-    this.viewPortEl.style.transformOrigin = 'top left'
+    this.getViewPortEl().style.transformOrigin = 'top left'
     this.currentComposite = null
   }
 
@@ -164,7 +158,7 @@ export default class WorkSpaceControl {
 
     // 使用 scrollTo() 方法
     setTimeout(() => {
-      this.workspaceEl.scrollTo({
+      this.getWorkspaceEl().scrollTo({
         top: 0,
         left: 0,
         behavior: 'smooth'
@@ -626,6 +620,7 @@ export default class WorkSpaceControl {
     } else {
       this.putElementToRoot(el, x, y)
     }
+    this.editorStore.getState().updateTreeData()
 
     this.selectElements([el])
     this.ensureDragPlacement(null)

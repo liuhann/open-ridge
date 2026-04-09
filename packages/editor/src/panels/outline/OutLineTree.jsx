@@ -1,165 +1,154 @@
-import React from 'react'
-import Debug from 'debug'
+// components/OutlineTree.jsx
+import React, { useState, useCallback, useEffect, useMemo } from 'react'
 import { Tree, Space, Typography, Button, Tag, Toast } from '@douyinfe/semi-ui'
 import './outline.less'
-import context from '../../service/RidgeEditorContext.js'
-import { ThemeContext } from '../movable/MoveablePanel.jsx'
+import useEditorStore from '../../store/editor.store'
 
 const { Text } = Typography
-const debug = Debug('ridge:outline')
 
-class OutLineTree extends React.Component {
-  constructor () {
-    super()
-    this.state = {
-      componentTreeData: [],
-      expandedKeys: [],
-      selected: null
+const OutlineTree = () => {
+  // 从 store 获取数据
+  const componentTreeData = useEditorStore((state) => state.componentTreeData)
+  const updateTreeData = useEditorStore((state) => state.updateTreeData)
+  const workspaceControl = useEditorStore((state) => state.workspaceControl)
+  const editorComposite = useEditorStore((state) => state.editorComposite)
+  const currentEditNodeId = useEditorStore((state) => state.currentEditNodeId)
+
+  // 本地状态
+  const [expandedKeys, setExpandedKeys] = useState([])
+
+  // 初始化时设置回调
+  useEffect(() => {
+    // 如果有需要，可以在这里设置一些全局回调
+    return () => {
+      // 清理
     }
-    context.services.outlinePanel = this
-  }
+  }, [])
 
-  static contextType = ThemeContext
-
-  updateOutline (reset) {
-    if (reset) {
-      this.setState({
-        expandedKeys: [],
-        selected: null
-      })
-    }
-    if (context.editorComposite) {
-      const componentTreeData = context.editorComposite.getCompositeElementTree()
-
-      debug('updateOutline', componentTreeData)
-      this.setState({
-        componentTreeData
-      })
-    } else {
-      this.setState({
-        componentTreeData: []
-      })
-    }
-  }
-
-  /**
-   * 对外提供方法，工作区选择节点调用
-   **/
-  setCurrentNode (node) {
-    if (node) {
-      let treeNode = this.findNode(this.state.componentTreeData, node.getId())
-      const keys = []
-
-      while (treeNode) {
-        keys.push(treeNode.key)
-        if (treeNode.parentKey) {
-          treeNode = this.findNode(this.state.componentTreeData, treeNode.parentKey)
-        } else {
-          treeNode = null
-        }
-      }
-
-      this.setState({
-        selected: node.getId(),
-        expandedKeys: Array.from(new Set([...keys, ...this.state.expandedKeys]))
-      })
-    } else {
-      this.setState({
-        selected: null
-      })
-    }
-  }
-
-  findNode (treeData, key) {
+  // 查找树节点
+  const findNode = useCallback((treeData, key) => {
     for (const node of treeData) {
       if (node.key === key) {
         return node
       }
       if (node.children) {
-        const c = this.findNode(node.children, key)
+        const c = findNode(node.children, key)
         if (c) {
           return c
         }
       }
     }
-  }
+  }, [])
 
-  /**
-   * 点击选择节点
-   * @param {*} val 节点id
-   */
-  onNodeSelected (val, treeNode) {
-    const node = context.getNode(val)
+  // 对外提供方法，工作区选择节点调用
+  const setCurrentNode = useCallback((node) => {
     if (node) {
-      if (node.el && node.config.visible && !node.config.locked) {
-        // 联动workspace选择节点
-        node.selected()
-        context.workspaceControl.selectElements([node.el], true)
-      } else {
-        context.workspaceControl.selectElements([])
-        context.onElementSelected(node)
+      const keys = []
+      let treeNode = findNode(componentTreeData, node.getId())
+
+      while (treeNode) {
+        keys.push(treeNode.key)
+        if (treeNode.parentKey) {
+          treeNode = findNode(componentTreeData, treeNode.parentKey)
+        } else {
+          treeNode = null
+        }
       }
+
+      setExpandedKeys(prev => Array.from(new Set([...keys, ...prev])))
+    } else {
     }
-    this.setState({
-      selected: val
-    })
+  }, [componentTreeData, findNode])
+
+  // 点击选择节点
+  const onNodeSelected = (val, treeNode) => {
+    const node = editorComposite.getNode(val)
+    if (node && node.el) {
+      workspaceControl.selectElements([node.el])
+    }
+    // const node = getNode(val)
+    // if (node) {
+    //   if (node.el && node.config.visible && !node.config.locked) {
+    //     // 联动workspace选择节点
+    //     node.selected?.()
+    //     workspaceControl?.selectElements?.([node.el], true)
+    //   } else {
+    //     workspaceControl?.selectElements?.([])
+    //     // 这里可能需要调用其他回调
+    //     // context.onElementSelected(node)
+    //   }
+    // }
   }
 
-  toggleLock = (data) => {
-    const view = context.getNode(data.element)
-    view.setLocked(!view.config.locked)
-    context.workspaceControl.selectElements([view.el])
-  }
+  // 切换锁定
+  const toggleLock = useCallback((data) => {
+    const view = data.element
+    if (view) {
+      view.setLocked?.(!view.config.locked)
+      workspaceControl?.selectElements?.([view.el])
+    }
+  }, [workspaceControl])
 
-  toggleVisible = (data) => {
-    const view = context.getNode(data.element)
-    view.setVisible(!view.config.visible)
+  // 切换可见
+  const toggleVisible = useCallback((data) => {
+    const view = data.element
+    if (view) {
+      view.setVisible?.(!view.config.visible)
+      updateTreeData() // 更新大纲
+    }
+  }, [updateTreeData])
 
-    this.updateOutline()
-  }
-
-  renderFullLabel = (label, data) => {
-    const { toggleLock, toggleVisible } = this
-    let { visible, locked } = data.element.config
+  // 渲染标签
+  const renderFullLabel = useCallback((label, data) => {
+    const { visible, locked } = data.element.config
     const { slotLabel } = data
-
-    if (visible !== false) {
-      visible = true
-    }
-    if (locked !== true) {
-      locked = false
-    }
+    const isVisible = visible !== false
+    const isLocked = locked === true
 
     return (
-      <div className={'tree-label ' + (visible ? 'is-visible' : 'is-hidden') + ' ' + (locked ? 'is-locked' : '')}>
+      <div className={`tree-label ${isVisible ? 'is-visible' : 'is-hidden'} ${isLocked ? 'is-locked' : ''}`}>
         <Space className='label-content'>
           <Text className='label-text'>{label ?? data.key}</Text>
-          {data.tags && data.tags.map(tag => <Tag size='small' color='amber' key={tag}> {tag} </Tag>)}
+          {data.tags?.map(tag => (
+            <Tag size='small' color='amber' key={tag}> {tag} </Tag>
+          ))}
         </Space>
-        {!slotLabel &&
-          <Space spacing={2}>
-            <Button
-              className={locked ? '' : 'hover-show'}
-              size='small' theme='borderless' type='tertiary' onClick={() => {
-                toggleLock(data)
-              }} icon={locked ? <i class='bi bi-lock-fill' /> : <i class='bi bi-unlock-fill' />}
-            />
-            <Button
-              className={visible ? 'hover-show' : ''}
-              size='small' theme='borderless' type='tertiary' onClick={() => {
-                toggleVisible(data)
-              }} icon={visible ? <i class='bi bi-eye-fill' /> : <i class='bi bi-eye-slash-fill' />}
-            />
-          </Space>}
-        {slotLabel && <Tag>{slotLabel}</Tag>}
+        {!slotLabel
+          ? (
+            <Space spacing={2}>
+              <Button
+                className={isLocked ? '' : 'hover-show'}
+                size='small'
+                theme='borderless'
+                type='tertiary'
+                onClick={(e) => {
+                  e.stopPropagation()
+                  toggleLock(data)
+                }}
+                icon={isLocked ? <i className='bi bi-lock-fill' /> : <i className='bi bi-unlock-fill' />}
+              />
+              <Button
+                className={isVisible ? 'hover-show' : ''}
+                size='small'
+                theme='borderless'
+                type='tertiary'
+                onClick={(e) => {
+                  e.stopPropagation()
+                  toggleVisible(data)
+                }}
+                icon={isVisible ? <i className='bi bi-eye-fill' /> : <i className='bi bi-eye-slash-fill' />}
+              />
+            </Space>
+            )
+          : (
+            <Tag>{slotLabel}</Tag>
+            )}
       </div>
     )
-  }
+  }, [toggleLock, toggleVisible])
 
-  /**
-   * 拖拽 dragNode 到一个排序子节点列表之中, 放置到node之前(-1)或之后(1)
-   */
-  ordering (siblingNodes, dragNode, node, beforeOrAfter) {
+  // 拖拽排序
+  const ordering = useCallback((siblingNodes, dragNode, node, beforeOrAfter) => {
     const finals = []
     for (let i = 0; i < siblingNodes.length; i++) {
       if (siblingNodes[i].key === node.key) {
@@ -175,101 +164,101 @@ class OutLineTree extends React.Component {
       }
     }
     return finals
-  }
+  }, [])
 
-  /**
-   * 树拖拽放置到目标位置
-   * node: 拖拽节点之前的父节点？
-   * dragNode： 拖拽的节点
-   * dropPosition： 拖拽目标的位置
-   * dropToGap： 是附加到节点后 （追加） 还是在子中间
-   **/
-  onTreeDrop ({ event, node, dragNode, dragNodesKeys, dropPosition, dropToGap }) {
-    // 首先根据dropPosition和node.pos计算出来目标位置相对于node的前后关系,直接用dropPosition存在问题
+  // 树拖拽
+  const onTreeDrop = useCallback(({ node, dragNode, dropPosition, dropToGap }) => {
+    if (!editorComposite) return
 
-    if (node.parentKey) {
-      node.parent = this.findNode(this.state.componentTreeData, node.parentKey)
-    }
-    if (dragNode.parentKey) {
-      dragNode.parent = this.findNode(this.state.componentTreeData, dragNode.parentKey)
-    }
     const dropPos = node.pos.split('-')
     const beforeOrAfter = dropPosition - Number(dropPos[dropPos.length - 1])
-    const targetParent = node.parent ? node.parent.element : context.editorComposite
-    const dragParent = dragNode.parent ? dragNode.parent.element : context.editorComposite
+
+    // 查找父节点
+    if (node.parentKey) {
+      const parentNode = findNode(componentTreeData, node.parentKey)
+      node.parent = parentNode
+    }
+    if (dragNode.parentKey) {
+      const parentNode = findNode(componentTreeData, dragNode.parentKey)
+      dragNode.parent = parentNode
+    }
+
+    const targetParent = node.parent?.element || editorComposite
+    const dragParent = dragNode.parent?.element || editorComposite
 
     if (dropToGap === true) {
-      const siblings = node.parent ? node.parent.children : this.state.componentTreeData
-      const orders = this.ordering(siblings, dragNode, node, beforeOrAfter)
-      // removeChild
+      const siblings = node.parent?.children || componentTreeData
+      const orders = ordering(siblings, dragNode, node, beforeOrAfter)
+
+      // 移除子节点
       if (targetParent !== dragParent) {
-        dragParent.removeChild(dragNode.element)
+        dragParent.removeChild?.(dragNode.element)
       }
-      // appendChild
+
+      // 添加子节点
       if (orders.length !== siblings.length) {
-        targetParent.appendChild(dragNode.element)
+        targetParent.appendChild?.(dragNode.element)
       }
-      targetParent.updateChildList(orders)
+
+      targetParent.updateChildList?.(orders)
     } else {
-      if (node.element.children == null) {
+      if (!node.element.children) {
         Toast.warning({
           content: '目标节点无法再放入子节点',
           duration: 3
         })
         return
       } else {
-        dragParent.removeChild(dragNode.element)
-        node.element.appendChild(dragNode.element)
+        dragParent.removeChild?.(dragNode.element)
+        node.element.appendChild?.(dragNode.element)
       }
     }
-    this.updateOutline()
-    context.workspaceControl.selectElements([dragNode.element.el], true)
-  }
 
-  onNodeDblClick = (node) => {
-    console.log('onNodeDblClick', node)
+    // 更新大纲
+    updateTreeData()
+    workspaceControl?.selectElements?.([dragNode.element.el], true)
+  }, [editorComposite, componentTreeData, findNode, ordering, updateTreeData, workspaceControl])
 
-    if (node.element?.config?.path === 'ridge-container/composite') { // 双击打开的是composite节点
+  // 双击节点
+  const onNodeDblClick = useCallback((node) => {
+    if (node.element?.config?.path === 'ridge-container/composite') {
       const filePath = node.element?.config?.props?.pagePath
       if (filePath) {
-        const file = context.services.appService.getFileByPath(filePath)
-        if (file && file.id) {
-          context.openFile(file.id)
-        }
+        // 这里需要根据实际情况处理打开文件
+        console.log('打开文件:', filePath)
+        // 原有的 context.openFile 逻辑需要另外实现
       }
     }
-  }
+  }, [])
 
-  render () {
-    const { selected, componentTreeData, expandedKeys } = this.state
-    const { renderFullLabel, onTreeDrop, onNodeDblClick } = this
-    return (
-      <Tree
-        className='outline-tree'
-        autoExpandWhenDragEnter
-        showFilteredOnly
-        filterTreeNode
-        draggable
-        emptyContent='暂无打开的页面'
-        renderLabel={renderFullLabel}
-        onDrop={onTreeDrop.bind(this)}
-        onChange={(value, node) => {
-          this.onNodeSelected(value, node)
-        }}
-        onDoubleClick={(event, node) => {
-          onNodeDblClick(node)
-        }}
-        onExpand={expandedKeys => {
-          this.setState({
-            expandedKeys
-          })
-        }}
-        expandedKeys={expandedKeys}
-        value={selected}
-        treeData={componentTreeData}
-      />
-    )
-  }
+  // 提供外部访问的方法
+  useEffect(() => {
+    // 如果需要将 setCurrentNode 暴露给外部，可以在这里处理
+    // 例如：window.outlineTree = { setCurrentNode }
+  }, [setCurrentNode])
+
+  return (
+    <Tree
+      className='outline-tree'
+      autoExpandWhenDragEnter
+      showFilteredOnly
+      filterTreeNode
+      draggable
+      emptyContent='暂无打开的页面'
+      renderLabel={renderFullLabel}
+      onDrop={onTreeDrop}
+      onChange={(value, node) => {
+        onNodeSelected(value, node)
+      }}
+      onDoubleClick={(event, node) => {
+        onNodeDblClick(node)
+      }}
+      onExpand={setExpandedKeys}
+      expandedKeys={expandedKeys}
+      value={currentEditNodeId}
+      treeData={componentTreeData}
+    />
+  )
 }
 
-export default OutLineTree
+export default OutlineTree

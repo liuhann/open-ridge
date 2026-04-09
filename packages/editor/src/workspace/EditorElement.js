@@ -22,7 +22,7 @@ export default class EditorElement extends Element {
 
   // 获取组件元数据
   getComponentMeta () {
-    return this.componentMeta
+    return this.componentMeta || {}
   }
 
   // 检查是否已加载组件元数据
@@ -175,6 +175,10 @@ export default class EditorElement extends Element {
     this.config.props.children = children.map(c => c.getId())
     this.properties.children = children
     this.updateProps()
+  }
+
+  getIcon () {
+    return <img className='outline-element-icon' src={this.getComponentMeta()?.icon} />
   }
 
   async loadMeta () {

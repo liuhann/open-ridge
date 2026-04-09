@@ -332,33 +332,34 @@ class EditorComposite extends Composite {
       treeNodeObject.isLeaf = true
     }
 
+    treeNodeObject.icon = element.getIcon()
     // update icon
-    if (element.componentDefinition) {
-      if (element.componentDefinition.icon) {
-        if (element.componentDefinition.icon.$$typeof) {
-          treeNodeObject.icon = element.componentDefinition.icon
-        } else if (element.componentDefinition.icon.indexOf('.') > -1) {
-          treeNodeObject.icon = <img className='item-icon' src={this.context.baseUrl + '/' + element.componentDefinition.packageName + '/' + element.componentDefinition.icon} />
-        } else {
-          treeNodeObject.icon = <i className={element.componentDefinition.icon} />
-        }
-      }
-      for (const prop of element.componentDefinition.props || []) {
-        if (prop.type === 'slot' && element.config.props[prop.name]) {
-          if (!treeNodeObject.children) {
-            treeNodeObject.children = []
-          }
-          const childNode = this.getNode(element.config.props[prop.name])
-          treeNodeObject.children.push({
-            ...this.getElementTree(childNode),
-            parentKey: element.getId(),
-            slotLabel: prop.label
-            // parent: treeNodeObject
-          })
-          treeNodeObject.isLeaf = false
-        }
-      }
-    }
+    // if (element.componentDefinition) {
+    //   if (element.componentDefinition.icon) {
+    //     if (element.componentDefinition.icon.$$typeof) {
+    //       treeNodeObject.icon = element.componentDefinition.icon
+    //     } else if (element.componentDefinition.icon.indexOf('.') > -1) {
+    //       treeNodeObject.icon = <img className='item-icon' src={this.context.baseUrl + '/' + element.componentDefinition.packageName + '/' + element.componentDefinition.icon} />
+    //     } else {
+    //       treeNodeObject.icon = <i className={element.componentDefinition.icon} />
+    //     }
+    //   }
+    //   for (const prop of element.componentDefinition.props || []) {
+    //     if (prop.type === 'slot' && element.config.props[prop.name]) {
+    //       if (!treeNodeObject.children) {
+    //         treeNodeObject.children = []
+    //       }
+    //       const childNode = this.getNode(element.config.props[prop.name])
+    //       treeNodeObject.children.push({
+    //         ...this.getElementTree(childNode),
+    //         parentKey: element.getId(),
+    //         slotLabel: prop.label
+    //         // parent: treeNodeObject
+    //       })
+    //       treeNodeObject.isLeaf = false
+    //     }
+    //   }
+    // }
     return treeNodeObject
   }
 

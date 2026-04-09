@@ -268,7 +268,7 @@ export default class ApplicationService {
       }
       await this.collection.remove({ id: file.id })
 
-      await this.updateAppFileTree(false)
+      await this.updateAppFileTree(true)
       return true
     } else {
       return false

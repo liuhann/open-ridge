@@ -1,11 +1,5 @@
 .left-panel {
-  width: 100%;
-  height: 100%;
-  background: #ffffff;
-  border-right: 1px solid var(--semi-color-border);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
+  
 }
 
 /* 顶部标题栏优化 */
@@ -58,6 +52,13 @@
   overflow-y: auto;
   padding: 0;
   --tree-node-height: 32px;
+
+  .semi-tree-option-label {
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
 }
 
 .file-tree :global(.semi-tree-treeNode) {
@@ -94,13 +95,4 @@
 
 .tree-label:hover .more-button {
   opacity: 1;
-}
-
-/* 滚动条美化 */
-::-webkit-scrollbar {
-  width: 5px;
-}
-::-webkit-scrollbar-thumb {
-  background: rgba(59, 130, 246, 0.2);
-  border-radius: 10px;
 }

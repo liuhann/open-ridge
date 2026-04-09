@@ -1,12 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react'
 
-import { Button, Tree, Dropdown, Typography, Toast, Upload, Modal, Input } from '@douyinfe/semi-ui'
+import {
+  Button, Tree, Dropdown, Typography, Toast, Upload, Modal, Input, Space, ResizeGroup,
+  ResizeItem,
+  ResizeHandler
+} from '@douyinfe/semi-ui'
 import { mapTree } from './buildFileTree.js'
 import DialogCreate from './DialogCreate.jsx'
 import './file-list.less'
 
+import OutlineTree from '../outline/OutLineTree.jsx'
 import appStore from '../../store/app.store.js'
 import editorStore from '../../store/editor.store.js'
+import { EP_BACK, FILE_COMPOSITE, FILE_FOLDER, FILE_IMAGE, FILE_JS, FILE_JSON, FILE_MARKDOWN, FILE_PAGE } from '../../icons/icons.js'
 const { Text } = Typography
 
 const ACCEPT_FILES = '.svg,.png,.jpg,.json,.css,.js,.md,.webp,.zip,.gif'
@@ -40,15 +46,15 @@ const AppFileList = () => {
   const getAppTreeData = (treeData) => {
   // SVG 图标集合 —— 专业、简洁、统一
     const ICONS = {
-      folder: <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='#6B7280' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'><path d='M3 7h18l-2 14H5L3 7z' /><path d='M3 7h18l-2 14H5L3 7z' /><path d='M3 7h18l-2 14H5L3 7z' /><path d='M3 7L5 3h6l4 4h6' /></svg>,
-      page: <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='#3B82F6' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'><path d='M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z' /><polyline points='14,2 14,8 20,8' /></svg>,
-      js: <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='#F59E0B' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'><path d='M16.5 10.5B4.5 4.5 4.5 19.5 16.5 19.5' /><path d='M10 7.5L7.5 10 10 12.5M14 11.5L16.5 14 14 16.5' /></svg>,
-      json: <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='#8B5CF6' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'><path d='M10 7L8 12L10 17M14 7L16 12L14 17' /></svg>,
-      image: <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='#EC4899' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'><rect x='3' y='3' width='18' height='18' rx='2' ry='2' /><circle cx='8.5' cy='8.5' r='1.5' /><path d='M21 15l-5-5L5 21' /></svg>,
+      folder: FILE_FOLDER,
+      page: FILE_PAGE,
+      js: FILE_JS,
+      json: FILE_JSON,
+      image: FILE_IMAGE,
       font: <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='#10B981' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'><path d='M4 3l4 18h8l4-18' /><path d='M12 3v18' /></svg>,
       audio: <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='#06B6D4' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'><path d='M9 18V5l12-2v13' /><circle cx='6' cy='18' r='3' /><circle cx='18' cy='16' r='3' /></svg>,
       file: <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='#64748B' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'><path d='M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z' /><polyline points='13,2 13,9 20,9' /></svg>,
-      md: <svg width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='#64748B' strokeWidth='2' strokeLinecap='round' strokeLinejoin='round'><path d='M13 13l-3-3-3 3' /><path d='M13 11l3 3 3-3' /><rect x='2' y='4' width='20' height='16' rx='2' ry='2' /></svg>
+      md: FILE_MARKDOWN
     }
 
     const fileTree = mapTree(treeData, file => {
@@ -218,7 +224,7 @@ const AppFileList = () => {
     <Dropdown.Item key='upload' icon={<i class='bi bi-upload' />}>
       <Upload
         action='none'
-        multiple showUploadList={false} uploadTrigger='custom' onChange={files => {
+        multiple showUploadList={false} uploadTrigger='custom' onFileChange={files => {
           onFileUpload(files)
         }} accept={ACCEPT_FILES}
       >
@@ -334,43 +340,40 @@ const AppFileList = () => {
 
   const RenderCreateDropDown = () => {
     return (
-      <div className='panel-sub-title'>
-        <Dropdown
-          trigger='click'
-          closeOnEsc
-          clickToHide
-          keepDOM
-          position='bottomLeft'
-          render={
-            <Dropdown.Menu className='app-files-dropdown'>
-              {CREATE_MENUS}
-            </Dropdown.Menu>
+      <Dropdown
+        trigger='click'
+        closeOnEsc
+        clickToHide
+        keepDOM
+        position='bottomLeft'
+        render={
+          <Dropdown.Menu className='app-files-dropdown'>
+            {CREATE_MENUS}
+          </Dropdown.Menu>
           }
-        >
-          <Button
-            style={{
-              marginLeft: '12px',
-              marginTop: '6px'
-            }} colorful theme='outline' type='primary' icon={<i className='bi bi-plus-lg' />}
-          >创建
-          </Button>
-        </Dropdown>
-        <Upload
-          action='none'
-          multiple showUploadList={false} uploadTrigger='custom' onFileChange={files => {
-            onFileUpload(files)
-          }} accept={ACCEPT_FILES}
-        >
-          <Button
-            style={{
-              marginLeft: '12px',
-              marginTop: '6px'
-            }}
-          >
-            上传文件
-          </Button>
-        </Upload>
-      </div>
+      >
+        <Button
+          colorful theme='outline' type='primary' icon={<i className='bi bi-plus-lg' />}
+        >创建
+        </Button>
+      </Dropdown>
+    // <Space>
+    //   <Upload
+    //     action='none'
+    //     multiple showUploadList={false} uploadTrigger='custom' onFileChange={files => {
+    //       onFileUpload(files)
+    //     }} accept={ACCEPT_FILES}
+    //   >
+    //     <Button
+    //       style={{
+    //         marginLeft: '12px',
+    //         marginTop: '6px'
+    //       }}
+    //     >
+    //       上传文件
+    //     </Button>
+    //   </Upload>
+    // </Space>
     )
   }
 
@@ -411,18 +414,28 @@ const AppFileList = () => {
   // 渲染逻辑
   return (
     <div className='left-panel'>
-      {/* 顶部标题栏：优化对齐 */}
-      <div className='panel-title'>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-          <i className='bi bi-folder2' style={{ fontSize: '16px', color: '#667085' }} />
-          <span>应用文件</span>
-        </div>
-        <Button
-          type='tertiary'
-          onClick={confirmExitToAppList}
-          theme='borderless'
-          icon={<i className='bi bi-box-arrow-right' />}
-        />
+      {/* 顶部标题栏：优化对齐，参考提供的样式 */}
+      <div
+        className='panel-title'
+      >
+        <Space align='center'>
+          <Button
+            icon={EP_BACK}
+            theme='borderless'
+            onClick={confirmExitToAppList}
+            className='back-button'
+          />
+          <Text
+            strong style={{
+              fontSize: '16px',
+              color: 'var(--semi-color-text-0)'
+            }}
+          >
+            应用文件
+          </Text>
+        </Space>
+        {/* 按钮工具栏：完美排版 */}
+        <RenderCreateDropDown />
       </div>
 
       <DialogCreate
@@ -435,26 +448,50 @@ const AppFileList = () => {
         }}
       />
 
-      {/* 按钮工具栏：完美排版 */}
-      <RenderCreateDropDown />
+      <ResizeGroup direction='vertical' className='file-list-resize-group'>
+        <ResizeItem
+          minHeight='200px'
+          style={{
+            height: '400px',
+            overflowY: 'auto'
+          }}
+        >
+          <Tree
+            autoExpandParent
+            className='file-tree'
+            showFilteredOnly
+            draggable
+            renderLabel={renderFullLabel}
+            treeData={treeData}
+            onDrop={({ node, dragNode, dropPosition, dropToGap }) => {
+              move(node, dragNode, dropToGap)
+            }}
+            onDoubleClick={(ev, node) => {
+              onOpenClicked(node)
+            }}
+            onSelect={(key, selected, node) => {
+              onNodeSelect(node)
+            }}
+          />
+        </ResizeItem>
 
-      <Tree
-        autoExpandParent
-        className='file-tree'
-        showFilteredOnly
-        draggable
-        renderLabel={renderFullLabel}
-        treeData={treeData}
-        onDrop={({ node, dragNode, dropPosition, dropToGap }) => {
-          move(node, dragNode, dropToGap)
+        <ResizeHandler style={{
+          height: 4,
+          background: 'var(--semi-color-bg-0)',
+          zIndex: 99
         }}
-        onDoubleClick={(ev, node) => {
-          onOpenClicked(node)
+        >
+          <div />
+        </ResizeHandler>
+
+        <ResizeItem style={{
+          height: '400px',
+          overflowY: 'auto'
         }}
-        onSelect={(key, selected, node) => {
-          onNodeSelect(node)
-        }}
-      />
+        >
+          <OutlineTree />
+        </ResizeItem>
+      </ResizeGroup>
     </div>
   )
 }

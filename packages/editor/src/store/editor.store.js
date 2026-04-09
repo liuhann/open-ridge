@@ -43,6 +43,16 @@ const editorStore = create((set, get) => ({
     })
   },
 
+  updateTreeData: () => {
+    const { editorComposite } = get()
+    if (editorComposite) {
+      const componentTreeData = editorComposite.getCompositeElementTree?.() || []
+      set({ componentTreeData })
+    } else {
+      set({ componentTreeData: [] })
+    }
+  },
+
   setWorkspaceControl: workspaceControl => {
     set({
       workspaceControl
@@ -114,7 +124,7 @@ const editorStore = create((set, get) => ({
 
   // 打开页面
   openPage: async (id, page) => {
-    const { currentOpenPageId, unmountWorkspace, openedFileContentMap, pageZoomMap, pageTransformMap, workspaceControl, openedPages, setZoom } = get()
+    const { currentOpenPageId, unmountWorkspace, openedFileContentMap, pageZoomMap, pageTransformMap, workspaceControl, openedPages, setZoom, updateTreeData } = get()
     const appService = localRepoService.getCurrentAppService()
     if (currentOpenPageId === id) {
       return
@@ -158,6 +168,7 @@ const editorStore = create((set, get) => ({
           }],
       editorComposite
     })
+    updateTreeData()
   },
 
   saveCurrentPage: async () => {
@@ -185,7 +196,8 @@ const editorStore = create((set, get) => ({
     workspaceControl.disable()
 
     set({
-      editorComposite: null
+      editorComposite: null,
+      componentTreeData: []
     })
   },
 
@@ -205,7 +217,7 @@ const editorStore = create((set, get) => ({
 
   // 切换到另一页面
   switchPage: async id => {
-    const { currentOpenPageId, unmountWorkspace, openedFileContentMap, pageZoomMap, pageTransformMap, workspaceControl, setZoom } = get()
+    const { currentOpenPageId, unmountWorkspace, openedFileContentMap, pageZoomMap, pageTransformMap, workspaceControl, setZoom, updateTreeData } = get()
     if (currentOpenPageId === id) {
       return
     }
@@ -234,6 +246,8 @@ const editorStore = create((set, get) => ({
         currentOpenPageId: id,
         editorComposite
       })
+
+      updateTreeData()
     }
   },
 
