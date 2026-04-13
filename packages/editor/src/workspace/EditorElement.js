@@ -220,6 +220,28 @@ export default class EditorElement extends Element {
     return cloned
   }
 
+  getLocked () {
+    return this.config?.editor?.locked
+  }
+
+  setLocked (locked) {
+    if (!this.config.editor) {
+      this.config.editor = {}
+    }
+    this.config.editor.locked = locked
+  }
+
+  getHidden () {
+    return this.config?.editor?.hidden
+  }
+
+  setHidden (hidden) {
+    if (!this.config.editor) {
+      this.config.editor = {}
+    }
+    this.config.editor.hidden = hidden
+  }
+
   // ========================================================================
   // 导出
   // ========================================================================

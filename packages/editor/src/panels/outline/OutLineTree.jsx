@@ -3,6 +3,7 @@ import React, { useState, useCallback, useEffect, useMemo } from 'react'
 import { Tree, Space, Typography, Button, Tag, Toast } from '@douyinfe/semi-ui'
 import './outline.less'
 import useEditorStore from '../../store/editor.store'
+import { ICON_EYE, ICON_EYE_CLOSE, ICON_LOCK, ICON_UNLOCK } from '../../icons/icons'
 
 const { Text } = Typography
 
@@ -100,13 +101,12 @@ const OutlineTree = () => {
 
   // 渲染标签
   const renderFullLabel = useCallback((label, data) => {
-    const { visible, locked } = data.element.config
     const { slotLabel } = data
-    const isVisible = visible !== false
-    const isLocked = locked === true
+    const isLocked = data.element.getLocked()
+    const isHidden = data.element.getHidden()
 
     return (
-      <div className={`tree-label ${isVisible ? 'is-visible' : 'is-hidden'} ${isLocked ? 'is-locked' : ''}`}>
+      <div className={`tree-label ${isHidden ? 'is-hidden' : 'is-visible'} ${isLocked ? 'is-locked' : ''}`}>
         <Space className='label-content'>
           <Text className='label-text'>{label ?? data.key}</Text>
           {data.tags?.map(tag => (
@@ -125,10 +125,10 @@ const OutlineTree = () => {
                   e.stopPropagation()
                   toggleLock(data)
                 }}
-                icon={isLocked ? <i className='bi bi-lock-fill' /> : <i className='bi bi-unlock-fill' />}
+                icon={isLocked ? ICON_LOCK : ICON_UNLOCK}
               />
               <Button
-                className={isVisible ? 'hover-show' : ''}
+                className={isHidden ? '' : 'hover-show'}
                 size='small'
                 theme='borderless'
                 type='tertiary'
@@ -136,7 +136,7 @@ const OutlineTree = () => {
                   e.stopPropagation()
                   toggleVisible(data)
                 }}
-                icon={isVisible ? <i className='bi bi-eye-fill' /> : <i className='bi bi-eye-slash-fill' />}
+                icon={isHidden ? ICON_EYE_CLOSE : ICON_EYE}
               />
             </Space>
             )

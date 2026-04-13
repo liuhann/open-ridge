@@ -342,9 +342,6 @@ const ConfigPanel = () => {
     if (currentEditNodeId === values.id) {
       updateElementConfig(values, field)
     }
-    // if (values.id === this.componentView.config.id) {
-    //   updateElementConfig(values)
-    // }
   }
 
   const componentEventValueChange = (values, field) => {
