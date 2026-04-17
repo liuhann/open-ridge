@@ -1,0 +1,73 @@
+{
+  "name": "RelativeContainer",
+  "title": "相对定位容器",
+  "icon": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMjgiIGhlaWdodD0iMTI4IiB2aWV3Qm94PSIwIDAgNDggNDgiPjxnIGZpbGw9Im5vbmUiIHN0cm9rZS13aWR0aD0iMyI+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTMuNDQgOS4wODRjLjIyNy0yLjg2OCAyLjA5OC01LjExIDQuOTM2LTUuNTgyQzExLjQzMiAyLjk5NCAxNi4zNjUgMi41IDI0IDIuNXMxMi41NjguNDk0IDE1LjYyNCAxLjAwMmMyLjgzOC40NzIgNC43MSAyLjcxNCA0LjkzNiA1LjU4MmMuMjI5IDIuODg4LjQ0IDcuNDQ0LjQ0IDE0LjQxNnMtLjIxMSAxMS41MjgtLjQ0IDE0LjQxNmMtLjIyNyAyLjg2OC0yLjA5OCA1LjExLTQuOTM2IDUuNTgyQzM2LjU2OCA0NC4wMDcgMzEuNjM1IDQ0LjUgMjQgNDQuNXMtMTIuNTY4LS40OTMtMTUuNjI0LTEuMDAyYy0yLjgzOC0uNDcyLTQuNzEtMi43MTQtNC45MzYtNS41ODJDMy4yMSAzNS4wMjggMyAzMC40NzIgMyAyMy41cy4yMTEtMTEuNTI4LjQ0LTE0LjQxNiIvPjxwYXRoIGZpbGw9IiM4ZmJmZmEiIGQ9Ik0yNy4xNiAxMC41MTNjLTEuMzA4LjIyNS0xLjgxNiAxLjYwNy0uOTI5IDIuNTk4Yy40OTIuNTUgMS4xMjMgMS4yMyAxLjkyNyAyLjA1OWE1MzcgNTM3IDAgMCAwLTUuNjc1IDYuMjkyYy0uNTEuNTc0LS42NSAxLjM5My0uMjUyIDIuMDVjLjI2OC40NDIuNjIyLjk0NCAxLjA0NiAxLjM1OWMuNC4zOTEuODM2LjY5NyAxLjIxOC45MjRjLjYyLjM2NyAxLjM3OC4yMTggMS45MTgtLjI2YzEuNDM3LTEuMjcxIDQuMzQ2LTMuODYyIDYuMzk4LTUuOGE3MSA3MSAwIDAgMCAyLjI1NSAyLjAzYzEuMDA5Ljg2NiAyLjM3LjMyIDIuNTYtMWMuNjQyLTQuNDU4LjMxOS03LjY1OC4wNTItOS4yM2ExLjU3IDEuNTcgMCAwIDAtMS4zMzYtMS4zMDhjLTEuNTcyLS4yMjktNC43NjMtLjQ3Mi05LjE4Mi4yODZNMTkuODk5IDMxLjk2Yy0uMTA0LTIuMTM0LTEuNzI1LTMuNzU1LTMuODU5LTMuODU5QTk0IDk0IDAgMCAwIDExLjUgMjhjLTEuODQ5IDAtMy4zNTMuMDQzLTQuNTQuMTAxYy0yLjEzNC4xMDQtMy43NTUgMS43MjUtMy44NTkgMy44NTlBOTMgOTMgMCAwIDAgMyAzNi41YzAgMS44NDkuMDQzIDMuMzUzLjEwMSA0LjU0Yy4xMDQgMi4xMzQgMS43MjUgMy43NTUgMy44NTkgMy44NTljMS4xODcuMDU4IDIuNjkxLjEwMSA0LjU0LjEwMXMzLjM1My0uMDQzIDQuNTQtLjEwMWMyLjEzNC0uMTA0IDMuNzU1LTEuNzI1IDMuODU5LTMuODU5Yy4wNTgtMS4xODcuMTAxLTIuNjkxLjEwMS00LjU0cy0uMDQzLTMuMzUzLS4xMDEtNC41NCIvPjxwYXRoIHN0cm9rZT0iIzI4NTljNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIiBzdHJva2UtbGluZWpvaW49InJvdW5kIiBkPSJNMzguNSAzLjQ0NXEuNjYyLjA0NyAxLjI0MS4wOTRjMi41NTUuMjA4IDQuNTEzIDIuMTY1IDQuNzIgNC43MnEuMDQ4LjU4LjA5NCAxLjI0MU0zMy41IDMuMTc0YTIzMCAyMzAgMCAwIDAtNy0uMTYzbS01LjAwOCAwYy0yLjY1NS4wMjQtNC45ODMuMDg0LTcgLjE2M20tNSAuMjdxLS42NjEuMDQ4LTEuMjQuMDk1Yy0yLjU1Ni4yMDgtNC41MTMgMi4xNjUtNC43MiA0LjcycS0uMDQ4LjU4LS4wOTUgMS4yNDFtNDEuNTUyIDEyYTIzMCAyMzAgMCAwIDAtLjE2My03bTAgMTkuMDA4Yy4wOC0yLjAxOC4xNC00LjM0NS4xNjMtN20tLjQzNCAxMnEtLjA0Ni42NjItLjA5NCAxLjI0Yy0uMjA3IDIuNTU2LTIuMTY1IDQuNTEzLTQuNzIgNC43MnEtLjU4LjA0OC0xLjI0LjA5NU0zLjE2NiAxNC41YTIyOSAyMjkgMCAwIDAtLjE2NCA3TTI2LjUgNDQuOTk3YTIyOSAyMjkgMCAwIDAgNy0uMTY0bS02LjM0LTM0LjMyYy0xLjMwOC4yMjUtMS44MTYgMS42MDctLjkyOSAyLjU5OGMuNDkyLjU1IDEuMTIzIDEuMjMgMS45MjcgMi4wNTlhNTM3IDUzNyAwIDAgMC01LjY3NSA2LjI5MmMtLjUxLjU3NC0uNjUgMS4zOTMtLjI1MiAyLjA1Yy4yNjguNDQyLjYyMi45NDQgMS4wNDYgMS4zNTljLjQuMzkxLjgzNi42OTcgMS4yMTguOTI0Yy42Mi4zNjcgMS4zNzguMjE4IDEuOTE4LS4yNmMxLjQzNy0xLjI3MSA0LjM0Ni0zLjg2MiA2LjM5OC01LjhhNzEgNzEgMCAwIDAgMi4yNTUgMi4wM2MxLjAwOS44NjYgMi4zNy4zMiAyLjU2LTFjLjY0Mi00LjQ1OC4zMTktNy42NTguMDUyLTkuMjNhMS41NyAxLjU3IDAgMCAwLTEuMzM2LTEuMzA4Yy0xLjU3Mi0uMjI5LTQuNzYzLS40NzItOS4xODIuMjg2TTE5Ljg5OSAzMS45NmMtLjEwNC0yLjEzNC0xLjcyNS0zLjc1NS0zLjg1OS0zLjg1OUE5NCA5NCAwIDAgMCAxMS41IDI4Yy0xLjg0OSAwLTMuMzUzLjA0My00LjU0LjEwMWMtMi4xMzQuMTA0LTMuNzU1IDEuNzI1LTMuODU5IDMuODU5QTkzIDkzIDAgMCAwIDMgMzYuNWMwIDEuODQ5LjA0MyAzLjM1My4xMDEgNC41NGMuMTA0IDIuMTM0IDEuNzI1IDMuNzU1IDMuODU5IDMuODU5YzEuMTg3LjA1OCAyLjY5MS4xMDEgNC41NC4xMDFzMy4zNTMtLjA0MyA0LjU0LS4xMDFjMi4xMzQtLjEwNCAzLjc1NS0xLjcyNSAzLjg1OS0zLjg1OWMuMDU4LTEuMTg3LjEwMS0yLjY5MS4xMDEtNC41NHMtLjA0My0zLjM1My0uMTAxLTQuNTQiLz48L2c+PC9zdmc+",
+  "description": "相对定位布局容器，子组件可自由拖拽定位、自由摆放位置，支持绝对定位子项层级管理，适合画布、自定义排版、自由拖拽布局等场景",
+  "tags": [
+    "容器",
+    "相对定位",
+    "绝对定位",
+    "自由布局",
+    "拖拽布局"
+  ],
+  "category": "容器",
+  "version": "1.0.0",
+  "author": "LiuHan",
+  "visualConfig": {
+    "thumbnail": "供base64 图片，描述到页面后显示的样子，一般要额外提供",
+    "preferredWidth": 360,
+    "preferredHeight": 240,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "overflow",
+      "description": "是否隐藏超出容器范围的子项内容",
+      "label": "溢出隐藏",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "children",
+      "label": "子项",
+      "control": "children",
+      "type": "children",
+      "hidden": true
+    }
+  ],
+  "events": [],
+  "childStyles": [
+    {
+      "name": "x",
+      "description": "子项相对于容器的横向定位坐标（单位：像素）",
+      "label": "X坐标",
+      "control": "number",
+      "type": "number",
+      "defaultValue": 0
+    },
+    {
+      "name": "y",
+      "description": "子项相对于容器的纵向定位坐标（单位：像素）",
+      "label": "Y坐标",
+      "control": "number",
+      "type": "number",
+      "defaultValue": 0
+    },
+    {
+      "name": "width",
+      "description": "子项的宽度（单位：像素）",
+      "label": "宽度",
+      "control": "number",
+      "type": "number"
+    },
+    {
+      "name": "height",
+      "description": "子项的高度（单位：像素）",
+      "label": "高度",
+      "control": "number",
+      "type": "number"
+    }
+  ]
+}

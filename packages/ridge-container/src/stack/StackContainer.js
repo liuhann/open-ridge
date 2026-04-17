@@ -21,7 +21,7 @@ export default class StackContainer extends BaseContainer {
   // 挂载完成后的初始化
   async mounted () {
     this.containerEl.className = this.getContainerClassName()
-    this.forceUpdateChildren = true
+    this.forceUpdateChildren = false
 
     if (!this.isEditor) {
       this.updateChildrenVisibility()
@@ -84,28 +84,8 @@ export default class StackContainer extends BaseContainer {
       height: '100%',
       position: 'absolute',
       left: 0,
-      top: 0,
-      zIndex: this.getChildZIndex(style) // 提取为独立方法
+      top: 0
     }
-  }
-
-  // 获取子节点的 z-index
-  getChildZIndex (style) {
-    // 如果没有指定 zIndex，则使用元素在父容器中的顺序
-    if (style?.zIndex !== undefined) {
-      return style.zIndex
-    }
-
-    // 默认使用 DOM 顺序
-    if (style._node && style._node.el) {
-      const parent = style._node.el.parentElement
-      if (parent) {
-        const children = Array.from(parent.children)
-        return children.indexOf(style._node.el)
-      }
-    }
-
-    return 0
   }
 
   // 销毁时清理
