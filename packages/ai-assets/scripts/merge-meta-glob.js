@@ -1,17 +1,23 @@
-// merge-meta-glob.js
 const fs = require('fs')
 const path = require('path')
 const glob = require('glob')
+const { copyFileSync } = require('fs')
 
 /**
  * 使用 glob 模式匹配所有 meta.json 文件并合并
  * @param {string} pattern - glob 模式
  * @param {string} outputFile - 输出文件路径
+ * @param {string} copyTargetPath - 复制目标路径（可选）
  */
-async function mergeMetaJsonWithGlob (pattern, outputFile) {
+async function mergeMetaJsonWithGlob (pattern, outputFile, copyTargetPath) {
   console.log(`🔍 搜索模式: ${pattern}`)
+  console.log(`📤 输出文件: ${outputFile}`)
+  if (copyTargetPath) {
+    console.log(`📋 生成后将复制到: ${copyTargetPath}\n`)
+  } else {
+    console.log('📋 不执行复制操作\n')
+  }
 
-  // 使用 glob 查找文件
   glob(pattern, (err, files) => {
     if (err) {
       console.error('❌ 搜索文件时出错:', err.message)
@@ -29,13 +35,11 @@ async function mergeMetaJsonWithGlob (pattern, outputFile) {
     let successCount = 0
     let errorCount = 0
 
-    // 处理每个文件
     files.forEach((file, index) => {
       try {
         const content = fs.readFileSync(file, 'utf8')
         const data = JSON.parse(content)
 
-        // 添加文件信息
         const enhancedData = {
           ...data,
           _meta: {
@@ -46,18 +50,13 @@ async function mergeMetaJsonWithGlob (pattern, outputFile) {
         }
 
         if (Array.isArray(data)) {
-          // 如果文件内容是数组
           data.forEach((item, i) => {
             mergedArray.push({
               ...item,
-              _meta: {
-                filePath: file,
-                index: i
-              }
+              _meta: { filePath: file, index: i }
             })
           })
         } else {
-          // 如果文件内容是对象
           mergedArray.push(enhancedData)
         }
 
@@ -66,26 +65,49 @@ async function mergeMetaJsonWithGlob (pattern, outputFile) {
       } catch (error) {
         errorCount++
         console.error(`  [${index + 1}/${files.length}] ✗ ${file}: ${error.message}`)
-
-        mergedArray.push({
-          _error: error.message,
-          _meta: { filePath: file }
-        })
+        mergedArray.push({ _error: error.message, _meta: { filePath: file } })
       }
     })
 
+    // 读取 package.json
     const packageJSON = fs.readFileSync('./package.json', 'utf8')
     const packageJSONObject = JSON.parse(packageJSON)
 
     // 写入输出文件
-    fs.writeFileSync(outputFile, JSON.stringify({
-      name: packageJSONObject.name,
-      version: packageJSONObject.version,
-      schemaVersion: '2.0',
-      lastUpdated: new Date(),
-      generatedBy: 'ridge-ui-cli',
-      components: mergedArray
-    }, null, 2))
+    fs.writeFileSync(
+      outputFile,
+      JSON.stringify(
+        {
+          name: packageJSONObject.name,
+          version: packageJSONObject.version,
+          schemaVersion: '2.0',
+          lastUpdated: new Date(),
+          generatedBy: 'ridge-ui-cli',
+          components: mergedArray
+        },
+        null,
+        2
+      )
+    )
+
+    // ======================
+    // 关键：自动复制到目标路径
+    // ======================
+    if (copyTargetPath) {
+      try {
+        // 确保目标目录存在
+        const targetDir = path.dirname(copyTargetPath)
+        if (!fs.existsSync(targetDir)) {
+          fs.mkdirSync(targetDir, { recursive: true })
+        }
+
+        // 执行复制
+        copyFileSync(outputFile, copyTargetPath)
+        console.log(`\n✅ 已复制文件到: ${copyTargetPath}`)
+      } catch (err) {
+        console.error(`\n❌ 复制文件失败: ${err.message}`)
+      }
+    }
 
     console.log('\n' + '='.repeat(50))
     console.log('✅ 合并完成！')
@@ -98,14 +120,10 @@ async function mergeMetaJsonWithGlob (pattern, outputFile) {
   })
 }
 
-// 安装 glob
-console.log('需要先安装 glob 模块:')
-console.log('npm install glob')
-console.log('或')
-console.log('yarn add glob\n')
+// ========== 命令行参数解析 ==========
+const args = process.argv.slice(2)
+const pattern = args[0] || '**/*.meta.json'
+const outputFile = args[1] || './meta.json'
+const copyTargetPath = args[2] || '' // 第三个参数：复制目标路径
 
-// 使用示例
-mergeMetaJsonWithGlob(
-  '**/meta.json', // 查找所有目录下的 meta.json
-  './meta.json'
-)
+mergeMetaJsonWithGlob(pattern, outputFile, copyTargetPath)

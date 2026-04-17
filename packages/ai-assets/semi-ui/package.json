@@ -1,0 +1,12 @@
+{
+  "name": "@douyinfe/semi-ui",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "meta": "node ../scripts/merge-meta-glob.js **/*.meta.json ./semi-ui.json ../../../public/npm/ridge-externals/meta/semi-ui.json"
+  }
+}

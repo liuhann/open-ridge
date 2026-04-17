@@ -12,7 +12,7 @@
   "files": [
     "dist",
     "icons",
-    "components-metadata.json"
+    "meta.json"
   ],
   "author": "Ridge System",
   "license": "MIT",

@@ -35,19 +35,17 @@ export default class EditorElement extends Element {
   // ========================================================================
   getProperties () {
     return {
+      ...super.getProperties(),
       __isEdit: true,
       __el: this.el,
-      __composite: this.composite,
-      ...this.config.props,
-      ...this.properties,
-      children: this.children
+      __composite: this.composite
     }
   }
 
   updateConfig (config) {
     merge(this.config, config)
     this.style = { ...this.config.style }
-    this.properties = { ...this.config.props }
+    // this.properties = { ...this.config.props }
     this.updateProps()
     this.updateStyle()
   }
@@ -127,10 +125,10 @@ export default class EditorElement extends Element {
   initPropsOnCreate () {
     for (const prop of this.getPropDefinations()) {
       if (!prop.name) continue
-      if (prop.value !== undefined && this.config.props[prop.name] === undefined) {
-        this.config.props[prop.name] = prop.value
+      if (prop.defaultValue !== undefined && this.config.props[prop.name] === undefined) {
+        this.config.props[prop.name] = prop.defaultValue
       }
-      if (prop.name === 'children' || prop.type === 'slot') {
+      if (prop.name === 'children' && prop.type === 'children') {
         this.config.props.children ||= []
         this.children ||= []
       }

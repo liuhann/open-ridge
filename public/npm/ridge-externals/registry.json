@@ -53,6 +53,7 @@
     "title": "SemiUI",
     "icon": "ridge-externals/icons/semi.png",
     "dependencies": ["react", "react-dom"],
+    "meta": "ridge-externals/meta/semi-ui.json",
     "dist": ["dist/umd/semi-ui.min.js", "dist/css/semi.min.css"],
     "category": "interaction",
     "type": "ui",
@@ -79,7 +80,7 @@
     "title": "布局组件",
     "icon": "ridge-container/icons/GlyphsPolyGrid1.svg",
     "dist": ["dist/ridge-container.umd.min.js"],
-    "meta": "ridge-container/components-metadata.json",
+    "meta": "ridge-container/meta.json",
     "category": "container",
     "type": "container",
     "description": "容器组件"

@@ -80,25 +80,40 @@ class Loader {
   }
 
   getComponentFromGlobalVar (packageName, componentPath) {
-    // 查找组件包的externals配置
+  // 查找组件包的externals配置
     const packageConfig = this.packageMap.get(packageName)
 
     if (!packageConfig) {
       console.error('对应组件包未定义:', packageName)
       return null
     }
-    const globalVar = packageConfig.root
 
-    if (window[globalVar]) {
-      if (!window[globalVar][componentPath]) {
-        console.error('组件在组件包中不存在', globalVar, componentPath)
-        return null
-      } else {
-        return window[globalVar][componentPath]
-      }
-    } else {
+    const globalVar = packageConfig.root
+    const root = window[globalVar]
+
+    if (!root) {
       return null
     }
+
+    // ==============================================
+    // 核心兼容逻辑：支持 Button / Typography.Text
+    // ==============================================
+    function getNested (obj, path) {
+      if (!obj || !path) return obj
+      // 按 . 拆分路径，逐级获取
+      return path.split('.').reduce((target, key) => {
+        return target && target[key] ? target[key] : undefined
+      }, obj)
+    }
+
+    const component = getNested(root, componentPath)
+
+    if (!component) {
+      console.error('组件在组件包中不存在', globalVar, componentPath)
+      return null
+    }
+
+    return component
   }
 
   /**

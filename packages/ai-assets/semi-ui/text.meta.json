@@ -1,0 +1,174 @@
+{
+  "name": "Typography.Text",
+  "title": "文本",
+  "icon": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNSA1SDE5TDE3IDE5SDdMNSA1WiIgc3Ryb2tlPSIjNEU1OTY2IiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJNOCAxMkgxNiIgc3Ryb2tlPSIjNEU1OTY2IiBzdHJva2Utd2lkdGg9IjIiLz48L3N2Zz4=",
+  "description": "基础文本组件，用于展示普通文字内容，支持加粗、删除线、下划线、省略、可复制、链接、不同颜色与大小等样式",
+  "tags": [
+    "文本",
+    "展示",
+    "基础组件",
+    "排版"
+  ],
+  "category": "展示组件",
+  "version": "1.0.0",
+  "author": "LiuHan",
+  "visualConfig": {
+    "thumbnail": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzYwIiBoZWlnaHQ9IjI0MCIgdmlld0JveD0iMCAwIDM2MCAyNDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjM2MCIgaGVpZ2h0PSIyNDAiIGZpbGw9IiNGRkZGRkYiLz48dGV4dCB4PSI1MCIgeT0iMTIwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiM0RTU5NjYiPuWKoOeUqOS8lTx0ZXh0Pjwvc3ZnPg==",
+    "preferredWidth": 240,
+    "preferredHeight": 32,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "children",
+      "description": "显示的文本内容",
+      "label": "文本内容",
+      "type": "string",
+      "defaultValue": "文本内容"
+    },
+    {
+      "name": "code",
+      "description": "是否以代码样式展示",
+      "label": "代码样式",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "copyable",
+      "description": "是否允许点击复制文本",
+      "label": "可复制",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "delete",
+      "description": "是否显示删除线",
+      "label": "删除线",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "disabled",
+      "description": "是否置灰禁用状态",
+      "label": "禁用",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "ellipsis",
+      "description": "内容超长时自动省略",
+      "label": "自动省略",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "link",
+      "description": "是否作为链接展示",
+      "label": "链接样式",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "mark",
+      "description": "是否高亮标记",
+      "label": "高亮标记",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "size",
+      "description": "文本大小",
+      "label": "大小",
+      "control": "select",
+      "type": "string",
+      "options": [
+        {
+          "label": "标准",
+          "value": "normal"
+        },
+        {
+          "label": "小",
+          "value": "small"
+        },
+        {
+          "label": "继承父级",
+          "value": "inherit"
+        }
+      ],
+      "defaultValue": "normal"
+    },
+    {
+      "name": "strong",
+      "description": "是否加粗",
+      "label": "加粗",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "type",
+      "description": "文本颜色类型",
+      "label": "颜色类型",
+      "control": "select",
+      "type": "string",
+      "options": [
+        {
+          "label": "主要",
+          "value": "primary"
+        },
+        {
+          "label": "次要",
+          "value": "secondary"
+        },
+        {
+          "label": "三级",
+          "value": "tertiary"
+        },
+        {
+          "label": "四级",
+          "value": "quaternary"
+        },
+        {
+          "label": "警告",
+          "value": "warning"
+        },
+        {
+          "label": "危险",
+          "value": "danger"
+        },
+        {
+          "label": "成功",
+          "value": "success"
+        }
+      ],
+      "defaultValue": "primary"
+    },
+    {
+      "name": "underline",
+      "description": "是否显示下划线",
+      "label": "下划线",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "weight",
+      "description": "字体粗细数值",
+      "label": "字重",
+      "control": "number",
+      "type": "number",
+      "min": 100,
+      "max": 900,
+      "defaultValue": 400
+    }
+  ],
+  "events": []
+}

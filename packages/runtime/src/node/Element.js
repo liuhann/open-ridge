@@ -44,12 +44,16 @@ export default class Element extends BaseNode {
   getEl () { return this.el }
 
   getProperties () {
-    return {
+    const properties = {
       ...this.config.props,
       ...this.properties,
-      ...this.events,
-      children: this.children
+      ...this.events
     }
+
+    if (typeof properties.children !== 'string') {
+      properties.children = this.children
+    }
+    return properties
   }
 
   getStyle () {
@@ -258,11 +262,6 @@ export default class Element extends BaseNode {
 
   // 修改：更新属性时使用计算后的值
   updateProps (props) {
-    if (props) {
-      // 如果有传入props，直接合并到config.props（用于编辑态设置固定值）
-      Object.assign(this.config.props, props)
-    }
-
     // 计算运行时属性
     const runtimeProps = this.computeRuntimeProperties()
 
@@ -449,7 +448,7 @@ export default class Element extends BaseNode {
 
   // 新增：计算运行时属性
   computeRuntimeProperties () {
-    const runtimeProps = { ...this.config.props }
+    const runtimeProps = {}
 
     // 合并动态属性（propEx）
     if (this.config.propEx) {
