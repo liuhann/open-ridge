@@ -3,8 +3,8 @@ import EditorElement from './EditorElement.js'
 import { parseStoreMeta, searchCodeWithComment, parseSourceWithComments } from './editorUtils.js'
 import { nanoid } from '../utils/string'
 import { cloneDeep, isPlainObject } from 'lodash'
-import { hasUrlProtocol, removeUrlProtocol, cleanMultiSlash } from 'ridgejs/src/utils/string.js'
-import { loadLocalJsModule } from 'ridgejs/src/utils/load.js'
+// import { hasUrlProtocol, removeUrlProtocol, cleanMultiSlash } from 'ridgejs/src/utils/string.js'
+// import { loadLocalJsModule } from 'ridgejs/src/utils/load.js'
 
 /**
  * 编辑器下Composite，提供额外Element编辑和更新能力
@@ -15,30 +15,6 @@ class EditorComposite extends Composite {
     this.appService = props.appService
     this.isEdit = true
     this.CLASS_LIST = ['viewport-container', 'is-edit']
-  }
-
-  async loadJSModule (jsPath) {
-    if (hasUrlProtocol(jsPath)) {
-      const jsPathInApp = removeUrlProtocol(jsPath)
-      return loadLocalJsModule(jsPathInApp, {
-        load: async path => {
-          const file = this.appService.getFile(path)
-          if (file) {
-            return file.textContent
-          }
-          return ''
-        }
-      })
-    } else {
-      return super.loadJSModule(jsPath)
-    }
-  }
-
-  createElement ({ config }) {
-    return new EditorElement({
-      config,
-      composite: this
-    })
   }
 
   createNewElement ({ path, meta, config }) {

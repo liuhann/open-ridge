@@ -5,8 +5,8 @@ import BaseNode from './BaseNode'
 import { STORE, PROP } from '../utils/contants.js'
 import { cloneDeep } from '../utils/object.js'
 import Debug from 'debug'
-import { generateUrlFontName, toCSSLength, addJsonSuffix, hasUrlProtocol, removeUrlProtocol, cleanMultiSlash } from '../utils/string'
-import { loadRemoteJsModule } from '../utils/load.js'
+import { generateUrlFontName, toCSSLength, addJsonSuffix, removeUrlProtocol, cleanMultiSlash, isUrlInApp } from '../utils/string'
+import { loadRemoteJsModule, loadLocalJsModule } from '../utils/load.js'
 const debug = Debug('ridge:composite')
 
 /**
@@ -17,20 +17,21 @@ class Composite extends BaseNode {
     id,
     appName,
     path,
+    appService,
     properties,
     config,
     loader
   }) {
     super()
+    this.appService = appService
     this.id = id
     this.path = path
-    this.loader = loader
-    this.baseUrl = loader.baseUrl
     this.appName = appName
+    this.loader = loader
     this.config = config
     this.properties = properties || this.comfig?.properties || {}
     this.CLASS_LIST = ['ridge-composite']
-    this.dataReady = true // 数据层加载完成
+    this.dataReady = false // 数据层加载完成
   }
 
   // 加载页面配置  运行时调用
@@ -78,9 +79,7 @@ class Composite extends BaseNode {
     this.nodes = {}
     // 创建每个组件实例
     for (let i = 0; i < this.config.elements.length; i++) {
-      const node = this.createElement({
-        config: this.config.elements[i]
-      })
+      const node = this.createElement(this.config.elements[i])
       this.nodes[node.getId()] = node
     }
     this.initChildren()
@@ -137,7 +136,7 @@ class Composite extends BaseNode {
   }
 
   getBlobUrl (url) {
-    return this.context.getBlobUrl(url, this.packageName)
+    return this.loader.getBlobUrl(url, this.packageName)
   }
 
   // 构造页面树结构
@@ -313,9 +312,22 @@ class Composite extends BaseNode {
   }
 
   async loadJSModule (jsPath) {
-    if (hasUrlProtocol(jsPath)) {
+    if (isUrlInApp(jsPath)) {
       const jsPathInApp = removeUrlProtocol(jsPath)
-      return loadRemoteJsModule(cleanMultiSlash(`${this.appName}/${jsPathInApp}`))
+      if (this.appService) {
+        return loadLocalJsModule(jsPathInApp, {
+          load: async path => {
+            const file = this.appService.getFile(path)
+            if (file) {
+              return file.textContent
+            }
+            return ''
+          }
+        })
+      } else {
+        const jsPathInApp = removeUrlProtocol(jsPath)
+        return loadRemoteJsModule(cleanMultiSlash(`${this.appName}/${jsPathInApp}`))
+      }
     } else {
       return loadRemoteJsModule(jsPath)
     }

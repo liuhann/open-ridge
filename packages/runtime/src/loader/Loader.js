@@ -2,7 +2,7 @@ import debug from 'debug'
 import memoize from 'lodash/memoize'
 
 import { loadCss, loadWebFont, loadScript, loadJSON } from '../utils/load'
-import { addStringPrefix, extractPackageAndPath } from '../utils/string'
+import { addStringPrefix, extractPackageAndPath, concatToPath, isUrlInApp, removeUrlProtocol } from '../utils/string'
 const log = debug('ridge:loader')
 
 const trace = window.showError || function () {}
@@ -196,6 +196,22 @@ class Loader {
 
   async loadJSON (path) {
     return await loadJSON(addStringPrefix(this.baseUrl, path))
+  }
+
+  /**
+     * 获取图片、视频等二进制类型的加载地址
+     * @param {*} url 地址
+     * @param {*} packageName 应用包名称
+     * @returns
+     */
+  getBlobUrl (url, packageName) {
+    if (url.startsWith('http') || url.startsWith('data:') || url.startsWith('blob:') || url.startsWith('/')) {
+      return url
+    } else if (isUrlInApp(url)) {
+      return concatToPath(this.baseUrl, packageName, removeUrlProtocol(url))
+    } else {
+      return concatToPath(this.baseUrl, url)
+    }
   }
 }
 

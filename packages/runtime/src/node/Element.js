@@ -1,8 +1,6 @@
-import debugGen from 'debug'
 import ReactRenderer from '../render/ReactRenderer'
 import VanillaRender from '../render/VanillaRenderer'
 import createReactElement from '../render/createReactElement.js'
-import { STORE, PROP } from '../utils/contants.js'
 import { nanoid, ensureLeading } from '../utils/string'
 import BaseNode from './BaseNode.js'
 import {

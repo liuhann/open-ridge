@@ -205,6 +205,10 @@ const hasUrlProtocol = (url) => {
   return protocolReg.test(url.trim()) // 去除首尾空格后判断，避免空格干扰
 }
 
+const isUrlInApp = url => {
+  return url && url.startsWith('app://')
+}
+
 const convertToValidVariableName = str => {
   // 1. 移除所有非字母数字的字符，并用空字符串替换
   // 2. 确保变量名不以数字开头（如果以数字开头，前面添加下划线）
@@ -251,7 +255,31 @@ const extractPackageAndPath = (componentPath) => {
   return { packageName, componentPath: path }
 }
 
+/**
+ * 智能拼接多个路径，自动处理多余斜杠，保留协议头
+ * @param  {...string} paths 路径片段
+ * @returns {string} 拼接后的完整路径
+ */
+const concatToPath = (...args) => {
+  // 过滤掉空、undefined、null 等无效值
+  const paths = args.filter(Boolean)
+
+  if (paths.length === 0) return ''
+
+  // 拼接逻辑：处理协议 + 普通路径
+  return paths.reduce((prev, curr) => {
+    // 如果上一段是协议结尾（如 https://），直接拼接
+    if (prev.match(/^\w+:\/\/$/)) {
+      return prev + curr
+    }
+    // 去掉上一段末尾的 /，去掉下一段开头的 /，中间补一个 /
+    return prev.replace(/\/$/, '') + '/' + curr.replace(/^\//, '')
+  })
+}
+
 export {
+  isUrlInApp,
+  concatToPath,
   extractPackageAndPath,
   cleanMultiSlash,
   hasUrlProtocol,

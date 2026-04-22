@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import { localRepoService } from './app.store'
 
 import { cloneDeep } from 'ridgejs/src/utils/object'
+import { Composite, loader } from 'ridgejs'
 
 const editorStore = create((set, get) => ({
   // 页面编辑状态
@@ -324,16 +325,15 @@ const editorStore = create((set, get) => ({
     setZoom(targetZoom)
   },
 
-  previewPage: async (id, page) => {
-    const previewComposite = EditorComposite({
+  previewPage: async (config) => {
+    const previewComposite = new Composite({
       loader,
+      appService: localRepoService.getCurrentAppService(),
       appName: 'local',
-      path,
-      appService,
-      config: pageContent
+      config
     })
 
-    await editorComposite.mount(this.getViewPortEl())
+    await previewComposite.mount(document.querySelector('.preview-view-port'))
   }
 }))
 

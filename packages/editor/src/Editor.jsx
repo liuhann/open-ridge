@@ -8,7 +8,6 @@ import {
   ResizeItem,
   ResizeHandler
 } from '@douyinfe/semi-ui'
-import { IconSidebar } from '@douyinfe/semi-icons'
 
 import ConfigPanel from './panels/config/ConfigPanel.jsx'
 import DialogCodeEdit from './panels/files/DialogCodeEdit.jsx'

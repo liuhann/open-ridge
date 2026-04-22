@@ -3,6 +3,8 @@ import { Tree, Typography, Button } from '@douyinfe/semi-ui'
 import './file-list.less'
 
 import appStore from '../../store/app.store.js'
+import editorStore from '../../store/editor.store'
+
 import { getAppTreeData } from './utils.js'
 import { ICON_COMMON_START } from '../../icons/icons'
 const { Text } = Typography
@@ -14,7 +16,7 @@ const AppPagePreviewList = ({ onRunPage }) => {
 
   const currentAppName = appStore((state) => state.currentAppName)
   const currentAppFilesTree = appStore((state) => state.currentAppFilesTree)
-  const previewPage = appStore((state) => state.previewPage)
+  const previewPage = editorStore((state) => state.previewPage)
 
   // 转换树数据，只保留目录和页面节点
   const transformToPageTree = useMemo(() => {
@@ -94,7 +96,7 @@ const AppPagePreviewList = ({ onRunPage }) => {
               icon={ICON_COMMON_START}
               onClick={(e) => {
                 e.stopPropagation()
-                previewPage(data)
+                previewPage(data.raw.json)
               }}
               className='run-btn'
             >
