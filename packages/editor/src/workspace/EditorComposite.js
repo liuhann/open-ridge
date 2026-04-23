@@ -17,6 +17,13 @@ class EditorComposite extends Composite {
     this.CLASS_LIST = ['viewport-container', 'is-edit']
   }
 
+  createElement (config) {
+    return new EditorElement({
+      composite: this,
+      config
+    })
+  }
+
   createNewElement ({ path, meta, config }) {
     const div = document.createElement('div')
     // 从meta生成元素配置

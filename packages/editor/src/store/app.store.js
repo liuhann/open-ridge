@@ -25,7 +25,7 @@ const useStore = create((set, get) => ({
     const appList = await localRepoService.getLocalAppList()
 
     if (appList.length === 0) { // 无应用默认创建
-      if (!localRepoService.importedHello()) {
+      if (!window.localStorage.getItem('ridge-imported-hello')) {
         await importAppFile(helloZipApp)
         window.localStorage.setItem('ridge-imported-hello', true)
       }
@@ -68,7 +68,12 @@ const useStore = create((set, get) => ({
   importAppFile: async file => {
     const newAppId = alphabetid(6)
     const appService = new ApplicationService(newAppId)
-    await appService.importAppArchive(file)
+
+    // 👇 这段代码 开发环境 / build 生产环境 都能正常运行
+    const response = await fetch(file)
+    const blob = await response.blob()
+
+    await appService.importAppArchive(blob)
 
     await localRepoService.persistanceApp(newAppId, (await appService.getAppPackageJSON()).description)
 

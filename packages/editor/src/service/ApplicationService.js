@@ -444,11 +444,22 @@ export default class ApplicationService {
 
   async updateAppPackageJSON (packageJSONObject) {
     const file = await this.getFile('/package.json')
+
     if (!file) {
-      await this.createFile(-1, 'package.json', new File([JSON.stringify(packageJSONObject, null, 2), 'package.json']), 'text/json')
+    // 👇 修复：只传入 JSON 内容，不要加文件名
+      const content = JSON.stringify(packageJSONObject, null, 2)
+      await this.createFile(
+        -1,
+        'package.json',
+        new File([content], 'package.json'), // ✅ 正确用法
+        'text/json'
+      )
     } else {
-      await this.updateFileContent(file.id, JSON.stringify(packageJSONObject, null, 2))
+    // 更新已有文件
+      const content = JSON.stringify(packageJSONObject, null, 2)
+      await this.updateFileContent(file.id, content)
     }
+
     this.appPackageJSONObject = packageJSONObject
   }
 

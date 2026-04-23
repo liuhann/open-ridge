@@ -247,7 +247,12 @@ export default class EditorElement extends Element {
   // ========================================================================
   exportJSON () {
     const json = cloneDeep(this.config)
-    json.props.children = this.children?.map(c => c.getId()) || []
+
+    // 子节点是组件
+    if (this.getPropDefination('children')?.type === 'children') {
+      json.props.children = this.children?.map(c => c.getId()) || []
+    }
+    // deprecated
     json.slots = this.getSlotElements()
     if (this.componentMeta?.portalled) {
       json.style.portalled = true

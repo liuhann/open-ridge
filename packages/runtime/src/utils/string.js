@@ -206,7 +206,7 @@ const hasUrlProtocol = (url) => {
 }
 
 const isUrlInApp = url => {
-  return url && url.startsWith('app://')
+  return url && (url.startsWith('app://') || url.startsWith('composite://'))
 }
 
 const convertToValidVariableName = str => {
