@@ -141,6 +141,14 @@ export default class ReactRenderer extends Renderer {
   }
 
   static isComponent (comp) {
-    return typeof comp === 'function' || !!comp.prototype?.isReactComponent
+    if (!comp) return false
+
+    // 1. 函数 / class 组件
+    if (typeof comp === 'function') {
+      return true
+    }
+    // 2. forwardRef / memo 包装组件
+    return !!(comp.$$typeof && comp.render)
+    // return typeof comp === 'function' || !!comp.prototype?.isReactComponent
   }
 }

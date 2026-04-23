@@ -1,0 +1,161 @@
+{
+  "name": "Button",
+  "title": "按钮",
+  "icon": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTgiIGhlaWdodD0iMTAiIHg9IjMiIHk9IjciIHJ4PSIyIiBzdHJva2U9IiM0RTU5NjYiIHN0cm9rZS13aWR0aD0iMiIgZmlsbD0iI2YwZjRmNiIvPjwvc3ZnPg==",
+  "description": "基础按钮组件，用于页面点击操作、提交表单、确认取消等交互场景",
+  "tags": [
+    "按钮",
+    "交互",
+    "基础组件"
+  ],
+  "category": "基础组件",
+  "version": "1.0.0",
+  "author": "LiuHan",
+  "visualConfig": {
+    "thumbnail": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzYwIiBoZWlnaHQ9IjI0MCIgdmlld0JveD0iMCAwIDM2MCAyNDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjM2MCIgaGVpZ2h0PSIyNDAiIGZpbGw9IiNGRkZGRkYiLz48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjQwIiB4PSIxMzAiIHk9IjEwMCIgcng9IjQiIGZpbGw9IiM0RTlFRjYiLz48dGV4dCB4PSIxODAiIHk9IjEyMCIgZmlsbD0iI2ZmZiIgZm9udC1mYW1saT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIHRleHQtYW5jaG9yPSJtaWRkbGUiPuWKoOmAmiA8L3RleHQ+PC9zdmc+",
+    "preferredWidth": 50,
+    "preferredHeight": 30,
+    "resizable": false,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "children",
+      "description": "按钮上显示的文字",
+      "label": "按钮文字",
+      "type": "string",
+      "defaultValue": "按钮"
+    },
+    {
+      "name": "aria-label",
+      "description": "按钮的描述标签（辅助阅读使用）",
+      "label": "描述标签",
+      "type": "string",
+      "defaultValue": ""
+    },
+    {
+      "name": "block",
+      "description": "是否占满整行宽度",
+      "label": "占满整行",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "disabled",
+      "description": "是否禁用按钮",
+      "label": "禁用",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "loading",
+      "description": "是否显示加载中状态",
+      "label": "加载中",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "size",
+      "description": "按钮大小",
+      "label": "尺寸",
+      "control": "select",
+      "type": "string",
+      "options": [
+        {
+          "label": "大",
+          "value": "large"
+        },
+        {
+          "label": "默认",
+          "value": "default"
+        },
+        {
+          "label": "小",
+          "value": "small"
+        }
+      ],
+      "defaultValue": "default"
+    },
+    {
+      "name": "theme",
+      "description": "按钮显示风格",
+      "label": "显示风格",
+      "control": "select",
+      "type": "string",
+      "options": [
+        {
+          "label": "实色背景",
+          "value": "solid"
+        },
+        {
+          "label": "无背景",
+          "value": "borderless"
+        },
+        {
+          "label": "浅背景",
+          "value": "light"
+        },
+        {
+          "label": "边框样式",
+          "value": "outline"
+        }
+      ],
+      "defaultValue": "light"
+    },
+    {
+      "name": "type",
+      "description": "按钮用途类型",
+      "label": "类型",
+      "control": "select",
+      "type": "string",
+      "options": [
+        {
+          "label": "主要",
+          "value": "primary"
+        },
+        {
+          "label": "次要",
+          "value": "secondary"
+        },
+        {
+          "label": "三级",
+          "value": "tertiary"
+        },
+        {
+          "label": "警告",
+          "value": "warning"
+        },
+        {
+          "label": "危险",
+          "value": "danger"
+        }
+      ],
+      "defaultValue": "primary"
+    }
+  ],
+  "events": [
+    {
+      "name": "onClick",
+      "description": "点击按钮时触发",
+      "label": "点击"
+    },
+    {
+      "name": "onMouseDown",
+      "description": "鼠标按下时触发",
+      "label": "鼠标按下"
+    },
+    {
+      "name": "onMouseEnter",
+      "description": "鼠标移入时触发",
+      "label": "鼠标移入"
+    },
+    {
+      "name": "onMouseLeave",
+      "description": "鼠标移出时触发",
+      "label": "鼠标移出"
+    }
+  ]
+}

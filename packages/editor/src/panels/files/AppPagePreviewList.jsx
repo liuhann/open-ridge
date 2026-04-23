@@ -88,7 +88,7 @@ const AppPagePreviewList = ({ onRunPage }) => {
           {isPageNode ? label.replace('.json', '') : label}
         </Text>
 
-        {isPageNode && (
+        {/* {isPageNode && (
           <div
             className={`page-run-button ${showRunButton ? 'visible' : 'hidden'}`}
           >
@@ -103,13 +103,14 @@ const AppPagePreviewList = ({ onRunPage }) => {
               运行
             </Button>
           </div>
-        )}
+        )} */}
       </div>
     )
   }
 
   const handleNodeSelect = (key, selected, node) => {
     setCurrentSelected(node)
+    previewPage(key)
   }
 
   return (

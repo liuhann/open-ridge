@@ -325,15 +325,20 @@ const editorStore = create((set, get) => ({
     setZoom(targetZoom)
   },
 
-  previewPage: async (config) => {
-    const previewComposite = new Composite({
-      loader,
-      appService: localRepoService.getCurrentAppService(),
-      appName: 'local',
-      config
-    })
+  previewPage: async (id) => {
+    const appService = localRepoService.getCurrentAppService()
 
-    await previewComposite.mount(document.querySelector('.preview-view-port'))
+    const file = await appService.getFile(id)
+
+    if (file) {
+      const previewComposite = new Composite({
+        loader,
+        appService: localRepoService.getCurrentAppService(),
+        appName: 'local',
+        config: cloneDeep(file.json)
+      })
+      await previewComposite.mount(document.querySelector('.preview-view-port'))
+    }
   }
 }))
 

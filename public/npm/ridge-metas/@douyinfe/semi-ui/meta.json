@@ -1,8 +1,7 @@
 {
   "name": "@douyinfe/semi-ui",
-  "version": "1.0.0",
   "schemaVersion": "2.0",
-  "lastUpdated": "2026-04-22T09:41:30.338Z",
+  "lastUpdated": "2026-04-22T11:01:27.279Z",
   "generatedBy": "ridge-ui-cli",
   "components": [
     {
@@ -164,12 +163,7 @@
           "description": "鼠标移出时触发",
           "label": "鼠标移出"
         }
-      ],
-      "_meta": {
-        "filePath": "button.meta.json",
-        "fileName": "button.meta.json",
-        "dir": "."
-      }
+      ]
     },
     {
       "name": "Input",
@@ -410,12 +404,7 @@
           "description": "输入法结束 composing",
           "label": "输入法结束"
         }
-      ],
-      "_meta": {
-        "filePath": "input.meta.json",
-        "fileName": "input.meta.json",
-        "dir": "."
-      }
+      ]
     },
     {
       "name": "Typography.Numeral",
@@ -639,12 +628,7 @@
           "defaultValue": false
         }
       ],
-      "events": [],
-      "_meta": {
-        "filePath": "number.meta.json",
-        "fileName": "number.meta.json",
-        "dir": "."
-      }
+      "events": []
     },
     {
       "name": "Typography.Paragraph",
@@ -814,12 +798,7 @@
           "defaultValue": false
         }
       ],
-      "events": [],
-      "_meta": {
-        "filePath": "paragraph.meta.json",
-        "fileName": "paragraph.meta.json",
-        "dir": "."
-      }
+      "events": []
     },
     {
       "name": "Typography.Text",
@@ -993,12 +972,7 @@
           "defaultValue": 400
         }
       ],
-      "events": [],
-      "_meta": {
-        "filePath": "text.meta.json",
-        "fileName": "text.meta.json",
-        "dir": "."
-      }
+      "events": []
     },
     {
       "name": "Typography.Title",
@@ -1192,12 +1166,7 @@
           "defaultValue": "default"
         }
       ],
-      "events": [],
-      "_meta": {
-        "filePath": "title.meta.json",
-        "fileName": "title.meta.json",
-        "dir": "."
-      }
+      "events": []
     }
   ]
 }

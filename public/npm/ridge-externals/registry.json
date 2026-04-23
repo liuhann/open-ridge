@@ -51,7 +51,7 @@
     "version": "2.61.0",
     "root": "SemiUI",
     "title": "SemiUI",
-    "icon": "ridge-externals/icons/semi.png",
+    "icon": "icon.png",
     "dependencies": ["react", "react-dom"],
     "meta": "ridge-externals/meta/semi-ui.json",
     "dist": ["dist/umd/semi-ui.min.js", "dist/css/semi.min.css"],
