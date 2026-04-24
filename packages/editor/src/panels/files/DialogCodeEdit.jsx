@@ -1,4 +1,4 @@
-import React, { useRef, useState, forwardRef, useImperativeHandle } from 'react'
+import React, { useRef, useState, forwardRef, useEffect, useImperativeHandle } from 'react'
 import { SideSheet, Spin, Tabs, TabPane, Modal, Toast, Typography, Button } from '@douyinfe/semi-ui'
 import editorStore from '../../store/editor.store.js'
 // import context from '../../service/RidgeEditorContext.js'
@@ -100,6 +100,7 @@ function downloadTextAsFile (text, filename = 'download.txt', charset = 'utf-8')
 export default forwardRef((props, pref) => {
   const [tabs, setTabs] = useState([])
   const [currentTab, setCurrentTab] = useState('')
+  const saveBtnRef = useRef(null)
 
   const [currentEditText, setCurrentEditText] = useState('')
   const [loading, setLoading] = useState(true)
@@ -119,7 +120,9 @@ export default forwardRef((props, pref) => {
 
     const extensions = [keymap.of([{
       key: 'Mod-s',
-      run: () => handleSave(),
+      run: () => {
+        saveBtnRef.current && saveBtnRef.current()
+      },
       preventDefault: true
     }, indentWithTab]), tooltips({
       position: 'absolute'
@@ -149,6 +152,10 @@ export default forwardRef((props, pref) => {
     }))
     Toast.success('保存成功')
   }
+
+  useEffect(() => {
+    saveBtnRef.current = handleSave
+  }, [handleSave]) // 依赖 handleSave，保证永远最新
 
   // 外部方法：打开文件
   const openFile = async file => {
@@ -242,8 +249,7 @@ export default forwardRef((props, pref) => {
   const hasOpenFile = tabs.length > 0
 
   const onCodeChange = (val, viewUpdate) => {
-    console.log('val:', val)
-
+    setCurrentEditText(val)
     setChanges(Object.assign({ ...changes, [currentTab]: true }))
     setContents(Object.assign({}, contents, {
       [currentTab]: val
@@ -254,6 +260,14 @@ export default forwardRef((props, pref) => {
     return (
       <div className='code-edit-title'>
         <Text className='flex-1'>代码编辑</Text>
+        <Button
+          ref={saveBtnRef}
+          disabled={!hasOpenFile} icon={<i className='bi bi-copy' />} onClick={async () => {
+            handleSave()
+          }}
+        >
+          保存
+        </Button>
         <Button
           disabled={!hasOpenFile}
           icon={<i className='bi bi-copy' />} onClick={async () => {

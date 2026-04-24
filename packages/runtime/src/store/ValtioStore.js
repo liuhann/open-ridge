@@ -84,13 +84,16 @@ export default class RidgeStore {
   // 进行Store初始化
   registerPageStore (StoreModule, properties) {
     log('RegisterPageStore', StoreModule)
-    if (!StoreModule.name) {
+
+    const storeModuleObject = StoreModule.default || StoreModule
+
+    if (!storeModuleObject.name) {
       log('Store Not Registered: No Name')
       return
     }
-    const moduleName = StoreModule.name
+    const moduleName = storeModuleObject.name
 
-    this.storeObjects[moduleName] = new StoreObject(StoreModule, this.composite)
+    this.storeObjects[moduleName] = new StoreObject(storeModuleObject, this.composite)
     this.storeObjects[moduleName].initStore(properties)
   }
 

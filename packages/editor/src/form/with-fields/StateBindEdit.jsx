@@ -13,6 +13,7 @@ const StateBindEdit = withField(({
 
   const storeTreeData = compositeStoreModules.map(storeModule => storeModule.connects)
 
+  console.log('storeTreeData', storeTreeData)
   const [StoreName, type, key] = (value ?? '').split('.')
   const renderSelectState = () => {
     return (
@@ -45,13 +46,13 @@ const StateBindEdit = withField(({
               expandAll
               emptyContent='无可连接动态数据'
               treeData={storeTreeData}
-              onSelect={val => {
-                if (value === val) {
-                  onChange(null)
+               // 👇 核心：Semi UI 正确用法，在 onChange 里做拦截
+              onChange={(val) => {
+                // 只有包含 .state. 或 .computed. 的节点才允许选中
+                if (/\.(state|computed)\./.test(val)) {
+                  onChange(val)
                 }
-              }}
-              onChange={val => {
-                onChange(val)
+                // 不满足条件 → 不做任何操作，等于不能选
               }}
             />
           </TabPane>

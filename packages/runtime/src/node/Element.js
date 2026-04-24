@@ -220,7 +220,7 @@ export default class Element extends BaseNode {
               scopedData: this.getScopedData(),
               eventArgs: act.payload
             }
-            this.composite.store.doStoreAction(act.store, act.method, event)
+            this.composite.store?.doStoreAction(act.store, act.method, event)
           }
         }
       }

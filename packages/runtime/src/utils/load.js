@@ -179,6 +179,13 @@ const loadRemoteJsModule = memoize(async (modulePath) => {
       globalThis.appModules['${moduleUrl}'] = currentModule
     `
   const scriptEl = document.createElement('script')
+  // 屏蔽脚本错误
+  scriptEl.onerror = (e) => {
+    e.preventDefault()
+    e.stopPropagation()
+    return true
+  }
+
   scriptEl.type = 'module'
   // scriptEl.baseURI = '/npm'
   return new Promise((resolve, reject) => {
@@ -257,10 +264,22 @@ const loadLocalJsModule = async (filePath, loader) => {
     const iifsCode = transformES6Text(sourceCode, filePath)
 
     const scriptEl = document.createElement('script')
+
     const textContent = `(function() {
-      ${iifsCode}
-    })()` //
+      try {
+        ${iifsCode}
+      } catch (e) {
+        // 内部错误也吞掉
+      }
+    })()`
     scriptEl.textContent = textContent
+
+    // 屏蔽脚本错误
+    scriptEl.onerror = (e) => {
+      e.preventDefault()
+      e.stopPropagation()
+      return true
+    }
 
     try {
       document.head.append(scriptEl)
@@ -380,5 +399,6 @@ export {
   loadScript,
   loadWebFont,
   loadLocalJsModule,
+  loadRemoteJsModuleLts,
   loadRemoteJsModule
 }
