@@ -248,7 +248,6 @@ const getCompositeEventsDef = composite => {
     Object.entries(node.config.events).forEach(([key, value]) => {
       if (value === 'promoted') {
         const eventName = (node.componentDefinition ? node.componentDefinition.events.find(ev => ev.name === key)?.label : key) ?? key
-
         eventDefinations.push({
           label: node.config.title + '-' + eventName,
           control: 'event',
@@ -271,21 +270,23 @@ const getNodePropDefination = (node, key) => {
 const buildStateConnectTree = (key, value, keyPrefix, parsedLines) => {
   const tree = {
     key: keyPrefix + key,
-    label: searchCodeWithComment(key, parsedLines)
+    label: searchCodeWithComment(key, parsedLines) || key // 容错
   }
 
+  // 递归处理对象
   if (isPlainObject(value)) {
     tree.children = []
-
     for (const k in value) {
       if (!k.startsWith('_')) {
-        tree.children.push(buildStateConnectTree(k, value[k], keyPrefix + key + '.', parsedLines))
+        tree.children.push(
+          buildStateConnectTree(k, value[k], `${keyPrefix}${key}.`, parsedLines)
+        )
       }
     }
   }
+
   return tree
 }
-
 /**
  * 解析store的结构，读取属性、状态、事件等信息
  * 返回树结构以供后续绑定时选择
@@ -293,104 +294,120 @@ const buildStateConnectTree = (key, value, keyPrefix, parsedLines) => {
  * @return { connects = [{key, label, children}], events = [key, label, children] }
  * }
  */
-const parseStoreMeta = jsStoreModule => {
+const parseStoreMeta = (jsStoreModule) => {
   try {
+    const jsStoreObject = jsStoreModule.default || jsStoreModule
+
+    if (!jsStoreObject.name) {
+      console.error('store 必须包含 name 属性', jsStoreModule)
+      return { error: '缺少 name' }
+    }
+
+    const rootName = jsStoreObject.name
+
+    // 绑定树（state、computed、properties）
     const StateBindRootNode = {
-      key: jsStoreModule.name + '.connect',
-      icon: <i className='bi bi-window-dock' />,
-      disabled: false,
-      label: jsStoreModule.label ?? jsStoreModule.name,
+      key: `${rootName}.connect`,
+      label: jsStoreObject.label ?? rootName,
       children: []
     }
+
+    // 事件/动作树（actions）
     const ActionBindRootNode = {
-      key: jsStoreModule.name + '.event',
-      label: jsStoreModule.label ?? jsStoreModule.name,
+      key: `${rootName}.event`,
+      label: jsStoreObject.label ?? rootName,
       children: []
     }
 
-    const parsedLines = parseSourceWithComments(jsStoreModule.jsContent)
+    const parsedLines = jsStoreModule.jsContent
+      ? parseSourceWithComments(jsStoreModule.jsContent)
+      : []
 
-    if (jsStoreModule.properties) {
+    // ------------------------------
+    // 1. properties 解析
+    // ------------------------------
+    if (Array.isArray(jsStoreObject.properties) && jsStoreObject.properties.length) {
       const propNode = {
-        key: jsStoreModule.name + '.properties',
+        key: `${rootName}.properties`,
         label: '属性',
-        children: []
-      }
-      for (const prop of jsStoreModule.properties) {
-        propNode.children.push({
-          key: jsStoreModule.name + '.prop.' + prop.name,
+        children: jsStoreObject.properties.map((prop) => ({
+          key: `${rootName}.prop.${prop.name}`,
           label: prop.label ?? prop.name
-        })
+        }))
       }
-      if (propNode.children.length) {
-        StateBindRootNode.children.push(propNode)
-      }
+      StateBindRootNode.children.push(propNode)
     }
-
-    // 写入状态列表
-    if (jsStoreModule.state) {
+    // ------------------------------
+    // 2. state 解析（支持嵌套对象）
+    // ------------------------------
+    if (jsStoreObject.state && typeof jsStoreObject.state === 'object') {
       const stateNode = {
-        key: jsStoreModule.name + '.state',
+        key: `${rootName}.state`,
         label: '状态',
         children: []
       }
-      let initStateObject = {}
-      if (typeof jsStoreModule.state === 'function') {
-        initStateObject = jsStoreModule.state({})
-      } else if (typeof jsStoreModule.state === 'object') {
-        initStateObject = jsStoreModule.state
-      }
 
-      for (const key of Object.keys(initStateObject)) {
+      const stateObj = jsStoreObject.state
+      for (const key of Object.keys(stateObj)) {
         if (!key.startsWith('_')) {
-          stateNode.children.push(buildStateConnectTree(key, initStateObject[key], jsStoreModule.name + '.state.', parsedLines))
+          // ✅ 使用递归构建嵌套树
+          stateNode.children.push(
+            buildStateConnectTree(key, stateObj[key], `${rootName}.state.`, parsedLines)
+          )
         }
       }
+
       if (stateNode.children.length) {
         StateBindRootNode.children.push(stateNode)
       }
     }
 
-    if (jsStoreModule.computed) {
+    // ------------------------------
+    // 3. computed 解析
+    // ------------------------------
+    if (jsStoreObject.computed && typeof jsStoreObject.computed === 'object') {
       const computedNode = {
-        key: jsStoreModule.name + '.computed',
+        key: `${rootName}.computed`,
         label: '计算值',
-        children: []
-      }
-      for (const key of Object.keys(jsStoreModule.computed)) {
-        computedNode.children.push({
-          key: jsStoreModule.name + '.computed.' + key,
-          label: searchCodeWithComment(key, parsedLines)
-        })
+        children: Object.keys(jsStoreObject.computed).map((key) => ({
+          key: `${rootName}.computed.${key}`,
+          label: searchCodeWithComment(key, parsedLines) || key
+        }))
       }
       if (computedNode.children.length) {
         StateBindRootNode.children.push(computedNode)
       }
     }
 
-    if (jsStoreModule.actions && typeof jsStoreModule.actions === 'object') {
-      Object.keys(jsStoreModule.actions || {}).forEach(key => {
-        if (!key.startsWith('_')) {
-          ActionBindRootNode.children.push({
-            name: jsStoreModule.name + '.' + key,
-            label: searchCodeWithComment(key, parsedLines)
-          })
-        }
-      })
+    // ------------------------------
+    // 4. actions 解析（修复结构）
+    // ------------------------------
+    if (jsStoreObject.actions && typeof jsStoreObject.actions === 'object') {
+      ActionBindRootNode.children.push(
+        ...Object.keys(jsStoreObject.actions)
+          .filter((key) => !key.startsWith('_'))
+          .map((key) => ({
+            key: `${rootName}.actions.${key}`, // ✅ 统一用 key
+            label: searchCodeWithComment(key, parsedLines) || key
+          }))
+      )
     }
+
+    // ------------------------------
+    // 5. events 补充解析
+    // ------------------------------
+    const events = Array.isArray(jsStoreObject.events) ? jsStoreObject.events : []
+
     return {
-      name: jsStoreModule.name,
-      events: jsStoreModule.events ?? [],
-      properties: jsStoreModule.properties ?? [],
+      name: rootName,
+      events,
+      properties: jsStoreObject.properties ?? [],
       connects: StateBindRootNode,
       actions: ActionBindRootNode
     }
   } catch (e) {
-    console.error('jsStoreModule Parse Error', jsStoreModule)
-
-    return {
-      error: e
-    }
+    console.error('parseStoreMeta 解析失败', e)
+    return { error: e }
   }
 }
 

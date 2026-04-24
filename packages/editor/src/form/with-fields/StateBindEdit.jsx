@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import context from '../../service/RidgeEditorContext'
+import editorStore from '../../store/editor.store'
 import { withField, Popover, Button, Space, Tree, Input, Typography, Tooltip, Tabs, TabPane } from '@douyinfe/semi-ui'
 
 const { Title, Text } = Typography
@@ -8,13 +8,10 @@ const StateBindEdit = withField(({
   value,
   onChange
 }) => {
-  const [storeTreeData, setStoreTreeData] = useState([])
+  const compositeStoreModules = editorStore(state => state.compositeStoreModules)
   const [visible, setVisible] = useState()
 
-  const updateStateTree = () => {
-    const storeModules = context.editorComposite ? context.editorComposite.getStoreModules() : []
-    setStoreTreeData(storeModules.map(storeModule => storeModule.connects))
-  }
+  const storeTreeData = compositeStoreModules.map(storeModule => storeModule.connects)
 
   const [StoreName, type, key] = (value ?? '').split('.')
   const renderSelectState = () => {
@@ -80,7 +77,6 @@ const StateBindEdit = withField(({
     <Popover
       content={renderSelectState} trigger='click' showArrow visible={visible} onVisibleChange={visible => {
         setVisible(visible)
-        updateStateTree()
       }}
     >
       <div

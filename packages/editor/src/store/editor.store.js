@@ -25,6 +25,8 @@ const editorStore = create((set, get) => ({
   },
 
   componentTreeData: [],
+  compositeStoreModules: [],
+
   // 非状态 作为服务
   editorComposite: null,
 

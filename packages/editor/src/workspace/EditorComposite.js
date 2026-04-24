@@ -1,8 +1,9 @@
 import { Composite } from 'ridgejs'
 import EditorElement from './EditorElement.js'
 import { parseStoreMeta, searchCodeWithComment, parseSourceWithComments } from './editorUtils.js'
+import editorStore from '../store/editor.store.js'
 import { nanoid } from '../utils/string'
-import { cloneDeep, isPlainObject } from 'lodash'
+import { cloneDeep } from 'lodash'
 // import { hasUrlProtocol, removeUrlProtocol, cleanMultiSlash } from 'ridgejs/src/utils/string.js'
 // import { loadLocalJsModule } from 'ridgejs/src/utils/load.js'
 
@@ -106,9 +107,6 @@ class EditorComposite extends Composite {
   async loadStore () {
     this.storeModules = []
     for (const jsModule of this.jsModules) {
-      if (!jsModule.jsContent && jsModule.filePath) {
-        jsModule.jsContent = await this.context.loadFileContent(jsModule.filePath)
-      }
       const storeMeta = parseStoreMeta(jsModule)
       if (storeMeta.error) {
         globalThis.msgerror && globalThis.msgerror('模块引入异常 :' + jsModule.filePath)
@@ -116,6 +114,9 @@ class EditorComposite extends Composite {
         this.storeModules.push(storeMeta)
       }
     }
+    editorStore.setState({
+      compositeStoreModules: this.storeModules
+    })
   }
 
   updateStyle () {

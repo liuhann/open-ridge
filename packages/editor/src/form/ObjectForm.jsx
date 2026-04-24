@@ -172,7 +172,6 @@ class ObjectForm extends React.Component {
             <StateBindEdit
               className='field-code-expr' noLabel field={field.fieldEx} options={options}
             />
-
           </div>
         </div>
       )
