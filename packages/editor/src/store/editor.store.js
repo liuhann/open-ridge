@@ -178,6 +178,24 @@ const editorStore = create((set, get) => ({
     updateTreeData()
   },
 
+  openCurrentPageJSONEdit: async () => {
+    const { currentOpenPageId, openedFileContentMap, openCode } = get()
+    const appService = localRepoService.getCurrentAppService()
+
+    if (!currentOpenPageId) return
+
+    const file = await appService.getFile(currentOpenPageId)
+
+    // 优先使用内存中未保存的页面 JSON
+    if (openedFileContentMap.has(currentOpenPageId)) {
+      const pageJson = openedFileContentMap.get(currentOpenPageId)
+      // 转成字符串给编辑器（关键修复）
+      file.textContent = JSON.stringify(pageJson, null, 2)
+    }
+
+    openCode(file)
+  },
+
   saveCurrentPage: async () => {
     const { currentOpenPageId, editorComposite, unsavedPages } = get()
 
@@ -309,6 +327,46 @@ const editorStore = create((set, get) => ({
     workspaceControl.setZoom(zoom)
     set({
       zoom
+    })
+  },
+
+  saveFile: async (fileId, content) => {
+    const appService = localRepoService.getCurrentAppService()
+    const { editorComposite, openedFileContentMap, currentOpenPageId, unsavedPages } = get()
+
+    // 1. 获取文件信息
+    const file = await appService.getFile(fileId)
+
+    // ==============================================
+    // 【页面 JSON】：保存时更新内存 & 页面
+    // ==============================================
+    if (file.type === 'page' || file.name.endsWith('.json')) {
+      try {
+        const jsonConfig = JSON.parse(content)
+
+        // 更新内存未保存缓存
+        openedFileContentMap.set(fileId, jsonConfig)
+
+        // 保存时才刷新设计器
+        if (editorComposite && currentOpenPageId === fileId) {
+          editorComposite.loadPageJSON(jsonConfig)
+        }
+      } catch (err) {
+        console.error('JSON 格式错误', err)
+        throw new Error('JSON 格式不正确：' + err.message)
+      }
+    }
+
+    // ==============================================
+    // 统一写入磁盘
+    // ==============================================
+    await appService.updateFileContent(fileId, content)
+
+    // ==============================================
+    // ✅ 关键：保存成功后，清除未保存页面标记
+    // ==============================================
+    set({
+      unsavedPages: unsavedPages.filter(id => id !== fileId)
     })
   },
 

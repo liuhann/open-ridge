@@ -167,15 +167,18 @@ class Composite extends BaseNode {
   // 挂载
   async mount (el, themeRoot) {
     debug('Composite Mount: ', this.appName, this.path)
+    if (el) {
+      this.el = el
+      this.el.ridgeComposite = this
+    }
+    if (!this.el) {
+      return
+    }
     try {
       this.beforeMount && this.beforeMount(el)
     } catch (e) { }
-    if (el) {
-      this.el = el
-      if (el.ridgeComposite) {
-        el.ridgeComposite.unmount()
-      }
-      this.el.ridgeComposite = this
+    if (this.el.ridgeComposite) {
+      this.el.ridgeComposite.unmount()
     }
     this.removeStatus()
     // debug(this.packageName, this.compositePath, 'mounting')
@@ -232,27 +235,31 @@ class Composite extends BaseNode {
 
   // 卸载
   unmount () {
-    this.el.className = this.initialClassList.join(' ')
+    if (!this.el) return
+
+    if (this.initialClassList) {
+      this.el.className = this.initialClassList.join(' ')
+    }
 
     this.el.removeAttribute('composite-id')
     // this.el.setAttribute('composite-id', this.getCompositeId())
-    if (this.config) {
-      for (const childNode of this.children) {
-        const el = childNode.el
-        try {
-          childNode.unmount()
-        } catch (e) {
-          //
-        }
-        if (el && el.parentElement === this.el) {
-          this.el.removeChild(el)
-        }
+    for (const childNode of this.children ?? []) {
+      const el = childNode.el
+      try {
+        childNode.unmount()
+      } catch (e) {
+        //
       }
-      this.store && this.store.destory()
+      if (el && el.parentElement === this.el) {
+        this.el.removeChild(el)
+      }
     }
+    this.store && this.store.destory()
 
     this.el.removeEventListener('mouseover', this.handleMouseOver)
     this.el.removeEventListener('mouseout', this.handleMouseOut)
+    this.firstPainted = false
+    delete this.el.ridgeComposite
   }
 
   // 更新自身样式

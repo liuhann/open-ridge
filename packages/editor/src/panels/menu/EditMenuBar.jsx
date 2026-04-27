@@ -1,6 +1,5 @@
 import React from 'react'
 import { Button, Divider, confirm, Space, ButtonGroup, Modal, Dropdown, InputNumber, Tooltip, Tabs, TabPane, Popover } from '@douyinfe/semi-ui'
-import context from '../../service/RidgeEditorContext.js'
 import './style.less'
 
 import editorStore from '../../store/editor.store.js'

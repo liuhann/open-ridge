@@ -347,6 +347,14 @@ class EditorComposite extends Composite {
     return treeNodeObject
   }
 
+  async loadPageJSON (json) {
+    await this.unmount()
+
+    this.config = cloneDeep(json)
+
+    await this.mount()
+  }
+
   emit (name, payload) { }
 
   /**

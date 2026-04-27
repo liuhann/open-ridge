@@ -109,42 +109,94 @@ export default forwardRef((props, pref) => {
   const [contents, setContents] = useState({}) // 保存打开的多个Tabs内编辑的代码文本内容，用于切换时保存、切换回来时恢复
   const [changes, setChanges] = useState({}) // 每个文档改动标记，用于标识当前文档是否有改动
 
-  const saveCode = editorStore(state => state.saveCode)
+  const saveFile = editorStore(state => state.saveFile)
 
   const extensionsRef = useRef([])
 
   // 根据当前打开文件id初始化文件内容
-  const loadExtensions = async () => {
+  const loadExtensionsBackup = async () => {
     const { tooltips, keymap } = await import(/* webpackChunkName: "codemirror-common" */ '@codemirror/view')
     const { indentWithTab } = await import(/* webpackChunkName: "codemirror-common" */ '@codemirror/commands')
 
-    const extensions = [keymap.of([{
-      key: 'Mod-s',
-      run: () => {
-        saveBtnRef.current && saveBtnRef.current()
-      },
-      preventDefault: true
-    }, indentWithTab]), tooltips({
-      position: 'absolute'
-    })]
+    // 基础扩展
+    const base = [
+      keymap.of([
+        { key: 'Mod-s', run: () => saveBtnRef.current?.(), preventDefault: true },
+        indentWithTab
+      ]),
+      tooltips({ position: 'absolute' })
+    ]
+    // const { Linter } = await import(/* webpackChunkName: "codemirror-linter" */ 'eslint-linter-browserify')
+    // const { javascript, esLint } = await import(/* webpackChunkName: "codemirror-js" */ '@codemirror/lang-javascript')
+    // const { linter, lintGutter } = await import(/* webpackChunkName: "codemirror-js" */ '@codemirror/lint')
+    // extensions.push(javascript())
+    // extensions.push(lintGutter())
+    // extensions.push(linter(esLint(new Linter(), config)))
 
-    const { Linter } = await import(/* webpackChunkName: "codemirror-linter" */ 'eslint-linter-browserify')
+    // const { json } = await import(/* webpackChunkName: "codemirror-json" */ '@codemirror/lang-json')
+    // extensions.push(json())
+    // const { markdown } = await import(/* webpackChunkName: "codemirror-json" */ '@codemirror/lang-markdown')
+    // extensions.push(markdown())
+
+    // 语言
+    const { javascript } = await import('@codemirror/lang-javascript')
+    const { json } = await import('@codemirror/lang-json')
+    const { markdown } = await import('@codemirror/lang-markdown')
+
+    // 真正的语法检查（必须加这个才有提示！）
+    const { lintGutter, javascript: jsLint } = await import('@codemirror/lint')
+    const { json: jsonLint } = await import('@codemirror/lang-json')
+
+    extensionsRef.current = {
+      js: [...base, javascript(), jsLint(), lintGutter()],
+      json: [...base, json(), jsonLint(), lintGutter()],
+      md: [...base, markdown()]
+    }
+
+    // 最终都是 一维数组，符合类型定义
+    extensionsRef.current = {
+      js: [...base, javascript(), lintGutter()],
+      json: [...base, json(), lintGutter()],
+      md: [...base, markdown()]
+    }
+  }
+  const loadExtensions = async () => {
+    const { tooltips, keymap } = await import('@codemirror/view')
+    const { indentWithTab } = await import('@codemirror/commands')
+
+    // -------------- 语言包（单独分包）--------------
     const { javascript, esLint } = await import(/* webpackChunkName: "codemirror-js" */ '@codemirror/lang-javascript')
-    const { linter, lintGutter } = await import(/* webpackChunkName: "codemirror-js" */ '@codemirror/lint')
-    extensions.push(javascript())
-    extensions.push(lintGutter())
-    extensions.push(linter(esLint(new Linter(), config)))
+    const { json, jsonParseLinter } = await import(/* webpackChunkName: "codemirror-json" */ '@codemirror/lang-json')
+    const { markdown } = await import(/* webpackChunkName: "codemirror-md" */ '@codemirror/lang-markdown')
 
-    const { json } = await import(/* webpackChunkName: "codemirror-json" */ '@codemirror/lang-json')
-    extensions.push(json())
-    const { markdown } = await import(/* webpackChunkName: "codemirror-json" */ '@codemirror/lang-markdown')
-    extensions.push(markdown())
-    extensionsRef.current = extensions
+    // -------------- Lint 核心 --------------
+    const { linter, lintGutter } = await import('@codemirror/lint')
+
+    // 基础配置
+    const base = [
+      keymap.of([
+        { key: 'Mod-s', run: () => saveBtnRef.current?.(), preventDefault: true },
+        indentWithTab
+      ]),
+      tooltips({ position: 'absolute' })
+    ]
+    const { Linter } = await import(/* webpackChunkName: "codemirror-linter" */ 'eslint-linter-browserify')
+
+    extensionsRef.current = {
+    // JS：高亮 + ESLint 检查 + 错误栏
+      js: [...base, javascript(), linter(esLint(new Linter(), config)), lintGutter()],
+
+      // JSON：高亮 + 检查 + 错误栏
+      json: [...base, json(), linter(jsonParseLinter()), lintGutter()],
+
+      // MD：仅高亮
+      md: [...base, markdown()]
+    }
   }
 
   // 点击保存事件
   const handleSave = async () => {
-    await saveCode(currentTab, currentEditText)
+    await saveFile(currentTab, currentEditText)
 
     // 保存成功后，清除修改标记
     setChanges(Object.assign({}, changes, {
@@ -161,13 +213,16 @@ export default forwardRef((props, pref) => {
   const openFile = async file => {
     setVisible(true)
     const existed = tabs.find(tab => tab.id === file.id)
+
+    // 自动识别类型
+    let type = 'js'
+    if (file.name.endsWith('.json')) type = 'json'
+    else if (file.name.endsWith('.md')) type = 'md'
+
     if (!existed) {
-      setTabs([...tabs, {
-        id: file.id,
-        name: file.name,
-        file
-      }])
+      setTabs([...tabs, { id: file.id, name: file.name, file, type }])
     }
+
     setCurrentTab(file.id)
     if (loading) {
       await loadExtensions()
@@ -342,7 +397,12 @@ export default forwardRef((props, pref) => {
           overflow: 'auto'
         }}
         >
-          {!loading && currentEditText != null && <CodeMirror value={currentEditText} basicSetup extensions={extensionsRef.current} onChange={onCodeChange} />}
+          {!loading && currentEditText != null &&
+            <CodeMirror
+              value={currentEditText} basicSetup extensions={extensionsRef.current[
+                tabs.find(t => t.id === currentTab)?.type || 'js'
+              ]} onChange={onCodeChange}
+            />}
         </div>
         <div
           style={{

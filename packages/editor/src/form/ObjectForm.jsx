@@ -90,6 +90,7 @@ class ObjectForm extends React.Component {
     if (!field.field) {
       return <Form.Slot label={field.label}><Text disabled>未定义属性名称</Text></Form.Slot>
     }
+
     if (this.controlGeneratorMap[field.control]) {
       try {
         return this.controlGeneratorMap[field.control](field, readonly, options)
@@ -132,6 +133,11 @@ class ObjectForm extends React.Component {
     if (field.type === 'children' || field.type === 'slot') {
       return
     }
+
+    if (field.renderer && typeof field.renderer === 'function') {
+      return field.renderer(formState)
+    }
+
     const hidden = (typeof field.hidden === 'function') ? field.hidden(formState.values) : field.hidden
     if (hidden) {
       return
@@ -149,6 +155,7 @@ class ObjectForm extends React.Component {
         field.width = '50%'
       }
     }
+
     const RenderField = this.getRenderField(field, readonly, options)
 
     const fieldClassList = ['field-block']

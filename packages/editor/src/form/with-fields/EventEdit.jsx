@@ -1,11 +1,12 @@
 import React, { useState } from 'react'
-import { withField, Button, Space, TextArea, Tree, Popover, Typography, Select, Tag } from '@douyinfe/semi-ui'
+import { withField, Button, Tree, Typography, Select, Tag, TextArea, Popover } from '@douyinfe/semi-ui'
+import { nanoid } from 'nanoid' // 引入 nanoid
 import editorStore from '../../store/editor.store'
 
 const { Text } = Typography
 
-// 简单唯一 ID 生成
-const generateId = () => 'action_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6)
+// 用 nanoid 生成唯一 ID（官方推荐，更短更安全）
+const generateId = () => 'action_' + nanoid(6)
 
 const EventEdit = withField(({
   value,
@@ -15,10 +16,10 @@ const EventEdit = withField(({
   const actions = value || []
   const compositeStoreModules = editorStore(state => state.compositeStoreModules)
 
-  // 新增动作（自带唯一 ID）
+  // 新增动作
   const addAction = () => {
     const newAction = {
-      id: generateId(), // 👈 唯一 ID，永远不重复
+      id: generateId(), // 使用 nanoid
       key: '',
       payload: ''
     }
@@ -39,13 +40,32 @@ const EventEdit = withField(({
     )
   }
 
-  // 渲染单个动作
+  // 拖拽排序（官方规范）
+  const onDrop = (info) => {
+    const { node, dragNode, dropPosition } = info
+
+    if (!node || !dragNode || node.root) return
+
+    const oldIndex = actions.findIndex(item => item.id === dragNode.key)
+    const newIndex = actions.findIndex(item => item.id === node.key)
+
+    if (oldIndex === -1 || newIndex === -1) return
+
+    const newActions = [...actions]
+    const movedItem = newActions.splice(oldIndex, 1)[0]
+    const insertIndex = dropPosition === -1 ? newIndex : newIndex + 1
+
+    newActions.splice(insertIndex, 0, movedItem)
+    onChange(newActions)
+  }
+
+  // 渲染单个动作项
   const renderActionItem = (item) => {
     return (
-      <div className='tree-label' style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
         <Select
           placeholder='请选择方法'
-          style={{ width: 160 }}
+          style={{ width: 170 }}
           size='small'
           value={item.key}
           onChange={(val) => updateAction(item.id, { key: val })}
@@ -62,7 +82,7 @@ const EventEdit = withField(({
         <Popover
           trigger='click'
           content={
-            <div style={{ padding: 10, width: 300 }}>
+            <div style={{ padding: 12, width: 320 }}>
               <Text strong>方法参数</Text>
               <TextArea
                 value={item.payload}
@@ -74,13 +94,17 @@ const EventEdit = withField(({
           }
         >
           <Button
-            size='small' theme='borderless' type={item.payload ? 'primary' : 'tertiary'}
+            size='small'
+            theme='borderless'
+            type={item.payload ? 'primary' : 'tertiary'}
             icon={<i className='bi bi-diagram-3' />}
           />
         </Popover>
 
         <Button
-          size='small' theme='borderless' type='tertiary'
+          size='small'
+          theme='borderless'
+          type='tertiary'
           icon={<i className='bi bi-trash' />}
           onClick={() => removeAction(item.id)}
         />
@@ -88,14 +112,22 @@ const EventEdit = withField(({
     )
   }
 
-  // 树标题
+  // 树根标题 + 按钮右侧对齐
   const renderTreeLabel = (label, data) => {
     if (data.root) {
       return (
-        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+        <div style={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          width: '100%'
+        }}
+        >
           <Tag color='green'>{options.label}</Tag>
           <Button
-            size='small' type='primary' theme='borderless'
+            size='small'
+            type='primary'
+            theme='borderless'
             icon={<i className='bi bi-plus' />}
             onClick={addAction}
           />
@@ -105,13 +137,13 @@ const EventEdit = withField(({
     return renderActionItem(data.item)
   }
 
-  // 树数据（用 id 做唯一 key）
+  // 100% 符合 Semi Tree 规范
   const treeData = [{
     label: options.label,
     key: 'action-root',
     root: true,
     children: actions.map(item => ({
-      key: item.id, // 👈 永远唯一
+      key: item.id, // 唯一 ID
       item
     }))
   }]
@@ -123,6 +155,10 @@ const EventEdit = withField(({
         expandAll
         renderLabel={renderTreeLabel}
         treeData={treeData}
+        draggable
+        onDrop={onDrop}
+        allowDrop={({ dropNode }) => !dropNode.root}
+        animation={false}
       />
     </div>
   )

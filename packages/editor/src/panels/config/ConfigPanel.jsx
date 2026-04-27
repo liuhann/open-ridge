@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react'
-import { Tabs, TabPane } from '@douyinfe/semi-ui'
+import { Tabs, TabPane, Button, Space, Typography } from '@douyinfe/semi-ui'
 import ObjectForm from '../../form/ObjectForm.jsx'
 import debug from 'debug'
 
@@ -10,6 +10,7 @@ import { getCompositePropertiesDef, getCompositeEventsDef } from '../../workspac
 import { ICON_RULER } from '../../icons/icons.js'
 const trace = debug('editor:config-panel')
 
+const { Text } = Typography
 const COMPONENT_BASIC_FIELDS = [{
   label: '名称',
   control: 'string',
@@ -162,6 +163,7 @@ const ConfigPanel = () => {
   const updatePageConfig = editorStore(state => state.updatePageConfig)
   const currentEditNodeRect = editorStore(state => state.currentEditNodeRect)
   const updateTreeData = editorStore(state => state.updateTreeData)
+  const openCurrentPageJSONEdit = editorStore(state => state.openCurrentPageJSONEdit)
 
   const updateElementFields = async (nodeId) => {
     if (!nodeId || !editorComposite) return
@@ -293,7 +295,21 @@ const ConfigPanel = () => {
   }, [nodePropFields])
 
   const updatePageFields = () => {
-    setPagePropFields([...PAGE_FIELDS, ...getCompositePropertiesDef(editorComposite)])
+    setPagePropFields([...PAGE_FIELDS, {
+      type: 'custom',
+      renderer: (formState) => {
+        return (
+          <Space>
+            <Text type='tertiary'>页面源文件</Text>
+            <Button onClick={() => {
+              openCurrentPageJSONEdit()
+            }}
+            >编辑
+            </Button>
+          </Space>
+        )
+      }
+    }, ...getCompositePropertiesDef(editorComposite)])
     setPageEventFields([...PAGE_EVNETS, ...getCompositeEventsDef(editorComposite)])
 
     for (const key of ['classList', 'style', 'properties', 'fontFiles', 'jsFiles', 'name', 'events']) {
