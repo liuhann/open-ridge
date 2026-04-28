@@ -30,6 +30,7 @@ export default class Element extends BaseNode {
     this.config.visible ??= true
     this.config.slots ||= []
     this.config.propEx ||= {}
+
     this.config.styleEx ||= {}
 
     this.onMounted(() => {
@@ -210,17 +211,31 @@ export default class Element extends BaseNode {
   // ========================================================================
   initializeEvents () {
     const events = this.config.events || {}
+
+    // 对属性为value的进行自动处理
+    if (!events.onChange && this.config.propEx.value) {
+      this.events.onChange = (val) => {
+        this.setProperties({ value: val })
+        const store = this.composite.store
+        store.dispatchChange(this.config.propEx.value, val)
+      }
+    }
+
     for (const [name, actions] of Object.entries(events)) {
       this.events[name] = (...payload) => {
         if (!Array.isArray(actions)) return
         for (const act of actions) {
-          if (act.store && act.method) {
-            const event = {
-              payload,
-              scopedData: this.getScopedData(),
-              eventArgs: act.payload
+          if (act.key) {
+            const [storeName, _, method] = act.key.split('.')
+            if (storeName && method) {
+              const event = {
+                payload,
+                scopedData: this.getScopedData(),
+                eventArgs: act.payload
+              }
+              const store = this.composite.store
+              store.doStoreAction(storeName, method, event)
             }
-            this.composite.store?.doStoreAction(act.store, act.method, event)
           }
         }
       }
@@ -233,6 +248,7 @@ export default class Element extends BaseNode {
     Object.values(this.config.styleEx || {}).forEach(expr => {
       store.subscribe(expr, () => this.forceUpdateStyle())
     })
+
     Object.values(this.config.propEx || {}).forEach(expr => {
       store.subscribe(expr, () => this.forceUpdateProperty())
     })
@@ -306,7 +322,9 @@ export default class Element extends BaseNode {
   }
 
   preparePropsBeforeRender () {
-    if (!this.definition?.properties) return
+    // 运行期 definition 可能不包含 properties 元数据，因此跳过基于元数据的属性预处理
+    // 如果需要对特定属性进行特殊处理（如 blob url, slot 转换），应在配置层解决或通过其他机制
+    /*
     let slotOrder = 0
 
     for (const prop of this.definition.properties) {
@@ -335,6 +353,7 @@ export default class Element extends BaseNode {
         this.properties[prop.name] = handleClassListPropValue(this.config.props[prop.name], this.composite)
       }
     }
+    */
   }
 
   getBlobUrl (url) {

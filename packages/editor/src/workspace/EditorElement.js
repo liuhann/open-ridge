@@ -18,6 +18,8 @@ export default class EditorElement extends Element {
   // ========================================================================
   setComponentMeta (componentMeta) {
     this.componentMeta = componentMeta
+    // 元数据设置后，立即初始化属性元信息
+    this.initPropertyMetadata()
   }
 
   // 获取组件元数据
@@ -46,6 +48,7 @@ export default class EditorElement extends Element {
     merge(this.config, config)
     this.style = { ...this.config.style }
     // this.properties = { ...this.config.props }
+
     this.updateProps()
     this.updateStyle()
   }
@@ -185,8 +188,45 @@ export default class EditorElement extends Element {
         const componentMeta = await componentRegistry.getComponentMeta(`${this.config.path}`)
         if (componentMeta) {
           this.componentMeta = componentMeta
+          // 元数据加载成功后，初始化属性元信息
+          this.initPropertyMetadata()
         }
       } catch (e) {}
+    }
+  }
+
+  // ========================================================================
+  // 初始化属性元信息（仅在 meta 加载/设置时调用一次）
+  // ========================================================================
+  initPropertyMetadata () {
+    if (!this.componentMeta) return
+
+    const propsDef = this.componentMeta.properties || []
+    const eventsDef = this.componentMeta.events || []
+
+    // 1. 判断双向绑定: properties 包含 value 并且 events 包含 onChange
+    const hasValueProp = propsDef.some(p => p.name === 'value')
+    const hasOnChangeEvent = eventsDef.some(e => e.name === 'onChange' || e.name === 'on-change')
+
+    const syncProps = []
+    if (hasValueProp && hasOnChangeEvent) {
+      syncProps.push('value', 'onChange')
+    }
+
+    // 2. 收集资源属性列表
+    const urlProps = []
+    const resourceTypes = ['image', 'file', 'url', 'video', 'audio']
+
+    propsDef.forEach(prop => {
+      if (resourceTypes.includes(prop.type)) {
+        urlProps.push(prop.name)
+      }
+    })
+
+    // 保存简化后的 meta 结构
+    this.config.meta = {
+      sync: syncProps,
+      url: urlProps
     }
   }
 
