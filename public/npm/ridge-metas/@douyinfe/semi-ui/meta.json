@@ -1,7 +1,7 @@
 {
   "name": "@douyinfe/semi-ui",
   "schemaVersion": "2.0",
-  "lastUpdated": "2026-04-22T11:01:27.279Z",
+  "lastUpdated": "2026-04-28T10:29:07.611Z",
   "generatedBy": "ridge-ui-cli",
   "components": [
     {
@@ -166,9 +166,117 @@
       ]
     },
     {
+      "name": "Image",
+      "title": "图片",
+      "icon": "svgs/image.svg",
+      "description": "图片组件，支持地址配置、尺寸设置、加载状态、预览控制、图片描述等基础配置",
+      "tags": [
+        "图片",
+        "展示",
+        "预览"
+      ],
+      "category": "展示组件",
+      "version": "1.0.0",
+      "author": "",
+      "visualConfig": {
+        "thumbnail": "",
+        "preferredWidth": 280,
+        "preferredHeight": 200,
+        "resizable": true,
+        "aspectRatio": "auto"
+      },
+      "properties": [
+        {
+          "name": "src",
+          "description": "图片地址",
+          "label": "图片地址",
+          "type": "string",
+          "defaultValue": ""
+        },
+        {
+          "name": "alt",
+          "description": "图像描述",
+          "label": "图像描述",
+          "type": "string",
+          "defaultValue": ""
+        },
+        {
+          "name": "width",
+          "description": "图片显示宽度",
+          "label": "宽度",
+          "type": "number",
+          "defaultValue": null
+        },
+        {
+          "name": "height",
+          "description": "图片显示高度",
+          "label": "高度",
+          "type": "number",
+          "defaultValue": null
+        },
+        {
+          "name": "className",
+          "description": "自定义样式类名",
+          "label": "自定义类名",
+          "type": "string",
+          "defaultValue": ""
+        },
+        {
+          "name": "imgCls",
+          "description": "图片节点自定义类名",
+          "label": "图片节点类名",
+          "type": "string",
+          "defaultValue": ""
+        },
+        {
+          "name": "crossOrigin",
+          "description": "图片跨域配置",
+          "label": "跨域模式",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "anonymous",
+              "value": "anonymous"
+            },
+            {
+              "label": "use-credentials",
+              "value": "use-credentials"
+            }
+          ],
+          "defaultValue": ""
+        },
+        {
+          "name": "preview",
+          "description": "是否开启图片预览",
+          "label": "开启预览",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": true
+        }
+      ],
+      "events": [
+        {
+          "name": "onClick",
+          "description": "点击图片时触发",
+          "label": "点击事件"
+        },
+        {
+          "name": "onLoad",
+          "description": "图片加载成功时触发",
+          "label": "加载完成"
+        },
+        {
+          "name": "onError",
+          "description": "图片加载失败时触发",
+          "label": "加载失败"
+        }
+      ]
+    },
+    {
       "name": "Input",
       "title": "输入框",
-      "icon": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMWVtIiBoZWlnaHQ9IjFlbSIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0xMiA4LjVTMTIuNSA2IDExIDQgOCAyIDggMiIgc3Ryb2tlPSIjQUFCMkJGIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjxyZWN0IHg9IjEiIHk9IjYiIHdpZHRoPSIyMiIgaGVpZ2h0PSIxNSIgcng9IjIiIGZpbGw9IiNERDczRTgiLz48cmVjdCB4PSIzIiB5PSI4IiB3aWR0aD0iMyIgaGVpZ2h0PSIzIiByeD0iMS41IiBmaWxsPSIjNkE2RjdGIi8+PHJlY3QgeD0iOCIgeT0iOCIgd2lkdGg9IjMiIGhlaWdodD0iMyIgcng9IjEuNSIgZmlsbD0iIzZBNkY3RiIvPjxyZWN0IHg9IjEzIiB5PSI4IiB3aWR0aD0iMyIgaGVpZ2h0PSIzIiByeD0iMS41IiBmaWxsPSIjNkE2RjdGIi8+PHJlY3QgeD0iMTgiIHk9IjgiIHdpZHRoPSIzIiBoZWlnaHQ9IjMiIHJ4PSIxLjUiIGZpbGw9IiM2QTZGN0YiLz48cmVjdCB4PSIzIiB5PSIxMiIgd2lkdGg9IjMiIGhlaWdodD0iMyIgcng9IjEuNSIgZmlsbD0iIzZBNkY3RiIvPjxyZWN0IHg9IjgiIHk9IjEyIiB3aWR0aD0iMyIgaGVpZ2h0PSIzIiByeD0iMS41IiBmaWxsPSIjNkE2RjdGIi8+PHJlY3QgeD0iMTMiIHk9IjEyIiB3aWR0aD0iMyIgaGVpZ2h0PSIzIiByeD0iMS41IiBmaWxsPSIjNkE2RjdGIi8+PHJlY3QgeD0iMTgiIHk9IjEyIiB3aWR0aD0iMyIgaGVpZ2h0PSIzIiByeD0iMS41IiBmaWxsPSIjNkE2RjdGIi8+PHJlY3QgeD0iNiIgeT0iMTciIHdpZHRoPSIxMiIgaGVpZ2h0PSIyIiByeD0iMSIgZmlsbD0iIzZBNkY3RiIvPjwvc3ZnPg==",
+      "icon": "icons/input.svg",
       "description": "基础输入框组件，支持文本、密码等类型，提供前后置标签、清除按钮、校验状态、尺寸等常用配置",
       "tags": [
         "输入框",

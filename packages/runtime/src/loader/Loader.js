@@ -13,7 +13,7 @@ class Loader {
    * @param {string} baseUrl  元素下载基础地址
    * @param {string} loadPropControl  加载属性的自定义控制编辑
    */
-  constructor (baseUrl, registries = ['ridge-externals/registry.json']) {
+  constructor (baseUrl, registries = ['ridge-metas/registry.json']) {
     this.baseUrl = baseUrl.replace(/\/$/, '')
     log('RidgeLoader baseUrl: ' + this.baseUrl)
 
@@ -41,12 +41,7 @@ class Loader {
       for (const registry of this.registries) {
         const packagesLoaded = await this.loadJSON(registry)
         if (Array.isArray(packagesLoaded)) {
-          this.registryPackages.push(...packagesLoaded.map(pkg => {
-            if (pkg.icon) {
-              pkg.icon = this.addUrlPrefix(pkg.icon)
-            }
-            return pkg
-          }))
+          this.registryPackages.push(...packagesLoaded)
           for (const pkg of packagesLoaded) {
             this.packageMap.set(pkg.module, pkg)
           }

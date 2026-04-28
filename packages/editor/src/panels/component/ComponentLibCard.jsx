@@ -39,12 +39,12 @@ const ComponentLibCard = ({ item, onItemClick }) => {
         <div className='component-card-image'>
           {iconUrl
             ? (
-  <img src={iconUrl} alt={displayName} />
+              <img src={iconUrl} alt={displayName} />
               )
             : (
-  <div className='default-icon'>
-              {getInitial(displayName)}
-            </div>
+              <div className='default-icon'>
+                {getInitial(displayName)}
+              </div>
               )}
         </div>
 

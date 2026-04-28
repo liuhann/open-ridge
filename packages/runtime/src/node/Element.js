@@ -234,6 +234,7 @@ export default class Element extends BaseNode {
                 eventArgs: act.payload
               }
               const store = this.composite.store
+              if (!store) return
               store.doStoreAction(storeName, method, event)
             }
           }
