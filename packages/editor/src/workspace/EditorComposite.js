@@ -1,4 +1,4 @@
-import { Composite } from 'ridgejs'
+import { Composite, IN_APP_FILE_PREFIEX } from 'ridgejs'
 import EditorElement from './EditorElement.js'
 import { parseStoreMeta, searchCodeWithComment, parseSourceWithComments } from './editorUtils.js'
 import editorStore from '../store/editor.store.js'
@@ -345,6 +345,15 @@ class EditorComposite extends Composite {
     //   }
     // }
     return treeNodeObject
+  }
+
+  getBlobUrl (url) {
+    if (url.startsWith(IN_APP_FILE_PREFIEX)) {
+      const filePath = url.substring(IN_APP_FILE_PREFIEX.length)
+      return this.appService.getFile(filePath)?.url
+    } else {
+      return super.getBlobUrl(url)
+    }
   }
 
   async loadPageJSON (json) {

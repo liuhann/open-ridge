@@ -1,7 +1,7 @@
 {
   "name": "Typography.Title",
   "title": "标题",
-  "icon": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNSA1SDE5TDE3IDE5SDdMNSA1WiIgc3Ryb2tlPSIjNEU1OTY2IiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJNOCA5TDE2IDlNOAxM0gxNiIgc3Ryb2tlPSIjNEU1OTY2IiBzdHJva2Utd2lkdGg9IjIiLz48L3N2Zz4=",
+  "icon": "svgs/typography.svg",
   "description": "标题组件，用于页面标题、章节标题、卡片标题等，支持6级标题、可复制、省略、颜色样式、加粗等配置",
   "tags": [
     "标题",

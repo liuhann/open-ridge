@@ -7,6 +7,7 @@ import { cloneDeep } from '../utils/object.js'
 import Debug from 'debug'
 import { generateUrlFontName, toCSSLength, addJsonSuffix, removeUrlProtocol, cleanMultiSlash, isUrlInApp } from '../utils/string'
 import { loadRemoteJsModule, loadLocalJsModule } from '../utils/load.js'
+import { IN_APP_FILE_PREFIEX, ridgeBaseUrl } from '..'
 const debug = Debug('ridge:composite')
 
 /**
@@ -136,7 +137,14 @@ class Composite extends BaseNode {
   }
 
   getBlobUrl (url) {
-    return this.loader.getBlobUrl(url, this.packageName)
+    if (this.appService && url.startsWith(IN_APP_FILE_PREFIEX)) {
+      const filePath = url.substring(IN_APP_FILE_PREFIEX.length)
+      return this.appService.getFile(filePath)?.url
+    } else if (this.appName) {
+      return `${ridgeBaseUrl}/${this.appName}/${url.substring(IN_APP_FILE_PREFIEX.length)}`
+    } else {
+      return `${ridgeBaseUrl}/${url.substring(IN_APP_FILE_PREFIEX.length)}`
+    }
   }
 
   // 构造页面树结构

@@ -8,7 +8,7 @@ const { Text } = Typography
 const ComponentItemCard = ({ packageName, item, onItemClick }) => {
   const displayName = getDisplayName(item)
   const description = item.description || '无描述'
-  const iconUrl = getIconUrl(item)
+  const iconUrl = getIconUrl(item, packageName)
   const tags = item.tags || []
   const [isHovered, setIsHovered] = useState(false)
 
@@ -70,10 +70,6 @@ const ComponentItemCard = ({ packageName, item, onItemClick }) => {
               <img
                 src={iconUrl}
                 alt={displayName}
-                onError={(e) => {
-                  e.target.style.display = 'none'
-                  e.target.parentElement.innerHTML = `<div class="default-item-icon">${getInitial(displayName)}</div>`
-                }}
               />
               )
             : (

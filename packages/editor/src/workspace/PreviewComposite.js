@@ -1,4 +1,4 @@
-import { ValtioStore, Element, Composite } from 'ridgejs'
+import { ValtioStore, Element, Composite, IN_APP_FILE_PREFIEX } from 'ridgejs'
 import { importStyleFiles, importJSFiles } from './editorUtils.js'
 /**
  * Composite Preview on Editor
@@ -13,6 +13,15 @@ class PreviewComposite extends Composite {
     })
 
     return element
+  }
+
+  getBlobUrl (url) {
+    if (url.startsWith(IN_APP_FILE_PREFIEX)) {
+      const filePath = url.substring(IN_APP_FILE_PREFIEX.length)
+      return this.appService.getFile(filePath)?.url
+    } else {
+      return super.getBlobUrl(url)
+    }
   }
 
   async importStyleFiles () {

@@ -1,7 +1,7 @@
 {
   "name": "Typography.Text",
   "title": "文本",
-  "icon": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNSA1SDE5TDE3IDE5SDdMNSA1WiIgc3Ryb2tlPSIjNEU1OTY2IiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJNOCAxMkgxNiIgc3Ryb2tlPSIjNEU1OTY2IiBzdHJva2Utd2lkdGg9IjIiLz48L3N2Zz4=",
+  "icon": "svgs/typography.svg",
   "description": "基础文本组件，用于展示普通文字内容，支持加粗、删除线、下划线、省略、可复制、链接、不同颜色与大小等样式",
   "tags": [
     "文本",

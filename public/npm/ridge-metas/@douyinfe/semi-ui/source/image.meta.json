@@ -23,7 +23,7 @@
       "name": "src",
       "description": "图片地址",
       "label": "图片地址",
-      "type": "string",
+      "type": "image",
       "defaultValue": ""
     },
     {
@@ -37,15 +37,15 @@
       "name": "width",
       "description": "图片显示宽度",
       "label": "宽度",
-      "type": "number",
-      "defaultValue": null
+      "type": "string",
+      "defaultValue": "100%"
     },
     {
       "name": "height",
       "description": "图片显示高度",
       "label": "高度",
-      "type": "number",
-      "defaultValue": null
+      "type": "string",
+      "defaultValue": "100%"
     },
     {
       "name": "className",
@@ -58,7 +58,7 @@
       "name": "imgCls",
       "description": "图片节点自定义类名",
       "label": "图片节点类名",
-      "type": "string",
+      "type": "className",
       "defaultValue": ""
     },
     {

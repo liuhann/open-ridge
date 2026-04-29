@@ -24,6 +24,33 @@ export const eachNode = async (files, callback) => {
       await eachNode(file.children, callback)
     }
   }
+  return result
+}
+
+/**
+ * 树形结构扁平化（递归版，支持无限层级）
+ * @param {Array} tree 树形数组
+ * @returns {Array} 扁平化后的一维数组
+ */
+export const flattenTree = (tree) => {
+  const result = []
+
+  // 递归处理节点
+  const traverse = (node) => {
+    // 把当前节点推入结果（排除children，只保留自身属性）
+    const { children, ...rest } = node
+    result.push(rest)
+
+    // 如果有子节点，继续递归
+    if (children && children.length > 0) {
+      children.forEach((child) => traverse(child))
+    }
+  }
+
+  // 遍历整棵树
+  tree.forEach((item) => traverse(item))
+
+  return result
 }
 
 /* 从树节点过滤掉 */

@@ -1,7 +1,7 @@
 {
   "name": "Input",
   "title": "输入框",
-  "icon": "icons/input.svg",
+  "icon": "svgs/input.svg",
   "description": "基础输入框组件，支持文本、密码等类型，提供前后置标签、清除按钮、校验状态、尺寸等常用配置",
   "tags": [
     "输入框",

@@ -1,7 +1,7 @@
 {
   "name": "Button",
   "title": "按钮",
-  "icon": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTgiIGhlaWdodD0iMTAiIHg9IjMiIHk9IjciIHJ4PSIyIiBzdHJva2U9IiM0RTU5NjYiIHN0cm9rZS13aWR0aD0iMiIgZmlsbD0iI2YwZjRmNiIvPjwvc3ZnPg==",
+  "icon": "svgs/button.svg",
   "description": "基础按钮组件，用于页面点击操作、提交表单、确认取消等交互场景",
   "tags": [
     "按钮",

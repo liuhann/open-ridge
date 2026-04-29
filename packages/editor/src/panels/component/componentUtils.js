@@ -24,10 +24,20 @@ export const getInitial = (name) => {
   return name.charAt(0).toUpperCase()
 }
 
-export const getIconUrl = (item) => {
+// 替换字符串中的双斜杠为单斜杠， 但是对于协议部分的双斜杠 例如 http:// 不做替换
+const replaceDoubleSlashWithHttpProtocal = (str) => {
+  return str.replace(/(http[s]?:\/\/[^/]+)\/\//g, '/')
+}
+export const getIconUrl = (item, packageName) => {
   if (item.icon) {
-    if (item.module) {
-      return `${window.RidgeUI?.baseUrl ?? '/npm'}/ridge-metas/${item.module}/${item.icon}`
+    // 先判断icon是不是base64等非url类型，如果是就直接使用
+    if (item.icon.startsWith('data:')) {
+      return item.icon
+    } else if (packageName) {
+      // 获取图标
+      return replaceDoubleSlashWithHttpProtocal(`${window.RidgeUI?.baseUrl ?? '/npm'}/ridge-metas/${packageName}/${item.icon}`)
+    } else if (item.module) {
+      return replaceDoubleSlashWithHttpProtocal(`${window.RidgeUI?.baseUrl ?? '/npm'}/ridge-metas/${item.module}/${item.icon}`)
     }
     return item.icon
   }

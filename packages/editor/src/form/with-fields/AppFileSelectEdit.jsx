@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
+import { IN_APP_FILE_PREFIEX } from 'ridgejs'
 import { withField, TreeSelect, Tree, TagInput, Popover, Icon, Tag, Typography } from '@douyinfe/semi-ui'
 import { getAppTreeData } from '../../panels/files/utils.js'
 import appStore from '../../store/app.store.js'
@@ -45,11 +46,17 @@ const AppFileSelectEdit = ({
     const filtered = selectedNodes.filter(node => node.children == null)
 
     if (options.multiple) {
-      onChange && onChange([...filtered.map(key => 'app://' + key), ...value.filter(it => !it.startsWith('app://'))])
+      // 获取当前已选中的非应用内文件（外部文件）
+      const externalFiles = (Array.isArray(value) ? value : []).filter(it => !it.startsWith(IN_APP_FILE_PREFIEX))
+      // 新选中的应用内文件添加前缀
+      const newInternalFiles = filtered.map(node => IN_APP_FILE_PREFIEX + node.key)
+
+      onChange && onChange([...newInternalFiles, ...externalFiles])
     } else {
       const file = filtered[0] || ''
       if (file) {
-        onChange && onChange('app://' + file.key)
+        // 单选模式：直接添加前缀
+        onChange && onChange(IN_APP_FILE_PREFIEX + file.key)
         setVisible(false)
       }
     }
@@ -67,13 +74,17 @@ const AppFileSelectEdit = ({
   const getRemovePrefixValue = () => {
     if (options.multiple) {
       if (Array.isArray(value)) {
-        return value.filter(it => it.startsWith('app://')).map(it => it.substring(6))
+        // 多选：过滤出带前缀的值，并去掉前缀，用于树组件选中状态
+        return value
+          .filter(it => it.startsWith(IN_APP_FILE_PREFIEX))
+          .map(it => it.substring(IN_APP_FILE_PREFIEX.length))
       } else {
         return []
       }
     } else {
       if (typeof value === 'string') {
-        return value.startsWith('app://') ? value.substring(6) : ''
+        // 单选：如果带前缀则去掉，否则返回空（因为树组件只识别应用内路径）
+        return value.startsWith(IN_APP_FILE_PREFIEX) ? value.substring(IN_APP_FILE_PREFIEX.length) : ''
       }
       return ''
     }
@@ -86,14 +97,14 @@ const AppFileSelectEdit = ({
         closable
         color='white'
         onClick={() => {
-          if (item.startsWith('app://')) {
-            openFile(item.substring(6))
+          if (item.startsWith(IN_APP_FILE_PREFIEX)) {
+            openFile(item.substring(IN_APP_FILE_PREFIEX.length))
           }
         }}
         onClose={onClose}
         style={{ margin: '2px 4px 2px 0' }}
       >
-        {item && item.startsWith('app://') ? item.substring(item.lastIndexOf('/') + 1) : item}
+        {item && item.startsWith(IN_APP_FILE_PREFIEX) ? item.substring(item.lastIndexOf('/') + 1) : item}
       </Tag>
     )
   }

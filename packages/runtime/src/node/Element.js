@@ -4,10 +4,10 @@ import createReactElement from '../render/createReactElement.js'
 import { nanoid, ensureLeading } from '../utils/string'
 import BaseNode from './BaseNode.js'
 import {
-  forceDOMElementState,
-  handleClassListPropValue
+  forceDOMElementState
 } from '../utils/pseudo.js'
 import { isObject, isObjectsEqual } from '../utils/is.js'
+import { IN_APP_FILE_PREFIEX, ridgeBaseUrl } from '../index'
 
 export default class Element extends BaseNode {
   constructor ({
@@ -49,8 +49,14 @@ export default class Element extends BaseNode {
       ...this.events
     }
 
+    // this.children是所有子节点 node类型，但是如果之前就是string (Semi 文本、按钮等情况) 则直接传入string
     if (typeof properties.children !== 'string') {
       properties.children = this.children
+    }
+    if (Array.isArray(this.config.urlProps)) {
+      for (const propName of this.config.urlProps) {
+        properties[propName] = this.getBlobUrl(properties[propName])
+      }
     }
     return properties
   }
@@ -144,7 +150,6 @@ export default class Element extends BaseNode {
       this.initializeEvents()
       this.initSubscription()
       this.updateConnectedProperties()
-      this.preparePropsBeforeRender()
       this.createRenderer()
       this.mounted()
       this.parent?.updateChildStyle(this)
@@ -284,7 +289,6 @@ export default class Element extends BaseNode {
     Object.assign(this.properties, runtimeProps)
 
     if (this.renderer && this.el?.getAttribute('ridge-mount') === 'mounted') {
-      this.preparePropsBeforeRender()
       this.renderer.updateProps(this.getProperties())
     }
   }
@@ -322,52 +326,13 @@ export default class Element extends BaseNode {
       : node
   }
 
-  preparePropsBeforeRender () {
-    // 运行期 definition 可能不包含 properties 元数据，因此跳过基于元数据的属性预处理
-    // 如果需要对特定属性进行特殊处理（如 blob url, slot 转换），应在配置层解决或通过其他机制
-    /*
-    let slotOrder = 0
-
-    for (const prop of this.definition.properties) {
-      if (prop.type === 'image' || prop.type === 'file') {
-        const v = this.config.props[prop.name] ?? this.properties[prop.name]
-        if (v) this.properties[prop.name] = this.composite.getBlobUrl(v, this.composite.packageName)
-      } else if (prop.type === 'slot') {
-        delete this.properties[prop.name]
-        const sid = this.config.props[prop.name]
-        if (sid) {
-          const slotNode = this.composite.getNode(sid)
-          this.properties[prop.name] = this.getSlotPropValue(slotNode)
-        } else if (Array.isArray(this.children)) {
-          const match = this.children.find(c => c.config.title === prop.name)
-          if (match) {
-            this.properties[prop.name] = this.getSlotPropValue(match)
-          } else {
-            const slotNode = this.children[slotOrder++]
-            this.properties[prop.name] = this.getSlotPropValue(slotNode)
-          }
-        }
-      } else if (prop.type === 'decorate') {
-        const nid = this.config.props[prop.name]
-        if (nid) this.properties[prop.name] = this.composite.getNode(nid)
-      } else if (prop.type === 'style') {
-        this.properties[prop.name] = handleClassListPropValue(this.config.props[prop.name], this.composite)
-      }
-    }
-    */
-  }
-
   getBlobUrl (url) {
     if (url.startsWith('http') || url.startsWith('data:') || url.startsWith('blob:') || url.startsWith('/')) {
       return url
-    } else if (url.startsWith('app://')) {
-      if (this.composite.packageName) {
-        return this.composite.baseUrl + '/' + this.composite.packageName + ensureLeading(url.substring('composite://'.length))
-      } else {
-        return this.composite.baseUrl + '/' + ensureLeading(url.substring('composite://'.length))
-      }
+    } else if (url.startsWith(IN_APP_FILE_PREFIEX)) {
+      return this.composite.getBlobUrl(url)
     } else {
-      return this.composite.baseUrl + '/' + url
+      return ridgeBaseUrl + '/' + url
     }
   }
 

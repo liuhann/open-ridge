@@ -48,7 +48,7 @@ export default class EditorElement extends Element {
     merge(this.config, config)
     this.style = { ...this.config.style }
     // this.properties = { ...this.config.props }
-
+    this.config.urlProps = this.getUrlProps()
     this.updateProps()
     this.updateStyle()
   }
@@ -174,10 +174,6 @@ export default class EditorElement extends Element {
     this.updateProps()
   }
 
-  getBlobUrl () {
-
-  }
-
   getIcon () {
     return <img className='outline-element-icon' src={this.getComponentMeta()?.icon} />
   }
@@ -282,15 +278,35 @@ export default class EditorElement extends Element {
     this.styleUpdated()
   }
 
-  // ========================================================================
-  // 导出
-  // ========================================================================
+  getUrlProps () {
+    // 识别并标记资源类属性（目前仅针对 image 类型）
+    // 这些属性在后续处理中可能需要特殊对待（如路径前缀处理）
+    const urlProperties = this.getPropDefinations().filter(p => p.type === 'image')
+
+    const urlProps = []
+
+    for (const urlProperty of urlProperties) {
+      if (this.config.props[urlProperty.name]) {
+        urlProps.push(urlProperty.name)
+      }
+    }
+    return urlProps
+  }
+
+  /**
+   * 导出当前元素的 JSON 配置数据
+   * @returns {Object} 包含元素配置、URL 属性标记及插槽信息的 JSON 对象
+   */
   exportJSON () {
     const json = cloneDeep(this.config)
 
     // 子节点是组件
     if (this.getPropDefination('children')?.type === 'children') {
       json.props.children = this.children?.map(c => c.getId()) || []
+    }
+    const urlProps = this.getUrlProps()
+    if (urlProps.length) {
+      json.urlProps = urlProps
     }
     // deprecated
     json.slots = this.getSlotElements()

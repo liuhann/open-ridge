@@ -1,7 +1,7 @@
 {
   "name": "Typography.Numeral",
   "title": "数字格式化",
-  "icon": "",
+  "icon": "svgs/input-number.svg",
   "description": "数字格式化组件，可自动格式化普通数字、百分比、字节大小、科学计数法等，支持精度、取整方式控制",
   "tags": [
     "数字",

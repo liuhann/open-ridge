@@ -1,7 +1,7 @@
 {
   "name": "Typography.Paragraph",
   "title": "段落",
-  "icon": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMyA2SDE5TTMgMTJIMTlNMyAxOEgxNyIgc3Ryb2tlPSIjNEU1OTY2IiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjwvc3ZnPg==",
+  "icon": "svgs/typography.svg",
   "description": "段落文本组件，用于展示多行文字内容，支持省略、可复制、行距调整、样式修饰等排版能力",
   "tags": [
     "段落",

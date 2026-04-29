@@ -50,8 +50,8 @@ const ComponentRegistryPanel = () => {
 
   const loadLibComponents = useCallback(async (libItem) => {
     if (!libItem.meta) {
-      setError('该组件库没有定义元数据文件')
-      return
+      // "meta": "ridge-metas/@douyinfe/semi-ui/meta.json",
+      libItem.meta = `ridge-metas/${libItem.module}/meta.json`
     }
 
     setLoading(true)

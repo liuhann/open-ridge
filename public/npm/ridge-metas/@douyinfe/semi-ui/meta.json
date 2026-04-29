@@ -1,13 +1,13 @@
 {
   "name": "@douyinfe/semi-ui",
   "schemaVersion": "2.0",
-  "lastUpdated": "2026-04-28T10:29:07.611Z",
+  "lastUpdated": "2026-04-29T05:59:41.882Z",
   "generatedBy": "ridge-ui-cli",
   "components": [
     {
       "name": "Button",
       "title": "按钮",
-      "icon": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTgiIGhlaWdodD0iMTAiIHg9IjMiIHk9IjciIHJ4PSIyIiBzdHJva2U9IiM0RTU5NjYiIHN0cm9rZS13aWR0aD0iMiIgZmlsbD0iI2YwZjRmNiIvPjwvc3ZnPg==",
+      "icon": "svgs/button.svg",
       "description": "基础按钮组件，用于页面点击操作、提交表单、确认取消等交互场景",
       "tags": [
         "按钮",
@@ -190,7 +190,7 @@
           "name": "src",
           "description": "图片地址",
           "label": "图片地址",
-          "type": "string",
+          "type": "image",
           "defaultValue": ""
         },
         {
@@ -204,15 +204,15 @@
           "name": "width",
           "description": "图片显示宽度",
           "label": "宽度",
-          "type": "number",
-          "defaultValue": null
+          "type": "string",
+          "defaultValue": "100%"
         },
         {
           "name": "height",
           "description": "图片显示高度",
           "label": "高度",
-          "type": "number",
-          "defaultValue": null
+          "type": "string",
+          "defaultValue": "100%"
         },
         {
           "name": "className",
@@ -225,7 +225,7 @@
           "name": "imgCls",
           "description": "图片节点自定义类名",
           "label": "图片节点类名",
-          "type": "string",
+          "type": "className",
           "defaultValue": ""
         },
         {
@@ -276,7 +276,7 @@
     {
       "name": "Input",
       "title": "输入框",
-      "icon": "icons/input.svg",
+      "icon": "svgs/input.svg",
       "description": "基础输入框组件，支持文本、密码等类型，提供前后置标签、清除按钮、校验状态、尺寸等常用配置",
       "tags": [
         "输入框",
@@ -517,7 +517,7 @@
     {
       "name": "Typography.Numeral",
       "title": "数字格式化",
-      "icon": "",
+      "icon": "svgs/input-number.svg",
       "description": "数字格式化组件，可自动格式化普通数字、百分比、字节大小、科学计数法等，支持精度、取整方式控制",
       "tags": [
         "数字",
@@ -741,7 +741,7 @@
     {
       "name": "Typography.Paragraph",
       "title": "段落",
-      "icon": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMyA2SDE5TTMgMTJIMTlNMyAxOEgxNyIgc3Ryb2tlPSIjNEU1OTY2IiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPjwvc3ZnPg==",
+      "icon": "svgs/typography.svg",
       "description": "段落文本组件，用于展示多行文字内容，支持省略、可复制、行距调整、样式修饰等排版能力",
       "tags": [
         "段落",
@@ -911,7 +911,7 @@
     {
       "name": "Typography.Text",
       "title": "文本",
-      "icon": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNSA1SDE5TDE3IDE5SDdMNSA1WiIgc3Ryb2tlPSIjNEU1OTY2IiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJNOCAxMkgxNiIgc3Ryb2tlPSIjNEU1OTY2IiBzdHJva2Utd2lkdGg9IjIiLz48L3N2Zz4=",
+      "icon": "svgs/typography.svg",
       "description": "基础文本组件，用于展示普通文字内容，支持加粗、删除线、下划线、省略、可复制、链接、不同颜色与大小等样式",
       "tags": [
         "文本",
@@ -1085,7 +1085,7 @@
     {
       "name": "Typography.Title",
       "title": "标题",
-      "icon": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNNSA1SDE5TDE3IDE5SDdMNSA1WiIgc3Ryb2tlPSIjNEU1OTY2IiBzdHJva2Utd2lkdGg9IjIiLz48cGF0aCBkPSJNOCA5TDE2IDlNOAxM0gxNiIgc3Ryb2tlPSIjNEU1OTY2IiBzdHJva2Utd2lkdGg9IjIiLz48L3N2Zz4=",
+      "icon": "svgs/typography.svg",
       "description": "标题组件，用于页面标题、章节标题、卡片标题等，支持6级标题、可复制、省略、颜色样式、加粗等配置",
       "tags": [
         "标题",

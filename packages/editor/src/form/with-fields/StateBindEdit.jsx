@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import editorStore from '../../store/editor.store'
 import { withField, Popover, Button, Space, Tree, Input, Typography, Tooltip, Tabs, TabPane } from '@douyinfe/semi-ui'
 
-const { Title, Text } = Typography
+const { Text } = Typography
 
 const StateBindEdit = withField(({
   value,
@@ -13,7 +13,6 @@ const StateBindEdit = withField(({
 
   const storeTreeData = compositeStoreModules.map(storeModule => storeModule.connects)
 
-  console.log('storeTreeData', storeTreeData)
   const [StoreName, type, key] = (value ?? '').split('.')
   const renderSelectState = () => {
     return (
