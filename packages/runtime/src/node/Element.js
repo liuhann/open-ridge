@@ -7,6 +7,7 @@ import {
   forceDOMElementState
 } from '../utils/pseudo.js'
 import { isObject, isObjectsEqual } from '../utils/is.js'
+import { cloneDeep } from '../utils/object.js'
 import { IN_APP_FILE_PREFIEX, ridgeBaseUrl } from '../index'
 
 const runtimeDefaults = {
@@ -53,7 +54,7 @@ export default class Element extends BaseNode {
   restoreRuntimeDefaultConfig () {
     for (const key in runtimeDefaults) {
       if (this.config[key] === undefined) {
-        this.config[key] = runtimeDefaults[key]
+        this.config[key] = cloneDeep(runtimeDefaults[key])
       }
     }
   }
