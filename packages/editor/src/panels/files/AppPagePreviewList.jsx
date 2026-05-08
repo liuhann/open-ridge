@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import { Tree, Typography, Button } from '@douyinfe/semi-ui'
+import TitleBar from '../../components/TitleBar/TitleBar.jsx'
 import './file-list.less'
-
 import appStore from '../../store/app.store.js'
 import editorStore from '../../store/editor.store'
 
@@ -115,22 +115,11 @@ const AppPagePreviewList = ({ onRunPage }) => {
 
   return (
     <div className='page-preview-panel'>
-      <div className='panel-title'>
-        <Text
-          style={{
-            fontSize: '14px',
-            fontWeight: 500,
-            color: 'var(--semi-color-text-0)'
-          }}
-        >
-          页面预览
-        </Text>
-        <div className='page-count'>
-          <Text size='small' type='tertiary'>
-            {countPages(pageTreeData)} 个页面
-          </Text>
-        </div>
-      </div>
+      <TitleBar
+        title='页面预览' right={<Text size='small' type='tertiary'>
+          {countPages(pageTreeData)} 个页面
+        </Text>}
+      />
 
       <div className='page-tree-container'>
         {pageTreeData.length > 0

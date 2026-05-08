@@ -11,8 +11,9 @@ import './file-list.less'
 import OutlineTree from '../outline/OutLineTree.jsx'
 import appStore from '../../store/app.store.js'
 import editorStore from '../../store/editor.store.js'
-import { EP_BACK, ICON_COMMON_PLUS } from '../../icons/icons.js'
+import { ICON_NAV_BACK, ICON_COMMON_PLUS } from '../../icons/icons.js'
 import { getAppTreeData } from './utils.js'
+import TitleBar from '../../components/TitleBar/TitleBar.jsx'
 const { Text } = Typography
 
 const ACCEPT_FILES = '.svg,.png,.jpg,.json,.css,.js,.md,.webp,.zip,.gif'
@@ -256,7 +257,7 @@ const AppFileList = () => {
             >
               <i className='more-button bi bi-three-dots-vertical' />
             </Dropdown>
-          </>}
+            </>}
         {/* <Text
           onClick={() => {
             const now = new Date().getTime()
@@ -333,29 +334,7 @@ const AppFileList = () => {
   return (
     <div className='left-panel'>
       {/* 顶部标题栏：优化对齐，参考提供的样式 */}
-      <div
-        className='panel-title'
-      >
-        <Space align='center'>
-          <Button
-            icon={EP_BACK}
-            theme='borderless' type='tertiary'
-            onClick={confirmExitToAppList}
-            className='back-button'
-          />
-          <Text
-            strong style={{
-              fontSize: '16px',
-              color: 'var(--semi-color-text-0)'
-            }}
-          >
-            应用文件
-          </Text>
-        </Space>
-        {/* 按钮工具栏：完美排版 */}
-        {/* <RenderCreateDropDown /> */}
-      </div>
-
+      <TitleBar onBack={confirmExitToAppList} title='应用文件管理' right={<RenderCreateDropDown />} />
       <DialogCreate
         show={dialogCreateShow}
         type={dialgeCreateFileType}

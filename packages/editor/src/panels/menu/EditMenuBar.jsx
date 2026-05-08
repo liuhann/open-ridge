@@ -1,6 +1,7 @@
 import React from 'react'
 import { Button, Divider, confirm, Space, ButtonGroup, Modal, Dropdown, InputNumber, Tooltip, Tabs, TabPane, Popover } from '@douyinfe/semi-ui'
 import './style.less'
+import { ICON_NAV_COMPONENTS, ICON_NAV_FOLDERS, ICON_NAV_RUN, ICON_COMMON_GEAR } from '../../icons/icons.js'
 
 import editorStore from '../../store/editor.store.js'
 
@@ -14,6 +15,7 @@ const EditorMenuBar = () => {
   const setZoom = editorStore(state => state.setZoom)
   const closePage = editorStore(state => state.closePage)
   const switchPage = editorStore(state => state.switchPage)
+  const previewPage = editorStore(state => state.previewPage)
 
   const onTabClose = async tabKey => {
     if (unsavedPages.indexOf(tabKey) > -1) {
@@ -78,15 +80,17 @@ const EditorMenuBar = () => {
             <Button icon={<HumbleiconsShare />}>导出</Button>
           </Popover> */}
 
-        {/* <Tooltip content='预览页面'>
+        <Tooltip content='预览页面'>
           <Button
             disabled={!currentOpenPageId}
             type='tertiary'
             theme='borderless'
-            icon={<i className='bi bi-play-fill' />} onClick={() => { context.toggleMode() }}
+            icon={ICON_NAV_RUN} onClick={() => {
+              previewPage(currentOpenPageId)
+            }}
           >预览
           </Button>
-        </Tooltip> */}
+        </Tooltip>
       </Space>
     </div>
   )

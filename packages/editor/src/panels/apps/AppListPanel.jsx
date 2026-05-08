@@ -6,6 +6,7 @@ import appStore from '../../store/app.store.js'
 import selectZipFile from '../../utils/selectFileUpload.js'
 
 import { ICON_COMMON_PLUS } from '../../icons/icons.js'
+import TitleBar from '../../components/TitleBar/TitleBar.jsx'
 
 const { Text, Title } = Typography
 
@@ -37,28 +38,16 @@ const AppListPanel = () => {
   return (
     <div className='app-list-panel left-panel'>
       {/* 顶部标题 + 操作 */}
-      <div
-        className='panel-title'
-      >
-        <Space align='center'>
-          <Text
-            strong style={{
-              fontSize: '16px',
-              color: 'var(--semi-color-text-0)'
-            }}
-          >
-            应用管理
-          </Text>
-        </Space>
-        <Button
-          theme='borderless' type='tertiary'
-          icon={ICON_COMMON_PLUS}
-          onClick={() => setCreateDialogVisible(true)}
-        >
-          新增应用
-        </Button>
-      </div>
-
+      <TitleBar
+        title='应用管理' right={
+          <Button
+            theme='borderless' type='tertiary'
+            icon={ICON_COMMON_PLUS}
+            onClick={() => setCreateDialogVisible(true)}
+          >新增应用
+          </Button>
+        }
+      />
       <Text type='tertiary' className='panel-desc'>
         管理、创建、编辑你的所有应用
       </Text>

@@ -1,8 +1,11 @@
 import React from 'react'
 import { Button, Divider, Space, Dropdown } from '@douyinfe/semi-ui'
 import './style.less'
-
+import editorStore from '../../store/editor.store.js'
 const PreviewMenuBar = ({ onClose, onRefresh, onDeviceChange, onOpenNewWindow }) => {
+  const closePreviewPage = editorStore(state => state.closePreviewPage)
+  const refreshPreviewPage = editorStore(state => state.refreshPreviewPage)
+
   // 设备切换菜单
   const deviceMenu = [
     { node: 'item', name: '手机（竖屏）', onClick: () => onDeviceChange?.('mobile', 'portrait') },
@@ -20,7 +23,7 @@ const PreviewMenuBar = ({ onClose, onRefresh, onDeviceChange, onOpenNewWindow })
           type='tertiary'
           theme='borderless'
           icon={<i className='bi bi-x-lg' />}
-          onClick={onClose}
+          onClick={closePreviewPage}
         />
 
         <Divider layout='vertical' />
@@ -30,7 +33,7 @@ const PreviewMenuBar = ({ onClose, onRefresh, onDeviceChange, onOpenNewWindow })
           type='tertiary'
           theme='borderless'
           icon={<i className='bi bi-arrow-clockwise' />}
-          onClick={onRefresh}
+          onClick={refreshPreviewPage}
         />
 
         <Divider layout='vertical' />
@@ -53,14 +56,14 @@ const PreviewMenuBar = ({ onClose, onRefresh, onDeviceChange, onOpenNewWindow })
 
       {/* 右侧：新窗口预览 */}
       <Space>
-        <Button
+        {/* <Button
           type='tertiary'
           theme='borderless'
           icon={<i className='bi bi-box-arrow-up-right' />}
           onClick={onOpenNewWindow}
         >
           新窗口预览
-        </Button>
+        </Button> */}
       </Space>
     </div>
   )

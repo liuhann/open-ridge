@@ -8,6 +8,7 @@ const editorStore = create((set, get) => ({
   // 页面编辑状态
   isPreview: false,
   currentOpenPageId: null,
+  currentPanel: 'app',
   zoom: 1,
   openedPages: [],
   unsavedPages: [],
@@ -29,6 +30,7 @@ const editorStore = create((set, get) => ({
 
   // 非状态 作为服务
   editorComposite: null,
+  previewComposite: null,
 
   openedFileContentMap: new Map(),
   pageTransformMap: new Map(),
@@ -41,6 +43,11 @@ const editorStore = create((set, get) => ({
   }) => {
     set({
       codeEditorRef
+    })
+  },
+  setCurrentPanel: (panel) => {
+    set({
+      currentPanel: panel
     })
   },
 
@@ -400,6 +407,10 @@ const editorStore = create((set, get) => ({
 
     const file = await appService.getFile(id)
 
+    set({
+      currentPanel: 'preview'
+    })
+
     if (file) {
       const previewComposite = new Composite({
         loader,
@@ -407,6 +418,24 @@ const editorStore = create((set, get) => ({
         appName: 'local',
         config: cloneDeep(file.json)
       })
+      await previewComposite.mount(document.querySelector('.preview-view-port'))
+      set({
+        previewComposite
+      })
+    }
+  },
+  closePreviewPage: async () => {
+    const { previewComposite } = get()
+
+    if (previewComposite) {
+      previewComposite.unmount()
+    }
+  },
+  refreshPreviewPage: async () => {
+    const { previewComposite } = get()
+
+    if (previewComposite) {
+      previewComposite.unmount()
       await previewComposite.mount(document.querySelector('.preview-view-port'))
     }
   }

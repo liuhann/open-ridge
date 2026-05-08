@@ -176,18 +176,19 @@ class Composite extends BaseNode {
   async mount (el, themeRoot) {
     debug('Composite Mount: ', this.appName, this.path)
     if (el) {
+      if (el.ridgeComposite) {
+        el.ridgeComposite.unmount()
+      }
       this.el = el
       this.el.ridgeComposite = this
     }
+
     if (!this.el) {
       return
     }
     try {
       this.beforeMount && this.beforeMount(el)
     } catch (e) { }
-    if (this.el.ridgeComposite) {
-      this.el.ridgeComposite.unmount()
-    }
     this.removeStatus()
     // debug(this.packageName, this.compositePath, 'mounting')
 
@@ -266,6 +267,8 @@ class Composite extends BaseNode {
 
     this.el.removeEventListener('mouseover', this.handleMouseOver)
     this.el.removeEventListener('mouseout', this.handleMouseOut)
+    this.el.style.width = ''
+    this.el.style.height = ''
     this.firstPainted = false
     delete this.el.ridgeComposite
   }
@@ -275,18 +278,18 @@ class Composite extends BaseNode {
     this.el.setAttribute('composite-id', this.getCompositeId())
     if (this.config && this.config.style && this.el) {
       this.el.style.background = ''
-      if (this.config.style.widthFix) {
+      if (this.config.style.autoWidth) {
+        this.el.style.width = '100%'
+      } else {
         // 固定宽度则配置溢出隐藏
         this.el.style.width = this.config.style.width + 'px'
         this.el.style.overflowX = 'hidden'
-      } else {
-        this.el.style.width = '100%'
       }
-      if (this.config.style.heightFix) {
+      if (this.config.style.autoHeight) {
+        this.el.style.height = '100%'
+      } else {
         this.el.style.height = this.config.style.height + 'px'
         this.el.style.overflowY = 'hidden'
-      } else {
-        this.el.style.height = '100%'
       }
 
       // const classList = handleClassListPropValue(this.config.classList, this)

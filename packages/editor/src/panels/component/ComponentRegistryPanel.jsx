@@ -1,12 +1,13 @@
 // ComponentRegistryPanel.jsx
 import React, { useState, useEffect, useCallback } from 'react'
-import { Button, Empty, Spin, Typography } from '@douyinfe/semi-ui'
+import { Button, Empty, Spin, Typography, Space } from '@douyinfe/semi-ui'
 import { IconArrowLeft, IconRefresh, IconSearch } from '@douyinfe/semi-icons'
 import { CATEGORIES, getDisplayName } from './componentUtils'
 import componentRegistry from '../../service/ComponentRegistry'
 import ComponentLibCard from './ComponentLibCard.jsx'
 import ComponentItemCard from './ComponentItemCard.jsx'
 import CategoryHeader from './CategoryHeader.jsx'
+import TitleBar from '../../components/TitleBar/TitleBar.jsx'
 import './ComponentRegistryPanel.less'
 
 const { Text } = Typography
@@ -87,13 +88,7 @@ const ComponentRegistryPanel = () => {
 
   const renderLibsView = () => (
     <>
-      <div className='component-grid-header'>
-        <h2 className='component-grid-title'>组件库</h2>
-        <Text className='component-grid-subtitle'>
-          将鼠标悬停在组件库上查看详细信息
-        </Text>
-      </div>
-
+      <TitleBar title='组件库' right={<Text className='component-grid-subtitle'>悬停在组件库上查看详细信息</Text>} />
       <div className='component-grid-container'>
         <div className='component-grid-list'>
           {Object.entries(CATEGORIES).map(([categoryKey, categoryInfo]) => {
@@ -130,26 +125,7 @@ const ComponentRegistryPanel = () => {
 
   const renderComponentsView = () => (
     <>
-      <div className='component-view-header'>
-        <div className='header-left'>
-          <Button
-            icon={<IconArrowLeft />}
-            theme='borderless'
-            onClick={handleBackToLibs}
-            className='back-button'
-          />
-          <div className='lib-info'>
-            <h2 className='lib-name'>{getDisplayName(currentLib)}</h2>
-            {currentLib.version && (
-              <span className='lib-version'>v{currentLib.version}</span>
-            )}
-          </div>
-        </div>
-        {currentLib.description && (
-          <Text className='lib-description'>{currentLib.description}</Text>
-        )}
-      </div>
-
+      <TitleBar onBack={handleBackToLibs} title={getDisplayName(currentLib)} right={currentLib.version} />
       {loading
         ? (
           <div className='loading-container'>
@@ -216,7 +192,7 @@ const ComponentRegistryPanel = () => {
   )
 
   return (
-    <div className='component-grid'>
+    <div className='component-grid left-panel'>
       {currentView === 'libs' ? renderLibsView() : renderComponentsView()}
     </div>
   )

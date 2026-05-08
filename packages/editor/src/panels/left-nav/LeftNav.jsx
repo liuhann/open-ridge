@@ -2,13 +2,14 @@ import React, { useState } from 'react'
 import NavBar from '../../components/NavBar/NavBar.jsx'
 import { ICON_NAV_COMPONENTS, ICON_NAV_FOLDERS, ICON_NAV_RUN, ICON_COMMON_GEAR } from '../../icons/icons.js'
 const LeftNav = ({
+  active,
   onChange
 }) => {
-  const [active, setActive] = useState(0)
+  // const [active, setActive] = useState(0)
   return (
     <NavBar
       onChange={(item, index) => {
-        setActive(index)
+        // setActive(index)
         onChange(item.name)
       }}
       active={active}

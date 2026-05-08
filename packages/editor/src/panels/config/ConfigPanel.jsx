@@ -91,9 +91,9 @@ const PAGE_FIELDS = [
     width: '24px',
     type: 'boolean',
     control: 'boolean',
-    prompt: '选中后页面将以此固定宽度呈现',
+    prompt: '设置宽度为自动',
     icon: ICON_RULER,
-    field: 'style.widthFix'
+    field: 'style.autoWidth'
   }, {
     label: '高度',
     width: '128px',
@@ -103,9 +103,9 @@ const PAGE_FIELDS = [
     width: '24px',
     type: 'boolean',
     control: 'boolean',
-    prompt: '选中后页面将以此固定高度呈现',
+    prompt: '设置高度为自动',
     icon: ICON_RULER,
-    field: 'style.heightFix'
+    field: 'style.autoHeight'
   }, {
     field: 'jsFiles',
     label: '页面状态库',

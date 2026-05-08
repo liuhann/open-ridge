@@ -22,7 +22,7 @@ const ICON_NAV_FOLDERS = <svg xmlns='http://www.w3.org/2000/svg' width='1em' hei
 const ICON_NAV_RUN = <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'><g fill='none' stroke='currentColor' strokeWidth='1.5'><path strokeLinejoin='round' d='M2.5 7.5h19m-4.5-5l-3 5m-4-5l-3 5' /><path d='M2.5 12c0-4.478 0-6.718 1.391-8.109S7.521 2.5 12 2.5c4.478 0 6.718 0 8.109 1.391S21.5 7.521 21.5 12c0 4.478 0 6.718-1.391 8.109S16.479 21.5 12 21.5c-4.478 0-6.718 0-8.109-1.391S2.5 16.479 2.5 12Z' /><path strokeLinejoin='round' d='M14.953 14.895c-.151.627-.867 1.07-2.3 1.955c-1.383.856-2.075 1.285-2.633 1.112a1.4 1.4 0 0 1-.61-.392C9 17.12 9 16.247 9 14.5s0-2.62.41-3.07c.17-.186.38-.321.61-.393c.558-.172 1.25.257 2.634 1.113c1.432.886 2.148 1.329 2.3 1.955a1.7 1.7 0 0 1 0 .79Z' /></g></svg>
 
 const ICON_RULER = <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'><g fill='none' stroke='currentColor' strokeLinecap='round' strokeWidth='1.5'><path d='m17.5 10.5l2 2M14 14l2 2m-5.5 1.5l2 2' /><path strokeLinejoin='round' d='M10.536 4.678c1.364-1.365 2.047-2.047 2.808-2.363a4.14 4.14 0 0 1 3.17 0c.761.316 1.444.998 2.808 2.363c1.365 1.364 2.047 2.047 2.363 2.808a4.14 4.14 0 0 1 0 3.17c-.316.761-.998 1.444-2.363 2.808l-5.857 5.858c-1.365 1.365-2.048 2.047-2.809 2.363a4.14 4.14 0 0 1-3.17 0c-.761-.316-1.444-.998-2.808-2.363c-1.365-1.364-2.047-2.047-2.363-2.808a4.14 4.14 0 0 1 0-3.17c.316-.761.998-1.444 2.363-2.808z' /></g></svg>
-
+const ICON_NAV_BACK = <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 42 42'><path fill='currentColor' fillRule='evenodd' d='M27.066 1L7 21.068l19.568 19.569l4.934-4.933l-14.637-14.636L32 5.933z' /></svg>
 export {
   ICON_COMMON_PLUS,
   ICON_COMMON_GEAR,
@@ -46,5 +46,6 @@ export {
 
   ICON_NAV_COMPONENTS,
   ICON_NAV_FOLDERS,
+  ICON_NAV_BACK,
   ICON_NAV_RUN
 }

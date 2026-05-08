@@ -32,9 +32,11 @@ const Editor = () => {
   const codeEditorRef = useRef(null)
 
   const [collapseLeft, setCollapseLeft] = useState(false)
-  const [currentPanel, setCurrentPanel] = useState('app')
+  // const [currentPanel, setCurrentPanel] = useState('app')
   const [leftContentWidth, setLeftContentWidth] = useState(340) // 存储左侧宽度
 
+  const currentPanel = editorStore((state) => state.currentPanel)
+  const setCurrentPanel = editorStore((state) => state.setCurrentPanel)
   const openedPages = editorStore((state) => state.openedPages)
   const imagePreviewVisible = editorStore((state) => state.imagePreviewVisible)
   const imagePreviewSrc = editorStore((state) => state.imagePreviewSrc)
@@ -76,7 +78,7 @@ const Editor = () => {
 
   return (
     <div className='editor-root'>
-      <LeftNav onChange={val => setCurrentPanel(val)} />
+      <LeftNav active={currentPanel} onChange={val => setCurrentPanel(val)} />
 
       {/* 使用 ResizeGroup 替换手动拖拽实现 */}
       <ResizeGroup direction='horizontal' className='editor-resize-group'>
@@ -181,13 +183,16 @@ const Editor = () => {
             </div>
           </div>
 
-          {currentPanel === 'preview' &&
-            <div className='preview-content'>
-              <PreviewMenuBar />
-              <div className='preview-space'>
-                <div className='preview-view-port' />
-              </div>
-            </div>}
+          <div
+            className='preview-content' style={{
+              display: currentPanel === 'preview' ? '' : 'none'
+            }}
+          >
+            <PreviewMenuBar />
+            <div className='preview-space'>
+              <div className='preview-view-port' />
+            </div>
+          </div>
         </ResizeItem>
       </ResizeGroup>
 
