@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Button, Modal, Image } from '@douyinfe/semi-ui'
 
 const ImageSelector = ({
@@ -9,10 +9,26 @@ const ImageSelector = ({
   const [visible, setVisible] = useState(false)
   const currentItem = imageList.find(item => item.value === value)
 
+  // 弹窗内临时选中的值（点确定才提交）
+  const [tempValue, setTempValue] = useState(value)
+
+  // 打开弹窗时，同步当前值
+  useEffect(() => {
+    if (visible) {
+      setTempValue(value)
+    }
+  }, [visible, value])
+
   const openSelector = () => setVisible(true)
 
-  const handleSelect = (val) => {
-    onChange?.(val)
+  // 点确定 → 提交
+  const handleOk = () => {
+    onChange?.(tempValue)
+    setVisible(false)
+  }
+
+  // 点取消 → 关闭不提交
+  const handleCancel = () => {
     setVisible(false)
   }
 
@@ -50,8 +66,8 @@ const ImageSelector = ({
       <Modal
         title='选择图片'
         visible={visible}
-        onCancel={() => setVisible(false)}
-        footer={null}
+        onCancel={handleCancel}
+        onOk={handleOk}
         width={940}
       >
         <div
@@ -67,9 +83,9 @@ const ImageSelector = ({
           {imageList.map((item) => (
             <div
               key={item.value}
-              onClick={() => handleSelect(item.value)}
+              onClick={() => setTempValue(item.value)}
               style={{
-                border: item.value === value
+                border: item.value === tempValue
                   ? '2px solid var(--semi-color-primary)'
                   : '1px solid var(--semi-color-border)',
                 borderRadius: 4,
@@ -79,20 +95,18 @@ const ImageSelector = ({
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                height: '120px' // 固定每个选项卡片高度
+                height: '120px'
               }}
             >
-              {/* 图片固定高度，不会拉伸 */}
               <Image
                 className='object-scale-down'
                 src={item.url}
                 alt={item.label}
-                width='100%'
-                height='100%'
                 style={{
                   width: '100%',
-                  height: '80px', // 固定图片高度
-                  flexShrink: 0
+                  height: '80px',
+                  flexShrink: 0,
+                  objectFit: 'cover'
                 }}
                 preview={false}
               />

@@ -1,6 +1,6 @@
 // ComponentRegistryPanel.jsx
 import React, { useState, useEffect, useCallback } from 'react'
-import { Button, Empty, Spin, Typography, Space } from '@douyinfe/semi-ui'
+import { Button, Empty, Spin, Typography, Tag } from '@douyinfe/semi-ui'
 import { IconArrowLeft, IconRefresh, IconSearch } from '@douyinfe/semi-icons'
 import { CATEGORIES, getDisplayName } from './componentUtils'
 import componentRegistry from '../../service/ComponentRegistry'
@@ -125,7 +125,11 @@ const ComponentRegistryPanel = () => {
 
   const renderComponentsView = () => (
     <>
-      <TitleBar onBack={handleBackToLibs} title={getDisplayName(currentLib)} right={currentLib.version} />
+      <TitleBar
+        onBack={handleBackToLibs} title={getDisplayName(currentLib)} right={
+          <Tag size='small'>{currentLib.version} </Tag>
+}
+      />
       {loading
         ? (
           <div className='loading-container'>

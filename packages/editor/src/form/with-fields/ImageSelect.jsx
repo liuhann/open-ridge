@@ -1,11 +1,11 @@
 import React, { useState, useMemo, useEffect } from 'react'
-import { withField, Button, Modal, Image, Grid } from '@douyinfe/semi-ui'
+import { withField } from '@douyinfe/semi-ui'
 import appStore from '../../store/app.store.js'
 import ImageSelector from '../component/ImageSelector.jsx'
 import { flattenTree } from '../../panels/files/buildFileTree.js'
 import { IN_APP_FILE_PREFIEX } from 'ridgejs'
 
-const ImageSelect = ({
+export const ImageSelect = ({
   value,
   onChange
 }) => {

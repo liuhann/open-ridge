@@ -11,7 +11,8 @@ import './file-list.less'
 import OutlineTree from '../outline/OutLineTree.jsx'
 import appStore from '../../store/app.store.js'
 import editorStore from '../../store/editor.store.js'
-import { ICON_NAV_BACK, ICON_COMMON_PLUS } from '../../icons/icons.js'
+import { ICON_COMMON_PLUS } from '../../icons/icons.js'
+import PackageJsonEditorModal from '../apps/PackageJsonEditorModal.jsx'
 import { getAppTreeData } from './utils.js'
 import TitleBar from '../../components/TitleBar/TitleBar.jsx'
 const { Text } = Typography
@@ -27,6 +28,8 @@ const AppFileList = () => {
   const [currentDirId, setCurrentDirId] = useState(-1)
   const [currentRename, setCurrentRename] = useState(null)
   const [treeData, setTreeData] = useState([])
+
+  const [appModalEditVisible, setAppModalEditVisible] = useState(false)
 
   const currentAppName = appStore((state) => state.currentAppName)
   const currentAppFilesTree = appStore((state) => state.currentAppFilesTree)
@@ -334,7 +337,17 @@ const AppFileList = () => {
   return (
     <div className='left-panel'>
       {/* 顶部标题栏：优化对齐，参考提供的样式 */}
-      <TitleBar onBack={confirmExitToAppList} title='应用文件管理' right={<RenderCreateDropDown />} />
+      <TitleBar
+        onBack={confirmExitToAppList} title='应用文件管理' right={<Button onClick={() => {
+          setAppModalEditVisible(true)
+        }}
+                                                            />}
+      />
+
+      <PackageJsonEditorModal
+        visible={appModalEditVisible}
+        onClose={() => setAppModalEditVisible(false)}
+      />
       <DialogCreate
         show={dialogCreateShow}
         type={dialgeCreateFileType}

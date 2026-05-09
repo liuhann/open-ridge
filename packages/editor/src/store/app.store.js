@@ -12,6 +12,7 @@ const localRepoService = new LocalRepoService()
 const useStore = create((set, get) => ({
   // 初始化状态
   appList: [],
+  currentAppInfo: null, // 当前应用信息
   currentAppName: '', // 👈 改为 null，区分“未初始化”和“无应用”
   currentAppId: '', // 👈 同上
   currentAppFilesTree: [],
@@ -49,6 +50,7 @@ const useStore = create((set, get) => ({
 
       await appService.updateAppFileTree()
       set({
+        currentAppInfo: appInfo,
         appService,
         currentAppId: id,
         currentAppName: appInfo.name,
@@ -66,7 +68,7 @@ const useStore = create((set, get) => ({
   },
 
   importAppFile: async file => {
-    const newAppId = alphabetid(6)
+    const newAppId = alphabetid(24)
     const appService = new ApplicationService(newAppId)
 
     // 👇 这段代码 开发环境 / build 生产环境 都能正常运行
@@ -188,6 +190,16 @@ const useStore = create((set, get) => ({
       })
     }
     return moved
+  },
+
+  updateAppInfo: async pkgJsonObject => {
+    const appService = localRepoService.getCurrentAppService()
+    await appService.savePackageJSONObject(pkgJsonObject)
+    await localRepoService.persistanceApp(pkgJsonObject.name, pkgJsonObject.description)
+    set({
+      currentAppInfo: pkgJsonObject,
+      currentAppName: pkgJsonObject.description
+    })
   }
 }))
 

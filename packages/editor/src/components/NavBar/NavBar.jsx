@@ -22,7 +22,7 @@ const NavBar = ({
               }}
               onClick={() => {
                 onChange && onChange(n, index)
-              }} theme={active === index ? 'solid' : 'borderless'} type={active === index ? 'primary' : 'tertiary'} key={index} size={size} icon={n.icon} iconSize={iconSize || size}
+              }} theme={active === n.name ? 'solid' : 'borderless'} type={active === n.name ? 'primary' : 'tertiary'} key={index} size={size} icon={n.icon} iconSize={iconSize || size}
             />
           )
         })}
