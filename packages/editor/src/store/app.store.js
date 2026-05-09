@@ -1,4 +1,3 @@
-// src/store/useStore.js
 import { create } from 'zustand'
 import { alphabetid, trim, camelCase } from '../utils/string'
 import LocalRepoService from '../service/LocalRepoService'
@@ -7,108 +6,147 @@ import { stringToBlob } from '../utils/blob'
 
 import helloZipApp from '../ridge-app-hello-1.0.0.zip'
 
+// 单例（关键！不再 new 多次）
 const localRepoService = new LocalRepoService()
 
 const useStore = create((set, get) => ({
-  // 初始化状态
+  // 初始化状态（修复空值语义）
   appList: [],
-  currentAppInfo: null, // 当前应用信息
-  currentAppName: '', // 👈 改为 null，区分“未初始化”和“无应用”
-  currentAppId: '', // 👈 同上
+  currentAppInfo: null,
+  currentAppName: null,
+  currentAppId: null,
   currentAppFilesTree: [],
-  isReady: false, // 👈 新增：全局是否初始化完成
-
+  isReady: false,
   appService: null,
 
   initAppStore: async () => {
     const { importAppFile, openApp } = get()
 
-    const appList = await localRepoService.getLocalAppList()
+    try {
+      const appList = await localRepoService.getLocalAppList()
 
-    if (appList.length === 0) { // 无应用默认创建
-      if (!window.localStorage.getItem('ridge-imported-hello')) {
-        await importAppFile(helloZipApp)
-        window.localStorage.setItem('ridge-imported-hello', true)
+      // 无应用时自动导入 hello 模板
+      if (appList.length === 0) {
+        if (!localRepoService.importedHello()) {
+          await importAppFile(helloZipApp)
+          window.localStorage.setItem('ridge-imported-hello', 'true')
+        }
       }
-    }
-    const currentAppId = await localRepoService.getCurrentAppId()
 
-    if (currentAppId) {
-      await openApp(currentAppId)
-    }
-    set({
-      isReady: true,
-      appList
-    })
-  },
-  openApp: async id => {
-    const appInfo = await localRepoService.getApp(id)
+      const currentAppId = localRepoService.getCurrentAppId()
+      if (currentAppId) {
+        await openApp(currentAppId)
+      }
 
-    if (appInfo) {
-      const appService = localRepoService.getAppService(id)
-      localRepoService.setCurrentApp(id, appService)
-
-      await appService.updateAppFileTree()
       set({
-        currentAppInfo: appInfo,
+        isReady: true,
+        appList
+      })
+    } catch (err) {
+      console.error('initAppStore 失败:', err)
+      set({ isReady: true })
+    }
+  },
+
+  openApp: async (id) => {
+    if (!id) return
+
+    try {
+      const appInfo = await localRepoService.getApp(id)
+      if (!appInfo) return
+
+      const appService = localRepoService.getAppService(id)
+      await appService.updateAppFileTree()
+      const appPackageJSON = await appService.getAppPackageJSON()
+
+      await localRepoService.setCurrentApp(id, appService)
+
+      set({
+        currentAppInfo: appPackageJSON,
         appService,
         currentAppId: id,
-        currentAppName: appInfo.name,
+        currentAppName: appPackageJSON?.description || '',
         currentAppFilesTree: appService.getFileTree()
       })
+    } catch (err) {
+      console.error('openApp 失败:', err)
     }
   },
 
-  removeApp: async id => {
-    await localRepoService.removeApp(id)
-    const appList = await localRepoService.getLocalAppList()
-    set({
-      appList
-    })
+  removeApp: async (id) => {
+    if (!id) return
+
+    try {
+      await localRepoService.removeApp(id)
+      const appList = await localRepoService.getLocalAppList()
+
+      // 若删除的是当前应用，清空状态
+      const currentId = localRepoService.getCurrentAppId()
+      if (currentId === id) {
+        set({
+          currentAppId: null,
+          currentAppName: null,
+          currentAppInfo: null,
+          appService: null,
+          currentAppFilesTree: []
+        })
+      }
+
+      set({ appList })
+    } catch (err) {
+      console.error('removeApp 失败:', err)
+    }
   },
 
-  importAppFile: async file => {
-    const newAppId = alphabetid(24)
-    const appService = new ApplicationService(newAppId)
+  importAppFile: async (file) => {
+    try {
+      const newAppId = alphabetid(24)
+      const appService = new ApplicationService(newAppId)
 
-    // 👇 这段代码 开发环境 / build 生产环境 都能正常运行
-    const response = await fetch(file)
-    const blob = await response.blob()
+      const response = await fetch(file)
+      const blob = await response.blob()
 
-    await appService.importAppArchive(blob)
+      await appService.importAppArchive(blob)
 
-    await localRepoService.persistanceApp(newAppId, (await appService.getAppPackageJSON()).description)
+      const pkg = await appService.getAppPackageJSON()
+      await localRepoService.persistApp(newAppId, pkg.description)
 
-    const appList = await localRepoService.getLocalAppList()
-    set({
-      loadingAppFiles: true,
-      appList
-    })
+      const appList = await localRepoService.getLocalAppList()
+      set({ appList })
+    } catch (err) {
+      console.error('importAppFile 失败:', err)
+    }
   },
 
-  setCurrentAppName: name => {
-    set({
-      currentAppName: name
-    })
+  setCurrentAppName: (name) => {
+    set({ currentAppName: name })
   },
 
   exitToAppList: () => {
     localRepoService.setCurrentApp(null)
     set({
       currentAppFilesTree: [],
-      currentAppName: null
+      currentAppName: null,
+      currentAppId: null,
+      currentAppInfo: null,
+      appService: null
     })
   },
 
+  // 修复：必须 await，原来是异步变同步大BUG
   updateAppList: async () => {
-    const appList = localRepoService.getLocalAppList()
-    set({
-      appList
-    })
+    try {
+      const appList = await localRepoService.getLocalAppList()
+      set({ appList })
+    } catch (err) {
+      console.error('updateAppList 失败:', err)
+    }
   },
 
   createFolder: async (parentId, name) => {
     const { appService } = get()
+    if (!appService) return false
+
     try {
       await appService.createDirectory(parentId, name)
       set({
@@ -116,12 +154,15 @@ const useStore = create((set, get) => ({
       })
       return true
     } catch (e) {
+      console.error('createFolder 失败:', e)
       return false
     }
   },
 
   uploadFile: async (parentId, file) => {
     const appService = localRepoService.getCurrentAppService()
+    if (!appService) return false
+
     try {
       await appService.createFile(parentId, file.name, file)
       set({
@@ -129,77 +170,126 @@ const useStore = create((set, get) => ({
       })
       return true
     } catch (e) {
+      console.error('uploadFile 失败:', e)
       return false
     }
   },
 
   createFile: async (parentId, name, fileContent, mimeType) => {
     const appService = localRepoService.getCurrentAppService()
+    if (!appService) return
 
-    await appService.createFile(parentId, name, stringToBlob(fileContent, mimeType))
-    set({
-      currentAppFilesTree: appService.getFileTree()
-    })
+    try {
+      await appService.createFile(
+        parentId,
+        name,
+        stringToBlob(fileContent, mimeType)
+      )
+      set({
+        currentAppFilesTree: appService.getFileTree()
+      })
+    } catch (err) {
+      console.error('createFile 失败:', err)
+    }
   },
 
   deleteFile: async (fileId) => {
     const { appService } = get()
-    await appService.deleteFile(fileId)
+    if (!appService) return
 
-    set({
-      currentAppFilesTree: appService.getFileTree()
-    })
+    try {
+      await appService.deleteFile(fileId)
+      set({
+        currentAppFilesTree: appService.getFileTree()
+      })
+    } catch (err) {
+      console.error('deleteFile 失败:', err)
+    }
   },
 
-  getFilePath: async (fileId) => {
+  getFilePath: (fileId) => {
     const appService = localRepoService.getCurrentAppService()
+    if (!appService) return null
     const file = appService.getFile(fileId)
-    if (file) {
-      return file.path
-    }
+    return file?.path || null
   },
 
   checkNewNameValid: (id, newName) => {
     const appService = localRepoService.getCurrentAppService()
+    if (!appService) return false
     return appService.checkNewNameValid(id, newName)
   },
 
   checkCreateNameValid: (pid, name) => {
     const appService = localRepoService.getCurrentAppService()
-    return appService.filterFiles(file => file.parent === pid && camelCase(trim(name)) === camelCase(trim(file.name))).length === 0
+    if (!appService) return true
+
+    const list = appService.filterFiles(
+      file => file.parent === pid &&
+        camelCase(trim(name)) === camelCase(trim(file.name))
+    )
+    return list.length === 0
   },
 
   renameFile: async (fileId, name) => {
     const appService = localRepoService.getCurrentAppService()
-    const renamed = await appService.rename(fileId, name)
-    if (renamed === 1) {
-      await appService.updateAppFileTree()
-      set({
-        currentAppFilesTree: appService.getFileTree()
-      })
+    if (!appService) return 0
+
+    try {
+      const renamed = await appService.rename(fileId, name)
+      if (renamed === 1) {
+        await appService.updateAppFileTree()
+        set({ currentAppFilesTree: appService.getFileTree() })
+      }
+      return renamed
+    } catch (err) {
+      console.error('renameFile 失败:', err)
+      return 0
     }
-    return renamed
   },
 
   moveFile: async (fileId, parentId) => {
     const appService = localRepoService.getCurrentAppService()
-    const moved = await appService.move(fileId, parentId)
-    if (moved) {
-      set({
-        currentAppFilesTree: appService.getFileTree()
-      })
+    if (!appService) return false
+
+    try {
+      const moved = await appService.move(fileId, parentId)
+      if (moved) {
+        set({ currentAppFilesTree: appService.getFileTree() })
+      }
+      return moved
+    } catch (err) {
+      console.error('moveFile 失败:', err)
+      return false
     }
-    return moved
+  },
+  updateAppInfo: async (pkgJsonObject) => {
+    if (!pkgJsonObject || !pkgJsonObject.name) return // 👈 只加这一行防呆
+
+    const appService = localRepoService.getCurrentAppService()
+    if (!appService) return
+    const currentAppId = localRepoService.getCurrentAppId() // 👈 这个才是真正ID
+    try {
+    // 1. 更新应用内部 package.json
+      await appService.updateAppPackageJSON(pkgJsonObject)
+
+      // 2. 更新本地应用列表（用真正的本地ID）
+      await localRepoService.persistApp(
+        currentAppId,
+        pkgJsonObject.description
+      )
+
+      set({
+        currentAppInfo: pkgJsonObject,
+        currentAppName: pkgJsonObject.description
+      })
+    } catch (err) {
+      console.error('updateAppInfo 失败:', err)
+    }
   },
 
-  updateAppInfo: async pkgJsonObject => {
-    const appService = localRepoService.getCurrentAppService()
-    await appService.savePackageJSONObject(pkgJsonObject)
-    await localRepoService.persistanceApp(pkgJsonObject.name, pkgJsonObject.description)
-    set({
-      currentAppInfo: pkgJsonObject,
-      currentAppName: pkgJsonObject.description
-    })
+  trashApp: async (appId) => {
+
   }
 }))
 

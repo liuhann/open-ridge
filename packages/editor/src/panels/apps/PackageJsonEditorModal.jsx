@@ -22,8 +22,7 @@ export default function PackageJsonEditorModal ({
   // 提交
   const handleOk = async () => {
     try {
-      // const values = await form.validate()
-      // await updateAppInfo(values)
+      await updateAppInfo(appInfoObject)
       onClose()
     } catch (err) {
       console.log('验证失败', err)
@@ -42,12 +41,22 @@ export default function PackageJsonEditorModal ({
         <Form
           initValues={appInfoObject}
           style={{ padding: 10, width: '100%' }}
-          onValueChange={(v) => console.log(v)}
+          onValueChange={(v) => {
+            setAppInfoObject(v)
+          }}
         >
+          {/* 描述 */}
+          <Form.Input
+            field='description'
+            label='应用名词'
+            placeholder='简单描述这个应用'
+            rows={3}
+          />
+
           {/* 名称 - 不可修改 */}
           <Form.Input
             field='name'
-            label='应用名称'
+            label='应用编码'
             placeholder='自动生成，不可修改'
             disabled
             style={{ cursor: 'not-allowed' }}
@@ -70,13 +79,6 @@ export default function PackageJsonEditorModal ({
             placeholder='请输入作者名称'
           />
 
-          {/* 描述 */}
-          <Form.TextArea
-            field='description'
-            label='应用描述'
-            placeholder='简单描述这个应用'
-            rows={3}
-          />
         </Form>}
     </Modal>
   )
