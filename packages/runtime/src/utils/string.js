@@ -278,6 +278,7 @@ const concatToPath = (...args) => {
 }
 
 export {
+  trimLeadingSlash,
   isUrlInApp,
   concatToPath,
   extractPackageAndPath,

@@ -100,7 +100,7 @@ const useStore = create((set, get) => ({
 
   importAppFile: async (file) => {
     try {
-      const newAppId = alphabetid(24)
+      const newAppId = alphabetid(8)
       const appService = new ApplicationService(newAppId)
 
       const response = await fetch(file)
@@ -113,9 +113,17 @@ const useStore = create((set, get) => ({
 
       const appList = await localRepoService.getLocalAppList()
       set({ appList })
+      return newAppId
     } catch (err) {
       console.error('importAppFile 失败:', err)
     }
+  },
+
+  createEmptyApp: async () => {
+    const { importAppFile, openApp } = get()
+
+    const newAppId = await importAppFile(helloZipApp)
+    openApp(newAppId)
   },
 
   setCurrentAppName: (name) => {
@@ -263,8 +271,10 @@ const useStore = create((set, get) => ({
       return false
     }
   },
-  updateAppInfo: async (pkgJsonObject) => {
-    if (!pkgJsonObject || !pkgJsonObject.name) return // 👈 只加这一行防呆
+  updateAppInfo: async (updateObject) => {
+    if (!updateObject || !updateObject.name) return // 👈 只加这一行防呆
+
+    const pkgJsonObject = JSON.parse(JSON.stringify(updateObject))
 
     const appService = localRepoService.getCurrentAppService()
     if (!appService) return
@@ -279,7 +289,9 @@ const useStore = create((set, get) => ({
         pkgJsonObject.description
       )
 
+      const appList = await localRepoService.getLocalAppList()
       set({
+        appList,
         currentAppInfo: pkgJsonObject,
         currentAppName: pkgJsonObject.description
       })
@@ -289,7 +301,12 @@ const useStore = create((set, get) => ({
   },
 
   trashApp: async (appId) => {
+    await localRepoService.removeApp(appId)
+    const appList = await localRepoService.getLocalAppList()
 
+    set({
+      appList
+    })
   }
 }))
 

@@ -3,7 +3,7 @@ import { withField } from '@douyinfe/semi-ui'
 import appStore from '../../store/app.store.js'
 import ImageSelector from '../component/ImageSelector.jsx'
 import { flattenTree } from '../../panels/files/buildFileTree.js'
-import { IN_APP_FILE_PREFIEX } from 'ridgejs'
+import { trimLeadingSlash, addStringPrefix } from 'ridgejs/src/utils/string.js'
 
 export const ImageSelect = ({
   value,
@@ -27,23 +27,14 @@ export const ImageSelect = ({
     }).filter(Boolean))
   }, [currentAppFilesTree])
 
-  // 计算传给 ImageSelector 的值：去掉前缀
-  const selectorValue = useMemo(() => {
-    if (!value) return ''
-    if (typeof value === 'string' && value.startsWith(IN_APP_FILE_PREFIEX)) {
-      return value.substring(IN_APP_FILE_PREFIEX.length)
-    }
-    return value
-  }, [value])
-
   return (
     <ImageSelector
-      value={selectorValue}
+      value={addStringPrefix('/', value)}
       imageList={imageList}
       onChange={val => {
         // 传出值时：统一加上前缀
         if (val) {
-          onChange(IN_APP_FILE_PREFIEX + val)
+          onChange(trimLeadingSlash(val))
         } else {
           onChange(val)
         }

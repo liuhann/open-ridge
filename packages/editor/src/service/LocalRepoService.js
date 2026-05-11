@@ -30,7 +30,7 @@ export default class LocalRepoService {
       if (!existed) {
         await this.collection.insert({ id, name })
       } else {
-        await this.collection.update({ id }, { name })
+        await this.collection.update({ id }, { id, name })
       }
     } catch (e) {
       console.error('persistApp 失败:', e)
@@ -81,6 +81,9 @@ export default class LocalRepoService {
     if (id == null) return
     try {
       await this.collection.remove({ id })
+
+      const appService = this.getAppService(id)
+      await appService.clear()
       delete this.appServices[id]
 
       // 如果删除的是当前应用，清空当前ID

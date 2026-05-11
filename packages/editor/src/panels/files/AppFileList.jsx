@@ -11,7 +11,7 @@ import './file-list.less'
 import OutlineTree from '../outline/OutLineTree.jsx'
 import appStore from '../../store/app.store.js'
 import editorStore from '../../store/editor.store.js'
-import { ICON_COMMON_PLUS } from '../../icons/icons.js'
+import { ICON_COMMON_PLUS, ICON_COMMON_GEAR } from '../../icons/icons.js'
 import PackageJsonEditorModal from '../apps/PackageJsonEditorModal.jsx'
 import { getAppTreeData } from './utils.js'
 import TitleBar from '../../components/TitleBar/TitleBar.jsx'
@@ -45,7 +45,7 @@ const AppFileList = () => {
 
   useEffect(() => {
     setTreeData(getAppTreeData(currentAppFilesTree, currentAppName))
-  }, [currentAppFilesTree])
+  }, [currentAppFilesTree, currentAppName])
 
   const showCreateDialog = (fileType) => {
     setDialogCreateFileType(fileType)
@@ -338,10 +338,18 @@ const AppFileList = () => {
     <div className='left-panel'>
       {/* 顶部标题栏：优化对齐，参考提供的样式 */}
       <TitleBar
-        onBack={confirmExitToAppList} title='应用文件管理' right={<Button onClick={() => {
-          setAppModalEditVisible(true)
-        }}
-                                                            />}
+        onBack={confirmExitToAppList} title='应用文件管理'
+        right={
+          <Button
+            style={{
+              fontSize: '18px'
+            }}
+            theme='borderless' type='tertiary'
+            icon={ICON_COMMON_GEAR} onClick={() => {
+              setAppModalEditVisible(true)
+            }}
+          />
+        }
       />
 
       <PackageJsonEditorModal
@@ -379,6 +387,7 @@ const AppFileList = () => {
             className='file-tree'
             showFilteredOnly
             draggable
+            defaultExpandedKeys={['-1']}
             renderLabel={renderFullLabel}
             treeData={treeData}
             onDrop={({ node, dragNode, dropPosition, dropToGap }) => {

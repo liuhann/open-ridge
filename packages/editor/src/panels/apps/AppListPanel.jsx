@@ -14,8 +14,9 @@ const AppListPanel = () => {
   const [createDialogVisible, setCreateDialogVisible] = useState(false)
   const appList = appStore((state) => state.appList)
   const openApp = appStore((state) => state.openApp)
-  const removeApp = appStore((state) => state.removeApp)
+  const trashApp = appStore((state) => state.trashApp)
   const importAppFile = appStore((state) => state.importAppFile)
+  const createEmptyApp = appStore((state) => state.createEmptyApp)
 
   // 最近打开（取最近3个）
   const recentApps = appList.slice(-3).reverse()
@@ -61,6 +62,8 @@ const AppListPanel = () => {
             selectZipFile(async file => {
               await importAppFile(file)
             })
+          } else if (name === 'empty') {
+            createEmptyApp()
           }
         }}
         onCancel={() => setCreateDialogVisible(false)}
@@ -72,24 +75,21 @@ const AppListPanel = () => {
           <Text strong>最近打开</Text>
         </div>
         <div className='app-grid'>
-          {recentApps.length > 0
-            ? (
-                recentApps.map(item => (
-                  <div
-                    key={item.id}
-                    className='app-card'
-                    onClick={() => openApp(item.id)}
-                  >
-                    <div className='app-icon'>📄</div>
-                    <div className='app-name'>{item.name}</div>
-                    <div className='app-desc'>最近打开</div>
-                  </div>
-                ))
-              )
-            : (
-              <Empty layout='horizontal' description='暂无最近打开应用' />
-              )}
+          {recentApps.length > 0 && (
+            recentApps.map(item => (
+              <div
+                key={item.id}
+                className='app-card'
+                onClick={() => openApp(item.id)}
+              >
+                <div className='app-icon'>📄</div>
+                <div className='app-name'>{item.name}</div>
+                <div className='app-desc'>最近打开</div>
+              </div>
+            ))
+          )}
         </div>
+        {recentApps.length === 0 && <Empty layout='horizontal' description='暂无最近打开应用' />}
       </div>
 
       {/* 官方推荐 */}
@@ -120,41 +120,60 @@ const AppListPanel = () => {
           <Text type='tertiary'>{appList.length} 个应用</Text>
         </div>
         <div className='app-grid'>
-          {
-            appList.length > 0 ? (
-              appList.map(item => (
-                <div
-                  key={item.id}
-                  className='app-card'
-                  onClick={() => openApp(item.id)}
-                  onContextMenu={(e) => {
-                    e.preventDefault()
-                  // 你可以在这里加右键菜单
+          {appList.length > 0 && appList.map(item => (
+            <div
+              key={item.id}
+              className='app-card'
+              onClick={() => openApp(item.id)}
+              onContextMenu={(e) => {
+                e.preventDefault()
+              }}
+            >
+              <div className='app-icon'>📁</div>
+              <div className='app-name'>{item.name}</div>
+              <div className='app-actions'>
+                <Text
+                  size='small'
+                  type='danger'
+                  onClick={(e) => {
+                    e.stopPropagation()
+                    Modal.confirm({
+                      title: '确认删除？',
+                      content: '应用删除后不可找回，如有需要建议您先导出到本地文件系统保存',
+                      onOk: () => {
+                        trashApp(item.id)
+                      }
+                    })
                   }}
                 >
-                  <div className='app-icon'>📁</div>
-                  <div className='app-name'>{item.name}</div>
-                  <div className='app-actions'>
-                    <Text
-                      size='small'
-                      type='danger'
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        Modal.confirm('确认删除？').then(async () => {
-                          await removeApp(item.id)
-                        })
-                      }}
-                    >
-                      删除
-                    </Text>
-                  </div>
-                </div>
-              ))
-            ) : (
-              <Empty description='暂无应用，点击新增创建应用' />
-            )
-}
+                  删除
+                </Text>
+              </div>
+            </div>
+          ))}
         </div>
+        {appList.length === 0 &&
+          <div style={{
+            width: '100%',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '40px 0'
+          }}
+          >
+            <Empty description='暂无应用，点击新增创建应用' />
+
+            <Button
+              style={{ marginTop: 20 }}
+              theme='solid'
+              type='primary'
+              icon={ICON_COMMON_PLUS}
+              onClick={() => setCreateDialogVisible(true)}
+            >
+              新增应用
+            </Button>
+          </div>}
       </div>
     </div>
   )

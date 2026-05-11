@@ -17,7 +17,6 @@ const TitleBar = ({
           icon={ICON_NAV_BACK}
           theme='borderless' type='tertiary'
           onClick={onBack}
-          className='back-button'
                    />}
         <Text
           strong style={{

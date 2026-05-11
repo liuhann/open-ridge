@@ -51,7 +51,7 @@ const ImageSelector = ({
           ? (
             <Image
               src={currentItem.url}
-              style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              imgStyle={{ width: '100%', height: '100%', objectFit: 'cover' }}
               alt={currentItem.label}
             />
             )
@@ -102,11 +102,10 @@ const ImageSelector = ({
                 className='object-scale-down'
                 src={item.url}
                 alt={item.label}
+                imgStyle={{ width: '100%', height: '100%', objectFit: 'cover' }}
                 style={{
                   width: '100%',
-                  height: '80px',
-                  flexShrink: 0,
-                  objectFit: 'cover'
+                  height: '80px'
                 }}
                 preview={false}
               />

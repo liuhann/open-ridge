@@ -317,6 +317,9 @@ export default class ApplicationService {
     const file = this.getFile('/package.json')
     if (file?.json) {
       this.appPackageJSONObject = file.json
+      if (!this.appPackageJSONObject.description) {
+        this.appPackageJSONObject.description = '未命名应用'
+      }
       return file.json
     }
     return {}
@@ -338,7 +341,7 @@ export default class ApplicationService {
       await this.updateFileContent(file.id, content)
     }
 
-    this.appPackageJSONObject = packageJSONObject
+    this.appPackageJSONObject = JSON.parse(content)
   }
 
   async importZipEntryFile (filePath, zipObject) {
@@ -350,6 +353,11 @@ export default class ApplicationService {
     const blob = await zipObject.async('blob')
 
     await this.createFile(parentId, filename, blob, mimeType)
+  }
+
+  async clear () {
+    await this.collection.clean()
+    await this.store.clear()
   }
 
   // 修复：删除不存在的 backUpService 调用
