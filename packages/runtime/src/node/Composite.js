@@ -137,13 +137,12 @@ class Composite extends BaseNode {
   }
 
   getBlobUrl (url) {
-    if (this.appService && url.startsWith(IN_APP_FILE_PREFIEX)) {
-      const filePath = url.substring(IN_APP_FILE_PREFIEX.length)
-      return this.appService.getFile(filePath)?.url
+    if (this.appService) {
+      return this.appService.getFile('/' + url)?.url
     } else if (this.appName) {
-      return `${ridgeBaseUrl}/${this.appName}/${url.substring(IN_APP_FILE_PREFIEX.length)}`
+      return `${ridgeBaseUrl}/${this.appName}/${url}`
     } else {
-      return `${ridgeBaseUrl}/${url.substring(IN_APP_FILE_PREFIEX.length)}`
+      return `${ridgeBaseUrl}/${url}`
     }
   }
 

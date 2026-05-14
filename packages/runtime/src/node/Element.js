@@ -74,8 +74,8 @@ export default class Element extends BaseNode {
     if (typeof properties.children !== 'string') {
       properties.children = this.children
     }
-    if (this.config.meta && Array.isArray(this.config.meta.urlProps)) {
-      for (const propName of this.config.meta.urlProps) {
+    if (this.config.meta && Array.isArray(this.config.meta.url)) {
+      for (const propName of this.config.meta.url) {
         properties[propName] = this.getBlobUrl(properties[propName])
       }
     }
@@ -355,10 +355,8 @@ export default class Element extends BaseNode {
   getBlobUrl (url) {
     if (url.startsWith('http') || url.startsWith('data:') || url.startsWith('blob:') || url.startsWith('/')) {
       return url
-    } else if (url.startsWith(IN_APP_FILE_PREFIEX)) {
-      return this.composite.getBlobUrl(url)
     } else {
-      return ridgeBaseUrl + '/' + url
+      return this.composite.getBlobUrl(url)
     }
   }
 

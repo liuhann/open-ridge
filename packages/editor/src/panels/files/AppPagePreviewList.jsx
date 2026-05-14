@@ -109,15 +109,16 @@ const AppPagePreviewList = ({ onRunPage }) => {
 
   const handleNodeSelect = (key, selected, node) => {
     setCurrentSelected(node)
-    previewPage(key)
+
+    if (!Array.isArray(node.children)) {
+      previewPage(key)
+    }
   }
 
   return (
     <div className='page-preview-panel'>
       <TitleBar
-        title='页面预览' right={<Text size='small' type='tertiary'>
-          {countPages(pageTreeData)} 个页面
-                            </Text>}
+        title='页面预览' right={<Text size='small' type='tertiary'>{countPages(pageTreeData)} 个页面</Text>}
       />
 
       <div className='page-tree-container'>

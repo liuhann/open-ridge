@@ -125,7 +125,8 @@ class ObjectForm extends React.Component {
       }
     } else {
       // 未定义的配置方式
-      return <Form.Slot label={field.label}><Text disabled>未定义配置方式</Text></Form.Slot>
+      // return <Form.Slot label={field.label}><Text disabled>未定义配置方式</Text></Form.Slot>
+      return null
     }
   }
 

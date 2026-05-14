@@ -1,0 +1,131 @@
+{
+  "name": "Card",
+  "title": "卡片",
+  "icon": "svgs/card.svg",
+  "description": "基础卡片容器组件，用于信息模块、内容分组、数据卡片等业务场景",
+  "tags": [
+    "卡片",
+    "容器",
+    "基础组件"
+  ],
+  "category": "基础组件",
+  "version": "1.0.0",
+  "author": "LiuHan",
+  "visualConfig": {
+    "preferredWidth": 300,
+    "preferredHeight": 180,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "children",
+      "description": "卡片内部的文本内容",
+      "label": "卡片内容",
+      "type": "string",
+      "defaultValue": ""
+    },
+    {
+      "name": "title",
+      "description": "卡片标题",
+      "label": "卡片标题",
+      "type": "string",
+      "defaultValue": ""
+    },
+    {
+      "name": "headerExtraContent",
+      "description": "卡片标题右侧的额外内容",
+      "label": "标题右侧附加内容",
+      "type": "string",
+      "defaultValue": ""
+    },
+    {
+      "name": "footer",
+      "description": "自定义卡片页脚",
+      "label": "自定义页脚",
+      "type": "string",
+      "defaultValue": ""
+    },
+    {
+      "name": "bordered",
+      "description": "是否设置卡片的外边框",
+      "label": "显示外边框",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": true
+    },
+    {
+      "name": "className",
+      "description": "卡片的样式类名",
+      "label": "样式类名",
+      "type": "className"
+    },
+    {
+      "name": "bodyStyle",
+      "description": "卡片内容区内联样式",
+      "label": "内容区样式",
+      "type": "CSSProperties"
+    },
+    {
+      "name": "footerLine",
+      "description": "卡片页脚区与内容区是否有边线",
+      "label": "页脚分割线",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "footerStyle",
+      "description": "卡片页脚区内联样式",
+      "label": "页脚样式",
+      "type": "CSSProperties"
+    },
+    {
+      "name": "headerLine",
+      "description": "卡片标题区与内容区是否有边线",
+      "label": "标题分割线",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": true
+    },
+    {
+      "name": "headerStyle",
+      "description": "卡片标题区内联样式",
+      "label": "标题区样式",
+      "type": "CSSProperties"
+    },
+    {
+      "name": "loading",
+      "description": "是否设置加载时的占位",
+      "label": "加载状态",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "shadows",
+      "description": "设置显示阴影的时机，不设置则无阴影",
+      "label": "阴影显示时机",
+      "control": "select",
+      "type": "string",
+      "options": [
+        {
+          "label": "悬浮时显示",
+          "value": "hover"
+        },
+        {
+          "label": "一直显示",
+          "value": "always"
+        }
+      ],
+      "defaultValue": ""
+    },
+    {
+      "name": "style",
+      "description": "卡片根节点内联样式",
+      "label": "卡片样式",
+      "type": "CSSProperties"
+    }
+  ],
+  "events": []
+}

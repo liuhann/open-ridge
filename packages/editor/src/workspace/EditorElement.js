@@ -1,6 +1,7 @@
 import { Element } from 'ridgejs'
 import cloneDeep from 'lodash/cloneDeep.js'
 import isEqual from 'lodash/isEqual.js'
+import lodashSet from 'lodash/set'
 
 import { nanoid } from '../utils/string'
 import componentRegistry from '../service/ComponentRegistry'
@@ -60,11 +61,17 @@ export default class EditorElement extends Element {
     }
   }
 
-  updateConfig (config) {
+  updateConfig (config, update) {
     merge(this.config, config)
+
+    if (update) {
+      for (const keyPath of Object.keys(update)) {
+        lodashSet(this.config, keyPath, update[keyPath])
+      }
+    }
     this.style = { ...this.config.style }
-    this.updateProps()
     this.updateStyle()
+    this.updateProps()
   }
 
   styleUpdated () {

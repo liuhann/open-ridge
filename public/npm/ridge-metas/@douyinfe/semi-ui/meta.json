@@ -1,9 +1,378 @@
 {
   "name": "@douyinfe/semi-ui",
   "schemaVersion": "2.0",
-  "lastUpdated": "2026-05-06T11:03:25.056Z",
+  "lastUpdated": "2026-05-14T11:01:06.488Z",
   "generatedBy": "ridge-ui-cli",
   "components": [
+    {
+      "name": "Avatar",
+      "title": "头像",
+      "icon": "svgs/avatar.svg",
+      "description": "头像组件，用于展示用户头像、字符头像、图标头像，支持图片、文字、自定义内容及上下角标展示",
+      "tags": [
+        "头像",
+        "用户",
+        "展示",
+        "基础组件"
+      ],
+      "category": "基础组件",
+      "version": "1.0.0",
+      "author": "LiuHan",
+      "visualConfig": {
+        "preferredWidth": 60,
+        "preferredHeight": 60,
+        "resizable": true,
+        "aspectRatio": "1:1"
+      },
+      "properties": [
+        {
+          "name": "src",
+          "description": "图片类头像的资源地址",
+          "label": "图片地址",
+          "type": "image",
+          "defaultValue": ""
+        },
+        {
+          "name": "alt",
+          "description": "图像的替代文本描述",
+          "label": "图片描述",
+          "type": "string",
+          "defaultValue": ""
+        },
+        {
+          "name": "shape",
+          "description": "指定头像的形状",
+          "label": "头像形状",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "圆形",
+              "value": "circle"
+            },
+            {
+              "label": "方形",
+              "value": "square"
+            }
+          ],
+          "defaultValue": "circle"
+        },
+        {
+          "name": "size",
+          "description": "设置头像的大小",
+          "label": "头像尺寸",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "超小",
+              "value": "extra-extra-small"
+            },
+            {
+              "label": "极小",
+              "value": "extra-small"
+            },
+            {
+              "label": "小",
+              "value": "small"
+            },
+            {
+              "label": "默认",
+              "value": "default"
+            },
+            {
+              "label": "中等",
+              "value": "medium"
+            },
+            {
+              "label": "大",
+              "value": "large"
+            },
+            {
+              "label": "超大",
+              "value": "extra-large"
+            }
+          ],
+          "defaultValue": "medium"
+        },
+        {
+          "name": "color",
+          "description": "指定头像的颜色",
+          "label": "头像背景色",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "琥珀色",
+              "value": "amber"
+            },
+            {
+              "label": "蓝色",
+              "value": "blue"
+            },
+            {
+              "label": "青色",
+              "value": "cyan"
+            },
+            {
+              "label": "绿色",
+              "value": "green"
+            },
+            {
+              "label": "灰色",
+              "value": "grey"
+            },
+            {
+              "label": "靛蓝色",
+              "value": "indigo"
+            },
+            {
+              "label": "浅蓝色",
+              "value": "light-blue"
+            },
+            {
+              "label": "浅绿色",
+              "value": "light-green"
+            },
+            {
+              "label": "青柠色",
+              "value": "lime"
+            },
+            {
+              "label": "橙色",
+              "value": "orange"
+            },
+            {
+              "label": "粉色",
+              "value": "pink"
+            },
+            {
+              "label": "紫色",
+              "value": "purple"
+            },
+            {
+              "label": "红色",
+              "value": "red"
+            },
+            {
+              "label": "青色",
+              "value": "teal"
+            },
+            {
+              "label": "紫罗兰色",
+              "value": "violet"
+            },
+            {
+              "label": "黄色",
+              "value": "yellow"
+            }
+          ],
+          "defaultValue": "grey"
+        },
+        {
+          "name": "gap",
+          "description": "字符头像距离左右两侧的像素大小",
+          "label": "字符边距",
+          "type": "number",
+          "defaultValue": 3
+        },
+        {
+          "name": "border",
+          "description": "头像额外边框配置，支持颜色与动画",
+          "label": "额外边框",
+          "type": "boolean"
+        },
+        {
+          "name": "contentMotion",
+          "description": "头像内容区域动效",
+          "label": "内容动效",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "className",
+          "description": "类名",
+          "label": "样式类名",
+          "type": "className"
+        },
+        {
+          "name": "style",
+          "description": "样式名",
+          "label": "头像样式",
+          "type": "CSSProperties"
+        }
+      ],
+      "events": [
+        {
+          "name": "onClick",
+          "description": "单击头像的回调",
+          "label": "点击事件"
+        },
+        {
+          "name": "onError",
+          "description": "图片加载失败的事件",
+          "label": "图片加载失败"
+        },
+        {
+          "name": "onMouseEnter",
+          "description": "鼠标进入事件",
+          "label": "鼠标进入"
+        },
+        {
+          "name": "onMouseLeave",
+          "description": "鼠标离开事件",
+          "label": "鼠标离开"
+        }
+      ]
+    },
+    {
+      "name": "Badge",
+      "title": "徽标",
+      "icon": "svgs/badge.svg",
+      "description": "用于展示消息通知、数量标记、状态红点、角标等场景，支持数字、圆点、自定义内容",
+      "tags": [
+        "徽标",
+        "红点",
+        "通知",
+        "角标",
+        "基础组件"
+      ],
+      "category": "基础组件",
+      "version": "1.0.0",
+      "author": "LiuHan",
+      "visualConfig": {
+        "preferredWidth": 28,
+        "preferredHeight": 28,
+        "resizable": false,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "count",
+          "description": "徽章展示的内容",
+          "label": "显示数字/内容",
+          "type": "number",
+          "defaultValue": ""
+        },
+        {
+          "name": "dot",
+          "description": "不展示数字，只显示小圆点",
+          "label": "小圆点模式",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "overflowCount",
+          "description": "最大的展示数字值，超出显示 +",
+          "label": "最大显示数值",
+          "type": "number",
+          "defaultValue": ""
+        },
+        {
+          "name": "position",
+          "description": "徽章相对于内容的位置",
+          "label": "徽章位置",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "左上",
+              "value": "leftTop"
+            },
+            {
+              "label": "左下",
+              "value": "leftBottom"
+            },
+            {
+              "label": "右上",
+              "value": "rightTop"
+            },
+            {
+              "label": "右下",
+              "value": "rightBottom"
+            }
+          ],
+          "defaultValue": "rightTop"
+        },
+        {
+          "name": "theme",
+          "description": "徽章主题风格",
+          "label": "徽章主题",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "实心",
+              "value": "solid"
+            },
+            {
+              "label": "浅色",
+              "value": "light"
+            },
+            {
+              "label": "反色",
+              "value": "inverted"
+            }
+          ],
+          "defaultValue": "solid"
+        },
+        {
+          "name": "type",
+          "description": "徽章类型/状态色",
+          "label": "徽章类型",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "主要",
+              "value": "primary"
+            },
+            {
+              "label": "次要",
+              "value": "secondary"
+            },
+            {
+              "label": "三级",
+              "value": "tertiary"
+            },
+            {
+              "label": "危险",
+              "value": "danger"
+            },
+            {
+              "label": "警告",
+              "value": "warning"
+            },
+            {
+              "label": "成功",
+              "value": "success"
+            }
+          ],
+          "defaultValue": "primary"
+        },
+        {
+          "name": "className",
+          "description": "外侧样式类名",
+          "label": "外层类名",
+          "type": "className"
+        },
+        {
+          "name": "countClassName",
+          "description": "内容区域样式类名",
+          "label": "内容区类名",
+          "type": "className"
+        },
+        {
+          "name": "countStyle",
+          "description": "徽章内容的内联样式",
+          "label": "内容区样式",
+          "type": "CSSProperties"
+        }
+      ],
+      "events": []
+    },
     {
       "name": "Button",
       "title": "按钮",
@@ -18,7 +387,6 @@
       "version": "1.0.0",
       "author": "LiuHan",
       "visualConfig": {
-        "thumbnail": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzYwIiBoZWlnaHQ9IjI0MCIgdmlld0JveD0iMCAwIDM2MCAyNDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjM2MCIgaGVpZ2h0PSIyNDAiIGZpbGw9IiNGRkZGRkYiLz48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjQwIiB4PSIxMzAiIHk9IjEwMCIgcng9IjQiIGZpbGw9IiM0RTlFRjYiLz48dGV4dCB4PSIxODAiIHk9IjEyMCIgZmlsbD0iI2ZmZiIgZm9udC1mYW1saT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIHRleHQtYW5jaG9yPSJtaWRkbGUiPuWKoOmAmiA8L3RleHQ+PC9zdmc+",
         "preferredWidth": 50,
         "preferredHeight": 30,
         "resizable": false,
@@ -162,6 +530,615 @@
           "name": "onMouseLeave",
           "description": "鼠标移出时触发",
           "label": "鼠标移出"
+        }
+      ]
+    },
+    {
+      "name": "Card",
+      "title": "卡片",
+      "icon": "svgs/card.svg",
+      "description": "基础卡片容器组件，用于信息模块、内容分组、数据卡片等业务场景",
+      "tags": [
+        "卡片",
+        "容器",
+        "基础组件"
+      ],
+      "category": "基础组件",
+      "version": "1.0.0",
+      "author": "LiuHan",
+      "visualConfig": {
+        "preferredWidth": 300,
+        "preferredHeight": 180,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "children",
+          "description": "卡片内部的文本内容",
+          "label": "卡片内容",
+          "type": "string",
+          "defaultValue": ""
+        },
+        {
+          "name": "title",
+          "description": "卡片标题",
+          "label": "卡片标题",
+          "type": "string",
+          "defaultValue": ""
+        },
+        {
+          "name": "headerExtraContent",
+          "description": "卡片标题右侧的额外内容",
+          "label": "标题右侧附加内容",
+          "type": "string",
+          "defaultValue": ""
+        },
+        {
+          "name": "footer",
+          "description": "自定义卡片页脚",
+          "label": "自定义页脚",
+          "type": "string",
+          "defaultValue": ""
+        },
+        {
+          "name": "bordered",
+          "description": "是否设置卡片的外边框",
+          "label": "显示外边框",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": true
+        },
+        {
+          "name": "className",
+          "description": "卡片的样式类名",
+          "label": "样式类名",
+          "type": "className"
+        },
+        {
+          "name": "bodyStyle",
+          "description": "卡片内容区内联样式",
+          "label": "内容区样式",
+          "type": "CSSProperties"
+        },
+        {
+          "name": "footerLine",
+          "description": "卡片页脚区与内容区是否有边线",
+          "label": "页脚分割线",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "footerStyle",
+          "description": "卡片页脚区内联样式",
+          "label": "页脚样式",
+          "type": "CSSProperties"
+        },
+        {
+          "name": "headerLine",
+          "description": "卡片标题区与内容区是否有边线",
+          "label": "标题分割线",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": true
+        },
+        {
+          "name": "headerStyle",
+          "description": "卡片标题区内联样式",
+          "label": "标题区样式",
+          "type": "CSSProperties"
+        },
+        {
+          "name": "loading",
+          "description": "是否设置加载时的占位",
+          "label": "加载状态",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "shadows",
+          "description": "设置显示阴影的时机，不设置则无阴影",
+          "label": "阴影显示时机",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "悬浮时显示",
+              "value": "hover"
+            },
+            {
+              "label": "一直显示",
+              "value": "always"
+            }
+          ],
+          "defaultValue": ""
+        },
+        {
+          "name": "style",
+          "description": "卡片根节点内联样式",
+          "label": "卡片样式",
+          "type": "CSSProperties"
+        }
+      ],
+      "events": []
+    },
+    {
+      "name": "Checkbox",
+      "title": "复选框",
+      "icon": "svgs/checkbox.svg",
+      "description": "复选框组件，支持单独使用、组合使用、卡片样式、不确定状态等交互场景",
+      "tags": [
+        "复选框",
+        "选择",
+        "表单",
+        "基础组件"
+      ],
+      "category": "基础组件",
+      "version": "1.0.0",
+      "author": "LiuHan",
+      "visualConfig": {
+        "preferredWidth": 140,
+        "preferredHeight": 36,
+        "resizable": false,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "children",
+          "description": "指定文本内容",
+          "label": "内容",
+          "type": "string",
+          "defaultValue": "切换选框"
+        },
+        {
+          "name": "checked",
+          "description": "指定当前Checkbox是否选中",
+          "label": "是否选中",
+          "control": "boolean",
+          "inputEvent": "onChange",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "disabled",
+          "description": "失效状态",
+          "label": "禁用",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "indeterminate",
+          "description": "设置 indeterminate 状态，只负责样式控制",
+          "label": "不确定状态",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "type",
+          "description": "设置checkbox 的样式类型",
+          "label": "样式类型",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "默认",
+              "value": "default"
+            },
+            {
+              "label": "卡片",
+              "value": "card"
+            },
+            {
+              "label": "纯卡片",
+              "value": "pureCard"
+            }
+          ],
+          "defaultValue": "default"
+        },
+        {
+          "name": "extra",
+          "description": "副文本",
+          "label": "副文本内容",
+          "type": "string",
+          "defaultValue": ""
+        },
+        {
+          "name": "aria-label",
+          "description": "定义 Checkbox 的作用",
+          "label": "ARIA标签",
+          "type": "string",
+          "defaultValue": ""
+        },
+        {
+          "name": "className",
+          "description": "组件样式类名",
+          "label": "样式类名",
+          "type": "className"
+        },
+        {
+          "name": "style",
+          "description": "组件内联样式",
+          "label": "内联样式",
+          "type": "CSSProperties"
+        }
+      ],
+      "events": [
+        {
+          "name": "onChange",
+          "description": "变化时回调函数",
+          "label": "状态变化"
+        }
+      ]
+    },
+    {
+      "name": "DatePicker",
+      "title": "日期选择器",
+      "icon": "svgs/date-picker.svg",
+      "description": "日期、日期范围、日期时间、月份选择器，支持单选、多选、范围、快捷选择等功能",
+      "tags": [
+        "日期",
+        "时间",
+        "选择器",
+        "表单",
+        "基础组件"
+      ],
+      "category": "基础组件",
+      "version": "1.0.0",
+      "author": "LiuHan",
+      "visualConfig": {
+        "preferredWidth": 220,
+        "preferredHeight": 36,
+        "resizable": false,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "type",
+          "description": "选择器类型",
+          "label": "选择器类型",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "日期",
+              "value": "date"
+            },
+            {
+              "label": "日期范围",
+              "value": "dateRange"
+            },
+            {
+              "label": "日期时间",
+              "value": "dateTime"
+            },
+            {
+              "label": "日期时间范围",
+              "value": "dateTimeRange"
+            },
+            {
+              "label": "月份",
+              "value": "month"
+            },
+            {
+              "label": "月份范围",
+              "value": "monthRange"
+            }
+          ],
+          "defaultValue": "date"
+        },
+        {
+          "name": "borderless",
+          "description": "无边框模式",
+          "label": "无边框模式",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "defaultOpen",
+          "description": "面板默认显示或隐藏",
+          "label": "默认展开面板",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "density",
+          "description": "面板尺寸",
+          "label": "面板密度",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "默认",
+              "value": "default"
+            },
+            {
+              "label": "紧凑",
+              "value": "compact"
+            }
+          ],
+          "defaultValue": "default"
+        },
+        {
+          "name": "disabled",
+          "description": "是否禁用",
+          "label": "禁用",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "disabledTimePicker",
+          "description": "是否禁止时间选择",
+          "label": "禁用时间选择",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "hideDisabledOptions",
+          "description": "隐藏禁止选择的时间",
+          "label": "隐藏禁用时间",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "inputReadOnly",
+          "description": "文本框是否只读",
+          "label": "输入框只读",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "insetInput",
+          "description": "面板中是否嵌入输入框",
+          "label": "嵌入输入框",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "motion",
+          "description": "是否开启面板展开动画",
+          "label": "开启动画",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": true
+        },
+        {
+          "name": "multiple",
+          "description": "是否可以选择多个，仅支持date类型",
+          "label": "允许多选",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "needConfirm",
+          "description": "是否需要确认按钮，仅dateTime/dateTimeRange有效",
+          "label": "需要确认",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "open",
+          "description": "面板显示或隐藏的受控属性",
+          "label": "展开面板",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "showClear",
+          "description": "是否显示清除按钮",
+          "label": "显示清除按钮",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": true
+        },
+        {
+          "name": "syncSwitchMonth",
+          "description": "范围选择时同步切换双面板月份",
+          "label": "同步切换双月面板",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "size",
+          "description": "输入框尺寸",
+          "label": "尺寸",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "小",
+              "value": "small"
+            },
+            {
+              "label": "默认",
+              "value": "default"
+            },
+            {
+              "label": "大",
+              "value": "large"
+            }
+          ],
+          "defaultValue": "default"
+        },
+        {
+          "name": "placeholder",
+          "description": "输入框提示文字",
+          "label": "占位提示文字",
+          "type": "string",
+          "defaultValue": "Select date"
+        },
+        {
+          "name": "presetPosition",
+          "description": "快捷选择面板位置",
+          "label": "快捷选项位置",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "左",
+              "value": "left"
+            },
+            {
+              "label": "右",
+              "value": "right"
+            },
+            {
+              "label": "上",
+              "value": "top"
+            },
+            {
+              "label": "下",
+              "value": "bottom"
+            }
+          ],
+          "defaultValue": "bottom"
+        },
+        {
+          "name": "rangeSeparator",
+          "description": "范围选择日期分隔符",
+          "label": "日期范围分隔符",
+          "type": "string",
+          "defaultValue": "~"
+        },
+        {
+          "name": "format",
+          "description": "输入框日期显示格式",
+          "label": "日期格式",
+          "type": "string"
+        },
+        {
+          "name": "validateStatus",
+          "description": "校验状态",
+          "label": "校验状态",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "默认",
+              "value": "default"
+            },
+            {
+              "label": "错误",
+              "value": "error"
+            },
+            {
+              "label": "警告",
+              "value": "warning"
+            }
+          ],
+          "defaultValue": "default"
+        },
+        {
+          "name": "weekStartsOn",
+          "description": "周起始日，0=周日，1=周一",
+          "label": "周起始日",
+          "type": "number",
+          "defaultValue": 0
+        },
+        {
+          "name": "zIndex",
+          "description": "弹出面板层级",
+          "label": "浮层层级",
+          "type": "number",
+          "defaultValue": 1030
+        },
+        {
+          "name": "max",
+          "description": "多选最大数量",
+          "label": "多选最大数目",
+          "type": "number"
+        },
+        {
+          "name": "spacing",
+          "description": "浮层与触发器距离",
+          "label": "浮层间距",
+          "type": "number",
+          "defaultValue": 4
+        },
+        {
+          "name": "startYear",
+          "description": "年份滚动开始年",
+          "label": "开始年份",
+          "type": "number"
+        },
+        {
+          "name": "endYear",
+          "description": "年份滚动结束年",
+          "label": "结束年份",
+          "type": "number"
+        },
+        {
+          "name": "className",
+          "description": "组件样式类名",
+          "label": "样式类名",
+          "type": "className"
+        },
+        {
+          "name": "style",
+          "description": "组件内联样式",
+          "label": "内联样式",
+          "type": "CSSProperties"
+        }
+      ],
+      "events": [
+        {
+          "name": "onChange",
+          "description": "值变化时的回调",
+          "label": "值改变"
+        },
+        {
+          "name": "onOpenChange",
+          "description": "面板显示/隐藏切换回调",
+          "label": "面板展开收起"
+        },
+        {
+          "name": "onConfirm",
+          "description": "确认选择时的回调",
+          "label": "确认选择"
+        },
+        {
+          "name": "onClear",
+          "description": "点击清除按钮触发",
+          "label": "清除内容"
+        },
+        {
+          "name": "onFocus",
+          "description": "获得焦点时回调",
+          "label": "获得焦点"
+        },
+        {
+          "name": "onBlur",
+          "description": "失去焦点时回调",
+          "label": "失去焦点"
+        },
+        {
+          "name": "onCancel",
+          "description": "取消选择时的回调",
+          "label": "取消选择"
+        },
+        {
+          "name": "onPanelChange",
+          "description": "切换面板年月时回调",
+          "label": "面板年月切换"
+        },
+        {
+          "name": "onPresetClick",
+          "description": "点击快捷选择按钮回调",
+          "label": "快捷选项点击"
         }
       ]
     },

@@ -1,0 +1,158 @@
+{
+  "name": "InputNumber",
+  "title": "数字输入框",
+  "icon": "icons/input-number.svg",
+  "description": "支持数字输入、步长增减、最大最小值限制、货币格式化的数字输入组件",
+  "tags": [
+    "数字",
+    "输入框",
+    "计数器",
+    "表单",
+    "基础组件"
+  ],
+  "category": "基础组件",
+  "version": "1.0.0",
+  "author": "LiuHan",
+  "visualConfig": {
+    "preferredWidth": 160,
+    "preferredHeight": 36,
+    "resizable": false,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "value",
+      "description": "当前输入的数字值",
+      "label": "当前值",
+      "type": "number"
+    },
+    {
+      "name": "defaultValue",
+      "description": "初始默认数字值",
+      "label": "默认值",
+      "type": "number"
+    },
+    {
+      "name": "disabled",
+      "description": "是否禁用输入框",
+      "label": "禁用",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "autofocus",
+      "description": "是否自动获取焦点",
+      "label": "自动聚焦",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "min",
+      "description": "允许输入的最小值",
+      "label": "最小值",
+      "control": "number",
+      "type": "number",
+      "defaultValue": -Infinity
+    },
+    {
+      "name": "max",
+      "description": "允许输入的最大值",
+      "label": "最大值",
+      "control": "number",
+      "type": "number",
+      "defaultValue": Infinity
+    },
+    {
+      "name": "step",
+      "description": "点击加减按钮每次变化的数值",
+      "label": "步长",
+      "control": "number",
+      "type": "number",
+      "defaultValue": 1
+    },
+    {
+      "name": "precision",
+      "description": "小数点后保留的位数",
+      "label": "精度",
+      "control": "number",
+      "type": "number"
+    },
+    {
+      "name": "size",
+      "description": "输入框尺寸大小",
+      "label": "尺寸",
+      "control": "select",
+      "type": "string",
+      "options": [
+        {
+          "label": "小",
+          "value": "small"
+        },
+        {
+          "label": "默认",
+          "value": "default"
+        },
+        {
+          "label": "大",
+          "value": "large"
+        }
+      ],
+      "defaultValue": "default"
+    },
+    {
+      "name": "showClear",
+      "description": "是否显示清空按钮",
+      "label": "显示清空按钮",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "hideButtons",
+      "description": "是否隐藏上下加减按钮",
+      "label": "隐藏加减按钮",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "currency",
+      "description": "开启货币格式化，支持 CNY、USD、EUR",
+      "label": "货币模式",
+      "type": "boolean | string",
+      "defaultValue": false
+    },
+    {
+      "name": "className",
+      "description": "组件自定义样式类名",
+      "label": "自定义类名",
+      "control": "className",
+      "type": "array"
+    },
+    {
+      "name": "style",
+      "description": "组件内联样式",
+      "label": "内联样式",
+      "type": "CSSProperties"
+    }
+  ],
+  "events": [
+    {
+      "name": "onChange",
+      "description": "数值发生变化时触发",
+      "label": "值改变"
+    },
+    {
+      "name": "onFocus",
+      "description": "输入框获得焦点时触发",
+      "label": "获得焦点"
+    },
+    {
+      "name": "onBlur",
+      "description": "输入框失去焦点时触发",
+      "label": "失去焦点"
+    }
+  ]
+}
