@@ -10,6 +10,14 @@ import TitleBar from '../../components/TitleBar/TitleBar.jsx'
 
 const { Text, Title } = Typography
 
+const getAppIcon = (item) => {
+  if (typeof item === 'string') {
+    return <img src={item} />
+  } else {
+    return item
+  }
+}
+
 const AppListPanel = () => {
   const [createDialogVisible, setCreateDialogVisible] = useState(false)
   const appList = appStore((state) => state.appList)
@@ -82,7 +90,7 @@ const AppListPanel = () => {
                 className='app-card'
                 onClick={() => openApp(item.id)}
               >
-                <div className='app-icon'>📄</div>
+                <div className='app-icon'>{getAppIcon(item.iconUrl)}</div>
                 <div className='app-name'>{item.name}</div>
                 <div className='app-desc'>最近打开</div>
               </div>

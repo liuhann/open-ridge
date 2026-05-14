@@ -29,7 +29,7 @@ const replaceDoubleSlashWithHttpProtocal = (str) => {
   return str.replace(/(http[s]?:\/\/[^/]+)\/\//g, '/')
 }
 export const getIconUrl = (item, packageName) => {
-  if (item.icon) {
+  if (item && item.icon) {
     // 先判断icon是不是base64等非url类型，如果是就直接使用
     if (item.icon.startsWith('data:')) {
       return item.icon

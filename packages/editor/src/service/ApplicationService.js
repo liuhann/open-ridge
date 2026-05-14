@@ -355,9 +355,45 @@ export default class ApplicationService {
     await this.createFile(parentId, filename, blob, mimeType)
   }
 
+  /**
+ * 导出单个文件 / 整个文件夹
+ * @param {string} id 文件/文件夹id
+ * @returns {Promise<boolean>}
+ */
+  async exportFile (id) {
+  // 先查当前节点
+    const node = this.getFile(id)
+    if (!node) return false
+
+    // 单个文件：直接下载
+    if (node.type !== 'directory') {
+      const dataUrl = await this.store.getItem(node.id)
+      if (!dataUrl) return false
+      const blob = await dataURLtoBlob(dataUrl)
+      saveAs(blob, node.name)
+      return true
+    }
+
+    // 文件夹：递归收集当前目录下整棵子树，复用已有 zipFolder
+    const zip = new JSZip()
+    // 直接用当前 node 整棵树结构（自带 children）
+    await this.zipFolder(zip, [node])
+    const blob = await zip.generateAsync({ type: 'blob' })
+    saveAs(blob, `${node.name}.zip`)
+    return true
+  }
+
   async clear () {
     await this.collection.clean()
     await this.store.clear()
+  }
+
+  setIconUrl (iconUrl) {
+    this.iconUrl = iconUrl
+  }
+
+  getIconUrl () {
+    return this.iconUrl
   }
 
   // 修复：删除不存在的 backUpService 调用

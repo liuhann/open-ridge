@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import { Tree, Typography, Button } from '@douyinfe/semi-ui'
 import TitleBar from '../../components/TitleBar/TitleBar.jsx'
-import './file-list.less'
 import appStore from '../../store/app.store.js'
 import editorStore from '../../store/editor.store'
 
@@ -118,7 +117,7 @@ const AppPagePreviewList = ({ onRunPage }) => {
       <TitleBar
         title='页面预览' right={<Text size='small' type='tertiary'>
           {countPages(pageTreeData)} 个页面
-        </Text>}
+                            </Text>}
       />
 
       <div className='page-tree-container'>

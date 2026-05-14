@@ -1,6 +1,7 @@
+import { ICON_APP_DEFUALT } from '../icons/icons.js'
 import ApplicationService from './ApplicationService.js'
 import NeCollection from './NeCollection.js'
-
+import Localforge from 'localforage'
 // 常量集中管理
 const STORAGE_KEYS = {
   CURRENT_APP_ID: 'ridge-current-app-id',
@@ -11,7 +12,7 @@ export default class LocalRepoService {
   constructor () {
     this.collection = new NeCollection('ridge.repo.db')
     this.appServices = {}
-
+    this.store = Localforge.createInstance({ name: 'ridge-app-icons' })
     // 安全获取当前应用 ID
     const storedId = window.localStorage.getItem(STORAGE_KEYS.CURRENT_APP_ID)
     this.currentAppId = storedId && storedId !== 'null' && storedId !== 'undefined'
@@ -24,13 +25,18 @@ export default class LocalRepoService {
   }
 
   // 修复拼写错误
-  async persistApp (id, name) {
+  async persistApp (id, name, icon) {
+    if (!id || !name) return
+
     try {
       const existed = await this.collection.findOne({ id })
       if (!existed) {
         await this.collection.insert({ id, name })
       } else {
         await this.collection.update({ id }, { id, name })
+      }
+      if (icon) {
+        await this.store.setItem(id, icon)
       }
     } catch (e) {
       console.error('persistApp 失败:', e)
@@ -116,9 +122,23 @@ export default class LocalRepoService {
     }
   }
 
+  async getAppIcon (id) {
+    const iconUrl = await this.store.getItem(id)
+
+    return iconUrl || ICON_APP_DEFUALT
+  }
+
   async getLocalAppList () {
     try {
-      return await this.collection.find({})
+      const appList = await this.collection.find({})
+
+      for (const app of appList) {
+        const iconUrl = await this.store.getItem(app.id)
+
+        app.iconUrl = iconUrl || ICON_APP_DEFUALT
+      }
+
+      return appList
     } catch (e) {
       console.error('getLocalAppList 失败:', e)
       return []

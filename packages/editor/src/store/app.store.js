@@ -3,6 +3,7 @@ import { alphabetid, trim, camelCase } from '../utils/string'
 import LocalRepoService from '../service/LocalRepoService'
 import ApplicationService from '../service/ApplicationService'
 import { stringToBlob } from '../utils/blob'
+import { trimLeadingSlash, addStringPrefix } from 'ridgejs/src/utils/string.js'
 
 import helloZipApp from '../ridge-app-hello-1.0.0.zip'
 
@@ -14,6 +15,7 @@ const useStore = create((set, get) => ({
   appList: [],
   currentAppInfo: null,
   currentAppName: null,
+  currentAppIcon: null,
   currentAppId: null,
   currentAppFilesTree: [],
   isReady: false,
@@ -21,7 +23,6 @@ const useStore = create((set, get) => ({
 
   initAppStore: async () => {
     const { importAppFile, openApp } = get()
-
     try {
       const appList = await localRepoService.getLocalAppList()
 
@@ -37,7 +38,6 @@ const useStore = create((set, get) => ({
       if (currentAppId) {
         await openApp(currentAppId)
       }
-
       set({
         isReady: true,
         appList
@@ -57,6 +57,8 @@ const useStore = create((set, get) => ({
 
       const appService = localRepoService.getAppService(id)
       await appService.updateAppFileTree()
+      const iconUrl = await localRepoService.getAppIcon(id)
+      appService.setIconUrl(iconUrl)
       const appPackageJSON = await appService.getAppPackageJSON()
 
       await localRepoService.setCurrentApp(id, appService)
@@ -66,6 +68,7 @@ const useStore = create((set, get) => ({
         appService,
         currentAppId: id,
         currentAppName: appPackageJSON?.description || '',
+        currentAppIcon: iconUrl,
         currentAppFilesTree: appService.getFileTree()
       })
     } catch (err) {
@@ -202,8 +205,8 @@ const useStore = create((set, get) => ({
   },
 
   deleteFile: async (fileId) => {
-    const { appService } = get()
-    if (!appService) return
+    const appService = localRepoService.getCurrentAppService()
+    if (!appService) return null
 
     try {
       await appService.deleteFile(fileId)
@@ -213,6 +216,12 @@ const useStore = create((set, get) => ({
     } catch (err) {
       console.error('deleteFile 失败:', err)
     }
+  },
+
+  exportFile: async fileId => {
+    const appService = localRepoService.getCurrentAppService()
+    if (!appService) return null
+    appService.exportFile(fileId)
   },
 
   getFilePath: (fileId) => {
@@ -277,6 +286,11 @@ const useStore = create((set, get) => ({
     const pkgJsonObject = JSON.parse(JSON.stringify(updateObject))
 
     const appService = localRepoService.getCurrentAppService()
+
+    let iconUrl = null
+    if (updateObject.icon) {
+      iconUrl = await appService.getFileUrl(addStringPrefix('/', updateObject.icon))
+    }
     if (!appService) return
     const currentAppId = localRepoService.getCurrentAppId() // 👈 这个才是真正ID
     try {
@@ -286,13 +300,15 @@ const useStore = create((set, get) => ({
       // 2. 更新本地应用列表（用真正的本地ID）
       await localRepoService.persistApp(
         currentAppId,
-        pkgJsonObject.description
+        pkgJsonObject.description,
+        iconUrl
       )
 
       const appList = await localRepoService.getLocalAppList()
       set({
         appList,
         currentAppInfo: pkgJsonObject,
+        currentAppIcon: iconUrl,
         currentAppName: pkgJsonObject.description
       })
     } catch (err) {

@@ -6,12 +6,11 @@ import {
   ResizeHandler
 } from '@douyinfe/semi-ui'
 import DialogCreate from './DialogCreate.jsx'
-import './file-list.less'
 
 import OutlineTree from '../outline/OutLineTree.jsx'
 import appStore from '../../store/app.store.js'
 import editorStore from '../../store/editor.store.js'
-import { ICON_COMMON_PLUS, ICON_COMMON_GEAR } from '../../icons/icons.js'
+import { ICON_COMMON_PLUS, ICON_COMMON_GEAR, ICON_COMMON_DOT_VERT, ICON_COMMON_EXPORT_ZIP, FILE_CREATE_FOLDER } from '../../icons/icons.js'
 import PackageJsonEditorModal from '../apps/PackageJsonEditorModal.jsx'
 import { getAppTreeData } from './utils.js'
 import TitleBar from '../../components/TitleBar/TitleBar.jsx'
@@ -22,8 +21,8 @@ const ACCEPT_FILES = '.svg,.png,.jpg,.json,.css,.js,.md,.webp,.zip,.gif'
 const AppFileList = () => {
   const [dialgeCreateFileType, setDialogCreateFileType] = useState('')
   const [dialogCreateShow, setDialogCreateShow] = useState(false)
-
   const [currentSelected, setCurrentSelected] = useState(null)
+
   const [currentDir, setCurrentDir] = useState('/')
   const [currentDirId, setCurrentDirId] = useState(-1)
   const [currentRename, setCurrentRename] = useState(null)
@@ -32,19 +31,26 @@ const AppFileList = () => {
   const [appModalEditVisible, setAppModalEditVisible] = useState(false)
 
   const currentAppName = appStore((state) => state.currentAppName)
+  const currentAppIcon = appStore((state) => state.currentAppIcon)
   const currentAppFilesTree = appStore((state) => state.currentAppFilesTree)
   const exitToAppList = appStore((state) => state.exitToAppList)
   const renameFile = appStore((state) => state.renameFile)
   const uploadFile = appStore((state) => state.uploadFile)
   const moveFile = appStore((state) => state.moveFile)
   const deleteFile = appStore((state) => state.deleteFile)
+  const exportFile = appStore((state) => state.exportFile)
 
   const openFile = editorStore(state => state.openFile)
   const openedPages = editorStore(state => state.openedPages)
   const closeAllPages = editorStore(state => state.closeAllPages)
 
   useEffect(() => {
-    setTreeData(getAppTreeData(currentAppFilesTree, currentAppName))
+    const appTreeData = getAppTreeData(currentAppFilesTree, currentAppName)
+
+    // if (currentAppIcon) {
+    //   appTreeData[0].icon = <img className='w24' src={currentAppIcon} />
+    // }
+    setTreeData(appTreeData)
   }, [currentAppFilesTree, currentAppName])
 
   const showCreateDialog = (fileType) => {
@@ -143,6 +149,10 @@ const AppFileList = () => {
     }
   }
 
+  const onFileExportClick = async (fileid) => {
+    exportFile(fileid)
+  }
+
   // const confirmFileRename = async () => {
   //   const result = await renameFile(currentRename.key, currentRename.value)
   //   if (result === -1) {
@@ -153,10 +163,11 @@ const AppFileList = () => {
   // }
 
   const CREATE_MENUS = [
-    <Dropdown.Item key='page' icon={<i className='bi bi-file-earmark-plus' />} onClick={() => showCreateDialog('page')}>创建页面</Dropdown.Item>,
-    <Dropdown.Item key='folder' icon={<i className='bi bi-folder-plus' />} onClick={() => showCreateDialog('folder')}>创建目录</Dropdown.Item>,
-    <Dropdown.Item key='js' icon={<i className='bi bi-clipboard-plus' />} onClick={() => showCreateDialog('js')}>创建脚本库</Dropdown.Item>,
-    <Dropdown.Item key='upload' icon={<i class='bi bi-upload' />}>
+    <Dropdown.Item key='page' onClick={() => showCreateDialog('page')}>创建页面</Dropdown.Item>,
+    <Dropdown.Divider key='d1' />,
+    <Dropdown.Item key='folder' onClick={() => showCreateDialog('folder')}>创建目录</Dropdown.Item>,
+    <Dropdown.Item key='js' onClick={() => showCreateDialog('js')}>创建脚本库</Dropdown.Item>,
+    <Dropdown.Item key='upload'>
       <Upload
         action='none'
         multiple showUploadList={false} uploadTrigger='custom' onFileChange={files => {
@@ -176,7 +187,7 @@ const AppFileList = () => {
       MORE_MENUS.push(
         <Dropdown.Item
           key='open'
-          icon={<i className='bi bi-pencil-square' />} onClick={() => {
+          onClick={() => {
             onOpenClicked(data)
           }}
         >打开
@@ -184,11 +195,11 @@ const AppFileList = () => {
       )
     }
 
-    if (data.id !== -1) {
+    if (data.key !== '-1') {
       MORE_MENUS.push(
         <Dropdown.Item
           key='copy'
-          icon={<i className='bi bi-copy' />} onClick={() => {
+          onClick={() => {
             onCopyClicked(data)
           }}
         >复制
@@ -197,7 +208,6 @@ const AppFileList = () => {
       MORE_MENUS.push(
         <Dropdown.Item
           key='rename'
-          icon={<i className='bi bi-input-cursor-text' />}
           onClick={() => {
             setCurrentRename({
               key: data.key,
@@ -210,8 +220,8 @@ const AppFileList = () => {
       MORE_MENUS.push(
         <Dropdown.Item
           key='export'
-          icon={<i style={{ fontSize: '16px' }} className='bi bi-file-zip' />} onClick={() => {
-            onFileExportClick(data)
+          onClick={() => {
+            onFileExportClick(data.key)
           }}
         >导出
         </Dropdown.Item>
@@ -222,7 +232,6 @@ const AppFileList = () => {
         <Dropdown.Item
           key='delete'
           type='danger'
-          icon={<i className='bi bi-trash3' />}
           onClick={() => {
             onRemoveClicked(data)
           }}
@@ -258,7 +267,8 @@ const AppFileList = () => {
               clickToHide
               render={<Dropdown.Menu>{MORE_MENUS}</Dropdown.Menu>}
             >
-              <i className='more-button bi bi-three-dots-vertical' />
+              {data.key === '-1' && <div className='more-button'>{ICON_COMMON_PLUS}</div>}
+              {data.key !== '-1' && <div className='more-button hover-show'>{ICON_COMMON_DOT_VERT}</div>}
             </Dropdown>
             </>}
         {/* <Text
@@ -300,7 +310,7 @@ const AppFileList = () => {
   }
 
   const onNodeSelect = async node => {
-    if (currentSelected && node.id === currentSelected.id) {
+    if (currentSelected && node.key === currentSelected.key) {
       return
     }
     if (currentRename && currentRename.key !== node.key) {
@@ -367,15 +377,6 @@ const AppFileList = () => {
       />
 
       <ResizeGroup direction='vertical'>
-
-        {/* <ResizeHandler style={{
-          height: 4,
-          background: 'var(--semi-color-bg-0)',
-          zIndex: 99
-          }}
-          >
-          <div />
-          </ResizeHandler> */}
         <ResizeItem
           defaultSize='60%'
           style={{
