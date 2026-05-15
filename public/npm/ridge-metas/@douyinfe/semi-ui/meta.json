@@ -1,7 +1,7 @@
 {
   "name": "@douyinfe/semi-ui",
   "schemaVersion": "2.0",
-  "lastUpdated": "2026-05-14T11:01:06.488Z",
+  "lastUpdated": "2026-05-15T03:57:25.966Z",
   "generatedBy": "ridge-ui-cli",
   "components": [
     {
@@ -1889,6 +1889,274 @@
         }
       ],
       "events": []
+    },
+    {
+      "name": "PinCode",
+      "title": "验证码输入",
+      "icon": "svgs/pincode.svg",
+      "description": "用于短信验证码、邮箱验证码、数字密码等分段输入组件",
+      "tags": [
+        "验证码",
+        "输入",
+        "表单",
+        "基础组件"
+      ],
+      "category": "基础组件",
+      "version": "1.0.0",
+      "author": "LiuHan",
+      "visualConfig": {
+        "preferredWidth": 280,
+        "preferredHeight": 48,
+        "resizable": false,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "value",
+          "description": "输入框内容",
+          "label": "输入值",
+          "type": "string"
+        },
+        {
+          "name": "defaultValue",
+          "description": "输入框默认内容",
+          "label": "默认值",
+          "type": "string"
+        },
+        {
+          "name": "count",
+          "description": "验证码输入位数",
+          "label": "验证码位数",
+          "control": "number",
+          "type": "number",
+          "defaultValue": 6
+        },
+        {
+          "name": "autoFocus",
+          "description": "是否自动聚焦到第一个输入框",
+          "label": "自动聚焦",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": true
+        },
+        {
+          "name": "disabled",
+          "description": "是否禁用组件",
+          "label": "禁用",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "size",
+          "description": "输入框大小",
+          "label": "尺寸",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "大",
+              "value": "large"
+            },
+            {
+              "label": "默认",
+              "value": "default"
+            },
+            {
+              "label": "小",
+              "value": "small"
+            }
+          ],
+          "defaultValue": "default"
+        },
+        {
+          "name": "className",
+          "description": "组件自定义样式类名",
+          "label": "自定义类名",
+          "control": "className",
+          "type": "array"
+        },
+        {
+          "name": "style",
+          "description": "组件内联样式",
+          "label": "内联样式",
+          "type": "CSSProperties"
+        }
+      ],
+      "events": [
+        {
+          "name": "onChange",
+          "description": "输入内容变化时触发",
+          "label": "内容改变"
+        },
+        {
+          "name": "onComplete",
+          "description": "所有验证码位数输入完成时触发",
+          "label": "输入完成"
+        }
+      ]
+    },
+    {
+      "name": "RadioGroup",
+      "title": "单选框组",
+      "icon": "svgs/radio.svg",
+      "description": "单选框组合，用于包裹一组 Radio，支持多种样式、排列方向、配置化生成",
+      "tags": [
+        "单选",
+        "选择",
+        "表单",
+        "基础组件"
+      ],
+      "category": "基础组件",
+      "version": "1.0.0",
+      "author": "LiuHan",
+      "visualConfig": {
+        "preferredWidth": 280,
+        "preferredHeight": 40,
+        "resizable": false,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "value",
+          "description": "当前选中的值",
+          "label": "选中值",
+          "type": "string"
+        },
+        {
+          "name": "defaultValue",
+          "description": "默认选中的值",
+          "label": "默认值",
+          "type": "string"
+        },
+        {
+          "name": "disabled",
+          "description": "是否禁用所有单选框",
+          "label": "禁用",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "type",
+          "description": "单选框的样式类型",
+          "label": "类型",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "默认",
+              "value": "default"
+            },
+            {
+              "label": "按钮",
+              "value": "button"
+            },
+            {
+              "label": "卡片",
+              "value": "card"
+            },
+            {
+              "label": "纯卡片",
+              "value": "pureCard"
+            }
+          ],
+          "defaultValue": "default"
+        },
+        {
+          "name": "direction",
+          "description": "单选框排列方向，仅对 default 类型生效",
+          "label": "排列方向",
+          "control": "radiogroup",
+          "type": "string",
+          "options": [
+            {
+              "label": "横向",
+              "value": "horizontal"
+            },
+            {
+              "label": "纵向",
+              "value": "vertical"
+            }
+          ],
+          "defaultValue": "horizontal"
+        },
+        {
+          "name": "buttonSize",
+          "description": "按钮类型单选框尺寸",
+          "label": "按钮尺寸",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "小",
+              "value": "small"
+            },
+            {
+              "label": "中",
+              "value": "middle"
+            },
+            {
+              "label": "大",
+              "value": "large"
+            }
+          ],
+          "defaultValue": "middle"
+        },
+        {
+          "name": "name",
+          "description": "单选框组的 name 属性",
+          "label": "名称",
+          "type": "string"
+        },
+        {
+          "name": "aria-label",
+          "description": "无障碍访问标签",
+          "label": "ARIA标签",
+          "type": "string"
+        },
+        {
+          "name": "options",
+          "label": "子元素列表",
+          "control": "json",
+          "type": "array",
+          "defaultValue": [
+            {
+              "label": "Guest",
+              "value": "Guest"
+            },
+            {
+              "label": "Developer",
+              "value": "Developer"
+            },
+            {
+              "label": "Maintainer",
+              "value": "Maintainer",
+              "disabled": true
+            }
+          ]
+        },
+        {
+          "name": "className",
+          "description": "自定义样式类名",
+          "label": "自定义类名",
+          "control": "className",
+          "type": "array"
+        },
+        {
+          "name": "style",
+          "description": "组件内联样式",
+          "label": "内联样式",
+          "type": "CSSProperties"
+        }
+      ],
+      "events": [
+        {
+          "name": "onChange",
+          "description": "选中选项变化时触发",
+          "label": "值改变"
+        }
+      ]
     },
     {
       "name": "Switch",

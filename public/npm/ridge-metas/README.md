@@ -23,6 +23,14 @@
     "aspectRatio": "no"
   },
   "properties": [
+     {
+      "name": "value",
+      "description": "输入框内容 通过事件onChange可以实现双向绑定",
+      "label": "输入内容",
+      "inputEvent": "onChange",
+      "type": "string",
+      "defaultValue": ""
+    },
     {
       "name": "direction",
       "description": "主轴方向，决定子项的排列方向",
@@ -33,10 +41,6 @@
         {
           "label": "横向",
           "value": "row"
-        },
-        {
-          "label": "纵向",
-          "value": "column"
         }
       ],
       "defaultValue": "row"
@@ -93,18 +97,22 @@
         {
           "label": "默认",
           "value": "default"
-        },
-        {
-          "label": "卡片",
-          "value": "card"
-        },
-        {
-          "label": "纯卡片",
-          "value": "pureCard"
         }
       ],
       "defaultValue": "default"
     },
+    {
+      "name": "options",
+      "label": "子元素列表",
+      "control": "json",
+      "type": "array"
+    },
+    {
+      "name": "configs",
+      "label": "配置信息",
+      "control": "json",
+      "type": "object"
+    }
     {
       "name": "style",
       "description": "组件内联样式",
@@ -121,5 +129,7 @@
   ]
 }
 ```
+根据这个格式，对前端标准组件进行描述。
 
 其他例如ReactNode等无法直接输入类型需要排除。  另外，如果有的属性比较少见或者用户不容易理解，也可以列举出来供排除
+

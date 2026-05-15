@@ -24,6 +24,7 @@
       "name": "value",
       "description": "输入框内容",
       "label": "输入内容",
+      "inputEvent": "onChange",
       "type": "string",
       "defaultValue": ""
     },

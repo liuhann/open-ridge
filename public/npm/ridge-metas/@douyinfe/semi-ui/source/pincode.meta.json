@@ -1,0 +1,106 @@
+{
+  "name": "PinCode",
+  "title": "验证码输入",
+  "icon": "svgs/pincode.svg",
+  "description": "用于短信验证码、邮箱验证码、数字密码等分段输入组件",
+  "tags": [
+    "验证码",
+    "输入",
+    "表单",
+    "基础组件"
+  ],
+  "category": "基础组件",
+  "version": "1.0.0",
+  "author": "LiuHan",
+  "visualConfig": {
+    "preferredWidth": 280,
+    "preferredHeight": 48,
+    "resizable": false,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "value",
+      "description": "输入框内容",
+      "label": "输入值",
+      "type": "string"
+    },
+    {
+      "name": "defaultValue",
+      "description": "输入框默认内容",
+      "label": "默认值",
+      "type": "string"
+    },
+    {
+      "name": "count",
+      "description": "验证码输入位数",
+      "label": "验证码位数",
+      "control": "number",
+      "type": "number",
+      "defaultValue": 6
+    },
+    {
+      "name": "autoFocus",
+      "description": "是否自动聚焦到第一个输入框",
+      "label": "自动聚焦",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": true
+    },
+    {
+      "name": "disabled",
+      "description": "是否禁用组件",
+      "label": "禁用",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "size",
+      "description": "输入框大小",
+      "label": "尺寸",
+      "control": "select",
+      "type": "string",
+      "options": [
+        {
+          "label": "大",
+          "value": "large"
+        },
+        {
+          "label": "默认",
+          "value": "default"
+        },
+        {
+          "label": "小",
+          "value": "small"
+        }
+      ],
+      "defaultValue": "default"
+    },
+    {
+      "name": "className",
+      "description": "组件自定义样式类名",
+      "label": "自定义类名",
+      "control": "className",
+      "type": "array"
+    },
+    {
+      "name": "style",
+      "description": "组件内联样式",
+      "label": "内联样式",
+      "type": "CSSProperties"
+    }
+  ],
+  "events": [
+    {
+      "name": "onChange",
+      "description": "输入内容变化时触发",
+      "label": "内容改变"
+    },
+    {
+      "name": "onComplete",
+      "description": "所有验证码位数输入完成时触发",
+      "label": "输入完成"
+    }
+  ]
+}
