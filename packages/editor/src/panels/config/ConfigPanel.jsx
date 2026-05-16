@@ -1,6 +1,11 @@
 import React, { useEffect, useRef, useState, useCallback } from 'react'
-import { Tabs, TabPane, Button, Space, Typography } from '@douyinfe/semi-ui'
+import {
+  Tabs, TabPane, Button, Space, Typography, ResizeGroup,
+  ResizeItem,
+  ResizeHandler
+} from '@douyinfe/semi-ui'
 import ObjectForm from '../../form/ObjectForm.jsx'
+import OutlineTree from '../outline/OutLineTree.jsx'
 import debug from 'debug'
 
 import editorStore from '../../store/editor.store.js'
@@ -379,49 +384,80 @@ const ConfigPanel = () => {
 
   return (
     <div className='config-panel'>
-      <Tabs
-        className='on-title'
-        type='card'
-        style={{
-          display: currentEditNodeId ? 'block' : 'none'
+      <ResizeGroup
+        direction='vertical' style={{
+          height: '100%',
+          overflowY: 'hidden'
         }}
       >
-        {/* 组件属性配置 */}
-        <TabPane tab='属性' itemKey='props'>
-          <ObjectForm
-            fields={nodePropFields}
-            getFormApi={basicPropsAPI} onValueChange={componentPropValueChange}
-          />
-        </TabPane>
-        <TabPane tab='交互' itemKey='interact'>
-          <ObjectForm
-            fields={nodeEventFields}
-            getFormApi={eventPropsAPI} onValueChange={componentEventValueChange}
-          />
-        </TabPane>
-      </Tabs>
-
-      <Tabs
-        type='card'
-        className='on-title'
-        style={{
-          display: currentEditNodeId ? 'none' : 'block'
-        }}
-      >
-        {/* 页面属性配置 */}
-        <TabPane tab='基础' itemKey='style'>
-          <ObjectForm
-            fields={pagePropsFields}
-            getFormApi={cbPagePropFormApi} onValueChange={pagePropValueChange}
-          />
-        </TabPane>
-        <TabPane tab='交互' itemKey='interact'>
-          <ObjectForm
-            fields={pageEventFields}
-            getFormApi={pageEventPropsAPI} onValueChange={pageEventValueChange}
-          />
-        </TabPane>
-      </Tabs>
+        <ResizeItem
+          defaultSize='60%'
+          style={{
+            overflowY: 'auto'
+          }}
+        >
+          <Tabs
+            className='on-title'
+            type='card'
+            style={{
+              display: currentEditNodeId ? 'block' : 'none'
+            }}
+          >
+            {/* 组件属性配置 */}
+            <TabPane tab='属性' itemKey='props'>
+              <ObjectForm
+                fields={nodePropFields}
+                getFormApi={basicPropsAPI} onValueChange={componentPropValueChange}
+              />
+            </TabPane>
+            <TabPane tab='交互' itemKey='interact'>
+              <ObjectForm
+                fields={nodeEventFields}
+                getFormApi={eventPropsAPI} onValueChange={componentEventValueChange}
+              />
+            </TabPane>
+          </Tabs>
+          <Tabs
+            type='card'
+            className='on-title'
+            style={{
+              display: currentEditNodeId ? 'none' : 'block'
+            }}
+          >
+            {/* 页面属性配置 */}
+            <TabPane tab='基础' itemKey='style'>
+              <ObjectForm
+                fields={pagePropsFields}
+                getFormApi={cbPagePropFormApi} onValueChange={pagePropValueChange}
+              />
+            </TabPane>
+            <TabPane tab='交互' itemKey='interact'>
+              <ObjectForm
+                fields={pageEventFields}
+                getFormApi={pageEventPropsAPI} onValueChange={pageEventValueChange}
+              />
+            </TabPane>
+          </Tabs>
+        </ResizeItem>
+        <ResizeHandler
+          size='small' style={{
+            height: 4,
+            background: 'var(--semi-color-bg-0)',
+            zIndex: 99
+          }}
+        >
+          <div />
+        </ResizeHandler>
+        <ResizeItem
+          defaultSize='38%'
+          style={{
+            borderTop: '1px solid var(--semi-color-border)',
+            overflowY: 'auto'
+          }}
+        >
+          <OutlineTree />
+        </ResizeItem>
+      </ResizeGroup>
     </div>
   )
 }

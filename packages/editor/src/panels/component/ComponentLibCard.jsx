@@ -20,14 +20,16 @@ const ComponentLibCard = ({ item, onItemClick }) => {
 
   return (
     <Popover
-      visible={popoverVisible}
-      onVisibleChange={setPopoverVisible}
+      // visible={popoverVisible}
+      // onVisibleChange={setPopoverVisible}
       content={<PopoverDetailContent item={item} />}
       position='right'
       trigger='hover'
       className='component-popover'
       showArrow
       autoAdjustOverflow
+      mouseEnterDelay={0} // 立刻显示
+      mouseLeaveDelay={0} // 立刻消失（关键！解决不关闭）
       spacing={12}
     >
       <div

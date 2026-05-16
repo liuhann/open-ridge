@@ -245,27 +245,30 @@ const OutlineTree = () => {
   }, [setCurrentNode])
 
   return (
-    <Tree
-      className='outline-tree'
-      autoExpandWhenDragEnter
-      autoExpandParent
-      showFilteredOnly
-      filterTreeNode
-      draggable
-      emptyContent='暂无打开的页面'
-      renderLabel={renderFullLabel}
-      onDrop={onTreeDrop}
-      onChange={(value, node) => {
-        onNodeSelected(value, node)
-      }}
-      onDoubleClick={(event, node) => {
-        onNodeDblClick(node)
-      }}
-      onExpand={setExpandedKeys}
-      expandedKeys={expandedKeys}
-      value={currentEditNodeId}
-      treeData={componentTreeData}
-    />
+    <>
+      <Text>页面大纲</Text>
+      <Tree
+        className='outline-tree'
+        autoExpandWhenDragEnter
+        autoExpandParent
+        showFilteredOnly
+        filterTreeNode
+        draggable
+        emptyContent='暂无打开的页面'
+        renderLabel={renderFullLabel}
+        onDrop={onTreeDrop}
+        onChange={(value, node) => {
+          onNodeSelected(value, node)
+        }}
+        onDoubleClick={(event, node) => {
+          onNodeDblClick(node)
+        }}
+        onExpand={setExpandedKeys}
+        expandedKeys={expandedKeys}
+        value={currentEditNodeId}
+        treeData={componentTreeData}
+      />
+    </>
   )
 }
 

@@ -7,7 +7,6 @@ import {
 } from '@douyinfe/semi-ui'
 import DialogCreate from './DialogCreate.jsx'
 
-import OutlineTree from '../outline/OutLineTree.jsx'
 import appStore from '../../store/app.store.js'
 import editorStore from '../../store/editor.store.js'
 import { ICON_COMMON_PLUS, ICON_COMMON_GEAR, ICON_COMMON_DOT_VERT, ICON_COMMON_EXPORT_ZIP, FILE_CREATE_FOLDER } from '../../icons/icons.js'
@@ -416,9 +415,7 @@ const AppFileList = () => {
             borderTop: '1px solid var(--semi-color-border)',
             overflowY: 'auto'
           }}
-        >
-          <OutlineTree />
-        </ResizeItem>
+        />
 
       </ResizeGroup>
     </div>

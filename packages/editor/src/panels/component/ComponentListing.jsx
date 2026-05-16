@@ -39,7 +39,7 @@ export default ({
   }
 
   const renderComponentItem = (item, pkg) => {
-    let itemObject = item
+    const itemObject = item
     let content = null
 
     if (itemObject.cover) {
@@ -148,7 +148,8 @@ export default ({
     <>
       {packageObject.themes &&
         <Space>
-          <Text>主题</Text><Select
+          <Text>主题</Text>
+          <Select
             style={{ width: 120 }}
             onChange={val => {
               changePackageTheme(packageObject.name, val)
@@ -159,7 +160,7 @@ export default ({
               label: name,
               value: packageObject.themes[name]
             }))}
-                         />
+          />
         </Space>}
 
       <List
