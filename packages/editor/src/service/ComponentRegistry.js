@@ -49,6 +49,7 @@ class ComponentRegistry {
     if (meta.components && Array.isArray(meta.components)) {
       const componentCache = new Map()
       meta.components.forEach(component => {
+        component.packageName = meta.name
         componentCache.set(component.name, component)
       })
       this.loadedComponents.set(libName, componentCache)

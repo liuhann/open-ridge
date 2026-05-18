@@ -9,14 +9,17 @@ import {
 import { isObject, isObjectsEqual } from '../utils/is.js'
 import { cloneDeep } from '../utils/object.js'
 import { IN_APP_FILE_PREFIEX, ridgeBaseUrl } from '../index'
+import createDebugger from 'debug'
+
+const debug = createDebugger('ridge:element')
 
 const runtimeDefaults = {
   styleEx: {},
   propEx: {},
   events: {},
   props: {},
-  visible: true,
   slots: [],
+  editor: { hidden: false, locked: false },
   meta: { sync: [], url: [] }
 }
 
@@ -36,14 +39,6 @@ export default class Element extends BaseNode {
     this.renderer = null
     this.isMounted = false
     this.mounteds = []
-
-    this.config.events ||= {}
-    this.config.props ||= {}
-    this.config.visible ??= true
-    this.config.slots ||= []
-    this.config.propEx ||= {}
-
-    this.config.styleEx ||= {}
 
     this.onMounted(() => {
       this.bindDOMEvents()
@@ -71,7 +66,7 @@ export default class Element extends BaseNode {
     }
 
     // this.children是所有子节点 node类型，但是如果之前就是string (Semi 文本、按钮等情况) 则直接传入string
-    if (typeof properties.children !== 'string') {
+    if (typeof properties.children !== 'string' && this.children) {
       properties.children = this.children
     }
     if (this.config.meta && Array.isArray(this.config.meta.url)) {
@@ -181,11 +176,13 @@ export default class Element extends BaseNode {
   createRenderer () {
     if (!this.definition) return
     try {
+      const properties = this.getProperties()
       if (VanillaRender.isComponent(this.definition)) {
-        this.renderer = new VanillaRender(this.definition, this.getProperties())
+        this.renderer = new VanillaRender(this.definition, properties)
       } else if (ReactRenderer.isComponent(this.definition)) {
-        this.renderer = new ReactRenderer(this.definition, this.getProperties())
+        this.renderer = new ReactRenderer(this.definition, properties)
       }
+      debug('this.renderer?.mount', properties)
       this.renderer?.mount(this.el)
     } catch (e) {
       this.setStatus('render-error')
@@ -360,6 +357,10 @@ export default class Element extends BaseNode {
     }
   }
 
+  getHidden () {
+    return this.config?.editor?.hidden
+  }
+
   // 修改：更新样式时使用计算后的值
   updateStyle () {
     if (!this.el) return
@@ -370,12 +371,11 @@ export default class Element extends BaseNode {
     this.el.classList.add('ridge-element')
     this.el.setAttribute('component', this.config.path || '')
 
-    if (this.style.visible === false) {
+    if (this.getHidden()) {
       this.el.classList.add('ridge-runtime-hidden')
     } else {
       this.el.classList.remove('ridge-runtime-hidden')
     }
-
     this.parent?.updateChildStyle(this)
     this.styleUpdated && this.styleUpdated()
   }

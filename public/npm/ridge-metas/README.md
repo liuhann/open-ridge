@@ -1,4 +1,5 @@
-# RidgeUI组名描述规范
+# RidgeUI组件描述规范
+RidgeUI是一个零代码前端框架。 这其中，一个前端组件需要使用下面格式进行描述。 框架按这个文件决定组件可以配置哪些属性和事件
 
 ## 文件格式
 
@@ -6,7 +7,7 @@
 {
   "name": "FlexContainer",
   "title": "弹性容器",
-  "icon": "icons/flex-container.svg",
+  "icon": "svgs/flex-container.svg",
   "description": "适合多个内容进行垂直或水平形式。",
   "tags": [
     "容器",
@@ -129,7 +130,14 @@
   ]
 }
 ```
-根据这个格式，对前端标准组件进行描述。
+现在要通过UI组件的API表格生成上面的JSON，对于属性、事件，注意按含义和类型进行排除，包括但不限于：
+1. ReactNode等无法直接输入类型
+2. 比较少见或者用户不容易理解的属性
+3. width/height等实际配置过程会动态拖拽调整的，需要增加属性： hidden: true
+4. CSSProperties/className 等类型，虽然现在不支持，但是未来可能会支持，要保留。
 
-其他例如ReactNode等无法直接输入类型需要排除。  另外，如果有的属性比较少见或者用户不容易理解，也可以列举出来供排除
+给出的UI组件表格如下：
+
+
+
 

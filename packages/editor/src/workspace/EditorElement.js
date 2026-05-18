@@ -9,13 +9,12 @@ import merge from 'lodash/merge'
 import { getIconUrl } from '../panels/component/componentUtils'
 
 const defaultConfig = {
-  editor: { hidden: false, locked: false },
   styleEx: {},
   propEx: {},
   events: {},
   props: {},
-  visible: true,
   slots: [],
+  editor: { hidden: false, locked: false },
   meta: { sync: [], url: [] }
 }
 
@@ -196,7 +195,7 @@ export default class EditorElement extends Element {
   }
 
   getIcon () {
-    return <img className='outline-element-icon' src={getIconUrl(this.getComponentMeta()?.icon)} />
+    return <img className='outline-element-icon' src={getIconUrl(this.getComponentMeta())} />
   }
 
   async loadMeta () {
@@ -295,10 +294,6 @@ export default class EditorElement extends Element {
     }
     this.config.editor.locked = locked
     this.styleUpdated()
-  }
-
-  getHidden () {
-    return this.config?.editor?.hidden
   }
 
   setHidden (hidden) {

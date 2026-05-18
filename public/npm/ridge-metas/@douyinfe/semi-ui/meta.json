@@ -1,7 +1,7 @@
 {
   "name": "@douyinfe/semi-ui",
   "schemaVersion": "2.0",
-  "lastUpdated": "2026-05-15T03:57:25.966Z",
+  "lastUpdated": "2026-05-18T10:59:25.406Z",
   "generatedBy": "ridge-ui-cli",
   "components": [
     {
@@ -775,6 +775,91 @@
       ]
     },
     {
+      "name": "ColorPicker",
+      "title": "颜色选择器",
+      "icon": "svgs/color-platte.svg",
+      "description": "用于选择颜色，支持透明度调节与弹层展示。",
+      "tags": [
+        "颜色",
+        "选择器",
+        "表单"
+      ],
+      "category": "表单控件",
+      "version": "1.0.0",
+      "author": "LiuHan",
+      "visualConfig": {
+        "preferredWidth": 280,
+        "preferredHeight": 320,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "alpha",
+          "description": "是否开启透明度选择",
+          "label": "开启透明度",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": true
+        },
+        {
+          "name": "width",
+          "description": "组件宽度（单位：px）",
+          "label": "宽度",
+          "control": "number",
+          "type": "number",
+          "defaultValue": 280,
+          "hidden": true
+        },
+        {
+          "name": "height",
+          "description": "组件高度（单位：px）",
+          "label": "高度",
+          "control": "number",
+          "type": "number",
+          "defaultValue": 280,
+          "hidden": true
+        },
+        {
+          "name": "eyeDropper",
+          "description": "是否启用吸色器功能",
+          "label": "启用吸色器",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": true
+        },
+        {
+          "name": "usePopover",
+          "description": "是否使用浮层（Popover）展示选择器",
+          "label": "使用浮层",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "className",
+          "description": "自定义 CSS 类名",
+          "label": "自定义类名",
+          "control": "className",
+          "type": "array"
+        },
+        {
+          "name": "style",
+          "description": "组件内联样式",
+          "label": "内联样式",
+          "type": "CSSProperties",
+          "hidden": true
+        }
+      ],
+      "events": [
+        {
+          "name": "onChange",
+          "description": "颜色发生变化时触发",
+          "label": "颜色改变"
+        }
+      ]
+    },
+    {
       "name": "DatePicker",
       "title": "日期选择器",
       "icon": "svgs/date-picker.svg",
@@ -1256,6 +1341,255 @@
       ]
     },
     {
+      "name": "InputNumber",
+      "title": "数字输入框",
+      "icon": "svgs/input-number.svg",
+      "description": "用于输入数字，支持精度、步长、最小值、最大值及货币模式。",
+      "tags": [
+        "输入",
+        "数字",
+        "表单"
+      ],
+      "category": "表单控件",
+      "version": "2.77.0",
+      "author": "LiuHan",
+      "visualConfig": {
+        "preferredWidth": 160,
+        "preferredHeight": 32,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "autofocus",
+          "description": "是否自动获取焦点",
+          "label": "自动聚焦",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "className",
+          "description": "自定义 CSS 类名",
+          "label": "自定义类名",
+          "control": "className",
+          "type": "array"
+        },
+        {
+          "name": "currency",
+          "description": "是否开启货币模式，或指定货币类型（如 CNY、USD）",
+          "label": "货币模式",
+          "control": "string",
+          "type": "string",
+          "defaultValue": "false"
+        },
+        {
+          "name": "currencyDisplay",
+          "description": "货币展示方式",
+          "label": "货币展示方式",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "符号",
+              "value": "symbol"
+            },
+            {
+              "label": "代码",
+              "value": "code"
+            },
+            {
+              "label": "名称",
+              "value": "name"
+            }
+          ],
+          "defaultValue": "symbol"
+        },
+        {
+          "name": "defaultValue",
+          "description": "默认值",
+          "label": "默认值",
+          "control": "number",
+          "type": "number"
+        },
+        {
+          "name": "disabled",
+          "description": "是否禁用",
+          "label": "禁用",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "hideButtons",
+          "description": "是否隐藏上下调整按钮",
+          "label": "隐藏按钮",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "innerButtons",
+          "description": "上下调整按钮是否显示在输入框内部",
+          "label": "内置按钮",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "keepFocus",
+          "description": "点击按钮时是否保持输入框聚焦",
+          "label": "保持聚焦",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "localeCode",
+          "description": "货币模式下的地区代码（如 zh-CN、en-US）",
+          "label": "地区代码",
+          "control": "string",
+          "type": "string"
+        },
+        {
+          "name": "max",
+          "description": "最大值",
+          "label": "最大值",
+          "control": "number",
+          "type": "number",
+          "defaultValue": "Infinity"
+        },
+        {
+          "name": "min",
+          "description": "最小值",
+          "label": "最小值",
+          "control": "number",
+          "type": "number",
+          "defaultValue": "-Infinity"
+        },
+        {
+          "name": "precision",
+          "description": "数值精度（小数位数）",
+          "label": "精度",
+          "control": "number",
+          "type": "number"
+        },
+        {
+          "name": "pressInterval",
+          "description": "长按按钮时触发间隔（毫秒）",
+          "label": "长按间隔",
+          "control": "number",
+          "type": "number",
+          "defaultValue": 250
+        },
+        {
+          "name": "pressTimeout",
+          "description": "长按按钮时触发延迟（毫秒）",
+          "label": "长按延迟",
+          "control": "number",
+          "type": "number",
+          "defaultValue": 250
+        },
+        {
+          "name": "preventScroll",
+          "description": "聚焦时是否阻止页面滚动",
+          "label": "阻止滚动",
+          "control": "boolean",
+          "type": "boolean"
+        },
+        {
+          "name": "shiftStep",
+          "description": "按住 Shift 键时的步长",
+          "label": "Shift 步长",
+          "control": "number",
+          "type": "number",
+          "defaultValue": 10
+        },
+        {
+          "name": "showClear",
+          "description": "是否显示清除按钮",
+          "label": "显示清除",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "showCurrencySymbol",
+          "description": "是否显示货币符号（仅货币模式生效）",
+          "label": "显示货币符号",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": true
+        },
+        {
+          "name": "size",
+          "description": "输入框尺寸",
+          "label": "尺寸",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "默认",
+              "value": "default"
+            },
+            {
+              "label": "小",
+              "value": "small"
+            },
+            {
+              "label": "大",
+              "value": "large"
+            }
+          ],
+          "defaultValue": "default"
+        },
+        {
+          "name": "step",
+          "description": "每次调整步长",
+          "label": "步长",
+          "control": "number",
+          "type": "number",
+          "defaultValue": 1
+        },
+        {
+          "name": "style",
+          "description": "组件内联样式",
+          "label": "内联样式",
+          "type": "CSSProperties",
+          "hidden": true
+        },
+        {
+          "name": "value",
+          "description": "当前值",
+          "label": "当前值",
+          "control": "number",
+          "type": "number"
+        }
+      ],
+      "events": [
+        {
+          "name": "onBlur",
+          "description": "失去焦点时触发",
+          "label": "失去焦点"
+        },
+        {
+          "name": "onChange",
+          "description": "数值变化时触发",
+          "label": "值改变"
+        },
+        {
+          "name": "onFocus",
+          "description": "获得焦点时触发",
+          "label": "获得焦点"
+        },
+        {
+          "name": "onNumberChange",
+          "description": "数字值变化时触发",
+          "label": "数字改变"
+        }
+      ]
+    },
+    {
       "name": "Input",
       "title": "输入框",
       "icon": "svgs/input.svg",
@@ -1281,6 +1615,7 @@
           "name": "value",
           "description": "输入框内容",
           "label": "输入内容",
+          "inputEvent": "onChange",
           "type": "string",
           "defaultValue": ""
         },

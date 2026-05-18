@@ -33,13 +33,15 @@ export const getIconUrl = (item, packageName) => {
     // 先判断icon是不是base64等非url类型，如果是就直接使用
     if (item.icon.startsWith('data:')) {
       return item.icon
-    } else if (packageName) {
-      // 获取图标
-      return replaceDoubleSlashWithHttpProtocal(`${window.RidgeUI?.baseUrl ?? '/npm'}/ridge-metas/${packageName}/${item.icon}`)
-    } else if (item.module) {
-      return replaceDoubleSlashWithHttpProtocal(`${window.RidgeUI?.baseUrl ?? '/npm'}/ridge-metas/${item.module}/${item.icon}`)
+    } else {
+      const finalPkgName = packageName || item.packageName || item.module
+      if (finalPkgName) {
+        // 获取图标
+        return replaceDoubleSlashWithHttpProtocal(`${window.RidgeUI?.baseUrl ?? '/npm'}/ridge-metas/${finalPkgName}/${item.icon}`)
+      } else {
+        return item.icon
+      }
     }
-    return item.icon
   }
   return null
 }

@@ -385,10 +385,7 @@ const ConfigPanel = () => {
   return (
     <div className='config-panel'>
       <ResizeGroup
-        direction='vertical' style={{
-          height: '100%',
-          overflowY: 'hidden'
-        }}
+        direction='vertical'
       >
         <ResizeItem
           defaultSize='60%'
