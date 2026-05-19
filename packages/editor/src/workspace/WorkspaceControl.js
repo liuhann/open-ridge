@@ -101,7 +101,7 @@ export default class WorkSpaceControl {
 
   fitToCenter (padding = 40) {
     this.getViewPortEl().style.transform = ''
-    const wsbc = this.workspaceEl.getBoundingClientRect()
+    const wsbc = this.getWorkspaceEl().getBoundingClientRect()
     const vpbc = this.getViewPortEl().getBoundingClientRect()
     this.zoom = 1
 
@@ -902,7 +902,8 @@ export default class WorkSpaceControl {
     }
     this.selectElements([])
     this.currentComposite = editorComposite
-    this.setZoom()
+    // this.setZoom(1)
+    this.fitToCenter(10)
     return editorComposite
   }
 

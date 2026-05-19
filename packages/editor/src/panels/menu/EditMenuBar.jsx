@@ -4,6 +4,7 @@ import './style.less'
 import { ICON_NAV_COMPONENTS, ICON_NAV_FOLDERS, ICON_NAV_RUN, ICON_COMMON_GEAR } from '../../icons/icons.js'
 
 import editorStore from '../../store/editor.store.js'
+import ScaleController from './ScaleController.jsx'
 
 const EditorMenuBar = () => {
   const currentOpenPageId = editorStore(state => state.currentOpenPageId)
@@ -50,35 +51,22 @@ const EditorMenuBar = () => {
           <TabPane icon={unsavedPages.indexOf(t.id) > -1 ? <i class='bi bi-circle-fill' /> : null} closable tab={t.name} itemKey={t.id} key={t.id} />
         ))}
       </Tabs>
-      <Space className='bar-content'>
-        <Button
-          disabled={!currentOpenPageId}
-          type='tertiary' icon={<i className='bi bi-floppy' />} theme='borderless' onClick={savePage}
-        />
-        <InputNumber
-          disabled={!currentOpenPageId} style={{ width: '96px', background: 'transparent' }} value={Math.floor(zoom * 100)} suffix='%' onChange={val => {
-            setZoom(val / 100)
+      <Space gap={4}>
+        <ScaleController
+          scale={zoom} onChange={val => {
+            setZoom(val)
           }}
         />
-        <Divider layout='vertical' />
-        {/* <Tooltip content='切换显示容器轮廓'>
-            <Button
-              type={showContainer ? 'primary' : 'tertiary'}
-              theme={showContainer ? 'solid' : 'borderless'}
-              icon={<i className='bi bi-intersect' />}
-              onClick={() => {
-                this.setState({
-                  showContainer: !showContainer
-                })
-                context.setShowContainer(!showContainer)
-              }}
-            />
-          </Tooltip> */}
         <Divider layout='vertical' />
         {/* <ReactComposite app='ridge-editor-app' path='/user/UserPanel' /> */}
         {/* <Popover trigger='click' position='topRight' showArrow content={<ReactComposite app='ridge-editor-app' path='/AppShare' />}>
             <Button icon={<HumbleiconsShare />}>导出</Button>
           </Popover> */}
+
+        <Button
+          disabled={!currentOpenPageId}
+          type='tertiary' icon={<i className='bi bi-floppy' />} theme='borderless' onClick={savePage}
+        />
 
         <Tooltip content='预览页面'>
           <Button

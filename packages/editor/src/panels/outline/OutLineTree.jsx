@@ -5,7 +5,7 @@ import './outline.less'
 import useEditorStore from '../../store/editor.store'
 import { ICON_EYE, ICON_EYE_CLOSE, ICON_LOCK, ICON_UNLOCK } from '../../icons/icons'
 
-const { Text } = Typography
+const { Title, Text } = Typography
 
 const OutlineTree = () => {
   // 从 store 获取数据
@@ -245,8 +245,7 @@ const OutlineTree = () => {
   }, [setCurrentNode])
 
   return (
-    <>
-      <Text>页面大纲</Text>
+    <div style={{ margin: '12px 4px' }}>
       <Tree
         className='outline-tree'
         autoExpandWhenDragEnter
@@ -254,7 +253,7 @@ const OutlineTree = () => {
         showFilteredOnly
         filterTreeNode
         draggable
-        emptyContent='暂无打开的页面'
+        emptyContent='未找到对应的页面元素'
         renderLabel={renderFullLabel}
         onDrop={onTreeDrop}
         onChange={(value, node) => {
@@ -268,7 +267,7 @@ const OutlineTree = () => {
         value={currentEditNodeId}
         treeData={componentTreeData}
       />
-    </>
+    </div>
   )
 }
 
