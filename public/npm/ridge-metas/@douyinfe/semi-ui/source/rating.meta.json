@@ -1,0 +1,155 @@
+{
+  "name": "Rating",
+  "title": "评分组件",
+  "icon": "svgs/rating.svg",
+  "description": "用于评分、星级评价的交互组件，支持半选、清除、自定义尺寸等功能",
+  "tags": [
+    "表单",
+    "评分",
+    "星级"
+  ],
+  "category": "表单",
+  "version": "1.0.0",
+  "author": "RidgeUI",
+  "visualConfig": {
+    "preferredWidth": 240,
+    "preferredHeight": 48,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "allowClear",
+      "description": "是否允许再次点击后清除评分",
+      "label": "允许清除",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": true
+    },
+    {
+      "name": "allowHalf",
+      "description": "是否允许半星选择",
+      "label": "允许半选",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "autoFocus",
+      "description": "是否自动获取焦点",
+      "label": "自动聚焦",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "count",
+      "description": "星级总数",
+      "label": "星级数量",
+      "control": "number",
+      "type": "number",
+      "min": 1,
+      "defaultValue": 5
+    },
+    {
+      "name": "defaultValue",
+      "description": "组件默认评分值",
+      "label": "默认评分",
+      "control": "number",
+      "type": "number",
+      "defaultValue": 0
+    },
+    {
+      "name": "disabled",
+      "description": "是否禁用组件，禁用后无法交互",
+      "label": "禁用",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "preventScroll",
+      "description": "聚焦时是否禁止页面自动滚动",
+      "label": "禁止滚动",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "size",
+      "description": "组件尺寸，支持default/small或数字自定义",
+      "label": "尺寸",
+      "control": "select",
+      "type": "string | number",
+      "options": [
+        {
+          "label": "默认",
+          "value": "default"
+        },
+        {
+          "label": "小尺寸",
+          "value": "small"
+        }
+      ],
+      "defaultValue": "default",
+      "hidden": true
+    },
+    {
+      "name": "value",
+      "description": "组件当前评分值，支持双向绑定",
+      "label": "评分值",
+      "inputEvent": "onChange",
+      "control": "number",
+      "type": "number",
+      "defaultValue": 0
+    },
+    {
+      "name": "tooltips",
+      "description": "自定义每项星级的提示信息",
+      "label": "星级提示",
+      "control": "json",
+      "type": "array",
+      "defaultValue": []
+    },
+    {
+      "name": "className",
+      "description": "组件自定义CSS类名",
+      "label": "自定义类名",
+      "control": "className",
+      "type": "string"
+    },
+    {
+      "name": "style",
+      "description": "组件内联样式",
+      "label": "内联样式",
+      "type": "CSSProperties"
+    }
+  ],
+  "events": [
+    {
+      "name": "onBlur",
+      "description": "组件失去焦点时触发",
+      "label": "失去焦点"
+    },
+    {
+      "name": "onChange",
+      "description": "选择评分时触发，返回当前评分值",
+      "label": "评分改变"
+    },
+    {
+      "name": "onFocus",
+      "description": "组件获取焦点时触发",
+      "label": "获取焦点"
+    },
+    {
+      "name": "onHoverChange",
+      "description": "鼠标经过星级时数值变化触发",
+      "label": "悬停改变"
+    },
+    {
+      "name": "onKeyDown",
+      "description": "组件内按键时触发",
+      "label": "按键按下"
+    }
+  ]
+}

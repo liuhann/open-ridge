@@ -1,0 +1,261 @@
+{
+  "name": "TagInput",
+  "title": "标签输入框",
+  "icon": "svgs/tag-input.svg",
+  "description": "支持输入、添加、删除多个标签的输入组件，可配置数量限制、分隔符、拖拽排序等功能",
+  "tags": [
+    "表单",
+    "标签",
+    "输入框"
+  ],
+  "category": "表单",
+  "version": "1.0.0",
+  "author": "RidgeUI",
+  "visualConfig": {
+    "preferredWidth": 360,
+    "preferredHeight": 56,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "value",
+      "description": "当前标签列表，配合onChange实现双向绑定",
+      "label": "标签值",
+      "inputEvent": "onChange",
+      "type": "array",
+      "defaultValue": []
+    },
+    {
+      "name": "defaultValue",
+      "description": "初始默认标签列表",
+      "label": "默认标签",
+      "control": "json",
+      "type": "array",
+      "defaultValue": []
+    },
+    {
+      "name": "inputValue",
+      "description": "输入框实时内容",
+      "label": "输入框内容",
+      "inputEvent": "onInputChange",
+      "type": "string",
+      "defaultValue": ""
+    },
+    {
+      "name": "placeholder",
+      "description": "输入框占位提示文字",
+      "label": "提示文字",
+      "type": "string",
+      "defaultValue": "请输入并按回车添加标签"
+    },
+    {
+      "name": "disabled",
+      "description": "是否禁用组件，禁用后无法编辑",
+      "label": "禁用",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "draggable",
+      "description": "标签是否支持拖拽排序",
+      "label": "可拖拽",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "allowDuplicates",
+      "description": "是否允许添加重复标签",
+      "label": "允许重复",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": true
+    },
+    {
+      "name": "addOnBlur",
+      "description": "失去焦点时自动将输入内容转为标签",
+      "label": "失焦添加",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "showClear",
+      "description": "是否显示清空所有标签按钮",
+      "label": "显示清空",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "autoFocus",
+      "description": "是否自动获取焦点",
+      "label": "自动聚焦",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "separator",
+      "description": "标签分隔符，默认逗号",
+      "label": "分隔符",
+      "type": "string",
+      "defaultValue": ","
+    },
+    {
+      "name": "max",
+      "description": "最大允许添加的标签数量",
+      "label": "最大标签数",
+      "control": "number",
+      "type": "number",
+      "min": 0
+    },
+    {
+      "name": "maxLength",
+      "description": "单个标签的最大输入长度",
+      "label": "标签最大长度",
+      "control": "number",
+      "type": "number",
+      "min": 0
+    },
+    {
+      "name": "maxTagCount",
+      "description": "页面最多显示的标签数，超出显示+N",
+      "label": "最大展示数",
+      "control": "number",
+      "type": "number",
+      "min": 0
+    },
+    {
+      "name": "expandRestTagsOnClick",
+      "description": "点击组件时展开隐藏标签",
+      "label": "点击展开标签",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": true
+    },
+    {
+      "name": "showRestTagsPopover",
+      "description": "悬停+N时显示全部标签",
+      "label": "悬停显示全部",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": true
+    },
+    {
+      "name": "showContentTooltip",
+      "description": "标签过长时hover显示完整内容",
+      "label": "显示完整提示",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": true
+    },
+    {
+      "name": "size",
+      "description": "输入框尺寸",
+      "label": "尺寸",
+      "control": "select",
+      "type": "string",
+      "options": [
+        {
+          "label": "小",
+          "value": "small"
+        },
+        {
+          "label": "默认",
+          "value": "default"
+        },
+        {
+          "label": "大",
+          "value": "large"
+        }
+      ],
+      "defaultValue": "default",
+      "hidden": true
+    },
+    {
+      "name": "validateStatus",
+      "description": "校验状态样式",
+      "label": "校验状态",
+      "control": "select",
+      "type": "string",
+      "options": [
+        {
+          "label": "默认",
+          "value": "default"
+        },
+        {
+          "label": "警告",
+          "value": "warning"
+        },
+        {
+          "label": "错误",
+          "value": "error"
+        }
+      ],
+      "defaultValue": "default"
+    },
+    {
+      "name": "className",
+      "description": "自定义CSS类名",
+      "label": "自定义类名",
+      "control": "className",
+      "type": "string"
+    },
+    {
+      "name": "style",
+      "description": "组件内联样式",
+      "label": "内联样式",
+      "type": "CSSProperties"
+    }
+  ],
+  "events": [
+    {
+      "name": "onChange",
+      "description": "标签列表发生变化时触发",
+      "label": "标签改变"
+    },
+    {
+      "name": "onAdd",
+      "description": "添加标签时触发",
+      "label": "添加标签"
+    },
+    {
+      "name": "onRemove",
+      "description": "删除标签时触发",
+      "label": "删除标签"
+    },
+    {
+      "name": "onInputChange",
+      "description": "输入框内容变化时触发",
+      "label": "输入变化"
+    },
+    {
+      "name": "onExceed",
+      "description": "标签数量超出上限时触发",
+      "label": "超出数量限制"
+    },
+    {
+      "name": "onInputExceed",
+      "description": "单个标签长度超出上限时触发",
+      "label": "超出长度限制"
+    },
+    {
+      "name": "onFocus",
+      "description": "输入框获得焦点时触发",
+      "label": "获取焦点"
+    },
+    {
+      "name": "onBlur",
+      "description": "输入框失去焦点时触发",
+      "label": "失去焦点"
+    },
+    {
+      "name": "onKeyDown",
+      "description": "键盘按下时触发",
+      "label": "按键按下"
+    }
+  ]
+}

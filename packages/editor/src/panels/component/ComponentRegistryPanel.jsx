@@ -1,7 +1,5 @@
-// ComponentRegistryPanel.jsx
 import React, { useState, useEffect, useCallback } from 'react'
-import { Button, Empty, Spin, Typography, Tag } from '@douyinfe/semi-ui'
-import { IconArrowLeft, IconRefresh, IconSearch } from '@douyinfe/semi-icons'
+import { Button, Empty, Spin, Typography, Tag, Input, Icon } from '@douyinfe/semi-ui'
 import { CATEGORIES, getDisplayName } from './componentUtils'
 import componentRegistry from '../../service/ComponentRegistry'
 import ComponentLibCard from './ComponentLibCard.jsx'
@@ -9,6 +7,7 @@ import ComponentItemCard from './ComponentItemCard.jsx'
 import CategoryHeader from './CategoryHeader.jsx'
 import TitleBar from '../../components/TitleBar/TitleBar.jsx'
 import './ComponentRegistryPanel.less'
+import { ICON_COMMON_SEARCH } from '../../icons/icons.js'
 
 const { Text } = Typography
 
@@ -20,9 +19,8 @@ const ComponentRegistryPanel = () => {
   const [error, setError] = useState(null)
   const [componentData, setComponentData] = useState([])
   const [componentLibMeta, setComponentLibMeta] = useState({})
-
-  // 移除原来的 zustand 状态
-  const [registry, setRegistry] = useState([])
+  // 搜索过滤关键词
+  const [filterKeyword, setFilterKeyword] = useState('')
 
   useEffect(() => {
     // 初始化组件注册表
@@ -31,7 +29,6 @@ const ComponentRegistryPanel = () => {
         await componentRegistry.init()
         const reg = componentRegistry.getRegistry()
         const filteredRegistry = reg.filter(item => item.category !== 'base')
-        setRegistry(reg)
         setComponentData(filteredRegistry)
       } catch (err) {
         console.error('初始化组件注册表失败:', err)
@@ -51,18 +48,16 @@ const ComponentRegistryPanel = () => {
 
   const loadLibComponents = useCallback(async (libItem) => {
     if (!libItem.meta) {
-      // "meta": "ridge-metas/@douyinfe/semi-ui/meta.json",
       libItem.meta = `ridge-metas/${libItem.module}/meta.json`
     }
 
     setLoading(true)
     setError(null)
     setCurrentLib(libItem)
+    setFilterKeyword('') // 切换库时清空搜索
 
     try {
-      // 使用单例服务加载库
       const componentLibMeta = await componentRegistry.loadLibMeta(libItem.module)
-
       const mockComponents = componentLibMeta.components
 
       setComponentLibMeta(componentLibMeta)
@@ -80,11 +75,19 @@ const ComponentRegistryPanel = () => {
     setCurrentView('libs')
     setCurrentLib(null)
     setLibComponents([])
+    setFilterKeyword('')
   }
 
   const handleLibClick = (libItem) => {
     loadLibComponents(libItem)
   }
+
+  // 过滤后的组件列表
+  const filteredComponents = libComponents.filter(component => {
+    if (!filterKeyword) return true
+    const title = (component.title || '').toLowerCase()
+    return title.includes(filterKeyword.toLowerCase())
+  })
 
   const renderLibsView = () => (
     <>
@@ -128,7 +131,7 @@ const ComponentRegistryPanel = () => {
       <TitleBar
         onBack={handleBackToLibs} title={getDisplayName(currentLib)} right={
           <Tag size='small'>{currentLib.version} </Tag>
-}
+        }
       />
       {loading
         ? (
@@ -143,10 +146,8 @@ const ComponentRegistryPanel = () => {
               <Empty
                 title='加载失败'
                 description={error}
-                image={<IconRefresh style={{ fontSize: '60px', color: 'var(--semi-color-disabled-text)' }} />}
               />
               <Button
-                icon={<IconRefresh />}
                 onClick={() => loadLibComponents(currentLib)}
                 className='retry-button'
               >
@@ -157,19 +158,28 @@ const ComponentRegistryPanel = () => {
           : (
             <>
               <div className='components-view-container'>
-                {libComponents.length === 0
+                {/* 搜索过滤输入框 */}
+                <Input
+                  placeholder='输入组件名称搜索...'
+                  value={filterKeyword}
+                  showClear
+                  onChange={setFilterKeyword}
+                  style={{ marginBottom: 16 }}
+                />
+
+                {filteredComponents.length === 0
                   ? (
                     <div className='empty-container'>
                       <Empty
-                        title='暂无组件'
-                        description='该组件库中没有找到组件定义'
-                        image={<IconSearch style={{ fontSize: '60px', color: 'var(--semi-color-disabled-text)' }} />}
+                        title='暂无匹配组件'
+                        description='切换关键词或重试'
+                        image={<Icon style={{ fontSize: '52px' }} svg={ICON_COMMON_SEARCH} />}
                       />
                     </div>
                     )
                   : (
                     <div className='components-grid'>
-                      {libComponents.map((component, index) => (
+                      {filteredComponents.map((component, index) => (
                         <div key={index} className='component-grid-item'>
                           <ComponentItemCard
                             packageName={componentLibMeta.name}
@@ -184,7 +194,7 @@ const ComponentRegistryPanel = () => {
 
               <div className='components-view-footer'>
                 <Text className='components-count'>
-                  共 {libComponents.length} 个组件
+                  共 {filteredComponents.length} 个组件
                 </Text>
                 <Text className='components-tip'>
                   点击组件以使用

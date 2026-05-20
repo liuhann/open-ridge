@@ -383,21 +383,6 @@ const editorStore = create((set, get) => ({
     })
   },
 
-  handleWheel: (event) => {
-    if (!event.ctrlKey) return
-    // ✅ 彻底阻止浏览器默认行为：页面缩放 / 滚动
-    event.preventDefault()
-    event.stopPropagation()
-
-    const { zoom, setZoom } = get()
-
-    // 计算目标缩放值
-    let targetZoom = zoom + (event.deltaY > 0 ? -1 : 1) * 0.01
-    targetZoom = Math.min(Math.max(0.1, targetZoom), 2) // 限制 0.1 ~ 2
-
-    setZoom(targetZoom)
-  },
-
   previewPage: async (id) => {
     const appService = localRepoService.getCurrentAppService()
 

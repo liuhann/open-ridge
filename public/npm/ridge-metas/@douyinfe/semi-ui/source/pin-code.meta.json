@@ -1,7 +1,7 @@
 {
   "name": "PinCode",
   "title": "验证码输入",
-  "icon": "svgs/pin-code.svg",
+  "icon": "svgs/pincode.svg",
   "description": "用于输入验证码，支持指定位数、大小与格式限制。",
   "tags": [
     "验证码",

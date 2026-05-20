@@ -1008,13 +1008,14 @@ export default class WorkSpaceControl {
       // ==============================================
       if (e.ctrlKey) {
       // 缩放灵敏度（可调，越小越慢）
-        const sensitivity = 0.003
+        const sensitivity = 0.0015
         // 计算新缩放值：滚轮向上放大，向下缩小
         let newZoom = this.zoom + (-e.deltaY * sensitivity)
         // 限制缩放范围 0.1 ~ 2（可调）
         newZoom = Math.min(Math.max(0.1, newZoom), 2)
         // 应用缩放（你现成的方法）
         this.setZoom(newZoom)
+        this.editorStore.getState().setZoom(newZoom)
         return
       }
 
@@ -1077,6 +1078,7 @@ export default class WorkSpaceControl {
 
   saveCurrentPage () {
     // 实现保存逻辑
-    console.log('Save current page')
+    this.editorStore.getState().saveCurrentPage()
+    // console.log('Save current page')
   }
 }

@@ -17,7 +17,6 @@ import WorkSpaceControl from './workspace/WorkspaceControl'
 
 import editorStore from './store/editor.store.js'
 import appStore from './store/app.store.js'
-import { ReactComposite } from 'ridgejs'
 
 import './editor.less'
 import './panels/common.less'
@@ -42,7 +41,6 @@ const Editor = () => {
   const imagePreviewSrc = editorStore((state) => state.imagePreviewSrc)
   const setWorkspaceControl = editorStore((state) => state.setWorkspaceControl)
   const closeImagePreview = editorStore((state) => state.closeImagePreview)
-  const handleWheel = editorStore((state) => state.handleWheel)
   const initStore = editorStore((state) => state.initStore)
 
   const currentAppName = appStore((state) => state.currentAppName)
@@ -66,14 +64,6 @@ const Editor = () => {
       setWorkspaceControl(workspaceControl)
     }
     initialize()
-  }, [])
-
-  // 监听wheel事件
-  useEffect(() => {
-    // document.addEventListener('wheel', handleWheel, { passive: false })
-    // return () => {
-    //   document.removeEventListener('wheel', handleWheel)
-    // }
   }, [])
 
   return (

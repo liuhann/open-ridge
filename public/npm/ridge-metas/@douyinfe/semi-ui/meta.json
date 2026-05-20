@@ -1,7 +1,7 @@
 {
   "name": "@douyinfe/semi-ui",
   "schemaVersion": "2.0",
-  "lastUpdated": "2026-05-19T01:41:34.792Z",
+  "lastUpdated": "2026-05-20T08:16:07.774Z",
   "generatedBy": "ridge-ui-cli",
   "components": [
     {
@@ -1228,6 +1228,151 @@
       ]
     },
     {
+      "name": "Descriptions",
+      "title": "描述列表",
+      "icon": "svgs/descriptions.svg",
+      "description": "用于展示详情、表单结果、基础信息的描述列表组件，支持垂直/水平布局",
+      "tags": [
+        "展示",
+        "详情",
+        "描述",
+        "布局"
+      ],
+      "category": "展示",
+      "version": "1.0.0",
+      "author": "RidgeUI",
+      "visualConfig": {
+        "preferredWidth": 540,
+        "preferredHeight": 240,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "data",
+          "description": "描述列表数据源，包含 label、value、span",
+          "label": "数据项",
+          "control": "json",
+          "type": "array",
+          "sample": [
+            {
+              "label": "姓名",
+              "value": "张三",
+              "span": 1
+            },
+            {
+              "label": "年龄",
+              "value": "28",
+              "span": 1
+            },
+            {
+              "label": "地址",
+              "value": "北京市朝阳区",
+              "span": 2
+            }
+          ],
+          "defaultValue": []
+        },
+        {
+          "name": "layout",
+          "description": "列表布局模式",
+          "label": "布局模式",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "垂直",
+              "value": "vertical"
+            },
+            {
+              "label": "水平",
+              "value": "horizontal"
+            }
+          ],
+          "defaultValue": "vertical"
+        },
+        {
+          "name": "align",
+          "description": "描述列表对齐方式",
+          "label": "对齐方式",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "居中",
+              "value": "center"
+            },
+            {
+              "label": "两端对齐",
+              "value": "justify"
+            },
+            {
+              "label": "左对齐",
+              "value": "left"
+            },
+            {
+              "label": "朴素",
+              "value": "plain"
+            }
+          ],
+          "defaultValue": "center"
+        },
+        {
+          "name": "row",
+          "description": "是否双行显示（label 在上，value 在下）",
+          "label": "双行显示",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "column",
+          "description": "横向布局时，每行总列数",
+          "label": "每行显示列数",
+          "control": "number",
+          "type": "number",
+          "min": 1,
+          "defaultValue": 3
+        },
+        {
+          "name": "size",
+          "description": "双行显示时的列表大小",
+          "label": "尺寸大小",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "小",
+              "value": "small"
+            },
+            {
+              "label": "中",
+              "value": "medium"
+            },
+            {
+              "label": "大",
+              "value": "large"
+            }
+          ],
+          "defaultValue": "medium"
+        },
+        {
+          "name": "className",
+          "description": "组件自定义 CSS 类名",
+          "label": "自定义类名",
+          "control": "className",
+          "type": "string"
+        },
+        {
+          "name": "style",
+          "description": "组件内联样式",
+          "label": "内联样式",
+          "type": "CSSProperties"
+        }
+      ],
+      "events": []
+    },
+    {
       "name": "Image",
       "title": "图片",
       "icon": "svgs/image.svg",
@@ -2038,6 +2183,169 @@
       "events": []
     },
     {
+      "name": "Pagination",
+      "title": "分页器",
+      "icon": "svgs/pagination.svg",
+      "description": "用于多页数据导航的分页组件，支持页码切换、每页条数、快速跳转、总条数显示",
+      "tags": [
+        "导航",
+        "分页",
+        "数据"
+      ],
+      "category": "导航",
+      "version": "1.0.0",
+      "author": "RidgeUI",
+      "visualConfig": {
+        "preferredWidth": 480,
+        "preferredHeight": 48,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "currentPage",
+          "description": "当前页码，受控值，配合onPageChange使用",
+          "label": "当前页码",
+          "inputEvent": "onPageChange",
+          "type": "number",
+          "defaultValue": 1
+        },
+        {
+          "name": "defaultCurrentPage",
+          "description": "初始默认页码",
+          "label": "默认页码",
+          "type": "number",
+          "defaultValue": 1
+        },
+        {
+          "name": "total",
+          "description": "数据总条数",
+          "label": "总条数",
+          "control": "number",
+          "type": "number",
+          "min": 1,
+          "defaultValue": 1
+        },
+        {
+          "name": "pageSize",
+          "description": "每页显示条数",
+          "label": "每页条数",
+          "control": "number",
+          "type": "number",
+          "min": 1,
+          "defaultValue": 10
+        },
+        {
+          "name": "disabled",
+          "description": "是否禁用分页器",
+          "label": "禁用",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "size",
+          "description": "分页器尺寸",
+          "label": "尺寸",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "小",
+              "value": "small"
+            },
+            {
+              "label": "默认",
+              "value": "default"
+            }
+          ],
+          "defaultValue": "default",
+          "hidden": true
+        },
+        {
+          "name": "showTotal",
+          "description": "是否显示总页数/总条数信息",
+          "label": "显示总计",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "showSizeChanger",
+          "description": "是否允许切换每页条数",
+          "label": "切换每页条数",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "pageSizeOpts",
+          "description": "每页条数可选值数组",
+          "label": "条数可选值",
+          "control": "json",
+          "type": "array",
+          "sample": [
+            10,
+            20,
+            40,
+            100
+          ],
+          "defaultValue": [
+            10,
+            20,
+            40,
+            100
+          ]
+        },
+        {
+          "name": "showQuickJumper",
+          "description": "是否显示快速跳转到指定页码",
+          "label": "快速跳转",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "hideOnSinglePage",
+          "description": "只有一页时是否隐藏分页器",
+          "label": "单页隐藏",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "className",
+          "description": "分页器自定义类名",
+          "label": "自定义类名",
+          "control": "className",
+          "type": "string"
+        },
+        {
+          "name": "style",
+          "description": "分页器内联样式",
+          "label": "内联样式",
+          "type": "CSSProperties"
+        }
+      ],
+      "events": [
+        {
+          "name": "onPageChange",
+          "description": "页码变更时触发",
+          "label": "页码改变"
+        },
+        {
+          "name": "onPageSizeChange",
+          "description": "每页条数变更时触发",
+          "label": "条数改变"
+        },
+        {
+          "name": "onChange",
+          "description": "页码或每页条数任意变化时触发",
+          "label": "变更事件"
+        }
+      ]
+    },
+    {
       "name": "Typography.Paragraph",
       "title": "段落",
       "icon": "svgs/typography.svg",
@@ -2210,7 +2518,7 @@
     {
       "name": "PinCode",
       "title": "验证码输入",
-      "icon": "svgs/pin-code.svg",
+      "icon": "svgs/pincode.svg",
       "description": "用于输入验证码，支持指定位数、大小与格式限制。",
       "tags": [
         "验证码",
@@ -2331,112 +2639,6 @@
         {
           "name": "onComplete",
           "description": "所有验证码输入完成时触发",
-          "label": "输入完成"
-        }
-      ]
-    },
-    {
-      "name": "PinCode",
-      "title": "验证码输入",
-      "icon": "svgs/pincode.svg",
-      "description": "用于短信验证码、邮箱验证码、数字密码等分段输入组件",
-      "tags": [
-        "验证码",
-        "输入",
-        "表单",
-        "基础组件"
-      ],
-      "category": "基础组件",
-      "version": "1.0.0",
-      "author": "LiuHan",
-      "visualConfig": {
-        "preferredWidth": 280,
-        "preferredHeight": 48,
-        "resizable": false,
-        "aspectRatio": "no"
-      },
-      "properties": [
-        {
-          "name": "value",
-          "description": "输入框内容",
-          "label": "输入值",
-          "type": "string"
-        },
-        {
-          "name": "defaultValue",
-          "description": "输入框默认内容",
-          "label": "默认值",
-          "type": "string"
-        },
-        {
-          "name": "count",
-          "description": "验证码输入位数",
-          "label": "验证码位数",
-          "control": "number",
-          "type": "number",
-          "defaultValue": 6
-        },
-        {
-          "name": "autoFocus",
-          "description": "是否自动聚焦到第一个输入框",
-          "label": "自动聚焦",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": true
-        },
-        {
-          "name": "disabled",
-          "description": "是否禁用组件",
-          "label": "禁用",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
-          "name": "size",
-          "description": "输入框大小",
-          "label": "尺寸",
-          "control": "select",
-          "type": "string",
-          "options": [
-            {
-              "label": "大",
-              "value": "large"
-            },
-            {
-              "label": "默认",
-              "value": "default"
-            },
-            {
-              "label": "小",
-              "value": "small"
-            }
-          ],
-          "defaultValue": "default"
-        },
-        {
-          "name": "className",
-          "description": "组件自定义样式类名",
-          "label": "自定义类名",
-          "control": "className",
-          "type": "array"
-        },
-        {
-          "name": "style",
-          "description": "组件内联样式",
-          "label": "内联样式",
-          "type": "CSSProperties"
-        }
-      ],
-      "events": [
-        {
-          "name": "onChange",
-          "description": "输入内容变化时触发",
-          "label": "内容改变"
-        },
-        {
-          "name": "onComplete",
-          "description": "所有验证码位数输入完成时触发",
           "label": "输入完成"
         }
       ]
@@ -2604,6 +2806,607 @@
       ]
     },
     {
+      "name": "Rating",
+      "title": "评分组件",
+      "icon": "svgs/rating.svg",
+      "description": "用于评分、星级评价的交互组件，支持半选、清除、自定义尺寸等功能",
+      "tags": [
+        "表单",
+        "评分",
+        "星级"
+      ],
+      "category": "表单",
+      "version": "1.0.0",
+      "author": "RidgeUI",
+      "visualConfig": {
+        "preferredWidth": 240,
+        "preferredHeight": 48,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "allowClear",
+          "description": "是否允许再次点击后清除评分",
+          "label": "允许清除",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": true
+        },
+        {
+          "name": "allowHalf",
+          "description": "是否允许半星选择",
+          "label": "允许半选",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "autoFocus",
+          "description": "是否自动获取焦点",
+          "label": "自动聚焦",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "count",
+          "description": "星级总数",
+          "label": "星级数量",
+          "control": "number",
+          "type": "number",
+          "min": 1,
+          "defaultValue": 5
+        },
+        {
+          "name": "defaultValue",
+          "description": "组件默认评分值",
+          "label": "默认评分",
+          "control": "number",
+          "type": "number",
+          "defaultValue": 0
+        },
+        {
+          "name": "disabled",
+          "description": "是否禁用组件，禁用后无法交互",
+          "label": "禁用",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "preventScroll",
+          "description": "聚焦时是否禁止页面自动滚动",
+          "label": "禁止滚动",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "size",
+          "description": "组件尺寸，支持default/small或数字自定义",
+          "label": "尺寸",
+          "control": "select",
+          "type": "string | number",
+          "options": [
+            {
+              "label": "默认",
+              "value": "default"
+            },
+            {
+              "label": "小尺寸",
+              "value": "small"
+            }
+          ],
+          "defaultValue": "default",
+          "hidden": true
+        },
+        {
+          "name": "value",
+          "description": "组件当前评分值，支持双向绑定",
+          "label": "评分值",
+          "inputEvent": "onChange",
+          "control": "number",
+          "type": "number",
+          "defaultValue": 0
+        },
+        {
+          "name": "tooltips",
+          "description": "自定义每项星级的提示信息",
+          "label": "星级提示",
+          "control": "json",
+          "type": "array",
+          "defaultValue": []
+        },
+        {
+          "name": "className",
+          "description": "组件自定义CSS类名",
+          "label": "自定义类名",
+          "control": "className",
+          "type": "string"
+        },
+        {
+          "name": "style",
+          "description": "组件内联样式",
+          "label": "内联样式",
+          "type": "CSSProperties"
+        }
+      ],
+      "events": [
+        {
+          "name": "onBlur",
+          "description": "组件失去焦点时触发",
+          "label": "失去焦点"
+        },
+        {
+          "name": "onChange",
+          "description": "选择评分时触发，返回当前评分值",
+          "label": "评分改变"
+        },
+        {
+          "name": "onFocus",
+          "description": "组件获取焦点时触发",
+          "label": "获取焦点"
+        },
+        {
+          "name": "onHoverChange",
+          "description": "鼠标经过星级时数值变化触发",
+          "label": "悬停改变"
+        },
+        {
+          "name": "onKeyDown",
+          "description": "组件内按键时触发",
+          "label": "按键按下"
+        }
+      ]
+    },
+    {
+      "name": "Select",
+      "title": "下拉选择器",
+      "icon": "svgs/select.svg",
+      "description": "用于从选项列表中单选/多选的下拉选择组件，支持搜索、清除、远程搜索等常用功能",
+      "tags": [
+        "表单",
+        "选择器",
+        "下拉框"
+      ],
+      "category": "表单",
+      "version": "1.0.0",
+      "author": "RidgeUI",
+      "visualConfig": {
+        "preferredWidth": 280,
+        "preferredHeight": 40,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "value",
+          "description": "当前选中的值，配合onChange实现双向绑定",
+          "label": "选中值",
+          "inputEvent": "onChange",
+          "type": "string | number | array",
+          "defaultValue": ""
+        },
+        {
+          "name": "defaultValue",
+          "description": "初始默认选中的值",
+          "label": "默认值",
+          "type": "string | number | array",
+          "defaultValue": ""
+        },
+        {
+          "name": "optionList",
+          "description": "下拉选项列表，每项包含label和value",
+          "label": "选项列表",
+          "control": "json",
+          "type": "array",
+          "defaultValue": []
+        },
+        {
+          "name": "placeholder",
+          "description": "选择框默认提示文字",
+          "label": "提示文字",
+          "type": "string",
+          "defaultValue": "请选择"
+        },
+        {
+          "name": "disabled",
+          "description": "是否禁用组件，禁用后无法交互",
+          "label": "禁用",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "multiple",
+          "description": "是否开启多选模式",
+          "label": "多选",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "filter",
+          "description": "是否开启搜索筛选功能",
+          "label": "可搜索",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "allowCreate",
+          "description": "是否允许创建新的选项，需配合搜索使用",
+          "label": "允许创建",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "showClear",
+          "description": "是否显示清除选中值的按钮",
+          "label": "显示清除",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "showArrow",
+          "description": "是否显示下拉箭头图标",
+          "label": "显示箭头",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": true
+        },
+        {
+          "name": "autoFocus",
+          "description": "是否自动获取焦点",
+          "label": "自动聚焦",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "defaultOpen",
+          "description": "是否默认展开下拉列表",
+          "label": "默认展开",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "size",
+          "description": "组件尺寸大小",
+          "label": "尺寸",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "默认",
+              "value": "default"
+            },
+            {
+              "label": "小",
+              "value": "small"
+            },
+            {
+              "label": "大",
+              "value": "large"
+            }
+          ],
+          "defaultValue": "default",
+          "hidden": true
+        },
+        {
+          "name": "borderless",
+          "description": "是否开启无边框模式",
+          "label": "无边框",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "maxTagCount",
+          "description": "多选时最多显示的标签数量，超出显示+N",
+          "label": "最大标签数",
+          "control": "number",
+          "type": "number",
+          "min": 0,
+          "defaultValue": 3
+        },
+        {
+          "name": "max",
+          "description": "多选时最多可选数量",
+          "label": "最大可选数",
+          "control": "number",
+          "type": "number",
+          "min": 0
+        },
+        {
+          "name": "loading",
+          "description": "下拉列表是否显示加载动画",
+          "label": "加载中",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "position",
+          "description": "下拉菜单展开位置",
+          "label": "展开位置",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "左下",
+              "value": "bottomLeft"
+            },
+            {
+              "label": "右下",
+              "value": "bottomRight"
+            },
+            {
+              "label": "左上",
+              "value": "topLeft"
+            },
+            {
+              "label": "右上",
+              "value": "topRight"
+            }
+          ],
+          "defaultValue": "bottomLeft"
+        },
+        {
+          "name": "validateStatus",
+          "description": "校验状态样式",
+          "label": "校验状态",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "默认",
+              "value": "default"
+            },
+            {
+              "label": "警告",
+              "value": "warning"
+            },
+            {
+              "label": "错误",
+              "value": "error"
+            }
+          ],
+          "defaultValue": "default"
+        },
+        {
+          "name": "className",
+          "description": "组件自定义CSS类名",
+          "label": "自定义类名",
+          "control": "className",
+          "type": "string"
+        },
+        {
+          "name": "style",
+          "description": "组件内联样式",
+          "label": "内联样式",
+          "type": "CSSProperties"
+        },
+        {
+          "name": "dropdownStyle",
+          "description": "下拉弹层自定义样式",
+          "label": "弹层样式",
+          "type": "CSSProperties"
+        }
+      ],
+      "events": [
+        {
+          "name": "onChange",
+          "description": "选中值变化时触发",
+          "label": "值改变"
+        },
+        {
+          "name": "onSelect",
+          "description": "选项被选中时触发",
+          "label": "选中"
+        },
+        {
+          "name": "onDeselect",
+          "description": "多选取消选中时触发",
+          "label": "取消选中"
+        },
+        {
+          "name": "onClear",
+          "description": "点击清除按钮时触发",
+          "label": "清除"
+        },
+        {
+          "name": "onSearch",
+          "description": "搜索框内容变化时触发",
+          "label": "搜索"
+        },
+        {
+          "name": "onCreate",
+          "description": "创建新选项时触发",
+          "label": "创建选项"
+        },
+        {
+          "name": "onDropdownVisibleChange",
+          "description": "下拉列表展开/收起时触发",
+          "label": "展开状态改变"
+        },
+        {
+          "name": "onFocus",
+          "description": "组件获取焦点时触发",
+          "label": "获取焦点"
+        },
+        {
+          "name": "onBlur",
+          "description": "组件失去焦点时触发",
+          "label": "失去焦点"
+        },
+        {
+          "name": "onExceed",
+          "description": "多选超出最大可选数量时触发",
+          "label": "超出限制"
+        }
+      ]
+    },
+    {
+      "name": "Slider",
+      "title": "滑块",
+      "icon": "svgs/slider.svg",
+      "description": "用于在数值区间内通过滑动方式选择数值的表单组件，支持刻度、范围、禁用等常用功能",
+      "tags": [
+        "表单",
+        "滑块",
+        "数值选择"
+      ],
+      "category": "表单",
+      "version": "1.0.0",
+      "author": "RidgeUI",
+      "visualConfig": {
+        "preferredWidth": 320,
+        "preferredHeight": 48,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "value",
+          "description": "当前选中值，配合onChange实现双向绑定",
+          "label": "当前值",
+          "inputEvent": "onChange",
+          "type": "number",
+          "defaultValue": 0
+        },
+        {
+          "name": "defaultValue",
+          "description": "初始默认值",
+          "label": "默认值",
+          "control": "number",
+          "type": "number",
+          "defaultValue": 0
+        },
+        {
+          "name": "min",
+          "description": "最小值",
+          "label": "最小值",
+          "control": "number",
+          "type": "number",
+          "defaultValue": 0
+        },
+        {
+          "name": "max",
+          "description": "最大值",
+          "label": "最大值",
+          "control": "number",
+          "type": "number",
+          "defaultValue": 100
+        },
+        {
+          "name": "step",
+          "description": "滑动步长",
+          "label": "步长",
+          "control": "number",
+          "type": "number",
+          "min": 1,
+          "defaultValue": 1
+        },
+        {
+          "name": "disabled",
+          "description": "是否禁用滑块，禁用后无法交互",
+          "label": "禁用",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "vertical",
+          "description": "是否垂直方向展示",
+          "label": "垂直方向",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "marks",
+          "description": "刻度标记，键为数值，值为显示文本",
+          "label": "刻度配置",
+          "control": "json",
+          "type": "object",
+          "defaultValue": {}
+        },
+        {
+          "name": "showMarkLabel",
+          "description": "是否显示刻度标签",
+          "label": "显示刻度",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": true
+        },
+        {
+          "name": "showBoundary",
+          "description": "hover时是否显示最大/最小值",
+          "label": "显示边界值",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "tooltipVisible",
+          "description": "是否始终显示数值提示",
+          "label": "常驻提示",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "included",
+          "description": "刻度值是否为包含关系",
+          "label": "刻度包含关系",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": true
+        },
+        {
+          "name": "railStyle",
+          "description": "滑块轨道样式",
+          "label": "轨道样式",
+          "type": "CSSProperties"
+        },
+        {
+          "name": "className",
+          "description": "自定义CSS类名",
+          "label": "自定义类名",
+          "control": "className",
+          "type": "string"
+        },
+        {
+          "name": "style",
+          "description": "组件内联样式",
+          "label": "内联样式",
+          "type": "CSSProperties"
+        }
+      ],
+      "events": [
+        {
+          "name": "onChange",
+          "description": "滑动值改变时触发",
+          "label": "值改变"
+        },
+        {
+          "name": "onAfterChange",
+          "description": "滑动结束后触发",
+          "label": "滑动结束"
+        },
+        {
+          "name": "onMouseUp",
+          "description": "鼠标松开滑块时触发",
+          "label": "鼠标松开"
+        }
+      ]
+    },
+    {
       "name": "Switch",
       "title": "开关",
       "icon": "svgs/switch.svg",
@@ -2717,6 +3520,267 @@
           "name": "onMouseLeave",
           "description": "鼠标移出时回调",
           "label": "鼠标移出"
+        }
+      ]
+    },
+    {
+      "name": "TagInput",
+      "title": "标签输入框",
+      "icon": "svgs/tag-input.svg",
+      "description": "支持输入、添加、删除多个标签的输入组件，可配置数量限制、分隔符、拖拽排序等功能",
+      "tags": [
+        "表单",
+        "标签",
+        "输入框"
+      ],
+      "category": "表单",
+      "version": "1.0.0",
+      "author": "RidgeUI",
+      "visualConfig": {
+        "preferredWidth": 360,
+        "preferredHeight": 56,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "value",
+          "description": "当前标签列表，配合onChange实现双向绑定",
+          "label": "标签值",
+          "inputEvent": "onChange",
+          "type": "array",
+          "defaultValue": []
+        },
+        {
+          "name": "defaultValue",
+          "description": "初始默认标签列表",
+          "label": "默认标签",
+          "control": "json",
+          "type": "array",
+          "defaultValue": []
+        },
+        {
+          "name": "inputValue",
+          "description": "输入框实时内容",
+          "label": "输入框内容",
+          "inputEvent": "onInputChange",
+          "type": "string",
+          "defaultValue": ""
+        },
+        {
+          "name": "placeholder",
+          "description": "输入框占位提示文字",
+          "label": "提示文字",
+          "type": "string",
+          "defaultValue": "请输入并按回车添加标签"
+        },
+        {
+          "name": "disabled",
+          "description": "是否禁用组件，禁用后无法编辑",
+          "label": "禁用",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "draggable",
+          "description": "标签是否支持拖拽排序",
+          "label": "可拖拽",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "allowDuplicates",
+          "description": "是否允许添加重复标签",
+          "label": "允许重复",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": true
+        },
+        {
+          "name": "addOnBlur",
+          "description": "失去焦点时自动将输入内容转为标签",
+          "label": "失焦添加",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "showClear",
+          "description": "是否显示清空所有标签按钮",
+          "label": "显示清空",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "autoFocus",
+          "description": "是否自动获取焦点",
+          "label": "自动聚焦",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "separator",
+          "description": "标签分隔符，默认逗号",
+          "label": "分隔符",
+          "type": "string",
+          "defaultValue": ","
+        },
+        {
+          "name": "max",
+          "description": "最大允许添加的标签数量",
+          "label": "最大标签数",
+          "control": "number",
+          "type": "number",
+          "min": 0
+        },
+        {
+          "name": "maxLength",
+          "description": "单个标签的最大输入长度",
+          "label": "标签最大长度",
+          "control": "number",
+          "type": "number",
+          "min": 0
+        },
+        {
+          "name": "maxTagCount",
+          "description": "页面最多显示的标签数，超出显示+N",
+          "label": "最大展示数",
+          "control": "number",
+          "type": "number",
+          "min": 0
+        },
+        {
+          "name": "expandRestTagsOnClick",
+          "description": "点击组件时展开隐藏标签",
+          "label": "点击展开标签",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": true
+        },
+        {
+          "name": "showRestTagsPopover",
+          "description": "悬停+N时显示全部标签",
+          "label": "悬停显示全部",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": true
+        },
+        {
+          "name": "showContentTooltip",
+          "description": "标签过长时hover显示完整内容",
+          "label": "显示完整提示",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": true
+        },
+        {
+          "name": "size",
+          "description": "输入框尺寸",
+          "label": "尺寸",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "小",
+              "value": "small"
+            },
+            {
+              "label": "默认",
+              "value": "default"
+            },
+            {
+              "label": "大",
+              "value": "large"
+            }
+          ],
+          "defaultValue": "default",
+          "hidden": true
+        },
+        {
+          "name": "validateStatus",
+          "description": "校验状态样式",
+          "label": "校验状态",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "默认",
+              "value": "default"
+            },
+            {
+              "label": "警告",
+              "value": "warning"
+            },
+            {
+              "label": "错误",
+              "value": "error"
+            }
+          ],
+          "defaultValue": "default"
+        },
+        {
+          "name": "className",
+          "description": "自定义CSS类名",
+          "label": "自定义类名",
+          "control": "className",
+          "type": "string"
+        },
+        {
+          "name": "style",
+          "description": "组件内联样式",
+          "label": "内联样式",
+          "type": "CSSProperties"
+        }
+      ],
+      "events": [
+        {
+          "name": "onChange",
+          "description": "标签列表发生变化时触发",
+          "label": "标签改变"
+        },
+        {
+          "name": "onAdd",
+          "description": "添加标签时触发",
+          "label": "添加标签"
+        },
+        {
+          "name": "onRemove",
+          "description": "删除标签时触发",
+          "label": "删除标签"
+        },
+        {
+          "name": "onInputChange",
+          "description": "输入框内容变化时触发",
+          "label": "输入变化"
+        },
+        {
+          "name": "onExceed",
+          "description": "标签数量超出上限时触发",
+          "label": "超出数量限制"
+        },
+        {
+          "name": "onInputExceed",
+          "description": "单个标签长度超出上限时触发",
+          "label": "超出长度限制"
+        },
+        {
+          "name": "onFocus",
+          "description": "输入框获得焦点时触发",
+          "label": "获取焦点"
+        },
+        {
+          "name": "onBlur",
+          "description": "输入框失去焦点时触发",
+          "label": "失去焦点"
+        },
+        {
+          "name": "onKeyDown",
+          "description": "键盘按下时触发",
+          "label": "按键按下"
         }
       ]
     },
@@ -2893,6 +3957,222 @@
         }
       ],
       "events": []
+    },
+    {
+      "name": "TimePicker",
+      "title": "时间选择器",
+      "icon": "svgs/time-picker.svg",
+      "description": "用于选择时间或时间范围的组件，支持时分秒、12/24小时制、步长、禁用等常用功能",
+      "tags": [
+        "表单",
+        "时间",
+        "选择器"
+      ],
+      "category": "表单",
+      "version": "1.0.0",
+      "author": "RidgeUI",
+      "visualConfig": {
+        "preferredWidth": 280,
+        "preferredHeight": 40,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "value",
+          "description": "当前选中时间，配合onChange实现双向绑定",
+          "label": "时间值",
+          "inputEvent": "onChange",
+          "type": "string | Date",
+          "defaultValue": ""
+        },
+        {
+          "name": "defaultValue",
+          "description": "初始默认时间",
+          "label": "默认时间",
+          "type": "string | Date",
+          "defaultValue": ""
+        },
+        {
+          "name": "type",
+          "description": "选择类型：普通时间 / 时间范围",
+          "label": "选择类型",
+          "control": "radiogroup",
+          "type": "string",
+          "options": [
+            {
+              "label": "时间",
+              "value": "time"
+            },
+            {
+              "label": "时间范围",
+              "value": "timeRange"
+            }
+          ],
+          "defaultValue": "time"
+        },
+        {
+          "name": "placeholder",
+          "description": "输入框占位提示文字",
+          "label": "提示文字",
+          "type": "string",
+          "defaultValue": "请选择时间"
+        },
+        {
+          "name": "disabled",
+          "description": "是否禁用组件，无法交互",
+          "label": "禁用",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "showClear",
+          "description": "是否显示清除按钮",
+          "label": "显示清除",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": true
+        },
+        {
+          "name": "autoFocus",
+          "description": "是否自动获取焦点",
+          "label": "自动聚焦",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "borderless",
+          "description": "是否开启无边框模式",
+          "label": "无边框",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "use12Hours",
+          "description": "是否使用12小时制（AM/PM）",
+          "label": "12小时制",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "format",
+          "description": "时间显示格式",
+          "label": "时间格式",
+          "type": "string",
+          "defaultValue": "HH:mm:ss"
+        },
+        {
+          "name": "hourStep",
+          "description": "小时选项间隔",
+          "label": "小时步长",
+          "control": "number",
+          "type": "number",
+          "min": 1,
+          "defaultValue": 1
+        },
+        {
+          "name": "minuteStep",
+          "description": "分钟选项间隔",
+          "label": "分钟步长",
+          "control": "number",
+          "type": "number",
+          "min": 1,
+          "defaultValue": 1
+        },
+        {
+          "name": "secondStep",
+          "description": "秒选项间隔",
+          "label": "秒步长",
+          "control": "number",
+          "type": "number",
+          "min": 1,
+          "defaultValue": 1
+        },
+        {
+          "name": "hideDisabledOptions",
+          "description": "是否隐藏禁止选择的选项",
+          "label": "隐藏禁用选项",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "inputReadOnly",
+          "description": "输入框只读，避免移动端弹出键盘",
+          "label": "输入框只读",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "size",
+          "description": "组件尺寸大小",
+          "label": "尺寸",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "小",
+              "value": "small"
+            },
+            {
+              "label": "默认",
+              "value": "default"
+            },
+            {
+              "label": "大",
+              "value": "large"
+            }
+          ],
+          "defaultValue": "default",
+          "hidden": true
+        },
+        {
+          "name": "className",
+          "description": "组件自定义CSS类名",
+          "label": "自定义类名",
+          "control": "className",
+          "type": "string"
+        },
+        {
+          "name": "style",
+          "description": "组件内联样式",
+          "label": "内联样式",
+          "type": "CSSProperties"
+        },
+        {
+          "name": "popupStyle",
+          "description": "时间面板弹层样式",
+          "label": "弹层样式",
+          "type": "CSSProperties"
+        }
+      ],
+      "events": [
+        {
+          "name": "onChange",
+          "description": "选中时间变化时触发",
+          "label": "时间改变"
+        },
+        {
+          "name": "onOpenChange",
+          "description": "时间面板展开/收起时触发",
+          "label": "面板展开状态"
+        },
+        {
+          "name": "onFocus",
+          "description": "输入框获得焦点时触发",
+          "label": "获取焦点"
+        },
+        {
+          "name": "onBlur",
+          "description": "输入框失去焦点时触发",
+          "label": "失去焦点"
+        }
+      ]
     },
     {
       "name": "Typography.Title",
@@ -3087,6 +4367,179 @@
         }
       ],
       "events": []
+    },
+    {
+      "name": "TreeSelect",
+      "title": "树形选择器",
+      "icon": "svgs/tree-select.svg",
+      "description": "层级树形结构选择组件，支持单选多选、搜索、清空",
+      "tags": [
+        "表单",
+        "树形选择",
+        "下拉"
+      ],
+      "category": "表单",
+      "version": "1.0.0",
+      "author": "LiuHan",
+      "visualConfig": {
+        "preferredWidth": 320,
+        "preferredHeight": 40,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "value",
+          "description": "组件选中值，单选单值，多选数组",
+          "label": "选中值",
+          "inputEvent": "onChange",
+          "type": "string|number|array",
+          "sample": [
+            "1001"
+          ],
+          "defaultValue": ""
+        },
+        {
+          "name": "defaultValue",
+          "description": "组件默认选中值",
+          "label": "默认值",
+          "type": "string|number|array",
+          "sample": [
+            "1002"
+          ],
+          "defaultValue": ""
+        },
+        {
+          "name": "treeData",
+          "description": "树形数据源，嵌套层级结构",
+          "label": "树形数据源",
+          "control": "json",
+          "type": "array",
+          "sample": [
+            {
+              "label": "一级分类",
+              "value": "1",
+              "children": [
+                {
+                  "label": "二级分类",
+                  "value": "1-1"
+                }
+              ]
+            }
+          ],
+          "defaultValue": []
+        },
+        {
+          "name": "placeholder",
+          "description": "输入框空白提示文案",
+          "label": "占位提示",
+          "type": "string",
+          "defaultValue": "请选择分类"
+        },
+        {
+          "name": "disabled",
+          "description": "是否禁用组件",
+          "label": "禁用",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "multiple",
+          "description": "开启多选模式",
+          "label": "多选",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "filterTreeNode",
+          "description": "开启树形搜索筛选",
+          "label": "可搜索",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "showClear",
+          "description": "显示一键清空选中项按钮",
+          "label": "显示清空",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "defaultExpandAll",
+          "description": "默认展开全部树形节点",
+          "label": "默认全展开",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "size",
+          "description": "组件尺寸大小",
+          "label": "尺寸",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "小",
+              "value": "small"
+            },
+            {
+              "label": "默认",
+              "value": "default"
+            },
+            {
+              "label": "大",
+              "value": "large"
+            }
+          ],
+          "defaultValue": "default",
+          "hidden": true
+        },
+        {
+          "name": "className",
+          "description": "自定义CSS类名",
+          "label": "自定义类名",
+          "control": "className",
+          "type": "string"
+        },
+        {
+          "name": "style",
+          "description": "组件内联样式",
+          "label": "内联样式",
+          "type": "CSSProperties"
+        }
+      ],
+      "events": [
+        {
+          "name": "onChange",
+          "description": "选中节点变更触发",
+          "label": "值变更"
+        },
+        {
+          "name": "onSearch",
+          "description": "搜索关键词输入触发",
+          "label": "搜索事件"
+        },
+        {
+          "name": "onClear",
+          "description": "点击清空按钮触发",
+          "label": "清空事件"
+        },
+        {
+          "name": "onFocus",
+          "description": "获取焦点",
+          "label": "获取焦点"
+        },
+        {
+          "name": "onBlur",
+          "description": "失去焦点",
+          "label": "失去焦点"
+        }
+      ]
     }
   ]
 }
