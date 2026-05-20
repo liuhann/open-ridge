@@ -70,10 +70,10 @@ const Editor = () => {
 
   // 监听wheel事件
   useEffect(() => {
-    document.addEventListener('wheel', handleWheel, { passive: false })
-    return () => {
-      document.removeEventListener('wheel', handleWheel)
-    }
+    // document.addEventListener('wheel', handleWheel, { passive: false })
+    // return () => {
+    //   document.removeEventListener('wheel', handleWheel)
+    // }
   }, [])
 
   return (
@@ -173,13 +173,8 @@ const Editor = () => {
             <div className='workspace-panel'>
               <div className='workspace'>
                 <div className='view-port' isViewPort />
-                {!pageOpened && (
-                  <div className='no-open-file'>
-                    <ReactComposite app='ridge-editor-app' path='Welcome' />
-                  </div>
-                )}
               </div>
-              {pageOpened && <ConfigPanel />}
+              <ConfigPanel />
             </div>
           </div>
 

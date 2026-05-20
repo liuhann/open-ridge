@@ -150,7 +150,7 @@ const editorStore = create((set, get) => ({
 
   // 打开页面
   openPage: async (id, page) => {
-    const { currentOpenPageId, unmountWorkspace, openedFileContentMap, pageZoomMap, pageTransformMap, workspaceControl, openedPages, setZoom, updateTreeData } = get()
+    const { currentOpenPageId, unmountWorkspace, openedFileContentMap, pageTransformMap, workspaceControl, openedPages, updateTreeData } = get()
     const appService = localRepoService.getCurrentAppService()
     if (currentOpenPageId === id) {
       return
@@ -176,14 +176,10 @@ const editorStore = create((set, get) => ({
     if (transform) {
       workspaceControl.setTransform(transform)
     } else {
-      workspaceControl.setTransform({})
-    }
-
-    const zoom = pageZoomMap.get(id)
-    if (zoom) {
-      setZoom(zoom)
-    } else {
-      setZoom(1)
+      const zoom = workspaceControl.fitToCenter()
+      set({
+        zoom
+      })
     }
 
     set({
@@ -226,13 +222,12 @@ const editorStore = create((set, get) => ({
   },
 
   unmountWorkspace: (cache) => {
-    const { editorComposite, workspaceControl, openedFileContentMap, pageZoomMap, pageTransformMap, zoom, currentOpenPageId } = get()
+    const { editorComposite, workspaceControl, openedFileContentMap, pageTransformMap, currentOpenPageId } = get()
 
     if (cache) {
       // 缓存当前图纸
       openedFileContentMap.set(currentOpenPageId, editorComposite.exportPageJSON())
       pageTransformMap.set(currentOpenPageId, workspaceControl.getTransform())
-      pageZoomMap.set(currentOpenPageId, zoom)
     }
     editorComposite.unmount()
     workspaceControl.disable()
@@ -277,12 +272,6 @@ const editorStore = create((set, get) => ({
         workspaceControl.setTransform(transform)
       } else {
         workspaceControl.setTransform({})
-      }
-      const zoom = pageZoomMap.get(id)
-      if (zoom) {
-        setZoom(zoom)
-      } else {
-        setZoom(1)
       }
       set({
         currentOpenPageId: id,
@@ -341,10 +330,17 @@ const editorStore = create((set, get) => ({
 
   setZoom: (zoom) => {
     const { workspaceControl } = get()
-    workspaceControl.setZoom(zoom)
-    set({
-      zoom
-    })
+    if (zoom === 'fit') {
+      const fitZoom = workspaceControl.fitToCenter(20)
+      set({
+        zoom: fitZoom
+      })
+    } else {
+      workspaceControl.setZoom(zoom)
+      set({
+        zoom
+      })
+    }
   },
 
   saveFile: async (fileId, content, doRefresh = true) => {

@@ -4,30 +4,29 @@
    * @param bounds  容器，大小不定
    * @returns {width: Number, height: Number}
    */
+/**
+ * 等比缩放适配：object-fit: scale-down 逻辑
+ */
 export function fitRectIntoBounds (rect, bounds) {
-  // if rect is small
-  if (rect.width < bounds.width && rect.height < bounds.height) {
+  // 比容器小 → 不放大，保持原尺寸
+  if (rect.width <= bounds.width && rect.height <= bounds.height) {
     return rect
   }
 
-  const rectRatio = rect.width / rect.height
+  const ratio = rect.width / rect.height
   const boundsRatio = bounds.width / bounds.height
 
-  const newDimensions = {}
-
-  // Rect is more landscape than bounds - fit to width
-  if (rectRatio > boundsRatio) {
-    newDimensions.fitTo = 'width'
-    newDimensions.width = parseInt(bounds.width)
-    newDimensions.height = Math.floor(rect.height * (bounds.width / rect.width))
+  if (ratio > boundsRatio) {
+    return {
+      width: bounds.width,
+      height: bounds.width / ratio
+    }
   } else {
-    // Rect is more portrait than bounds - fit to height
-    newDimensions.fitTo = 'height'
-    newDimensions.width = Math.floor(rect.width * (bounds.height / rect.height))
-    newDimensions.height = parseInt(bounds.height)
+    return {
+      width: bounds.height * ratio,
+      height: bounds.height
+    }
   }
-
-  return newDimensions
 }
 
 /**

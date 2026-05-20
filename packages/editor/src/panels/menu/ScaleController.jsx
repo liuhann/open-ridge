@@ -9,6 +9,8 @@ import { IconChevronDown } from '@douyinfe/semi-icons'
  */
 export default function ScaleController ({ scale = 1, onChange }) {
   const options = [
+    { label: '居中适合', value: 'fit' },
+    { type: 'divider' },
     { label: '10%', value: 0.1 },
     { label: '25%', value: 0.25 },
     { label: '50%', value: 0.5 },
@@ -18,9 +20,7 @@ export default function ScaleController ({ scale = 1, onChange }) {
     { label: '150%', value: 1.5 },
     { label: '200%', value: 2 },
     { label: '300%', value: 3 },
-    { label: '500%', value: 5 },
-    { label: '适合', value: 'fit' },
-    { label: '填满', value: 'fill' }
+    { label: '500%', value: 5 }
   ]
 
   const handleSelect = (value) => {
@@ -31,12 +31,7 @@ export default function ScaleController ({ scale = 1, onChange }) {
     onChange(value)
   }
 
-  const displayText =
-    scale === 1
-      ? '适合'
-      : scale === 1.5
-        ? '填满'
-        : `${Math.round(scale * 100)}%`
+  const displayText = `${Math.round(scale * 100)}%`
 
   return (
     <Space

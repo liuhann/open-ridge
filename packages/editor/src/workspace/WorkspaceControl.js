@@ -39,6 +39,7 @@ export default class WorkSpaceControl {
 
     this.initKeyBind()
     this.initComponentDrop()
+    this.initWorkspaceScroll()
     this.viewPortX = 0
     this.viewPortY = 0
 
@@ -79,52 +80,53 @@ export default class WorkSpaceControl {
     this.moveable.updateRect()
   }
 
-  fitByWidth () {
-    const wsbc = this.workspaceEl.getBoundingClientRect()
-    const vpbc = this.getViewPortEl().getBoundingClientRect()
+  fitToCenter (padding = 20) {
+    const viewportEl = this.getViewPortEl()
+    const workspaceEl = this.getWorkspaceEl()
 
-    this.viewPortX = 292
-    this.viewPortY = 7
-
-    // 排除掉左右面板可得到宽度
-    const availableWidth = wsbc.width - 300 - 314
-    if (vpbc.width < availableWidth) {
-      this.zoom = 1
-    } else if (vpbc.width < availableWidth * 2) {
-      this.zoom = Math.floor(availableWidth / vpbc.width * 100) / 100
-    } else {
-      this.zoom = 0.5
-    }
-    this.getViewPortEl().style.transform = `translate(${this.viewPortX}px, ${this.viewPortY}px) scale(${this.zoom})`
-    return this.zoom
-  }
-
-  fitToCenter (padding = 40) {
-    this.getViewPortEl().style.transform = ''
-    const wsbc = this.getWorkspaceEl().getBoundingClientRect()
-    const vpbc = this.getViewPortEl().getBoundingClientRect()
+    // 清空样式
+    viewportEl.style.transform = ''
     this.zoom = 1
 
-    const fitted = fitRectIntoBounds({
-      width: vpbc.width,
-      height: vpbc.height
-    }, {
-      width: wsbc.width - padding * 2,
-      height: wsbc.height - padding * 2
-    })
+    // 获取尺寸
+    const vp = viewportEl.getBoundingClientRect()
+    const ws = workspaceEl.getBoundingClientRect()
 
-    if (fitted.width !== vpbc.width) {
-      this.viewPortX = 0
-      this.viewPortY = 0
-      return this.zoom
-      // this.zoom = fitted.width / vpbc.width
-    }
+    // ==============================
+    // 步骤1：设置缩放原点为【自身中心】
+    // 只影响缩放，不影响位移
+    // ==============================
+    viewportEl.style.transformOrigin = 'center center'
 
-    this.viewPortX = (wsbc.width - fitted.width) / 2
-    this.viewPortY = (wsbc.height - fitted.height) / 2
+    // ==============================
+    // 步骤2：scale=1 时，先让中心点对齐
+    // 公式：把自身中心移到容器中心
+    // ==============================
+    const centerX = (ws.width - vp.width) / 2
+    const centerY = (ws.height - vp.height) / 2
 
-    this.getViewPortEl().style.transform = `translate(${this.viewPortX}px, ${this.viewPortY}px) scale(${this.zoom})`
+    // ==============================
+    // 步骤3：计算需要缩放的比例（scale-down 只缩小不放大）
+    // ==============================
+    const boundsWidth = ws.width - padding * 2
+    const boundsHeight = ws.height - padding * 2
 
+    const scaleX = boundsWidth / vp.width
+    const scaleY = boundsHeight / vp.height
+    let scale = Math.min(scaleX, scaleY)
+
+    // 规则：不放大，只缩小
+    if (scale > 1) scale = 1
+    this.zoom = scale
+
+    // ==============================
+    // 步骤4：应用最终 transform
+    // 顺序：先居中位移 → 再缩放
+    // ==============================
+    viewportEl.style.transform = `translate(${centerX}px, ${centerY}px) scale(${scale})`
+
+    this.viewPortX = centerX
+    this.viewPortY = centerY
     return this.zoom
   }
 
@@ -902,60 +904,133 @@ export default class WorkSpaceControl {
     }
     this.selectElements([])
     this.currentComposite = editorComposite
-    // this.setZoom(1)
-    this.fitToCenter(10)
     return editorComposite
   }
 
-  // 修改键盘事件处理
+  // 统一键盘事件入口（所有按键都走这里）
+  triggerKeyBoardEvent (key) {
+  // 全局禁用判断
+    if (!this.enabled) return
+
+    switch (key) {
+    // 删除
+      case 'del':
+        if (!this.dragActive) return
+        if (Array.isArray(this.moveable.target)) {
+          for (const el of this.moveable.target) {
+            this.onElementRemoved(el)
+          }
+        } else if (this.moveable.target) {
+          this.onElementRemoved(this.moveable.target)
+        }
+        this.editorStore.getState().setCurrentPageChanged(true)
+        this.moveable.target = null
+        break
+
+        // 右
+      case 'right':
+        this.moveSelectedElement({ x: 1 })
+        break
+        // 左
+      case 'left':
+        this.moveSelectedElement({ x: -1 })
+        break
+        // 上
+      case 'up':
+        this.moveSelectedElement({ y: -1 })
+        break
+        // 下
+      case 'down':
+        this.moveSelectedElement({ y: 1 })
+        break
+
+        // 复制
+      case 'ctrl+c':
+        if (this.selected?.length) {
+          this.onCopyNodes(this.selected.map(el => el.ridgeNode))
+        } else {
+          this.onCopyNodes([])
+        }
+        break
+
+        // 粘贴
+      case 'ctrl+v':
+        this.onPasteNodes()
+        break
+
+        // 保存
+      case 'ctrl+s':
+        this.saveCurrentPage()
+        break
+
+      default:
+        break
+    }
+  }
+
+  // 初始化绑定（只做转发，不写业务）
   initKeyBind () {
     Mousetrap.bind('del', () => {
-      if (!this.enabled || !this.dragActive) return
-
-      if (Array.isArray(this.moveable.target)) {
-        for (const el of this.moveable.target) {
-          this.onElementRemoved(el)
-        }
-      } else if (this.moveable.target) {
-        this.onElementRemoved(this.moveable.target)
-      }
-      this.editorStore.getState().setCurrentPageChanged(true)
-      this.moveable.target = null
+      this.triggerKeyBoardEvent('del')
     })
 
-    Mousetrap.bind('right', () => this.moveSelectedElement({ x: 1 }))
-    Mousetrap.bind('left', () => this.moveSelectedElement({ x: -1 }))
-    Mousetrap.bind('up', () => this.moveSelectedElement({ y: -1 }))
-    Mousetrap.bind('down', () => this.moveSelectedElement({ y: 1 }))
+    Mousetrap.bind('right', () => this.triggerKeyBoardEvent('right'))
+    Mousetrap.bind('left', () => this.triggerKeyBoardEvent('left'))
+    Mousetrap.bind('up', () => this.triggerKeyBoardEvent('up'))
+    Mousetrap.bind('down', () => this.triggerKeyBoardEvent('down'))
 
-    Mousetrap.bind('ctrl+c', () => {
-      if (!this.enabled) return
-      if (this.selected) {
-        this.onCopyNodes(this.selected.map(el => el.ridgeNode))
-      } else {
-        this.onCopyNodes([])
-      }
-    })
+    Mousetrap.bind('ctrl+c', () => this.triggerKeyBoardEvent('ctrl+c'))
 
-    Mousetrap.bind('ctrl+s', e => {
-      if (!this.enabled) return
+    Mousetrap.bind('ctrl+s', (e) => {
       e.preventDefault()
-      this.saveCurrentPage()
+      this.triggerKeyBoardEvent('ctrl+s')
     })
 
-    Mousetrap.bind('ctrl+v', e => {
-      if (!this.enabled) return
+    Mousetrap.bind('ctrl+v', (e) => {
       e.preventDefault()
-      this.onPasteNodes()
+      this.triggerKeyBoardEvent('ctrl+v')
     })
+  }
 
-    // this.workspaceEl.onwheel = (event) => {
-    //   // if (!this.enabled) return
-    //   event.preventDefault()
-    //   let targetZoom = this.zoom + (event.deltaY > 0 ? -1 : 1) * 0.01
-    //   targetZoom = Math.min(Math.max(0.1, targetZoom), 2)
-    //   this.setZoom(targetZoom)
-    // }
+  // 【完整版】支持：
+  // 1. 触控板双指滑动 → 平移画布
+  // 2. 触控板双指张开/合拢 → 缩放画布
+  // 3. Ctrl + 鼠标滚轮 → 缩放画布
+  initWorkspaceScroll () {
+    const workspaceEl = this.getWorkspaceEl()
+
+    workspaceEl.addEventListener('wheel', (e) => {
+      e.preventDefault() // 阻止浏览器默认滚动
+      if (!this.enabled) return
+
+      // ==============================================
+      // 【模式1】按住 Ctrl 键 → 缩放画布 (鼠标滚轮 + 双指捏合)
+      // ==============================================
+      if (e.ctrlKey) {
+      // 缩放灵敏度（可调，越小越慢）
+        const sensitivity = 0.003
+        // 计算新缩放值：滚轮向上放大，向下缩小
+        let newZoom = this.zoom + (-e.deltaY * sensitivity)
+        // 限制缩放范围 0.1 ~ 2（可调）
+        newZoom = Math.min(Math.max(0.1, newZoom), 2)
+        // 应用缩放（你现成的方法）
+        this.setZoom(newZoom)
+        return
+      }
+
+      // ==============================================
+      // 【模式2】无 Ctrl 键 → 双指滑动 → 平移画布
+      // ==============================================
+      const deltaX = e.deltaX || 0
+      const deltaY = e.deltaY || 0
+
+      // 平移画布（和你拖拽逻辑完全一致）
+      this.viewPortX -= deltaX
+      this.viewPortY -= deltaY
+
+      this.getViewPortEl().style.transform =
+      `translate(${this.viewPortX}px, ${this.viewPortY}px) scale(${this.zoom})`
+    }, { passive: false })
   }
 
   // 新增：移动选中元素的方法
@@ -970,7 +1045,12 @@ export default class WorkSpaceControl {
       if (delta.x) newStyle.x = (newStyle.x || 0) + delta.x
       if (delta.y) newStyle.y = (newStyle.y || 0) + delta.y
 
-      ridgeNode.updateStyleConfig(newStyle)
+      ridgeNode.updateConfig({
+        style: {
+          x: newStyle.x,
+          y: newStyle.y
+        }
+      })
     }
     this.editorStore.getState().setCurrentPageChanged(true)
     this.moveable.updateTarget()

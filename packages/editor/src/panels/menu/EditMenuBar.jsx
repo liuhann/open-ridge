@@ -1,5 +1,5 @@
-import React from 'react'
-import { Button, Divider, confirm, Space, ButtonGroup, Modal, Dropdown, InputNumber, Tooltip, Tabs, TabPane, Popover } from '@douyinfe/semi-ui'
+import React, { useState } from 'react'
+import { Button, Divider, HotKeys, confirm, Space, ButtonGroup, Modal, Dropdown, InputNumber, Tooltip, Tabs, TabPane, Popover } from '@douyinfe/semi-ui'
 import './style.less'
 import { ICON_NAV_COMPONENTS, ICON_NAV_FOLDERS, ICON_NAV_RUN, ICON_COMMON_GEAR } from '../../icons/icons.js'
 
@@ -11,12 +11,39 @@ const EditorMenuBar = () => {
   const openedPages = editorStore(state => state.openedPages)
   const unsavedPages = editorStore(state => state.unsavedPages)
   const saveCurrentPage = editorStore(state => state.saveCurrentPage)
+  const workspaceControl = editorStore(state => state.workspaceControl)
 
   const zoom = editorStore(state => state.zoom)
   const setZoom = editorStore(state => state.setZoom)
   const closePage = editorStore(state => state.closePage)
   const switchPage = editorStore(state => state.switchPage)
   const previewPage = editorStore(state => state.previewPage)
+
+  const [shortcutVisible, setShortcutVisible] = useState(false)
+
+  // 🔥 你的快捷键配置（直接在这里扩展）
+  const shortcutList = [
+    {
+      keys: [HotKeys.Keys.ArrowUp],
+      desc: '向上移动',
+      onHotKey: () => {
+        workspaceControl.triggerKeyBoardEvent('up')
+      }
+    },
+    {
+      keys: [HotKeys.Keys.ArrowDown],
+      desc: '向下移动',
+      onHotKey: () => {
+        workspaceControl.triggerKeyBoardEvent('down')
+      }
+    },
+    { keys: [HotKeys.Keys.ArrowLeft], desc: '向左移动' },
+    { keys: [HotKeys.Keys.ArrowRight], desc: '向右移动' },
+    { keys: [HotKeys.Keys.Control, HotKeys.Keys.C], desc: '复制' },
+    { keys: [HotKeys.Keys.Control, HotKeys.Keys.V], desc: '粘贴' },
+    { keys: [HotKeys.Keys.Control, HotKeys.Keys.S], desc: '保存' },
+    { keys: [HotKeys.Keys.Delete], desc: '删除选中项' }
+  ]
 
   const onTabClose = async tabKey => {
     if (unsavedPages.indexOf(tabKey) > -1) {
@@ -63,6 +90,16 @@ const EditorMenuBar = () => {
             <Button icon={<HumbleiconsShare />}>导出</Button>
           </Popover> */}
 
+        {/* 🔥 快捷键帮助按钮 */}
+        <Tooltip content='快捷键说明'>
+          <Button
+            type='tertiary'
+            theme='borderless'
+            icon={<i className='bi bi-keyboard' />}
+            onClick={() => setShortcutVisible(true)}
+          />
+        </Tooltip>
+
         <Button
           disabled={!currentOpenPageId}
           type='tertiary' icon={<i className='bi bi-floppy' />} theme='borderless' onClick={savePage}
@@ -80,6 +117,29 @@ const EditorMenuBar = () => {
           </Button>
         </Tooltip>
       </Space>
+
+      {/* 🔥 SemiUI 快捷键帮助弹窗（你要的样式） */}
+      <Modal
+        title='键盘快捷键'
+        visible={shortcutVisible}
+        onCancel={() => setShortcutVisible(false)}
+        footer={null}
+        width={500}
+      >
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+          {shortcutList.map((item, idx) => (
+            <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+              {/* 直接渲染你原生使用的 HotKeys 组件 */}
+              <HotKeys
+                hotKeys={item.keys} onHotKey={() => {
+                  item.onHotKey()
+                }}
+              />
+              <span style={{ fontSize: 14 }}>{item.desc}</span>
+            </div>
+          ))}
+        </div>
+      </Modal>
     </div>
   )
 }
