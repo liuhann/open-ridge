@@ -360,17 +360,17 @@ class EditorComposite extends Composite {
   cleanUnusedElements (pageJson) {
     const rootChildren = pageJson.children || []
     const elements = pageJson.elements || []
-    const keepIds = new Set(rootChildren)
+    const keepIds = [...rootChildren]
 
     // 第一步：收集所有【自身带 children 数组】的元素 ID（这些不能删）
     for (const el of elements) {
-      if (Array.isArray(el.children)) {
-        keepIds.add(el.id)
+      if (Array.isArray(el.props?.children)) {
+        keepIds.push(...el.props.children)
       }
     }
 
     // 第二步：只保留在 keepIds 里的元素
-    pageJson.elements = elements.filter(el => keepIds.has(el.id))
+    pageJson.elements = elements.filter(el => keepIds.indexOf(el.id) > -1)
 
     return pageJson
   }

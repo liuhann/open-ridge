@@ -198,7 +198,7 @@ export default class WorkSpaceControl {
     if (this.moveable.target == null) {
       return false
     }
-    if (this.moveable.target.length === 1 && this.moveable.target[0] == el) {
+    if (this.moveable.target.length === 1 && this.moveable.target[0] === el) {
       return true
     }
     return false
@@ -420,14 +420,19 @@ export default class WorkSpaceControl {
     }
 
     // 拖拽起始位置位于元素内
-    const closestRidgeNode = target.closest(RIDGE_ELEMENT)
+    let closestRidgeNode = target.closest(RIDGE_ELEMENT)
     if (this.isElementMovable(closestRidgeNode)) {
       e.stop()
       return
     }
 
-    if (closestRidgeNode && !this.isTargetSelectable(closestRidgeNode)) {
-      return
+    while (closestRidgeNode) {
+      // 找到且可选中则退出循环
+      if (this.isTargetSelectable(closestRidgeNode)) {
+        break
+      }
+      // 先往上走一级，跳过当前自身
+      closestRidgeNode = closestRidgeNode.parentElement?.closest(RIDGE_ELEMENT)
     }
 
     if (closestRidgeNode) {

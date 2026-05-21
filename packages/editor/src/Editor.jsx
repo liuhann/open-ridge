@@ -52,7 +52,7 @@ const Editor = () => {
 
   useEffect(() => {
     const initialize = async () => {
-      await componentRegistry.init()
+      // await componentRegistry.init()
       await initAppStore()
       initStore({
         codeEditorRef

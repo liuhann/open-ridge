@@ -159,6 +159,10 @@ class ObjectForm extends React.Component {
 
     const RenderField = this.getRenderField(field, readonly, options)
 
+    if (!RenderField) {
+      return null
+    }
+
     const fieldClassList = ['field-block']
     if (!field.width || field.width === '100%') {
       fieldClassList.push('full')
