@@ -385,9 +385,13 @@ const editorStore = create((set, get) => ({
 
   previewPage: async (id) => {
     const appService = localRepoService.getCurrentAppService()
+    const { workspaceControl, saveCurrentPage } = get()
+
+    workspaceControl.selectElements([])
+
+    await saveCurrentPage()
 
     const file = await appService.getFile(id)
-
     set({
       currentPanel: 'preview'
     })

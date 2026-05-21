@@ -68,7 +68,7 @@ class ObjectForm extends React.Component {
       image: (col, readonly) => <ImageSelect label={col.label} field={col.field} disabled={readonly} options={col} />, // 图片选择
       page: (col, readonly) => <ImageEdit label={col.label} field={col.field} disabled={readonly} options={col} />, // 页面选择
       audio: (col, readonly) => <AudioEdit label={col.label} field={col.field} disabled={readonly} />,
-      json: (col, readonly) => <JSONEdit label={col.label} field={col.field} disabled={readonly} />,
+      json: (col, readonly) => <JSONEdit sample={col.sample} label={col.label} field={col.field} disabled={readonly} />,
       object: (col, readonly) => <JSONEdit label={col.label} field={col.field} disabled={readonly} />,
       array: (col, readonly) => <JSONEdit label={col.label} field={col.field} disabled={readonly} />,
       class: (col) => <ClassSelect label={col.label} field={col.field} options={col} />,

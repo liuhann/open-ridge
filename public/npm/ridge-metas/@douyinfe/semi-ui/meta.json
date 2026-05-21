@@ -1,7 +1,7 @@
 {
   "name": "@douyinfe/semi-ui",
   "schemaVersion": "2.0",
-  "lastUpdated": "2026-05-20T08:16:07.774Z",
+  "lastUpdated": "2026-05-21T01:39:17.553Z",
   "generatedBy": "ridge-ui-cli",
   "components": [
     {
@@ -1256,17 +1256,17 @@
           "type": "array",
           "sample": [
             {
-              "label": "姓名",
+              "key": "姓名",
               "value": "张三",
               "span": 1
             },
             {
-              "label": "年龄",
+              "key": "年龄",
               "value": "28",
               "span": 1
             },
             {
-              "label": "地址",
+              "key": "地址",
               "value": "北京市朝阳区",
               "span": 2
             }
@@ -3785,6 +3785,193 @@
       ]
     },
     {
+      "name": "Tag",
+      "title": "标签",
+      "icon": "svgs/tag.svg",
+      "description": "用于标记、分类、展示关键词的轻量组件",
+      "tags": [
+        "标签",
+        "标记",
+        "分类"
+      ],
+      "category": "展示",
+      "version": "1.0.0",
+      "author": "LiuHan",
+      "visualConfig": {
+        "preferredWidth": 80,
+        "preferredHeight": 32,
+        "resizable": false,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "children",
+          "description": "标签上显示的文字",
+          "label": "内容",
+          "type": "string",
+          "defaultValue": "标签"
+        },
+        {
+          "name": "closable",
+          "description": "标签是否显示关闭按钮",
+          "label": "可关闭",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "color",
+          "description": "标签主题色",
+          "label": "主题色",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "灰色",
+              "value": "grey"
+            },
+            {
+              "label": "蓝色",
+              "value": "blue"
+            },
+            {
+              "label": "绿色",
+              "value": "green"
+            },
+            {
+              "label": "红色",
+              "value": "red"
+            },
+            {
+              "label": "橙色",
+              "value": "orange"
+            },
+            {
+              "label": "紫色",
+              "value": "purple"
+            },
+            {
+              "label": "青色",
+              "value": "cyan"
+            },
+            {
+              "label": "黄色",
+              "value": "yellow"
+            }
+          ],
+          "defaultValue": "grey"
+        },
+        {
+          "name": "colorful",
+          "description": "是否开启多彩模式",
+          "label": "多彩模式",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "gradient",
+          "description": "是否开启渐变色（需多彩模式开启）",
+          "label": "渐变色彩",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "shape",
+          "description": "标签形状",
+          "label": "形状",
+          "control": "radiogroup",
+          "type": "string",
+          "options": [
+            {
+              "label": "方形",
+              "value": "square"
+            },
+            {
+              "label": "圆角/圆形",
+              "value": "circle"
+            }
+          ],
+          "defaultValue": "square"
+        },
+        {
+          "name": "size",
+          "description": "标签尺寸",
+          "label": "尺寸",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "小",
+              "value": "small"
+            },
+            {
+              "label": "大",
+              "value": "large"
+            }
+          ],
+          "defaultValue": "small"
+        },
+        {
+          "name": "type",
+          "description": "标签样式类型",
+          "label": "样式类型",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "浅色",
+              "value": "light"
+            },
+            {
+              "label": "实心",
+              "value": "solid"
+            },
+            {
+              "label": "空心",
+              "value": "ghost"
+            }
+          ],
+          "defaultValue": "light"
+        },
+        {
+          "name": "visible",
+          "description": "标签是否可见",
+          "label": "是否可见",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": true
+        },
+        {
+          "name": "width",
+          "description": "组件宽度",
+          "label": "宽度",
+          "type": "number",
+          "hidden": true
+        },
+        {
+          "name": "height",
+          "description": "组件高度",
+          "label": "高度",
+          "type": "number",
+          "hidden": true
+        }
+      ],
+      "events": [
+        {
+          "name": "onClick",
+          "description": "点击标签时触发",
+          "label": "点击"
+        },
+        {
+          "name": "onClose",
+          "description": "点击关闭按钮时触发",
+          "label": "关闭"
+        }
+      ]
+    },
+    {
       "name": "Typography.Text",
       "title": "文本",
       "icon": "svgs/typography.svg",
@@ -4538,6 +4725,170 @@
           "name": "onBlur",
           "description": "失去焦点",
           "label": "失去焦点"
+        }
+      ]
+    },
+    {
+      "name": "Tree",
+      "title": "树形组件",
+      "icon": "svgs/tree.svg",
+      "description": "展示层级树形数据，支持节点选中、展开、搜索等常用功能",
+      "tags": [
+        "树形",
+        "层级",
+        "选择",
+        "导航"
+      ],
+      "category": "数据",
+      "version": "1.0.0",
+      "author": "LiuHan",
+      "visualConfig": {
+        "preferredWidth": 360,
+        "preferredHeight": 480,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "disabled",
+          "description": "是否禁用整个树形组件",
+          "label": "禁用组件",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "multiple",
+          "description": "是否开启多选模式",
+          "label": "多选模式",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "defaultExpandAll",
+          "description": "初始化是否展开全部节点",
+          "label": "默认展开全部",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "defaultExpandedKeys",
+          "description": "默认展开指定节点key数组",
+          "label": "默认展开节点",
+          "control": "json",
+          "type": "array"
+        },
+        {
+          "name": "defaultValue",
+          "description": "组件默认选中值",
+          "label": "默认选中值",
+          "control": "json",
+          "type": "string"
+        },
+        {
+          "name": "value",
+          "description": "受控选中节点值",
+          "label": "选中值",
+          "control": "json",
+          "type": "string",
+          "inputEvent": "onChange"
+        },
+        {
+          "name": "expandedKeys",
+          "description": "受控展开节点key集合",
+          "label": "展开节点",
+          "control": "json",
+          "type": "array"
+        },
+        {
+          "name": "showLine",
+          "description": "是否显示节点连接线",
+          "label": "显示连接线",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "directory",
+          "description": "是否开启目录树样式",
+          "label": "目录树模式",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "leafOnly",
+          "description": "仅可选择叶子节点",
+          "label": "仅选叶子节点",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "labelEllipsis",
+          "description": "节点文字超出自动省略",
+          "label": "文字省略",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "treeData",
+          "description": "树形结构数据源",
+          "label": "树形数据",
+          "control": "json",
+          "type": "array",
+          "defaultValue": []
+        },
+        {
+          "name": "searchPlaceholder",
+          "description": "搜索框占位提示文字",
+          "label": "搜索提示文案",
+          "type": "string"
+        },
+        {
+          "name": "showClear",
+          "description": "搜索框显示清空按钮",
+          "label": "显示清空按钮",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": true
+        },
+        {
+          "name": "treeNodeFilterProp",
+          "description": "搜索匹配字段名",
+          "label": "搜索匹配字段",
+          "type": "string",
+          "defaultValue": "label"
+        }
+      ],
+      "events": [
+        {
+          "name": "onChange",
+          "description": "选中节点值改变触发",
+          "label": "选中变更"
+        },
+        {
+          "name": "onSelect",
+          "description": "点击选中单个节点触发",
+          "label": "节点选中"
+        },
+        {
+          "name": "onExpand",
+          "description": "节点展开收起触发",
+          "label": "展开变更"
+        },
+        {
+          "name": "onSearch",
+          "description": "搜索框内容变化触发",
+          "label": "搜索事件"
+        },
+        {
+          "name": "onDoubleClick",
+          "description": "双击节点触发",
+          "label": "双击节点"
         }
       ]
     }

@@ -1,8 +1,9 @@
 import React, { useState } from 'react'
 import { withField, Button, Modal, JsonViewer } from '@douyinfe/semi-ui'
 
-const JSONEdit = withField(({
+const JSONEdit = ({
   value,
+  sample,
   onChange
 }) => {
   const [visible, setVisible] = useState(false)
@@ -26,24 +27,26 @@ const JSONEdit = withField(({
           if (ref.current) {
             const output = ref.current.getValue()
             try {
-              JSON.parse(output)
-              onChange && onChange(output)
+              const jsonValue = JSON.parse(output)
+              onChange && onChange(jsonValue)
+              setVisible(false)
             } catch (e) {
 
             }
           }
         }}
       >
-        <JsonViewer ref={ref} height={600} width={700} value={value} />
+        <JsonViewer ref={ref} height={480} width={790} value={value ? JSON.stringify(value, null, 2) : ''} />
       </Modal>
       <Button
         size='small' type='tertiary' onClick={() => {
+          console.log('json edit', value)
           setVisible(true)
         }}
       >编辑
       </Button>
     </div>
   )
-})
+}
 
-export default JSONEdit
+export default withField(JSONEdit)
