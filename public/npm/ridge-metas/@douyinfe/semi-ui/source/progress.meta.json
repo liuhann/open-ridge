@@ -1,0 +1,162 @@
+{
+  "name": "Progress",
+  "title": "进度条",
+  "icon": "svgs/progress.svg",
+  "description": "展示任务进度，支持线形、环形样式，可自定义颜色与尺寸",
+  "tags": [
+    "数据展示",
+    "进度",
+    "状态提示"
+  ],
+  "category": "数据展示",
+  "version": "1.0.0",
+  "author": "LiuHan",
+  "visualConfig": {
+    "preferredWidth": 200,
+    "preferredHeight": 80,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "percent",
+      "description": "进度百分比数值",
+      "label": "进度百分比",
+      "control": "number",
+      "type": "number",
+      "min": 0,
+      "max": 100,
+      "defaultValue": 20
+    },
+    {
+      "name": "type",
+      "description": "进度条展示类型",
+      "label": "进度类型",
+      "control": "select",
+      "type": "string",
+      "options": [
+        {
+          "label": "线形",
+          "value": "line"
+        },
+        {
+          "label": "环形",
+          "value": "circle"
+        }
+      ],
+      "defaultValue": "line"
+    },
+    {
+      "name": "direction",
+      "description": "条状进度条排列方向",
+      "label": "排列方向",
+      "control": "select",
+      "type": "string",
+      "options": [
+        {
+          "label": "水平",
+          "value": "horizontal"
+        },
+        {
+          "label": "垂直",
+          "value": "vertical"
+        }
+      ],
+      "defaultValue": "horizontal"
+    },
+    {
+      "name": "size",
+      "description": "组件尺寸规格",
+      "label": "尺寸大小",
+      "control": "select",
+      "type": "string",
+      "options": [
+        {
+          "label": "默认",
+          "value": "default"
+        },
+        {
+          "label": "小型",
+          "value": "small"
+        },
+        {
+          "label": "大型",
+          "value": "large"
+        }
+      ],
+      "defaultValue": "default"
+    },
+    {
+      "name": "showInfo",
+      "description": "是否展示进度文本信息",
+      "label": "显示进度文本",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "stroke",
+      "description": "进度条填充颜色",
+      "label": "进度颜色",
+      "type": "string",
+      "control": "color",
+      "defaultValue": "#1bcc76"
+    },
+    {
+      "name": "orbitStroke",
+      "description": "进度条轨道底色",
+      "label": "轨道底色",
+      "type": "string",
+      "control": "color",
+      "defaultValue": "var(--semi-color-fill-0)"
+    },
+    {
+      "name": "strokeLinecap",
+      "description": "环形进度条端点样式",
+      "label": "端点样式",
+      "control": "select",
+      "type": "string",
+      "options": [
+        {
+          "label": "圆角",
+          "value": "round"
+        },
+        {
+          "label": "方角",
+          "value": "square"
+        }
+      ],
+      "defaultValue": "round"
+    },
+    {
+      "name": "strokeWidth",
+      "description": "环形进度条线条宽度",
+      "label": "线条宽度",
+      "control": "number",
+      "type": "number",
+      "min": 1,
+      "defaultValue": 4
+    },
+    {
+      "name": "width",
+      "description": "环形进度条整体宽度，可视化拖拽调整",
+      "label": "环形宽度",
+      "type": "number",
+      "hidden": true
+    },
+    {
+      "name": "className",
+      "description": "自定义样式类名",
+      "label": "自定义类名",
+      "type": "string",
+      "defaultValue": ""
+    },
+    {
+      "name": "style",
+      "description": "组件内联样式配置",
+      "label": "内联样式",
+      "type": "CSSProperties"
+    }
+  ],
+  "events": []
+}

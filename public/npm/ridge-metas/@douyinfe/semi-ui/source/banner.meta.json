@@ -1,0 +1,96 @@
+{
+  "name": "Banner",
+  "title": "横幅提示",
+  "icon": "svgs/banner.svg",
+  "description": "用于页面顶部的通知、提示、警告横幅组件。",
+  "tags": [
+    "提示",
+    "通知",
+    "反馈"
+  ],
+  "category": "反馈",
+  "version": "1.0.0",
+  "author": "",
+  "visualConfig": {
+    "preferredWidth": 520,
+    "preferredHeight": 60,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "bordered",
+      "description": "是否展示边框，仅在非全屏模式下有效",
+      "label": "展示边框",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "className",
+      "description": "组件自定义 CSS 类名",
+      "label": "自定义类名",
+      "control": "className",
+      "type": "array"
+    },
+    {
+      "name": "fullMode",
+      "description": "是否为全屏模式",
+      "label": "全屏模式",
+      "type": "boolean",
+      "defaultValue": true
+    },
+    {
+      "name": "style",
+      "description": "组件内联样式",
+      "label": "内联样式",
+      "type": "CSSProperties"
+    },
+    {
+      "name": "title",
+      "description": "横幅标题内容",
+      "label": "标题",
+      "type": "string",
+      "defaultValue": ""
+    },
+    {
+      "name": "description",
+      "description": "横幅描述内容",
+      "label": "描述",
+      "type": "string",
+      "defaultValue": ""
+    },
+    {
+      "name": "type",
+      "description": "类型，支持 info, success, danger, warning",
+      "label": "类型",
+      "control": "select",
+      "type": "string",
+      "options": [
+        {
+          "label": "信息",
+          "value": "info"
+        },
+        {
+          "label": "成功",
+          "value": "success"
+        },
+        {
+          "label": "危险",
+          "value": "danger"
+        },
+        {
+          "label": "警告",
+          "value": "warning"
+        }
+      ],
+      "defaultValue": "info"
+    }
+  ],
+  "events": [
+    {
+      "name": "onClose",
+      "description": "关闭横幅时触发",
+      "label": "关闭"
+    }
+  ]
+}

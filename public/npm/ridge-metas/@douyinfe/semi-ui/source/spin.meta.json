@@ -1,0 +1,78 @@
+{
+  "name": "Spin",
+  "title": "加载",
+  "icon": "svgs/spin.svg",
+  "description": "用于页面或区域的加载状态提示。",
+  "tags": [
+    "反馈",
+    "加载"
+  ],
+  "category": "反馈",
+  "version": "1.0.0",
+  "author": "RidgeUI",
+  "visualConfig": {
+    "preferredWidth": 120,
+    "preferredHeight": 60,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "spinning",
+      "description": "是否处于加载中的状态",
+      "label": "加载中状态",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": true
+    },
+    {
+      "name": "size",
+      "description": "组件大小，可选值 small、middle、large",
+      "label": "组件大小",
+      "control": "select",
+      "type": "string",
+      "options": [
+        {
+          "label": "small",
+          "value": "small"
+        },
+        {
+          "label": "middle",
+          "value": "middle"
+        },
+        {
+          "label": "large",
+          "value": "large"
+        }
+      ],
+      "defaultValue": "middle"
+    },
+    {
+      "name": "delay",
+      "description": "延迟显示加载效果的时间",
+      "label": "延迟时间",
+      "control": "number",
+      "type": "number",
+      "defaultValue": 0
+    },
+    {
+      "name": "style",
+      "description": "组件内联样式",
+      "label": "内联样式",
+      "type": "CSSProperties"
+    },
+    {
+      "name": "childStyle",
+      "description": "内部子元素的样式",
+      "label": "子元素样式",
+      "type": "CSSProperties"
+    }
+  ],
+  "events": [
+    {
+      "name": "onClick",
+      "description": "点击组件时触发",
+      "label": "点击"
+    }
+  ]
+}

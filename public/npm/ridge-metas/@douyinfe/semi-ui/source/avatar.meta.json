@@ -20,6 +20,13 @@
   },
   "properties": [
     {
+      "name": "children",
+      "description": "显示的文字",
+      "label": "文字",
+      "type": "string",
+      "defaultValue": "刘"
+    },
+    {
       "name": "src",
       "description": "图片类头像的资源地址",
       "label": "图片地址",
@@ -164,13 +171,6 @@
       "defaultValue": "grey"
     },
     {
-      "name": "gap",
-      "description": "字符头像距离左右两侧的像素大小",
-      "label": "字符边距",
-      "type": "number",
-      "defaultValue": 3
-    },
-    {
       "name": "border",
       "description": "头像额外边框配置，支持颜色与动画",
       "label": "额外边框",
@@ -183,18 +183,6 @@
       "control": "boolean",
       "type": "boolean",
       "defaultValue": false
-    },
-    {
-      "name": "className",
-      "description": "类名",
-      "label": "样式类名",
-      "type": "className"
-    },
-    {
-      "name": "style",
-      "description": "样式名",
-      "label": "头像样式",
-      "type": "CSSProperties"
     }
   ],
   "events": [

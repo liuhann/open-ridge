@@ -1,7 +1,7 @@
 {
   "name": "@douyinfe/semi-ui",
   "schemaVersion": "2.0",
-  "lastUpdated": "2026-05-21T01:39:17.553Z",
+  "lastUpdated": "2026-05-22T01:46:27.548Z",
   "generatedBy": "ridge-ui-cli",
   "components": [
     {
@@ -25,6 +25,13 @@
         "aspectRatio": "1:1"
       },
       "properties": [
+        {
+          "name": "children",
+          "description": "显示的文字",
+          "label": "文字",
+          "type": "string",
+          "defaultValue": "刘"
+        },
         {
           "name": "src",
           "description": "图片类头像的资源地址",
@@ -170,13 +177,6 @@
           "defaultValue": "grey"
         },
         {
-          "name": "gap",
-          "description": "字符头像距离左右两侧的像素大小",
-          "label": "字符边距",
-          "type": "number",
-          "defaultValue": 3
-        },
-        {
           "name": "border",
           "description": "头像额外边框配置，支持颜色与动画",
           "label": "额外边框",
@@ -189,18 +189,6 @@
           "control": "boolean",
           "type": "boolean",
           "defaultValue": false
-        },
-        {
-          "name": "className",
-          "description": "类名",
-          "label": "样式类名",
-          "type": "className"
-        },
-        {
-          "name": "style",
-          "description": "样式名",
-          "label": "头像样式",
-          "type": "CSSProperties"
         }
       ],
       "events": [
@@ -372,6 +360,102 @@
         }
       ],
       "events": []
+    },
+    {
+      "name": "Banner",
+      "title": "横幅提示",
+      "icon": "svgs/banner.svg",
+      "description": "用于页面顶部的通知、提示、警告横幅组件。",
+      "tags": [
+        "提示",
+        "通知",
+        "反馈"
+      ],
+      "category": "反馈",
+      "version": "1.0.0",
+      "author": "",
+      "visualConfig": {
+        "preferredWidth": 520,
+        "preferredHeight": 60,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "bordered",
+          "description": "是否展示边框，仅在非全屏模式下有效",
+          "label": "展示边框",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "className",
+          "description": "组件自定义 CSS 类名",
+          "label": "自定义类名",
+          "control": "className",
+          "type": "array"
+        },
+        {
+          "name": "fullMode",
+          "description": "是否为全屏模式",
+          "label": "全屏模式",
+          "type": "boolean",
+          "defaultValue": true
+        },
+        {
+          "name": "style",
+          "description": "组件内联样式",
+          "label": "内联样式",
+          "type": "CSSProperties"
+        },
+        {
+          "name": "title",
+          "description": "横幅标题内容",
+          "label": "标题",
+          "type": "string",
+          "defaultValue": ""
+        },
+        {
+          "name": "description",
+          "description": "横幅描述内容",
+          "label": "描述",
+          "type": "string",
+          "defaultValue": ""
+        },
+        {
+          "name": "type",
+          "description": "类型，支持 info, success, danger, warning",
+          "label": "类型",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "信息",
+              "value": "info"
+            },
+            {
+              "label": "成功",
+              "value": "success"
+            },
+            {
+              "label": "危险",
+              "value": "danger"
+            },
+            {
+              "label": "警告",
+              "value": "warning"
+            }
+          ],
+          "defaultValue": "info"
+        }
+      ],
+      "events": [
+        {
+          "name": "onClose",
+          "description": "关闭横幅时触发",
+          "label": "关闭"
+        }
+      ]
     },
     {
       "name": "Button",
@@ -2644,6 +2728,168 @@
       ]
     },
     {
+      "name": "Progress",
+      "title": "进度条",
+      "icon": "svgs/progress.svg",
+      "description": "展示任务进度，支持线形、环形样式，可自定义颜色与尺寸",
+      "tags": [
+        "数据展示",
+        "进度",
+        "状态提示"
+      ],
+      "category": "数据展示",
+      "version": "1.0.0",
+      "author": "LiuHan",
+      "visualConfig": {
+        "preferredWidth": 200,
+        "preferredHeight": 80,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "percent",
+          "description": "进度百分比数值",
+          "label": "进度百分比",
+          "control": "number",
+          "type": "number",
+          "min": 0,
+          "max": 100,
+          "defaultValue": 20
+        },
+        {
+          "name": "type",
+          "description": "进度条展示类型",
+          "label": "进度类型",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "线形",
+              "value": "line"
+            },
+            {
+              "label": "环形",
+              "value": "circle"
+            }
+          ],
+          "defaultValue": "line"
+        },
+        {
+          "name": "direction",
+          "description": "条状进度条排列方向",
+          "label": "排列方向",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "水平",
+              "value": "horizontal"
+            },
+            {
+              "label": "垂直",
+              "value": "vertical"
+            }
+          ],
+          "defaultValue": "horizontal"
+        },
+        {
+          "name": "size",
+          "description": "组件尺寸规格",
+          "label": "尺寸大小",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "默认",
+              "value": "default"
+            },
+            {
+              "label": "小型",
+              "value": "small"
+            },
+            {
+              "label": "大型",
+              "value": "large"
+            }
+          ],
+          "defaultValue": "default"
+        },
+        {
+          "name": "showInfo",
+          "description": "是否展示进度文本信息",
+          "label": "显示进度文本",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "stroke",
+          "description": "进度条填充颜色",
+          "label": "进度颜色",
+          "type": "string",
+          "control": "color",
+          "defaultValue": "#1bcc76"
+        },
+        {
+          "name": "orbitStroke",
+          "description": "进度条轨道底色",
+          "label": "轨道底色",
+          "type": "string",
+          "control": "color",
+          "defaultValue": "var(--semi-color-fill-0)"
+        },
+        {
+          "name": "strokeLinecap",
+          "description": "环形进度条端点样式",
+          "label": "端点样式",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "圆角",
+              "value": "round"
+            },
+            {
+              "label": "方角",
+              "value": "square"
+            }
+          ],
+          "defaultValue": "round"
+        },
+        {
+          "name": "strokeWidth",
+          "description": "环形进度条线条宽度",
+          "label": "线条宽度",
+          "control": "number",
+          "type": "number",
+          "min": 1,
+          "defaultValue": 4
+        },
+        {
+          "name": "width",
+          "description": "环形进度条整体宽度，可视化拖拽调整",
+          "label": "环形宽度",
+          "type": "number",
+          "hidden": true
+        },
+        {
+          "name": "className",
+          "description": "自定义样式类名",
+          "label": "自定义类名",
+          "type": "string",
+          "defaultValue": ""
+        },
+        {
+          "name": "style",
+          "description": "组件内联样式配置",
+          "label": "内联样式",
+          "type": "CSSProperties"
+        }
+      ],
+      "events": []
+    },
+    {
       "name": "RadioGroup",
       "title": "单选框组",
       "icon": "svgs/radio.svg",
@@ -3407,6 +3653,84 @@
       ]
     },
     {
+      "name": "Spin",
+      "title": "加载",
+      "icon": "svgs/spin.svg",
+      "description": "用于页面或区域的加载状态提示。",
+      "tags": [
+        "反馈",
+        "加载"
+      ],
+      "category": "反馈",
+      "version": "1.0.0",
+      "author": "RidgeUI",
+      "visualConfig": {
+        "preferredWidth": 120,
+        "preferredHeight": 60,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "spinning",
+          "description": "是否处于加载中的状态",
+          "label": "加载中状态",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": true
+        },
+        {
+          "name": "size",
+          "description": "组件大小，可选值 small、middle、large",
+          "label": "组件大小",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "small",
+              "value": "small"
+            },
+            {
+              "label": "middle",
+              "value": "middle"
+            },
+            {
+              "label": "large",
+              "value": "large"
+            }
+          ],
+          "defaultValue": "middle"
+        },
+        {
+          "name": "delay",
+          "description": "延迟显示加载效果的时间",
+          "label": "延迟时间",
+          "control": "number",
+          "type": "number",
+          "defaultValue": 0
+        },
+        {
+          "name": "style",
+          "description": "组件内联样式",
+          "label": "内联样式",
+          "type": "CSSProperties"
+        },
+        {
+          "name": "childStyle",
+          "description": "内部子元素的样式",
+          "label": "子元素样式",
+          "type": "CSSProperties"
+        }
+      ],
+      "events": [
+        {
+          "name": "onClick",
+          "description": "点击组件时触发",
+          "label": "点击"
+        }
+      ]
+    },
+    {
       "name": "Switch",
       "title": "开关",
       "icon": "svgs/switch.svg",
@@ -3520,6 +3844,160 @@
           "name": "onMouseLeave",
           "description": "鼠标移出时回调",
           "label": "鼠标移出"
+        }
+      ]
+    },
+    {
+      "name": "Table",
+      "title": "表格",
+      "icon": "svgs/table.svg",
+      "description": "用于数据展示、排序、筛选、分页、展开、树形数据、行选择的高性能表格组件",
+      "tags": [
+        "数据",
+        "展示",
+        "列表",
+        "树形"
+      ],
+      "category": "数据",
+      "version": "1.0.0",
+      "author": "",
+      "visualConfig": {
+        "preferredWidth": 720,
+        "preferredHeight": 480,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "className",
+          "description": "组件自定义 CSS 类名",
+          "label": "自定义类名",
+          "control": "className",
+          "type": "array"
+        },
+        {
+          "name": "style",
+          "description": "组件内联样式",
+          "label": "内联样式",
+          "type": "CSSProperties"
+        },
+        {
+          "name": "bordered",
+          "description": "是否展示外边框和列边框",
+          "label": "显示边框",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "size",
+          "description": "表格尺寸，影响行间距",
+          "label": "表格尺寸",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "默认",
+              "value": "default"
+            },
+            {
+              "label": "中等",
+              "value": "middle"
+            },
+            {
+              "label": "紧凑",
+              "value": "small"
+            }
+          ],
+          "defaultValue": "default"
+        },
+        {
+          "name": "loading",
+          "description": "表格数据是否加载中",
+          "label": "加载状态",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "showHeader",
+          "description": "是否显示表头",
+          "label": "显示表头",
+          "type": "boolean",
+          "defaultValue": true
+        },
+        {
+          "name": "pagination",
+          "description": "是否显示分页/分页配置",
+          "label": "分页配置",
+          "control": "json",
+          "type": "boolean",
+          "defaultValue": true
+        },
+        {
+          "name": "columns",
+          "description": "表格列配置，包含标题、绑定字段、对齐、宽度等",
+          "label": "列配置",
+          "control": "json",
+          "type": "array",
+          "sample": [
+            {
+              "title": "名称",
+              "dataIndex": "name"
+            },
+            {
+              "title": "大小",
+              "dataIndex": "size"
+            },
+            {
+              "title": "更新时间",
+              "dataIndex": "updateTime"
+            }
+          ]
+        },
+        {
+          "name": "dataSource",
+          "description": "表格展示数据源",
+          "label": "表格数据",
+          "control": "json",
+          "type": "array",
+          "sample": [
+            {
+              "key": "1",
+              "name": "设计文件",
+              "size": "2M",
+              "updateTime": "2020-02-02"
+            }
+          ]
+        },
+        {
+          "name": "sticky",
+          "description": "是否固定表头",
+          "label": "固定表头",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "resizable",
+          "description": "是否开启列宽拖拽调整",
+          "label": "列宽可调整",
+          "type": "boolean",
+          "defaultValue": false
+        }
+      ],
+      "events": [
+        {
+          "name": "onChange",
+          "description": "分页、排序、筛选变化时触发",
+          "label": "数据变化"
+        },
+        {
+          "name": "onExpand",
+          "description": "行展开/收起时触发",
+          "label": "行展开"
+        },
+        {
+          "name": "onRow",
+          "description": "点击表格行时触发",
+          "label": "行点击"
         }
       ]
     },
@@ -4360,6 +4838,89 @@
           "label": "失去焦点"
         }
       ]
+    },
+    {
+      "name": "Timeline",
+      "title": "时间轴",
+      "icon": "svgs/timeline.svg",
+      "description": "垂直展示时间顺序类信息，支持不同位置、类型、颜色展示。",
+      "tags": [
+        "展示",
+        "时间",
+        "流程"
+      ],
+      "category": "展示",
+      "version": "1.0.0",
+      "author": "",
+      "visualConfig": {
+        "preferredWidth": 520,
+        "preferredHeight": 400,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "className",
+          "description": "组件自定义 CSS 类名",
+          "label": "自定义类名",
+          "control": "className",
+          "type": "array"
+        },
+        {
+          "name": "mode",
+          "description": "时间轴与内容的相对位置",
+          "label": "展示模式",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "左侧",
+              "value": "left"
+            },
+            {
+              "label": "右侧",
+              "value": "right"
+            },
+            {
+              "label": "居中",
+              "value": "center"
+            },
+            {
+              "label": "交替",
+              "value": "alternate"
+            }
+          ],
+          "defaultValue": "left"
+        },
+        {
+          "name": "style",
+          "description": "组件内联样式",
+          "label": "内联样式",
+          "type": "CSSProperties"
+        },
+        {
+          "name": "dataSource",
+          "description": "时间轴数据源，包含时间、内容、类型、颜色、图标等",
+          "label": "数据源",
+          "control": "json",
+          "type": "array",
+          "sample": [
+            {
+              "time": "2019-07-14 10:35",
+              "extra": "节点辅助说明信息",
+              "content": "第一个节点内容",
+              "type": "ongoing"
+            },
+            {
+              "time": "2019-06-13 16:17",
+              "extra": "节点辅助说明信息",
+              "content": "第二个节点内容",
+              "color": "pink"
+            }
+          ]
+        }
+      ],
+      "events": []
     },
     {
       "name": "Typography.Title",

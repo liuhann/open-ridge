@@ -1,0 +1,131 @@
+{
+  "name": "Table",
+  "title": "表格",
+  "icon": "svgs/table.svg",
+  "description": "用于数据展示、排序、筛选、分页、展开、树形数据、行选择的高性能表格组件",
+  "tags": [
+    "数据",
+    "展示",
+    "列表",
+    "树形"
+  ],
+  "category": "数据",
+  "version": "1.0.0",
+  "author": "",
+  "visualConfig": {
+    "preferredWidth": 720,
+    "preferredHeight": 480,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "className",
+      "description": "组件自定义 CSS 类名",
+      "label": "自定义类名",
+      "control": "className",
+      "type": "array"
+    },
+    {
+      "name": "style",
+      "description": "组件内联样式",
+      "label": "内联样式",
+      "type": "CSSProperties"
+    },
+    {
+      "name": "bordered",
+      "description": "是否展示外边框和列边框",
+      "label": "显示边框",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "size",
+      "description": "表格尺寸，影响行间距",
+      "label": "表格尺寸",
+      "control": "select",
+      "type": "string",
+      "options": [
+        { "label": "默认", "value": "default" },
+        { "label": "中等", "value": "middle" },
+        { "label": "紧凑", "value": "small" }
+      ],
+      "defaultValue": "default"
+    },
+    {
+      "name": "loading",
+      "description": "表格数据是否加载中",
+      "label": "加载状态",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "showHeader",
+      "description": "是否显示表头",
+      "label": "显示表头",
+      "type": "boolean",
+      "defaultValue": true
+    },
+    {
+      "name": "pagination",
+      "description": "是否显示分页/分页配置",
+      "label": "分页配置",
+      "control": "json",
+      "type": "boolean",
+      "defaultValue": true
+    },
+    {
+      "name": "columns",
+      "description": "表格列配置，包含标题、绑定字段、对齐、宽度等",
+      "label": "列配置",
+      "control": "json",
+      "type": "array",
+      "sample": [
+        { "title": "名称", "dataIndex": "name" },
+        { "title": "大小", "dataIndex": "size" },
+        { "title": "更新时间", "dataIndex": "updateTime" }
+      ]
+    },
+    {
+      "name": "dataSource",
+      "description": "表格展示数据源",
+      "label": "表格数据",
+      "control": "json",
+      "type": "array",
+      "sample": [
+        { "key": "1", "name": "设计文件", "size": "2M", "updateTime": "2020-02-02" }
+      ]
+    },
+    {
+      "name": "sticky",
+      "description": "是否固定表头",
+      "label": "固定表头",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "resizable",
+      "description": "是否开启列宽拖拽调整",
+      "label": "列宽可调整",
+      "type": "boolean",
+      "defaultValue": false
+    }
+  ],
+  "events": [
+    {
+      "name": "onChange",
+      "description": "分页、排序、筛选变化时触发",
+      "label": "数据变化"
+    },
+    {
+      "name": "onExpand",
+      "description": "行展开/收起时触发",
+      "label": "行展开"
+    },
+    {
+      "name": "onRow",
+      "description": "点击表格行时触发",
+      "label": "行点击"
+    }
+  ]
+}

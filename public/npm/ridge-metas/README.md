@@ -1,5 +1,14 @@
-# RidgeUI组件描述规范
-RidgeUI是一个零代码前端框架。 这其中，一个前端组件需要使用下面格式进行描述。 框架按这个文件决定组件可以配置哪些属性和事件
+# RidgeUI AI时代的页面及交互呈现制作工具
+RidgeUI是一个零代码前端框架。
+
+
+
+
+
+
+
+## 组件
+这其中，一个前端组件需要使用下面格式进行描述。 框架按这个文件决定组件可以配置哪些属性和事件
 
 ## 文件格式
 
@@ -133,8 +142,22 @@ RidgeUI是一个零代码前端框架。 这其中，一个前端组件需要使
 现在要通过UI组件的API表格生成上面的JSON，对于属性、事件，注意按含义和类型进行排除，包括但不限于：
 1. ReactNode等无法直接输入类型
 2. 比较少见或者用户不容易理解的属性
-3. width/height等实际配置过程会动态拖拽调整的，需要增加属性： hidden: true
+3. 如果组件定义中包含width/height等，在实际配置过程会动态拖拽调整的，需要增加属性： hidden: true
 4. CSSProperties/className 等类型，虽然现在不支持，但是未来可能会支持，要保留。
-5. 复杂类型，给出sample 样例
+5. 复杂类型，给出sample 样例 JSON数据
+6. type 统一为单值：仅保留基础string，移除联合类型写法
 
 给出的UI组件表格如下：
+
+Banner
+属性	说明	类型	默认值	版本
+bordered	是否展示边框，仅在非全屏模式下有效	boolean	false	1.0
+className	类名	string	-	-
+closeIcon	自定义关闭icon，为 null 时不显示关闭按钮	string| ReactNode	-	1.0
+description	描述内容	ReactNode	-	1.0
+fullMode	是否为全屏模式	boolean	true	1.0
+icon	自定义 icon，为 null 时不显示 icon	string| ReactNode	-	1.0
+onClose	关闭时的回调函数	function	-	-
+style	样式名	object	-	-
+title	标题	ReactNode	-	1.0
+type	类型，支持 info, success, danger, warning	string	info	-
