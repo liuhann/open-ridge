@@ -204,9 +204,15 @@ const hasUrlProtocol = (url) => {
   const protocolReg = /^[a-zA-Z0-9-]+:\/\//
   return protocolReg.test(url.trim()) // 去除首尾空格后判断，避免空格干扰
 }
-
+// 判断是否为【应用内相对路径】
+// 规则：有值 + 不是以 / 开头 + 不是 http / https 外链
 const isUrlInApp = url => {
-  return url && (url.startsWith('app://') || url.startsWith('composite://'))
+  return (
+    url &&
+    !url.startsWith('/') &&
+    !url.startsWith('http://') &&
+    !url.startsWith('https://')
+  )
 }
 
 const convertToValidVariableName = str => {

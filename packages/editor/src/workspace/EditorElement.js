@@ -220,26 +220,53 @@ export default class EditorElement extends Element {
     const propsDef = this.componentMeta.properties || []
     const eventsDef = this.componentMeta.events || []
 
-    // 1. 收集【支持双向绑定】的属性：
-    //    规则：prop.input === true 且存在 prop.inputEvent
-    //    兼容旧规则：value + onChange
-    const syncProps = []
+    // 1. 构建 sync 配置对象（符合 RidgeUI 规范）
+    const syncConfig = {}
 
-    // 新规则：支持配置 input: true + inputEvent: "onChange" 的属性
+    // 新规则：遍历所有属性，查找支持双向绑定的属性
     propsDef.forEach(prop => {
-      if (prop.input === true && prop.inputEvent) {
-        syncProps.push(prop.name, prop.inputEvent)
+    // 检查是否有 inputEvent 定义（表示支持双向绑定）
+      if (prop.inputEvent) {
+      // 查找对应的事件定义
+        const eventDef = eventsDef.find(e => e.name === prop.inputEvent)
+
+        if (eventDef) {
+        // 构建 sync 配置项
+          const syncItem = {
+            source: prop.inputEvent // 监听的事件名
+          }
+
+          // 只有当事件定义了 payload 时才添加 path
+          if (eventDef.payload) {
+            syncItem.path = eventDef.payload
+          }
+
+          syncConfig[prop.name] = syncItem
+        }
       }
     })
 
-    // 旧规则（兼容）：properties 包含 value 并且 events 包含 onChange
+    // 旧规则（兼容）：value + onChange 的特殊处理
     const hasValueProp = propsDef.some(p => p.name === 'value')
     const hasOnChangeEvent = eventsDef.some(e => e.name === 'onChange' || e.name === 'on-change')
-    if (hasValueProp && hasOnChangeEvent && !syncProps.length) {
-      syncProps.push('value', 'onChange')
+
+    if (hasValueProp && hasOnChangeEvent && !syncConfig.value) {
+    // 查找 onChange 事件的 payload 定义
+      const changeEvent = eventsDef.find(e => e.name === 'onChange' || e.name === 'on-change')
+
+      const syncItem = {
+        source: 'onChange'
+      }
+
+      // 只有当事件定义了 payload 时才添加 path
+      if (changeEvent?.payload) {
+        syncItem.path = changeEvent.payload
+      }
+
+      syncConfig.value = syncItem
     }
 
-    // 2. 收集资源属性列表（不动你原有逻辑）
+    // 2. 收集资源属性列表（保持原逻辑不变）
     const urlProps = []
     const resourceTypes = ['image', 'file', 'url', 'video', 'audio']
 
@@ -249,9 +276,9 @@ export default class EditorElement extends Element {
       }
     })
 
-    // 保存简化后的 meta 结构
+    // 3. 保存完整的 meta 结构（符合 RidgeUI 规范）
     this.config.meta = {
-      sync: syncProps,
+      sync: syncConfig, // 现在是对象格式，不是数组
       url: urlProps
     }
   }

@@ -1,7 +1,7 @@
 {
   "name": "@douyinfe/semi-ui",
   "schemaVersion": "2.0",
-  "lastUpdated": "2026-05-22T01:46:27.548Z",
+  "lastUpdated": "2026-05-23T08:32:23.155Z",
   "generatedBy": "ridge-ui-cli",
   "components": [
     {
@@ -854,6 +854,7 @@
         {
           "name": "onChange",
           "description": "变化时回调函数",
+          "payload": "target.checked",
           "label": "状态变化"
         }
       ]
@@ -1920,14 +1921,6 @@
           "defaultValue": false
         },
         {
-          "name": "hideSuffix",
-          "description": "清除按钮与后缀并存时隐藏后缀",
-          "label": "隐藏后缀",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
           "name": "validateStatus",
           "description": "校验状态",
           "label": "校验状态",
@@ -1948,22 +1941,6 @@
             }
           ],
           "defaultValue": "default"
-        },
-        {
-          "name": "composition",
-          "description": "是否开启输入法优化模式",
-          "label": "输入法优化",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
-          "name": "preventScroll",
-          "description": "focus时是否禁止滚动",
-          "label": "禁止滚动",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
         },
         {
           "name": "aria-label",
@@ -2029,16 +2006,6 @@
           "name": "onKeyUp",
           "description": "按键抬起时触发",
           "label": "按键抬起"
-        },
-        {
-          "name": "onCompositionStart",
-          "description": "输入法开始 composing",
-          "label": "输入法开始"
-        },
-        {
-          "name": "onCompositionEnd",
-          "description": "输入法结束 composing",
-          "label": "输入法结束"
         }
       ]
     },
@@ -2444,7 +2411,6 @@
       "version": "1.0.0",
       "author": "LiuHan",
       "visualConfig": {
-        "thumbnail": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzYwIiBoZWlnaHQ9IjI0MCIgdmlld0JveD0iMCAwIDM2MCAyNDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjM2MCIgaGVpZ2h0PSIyNDAiIGZpbGw9IiNGRkZGRkYiLz48dGV4dCB4PSI1MCIgeT0iMTAwIiBmb250LWZhbWlseT0iYXJpYWwiIGZvbnQtc2l6ZT0iMTYiIGZpbGw9IiM0RTU5NjYiPuazleinuumBvuWFiy88L3RleHQ+PHRleHQgeD0iNTAiIHk9IjEyMCIgZm9udC1mYW1seT0iYXJpYWwiIGZvbnQtc2l6ZT0iMTYiIGZpbGw9IiM0RTU5NjYiPuWFseS6pemBvuWFiyDorr7orqHorr7orqHorr7orqHorr7orqHorr7orqHvvIzg8L3RleHQ+PC9zdmc+",
         "preferredWidth": 380,
         "preferredHeight": 80,
         "resizable": true,
@@ -3231,14 +3197,14 @@
           "description": "当前选中的值，配合onChange实现双向绑定",
           "label": "选中值",
           "inputEvent": "onChange",
-          "type": "string | number | array",
+          "type": "string",
           "defaultValue": ""
         },
         {
           "name": "defaultValue",
           "description": "初始默认选中的值",
           "label": "默认值",
-          "type": "string | number | array",
+          "type": "string",
           "defaultValue": ""
         },
         {
@@ -3247,7 +3213,30 @@
           "label": "选项列表",
           "control": "json",
           "type": "array",
-          "defaultValue": []
+          "defaultValue": [],
+          "sample": [
+            {
+              "value": "douyin",
+              "label": "抖音",
+              "otherKey": 0
+            },
+            {
+              "value": "ulikecam",
+              "label": "轻颜相机",
+              "disabled": true,
+              "otherKey": 1
+            },
+            {
+              "value": "jianying",
+              "label": "剪映",
+              "otherKey": 2
+            },
+            {
+              "value": "toutiao",
+              "label": "今日头条",
+              "otherKey": 3
+            }
+          ]
         },
         {
           "name": "placeholder",
@@ -3753,27 +3742,6 @@
       },
       "properties": [
         {
-          "name": "aria-label",
-          "description": "aria-label属性，用来给当前元素加上的标签描述, 提升可访问性",
-          "label": "ARIA标签",
-          "type": "string",
-          "defaultValue": ""
-        },
-        {
-          "name": "aria-labelledby",
-          "description": "aria-labelledby属性，表明某些元素的id是某一对象的标签，提升可访问性",
-          "label": "ARIA标签关联",
-          "type": "string",
-          "defaultValue": ""
-        },
-        {
-          "name": "className",
-          "description": "类名",
-          "label": "自定义类名",
-          "type": "string",
-          "defaultValue": ""
-        },
-        {
           "name": "checked",
           "description": "指示当前是否选中,配合 onChange 使用",
           "label": "是否选中",
@@ -3783,12 +3751,11 @@
           "defaultValue": false
         },
         {
-          "name": "defaultChecked",
-          "description": "初始是否选中",
-          "label": "默认选中",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
+          "name": "aria-label",
+          "description": "aria-label属性，用来给当前元素加上的标签描述, 提升可访问性",
+          "label": "ARIA标签",
+          "type": "string",
+          "defaultValue": ""
         },
         {
           "name": "disabled",
@@ -4464,7 +4431,6 @@
       "version": "1.0.0",
       "author": "LiuHan",
       "visualConfig": {
-        "thumbnail": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzYwIiBoZWlnaHQ9IjI0MCIgdmlld0JveD0iMCAwIDM2MCAyNDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjM2MCIgaGVpZ2h0PSIyNDAiIGZpbGw9IiNGRkZGRkYiLz48dGV4dCB4PSI1MCIgeT0iMTIwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiM0RTU5NjYiPuWKoOeUqOS8lTx0ZXh0Pjwvc3ZnPg==",
         "preferredWidth": 240,
         "preferredHeight": 32,
         "resizable": true,
@@ -4937,7 +4903,6 @@
       "version": "1.0.0",
       "author": "LiuHan",
       "visualConfig": {
-        "thumbnail": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzYwIiBoZWlnaHQ9IjI0MCIgdmlld0JveD0iMCAwIDM2MCAyNDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjM2MCIgaGVpZ2h0PSIyNDAiIGZpbGw9IiNGRkZGRkYiLz48dGV4dCB4PSI1MCIgeT0iMTIwIiBmb250LWZhbWlseT0iYXJpYWwiIGZvbnQtc2l6ZT0iMjQiIGZpbGw9IiM0RTU5NjYiPuWPl+eggeaUqTx0ZXh0Pjwvc3ZnPg==",
         "preferredWidth": 320,
         "preferredHeight": 48,
         "resizable": true,

@@ -13,7 +13,6 @@
   "version": "1.0.0",
   "author": "LiuHan",
   "visualConfig": {
-    "thumbnail": "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzYwIiBoZWlnaHQ9IjI0MCIgdmlld0JveD0iMCAwIDM2MCAyNDAiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHJlY3Qgd2lkdGg9IjM2MCIgaGVpZ2h0PSIyNDAiIGZpbGw9IiNGRkZGRkYiLz48dGV4dCB4PSI1MCIgeT0iMTIwIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTgiIGZpbGw9IiM0RTU5NjYiPuWKoOeUqOS8lTx0ZXh0Pjwvc3ZnPg==",
     "preferredWidth": 240,
     "preferredHeight": 32,
     "resizable": true,

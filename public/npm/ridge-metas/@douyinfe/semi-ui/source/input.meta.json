@@ -97,14 +97,6 @@
       "defaultValue": false
     },
     {
-      "name": "hideSuffix",
-      "description": "清除按钮与后缀并存时隐藏后缀",
-      "label": "隐藏后缀",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": false
-    },
-    {
       "name": "validateStatus",
       "description": "校验状态",
       "label": "校验状态",
@@ -116,22 +108,6 @@
         { "label": "警告", "value": "warning" }
       ],
       "defaultValue": "default"
-    },
-    {
-      "name": "composition",
-      "description": "是否开启输入法优化模式",
-      "label": "输入法优化",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": false
-    },
-    {
-      "name": "preventScroll",
-      "description": "focus时是否禁止滚动",
-      "label": "禁止滚动",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": false
     },
     {
       "name": "aria-label",
@@ -197,16 +173,6 @@
       "name": "onKeyUp",
       "description": "按键抬起时触发",
       "label": "按键抬起"
-    },
-    {
-      "name": "onCompositionStart",
-      "description": "输入法开始 composing",
-      "label": "输入法开始"
-    },
-    {
-      "name": "onCompositionEnd",
-      "description": "输入法结束 composing",
-      "label": "输入法结束"
     }
   ]
 }

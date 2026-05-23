@@ -21,27 +21,6 @@
   },
   "properties": [
     {
-      "name": "aria-label",
-      "description": "aria-label属性，用来给当前元素加上的标签描述, 提升可访问性",
-      "label": "ARIA标签",
-      "type": "string",
-      "defaultValue": ""
-    },
-    {
-      "name": "aria-labelledby",
-      "description": "aria-labelledby属性，表明某些元素的id是某一对象的标签，提升可访问性",
-      "label": "ARIA标签关联",
-      "type": "string",
-      "defaultValue": ""
-    },
-    {
-      "name": "className",
-      "description": "类名",
-      "label": "自定义类名",
-      "type": "string",
-      "defaultValue": ""
-    },
-    {
       "name": "checked",
       "description": "指示当前是否选中,配合 onChange 使用",
       "label": "是否选中",
@@ -51,12 +30,11 @@
       "defaultValue": false
     },
     {
-      "name": "defaultChecked",
-      "description": "初始是否选中",
-      "label": "默认选中",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": false
+      "name": "aria-label",
+      "description": "aria-label属性，用来给当前元素加上的标签描述, 提升可访问性",
+      "label": "ARIA标签",
+      "type": "string",
+      "defaultValue": ""
     },
     {
       "name": "disabled",

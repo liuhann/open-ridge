@@ -104,6 +104,7 @@
     {
       "name": "onChange",
       "description": "变化时回调函数",
+      "payload": "target.checked",
       "label": "状态变化"
     }
   ]

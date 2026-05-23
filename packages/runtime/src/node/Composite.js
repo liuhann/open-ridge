@@ -5,7 +5,7 @@ import BaseNode from './BaseNode'
 import { STORE, PROP } from '../utils/contants.js'
 import { cloneDeep } from '../utils/object.js'
 import Debug from 'debug'
-import { generateUrlFontName, toCSSLength, addJsonSuffix, removeUrlProtocol, cleanMultiSlash, isUrlInApp } from '../utils/string'
+import { generateUrlFontName, toCSSLength, addJsonSuffix, removeUrlProtocol, cleanMultiSlash, isUrlInApp, ensureLeading } from '../utils/string'
 import { loadRemoteJsModule, loadLocalJsModule } from '../utils/load.js'
 import { IN_APP_FILE_PREFIEX, ridgeBaseUrl } from '..'
 const debug = Debug('ridge:composite')
@@ -330,11 +330,10 @@ class Composite extends BaseNode {
 
   async loadJSModule (jsPath) {
     if (isUrlInApp(jsPath)) {
-      const jsPathInApp = removeUrlProtocol(jsPath)
       if (this.appService) {
-        return loadLocalJsModule(jsPathInApp, {
+        return loadLocalJsModule(jsPath, {
           load: async path => {
-            const file = this.appService.getFile(path)
+            const file = this.appService.getFile(ensureLeading(jsPath))
             if (file) {
               return file.textContent
             }
@@ -342,8 +341,7 @@ class Composite extends BaseNode {
           }
         })
       } else {
-        const jsPathInApp = removeUrlProtocol(jsPath)
-        return loadRemoteJsModule(cleanMultiSlash(`${this.appName}/${jsPathInApp}`))
+        return loadRemoteJsModule(cleanMultiSlash(`${this.appName}/${jsPath}`))
       }
     } else {
       return loadRemoteJsModule(jsPath)

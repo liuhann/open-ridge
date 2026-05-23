@@ -23,14 +23,14 @@
       "description": "当前选中的值，配合onChange实现双向绑定",
       "label": "选中值",
       "inputEvent": "onChange",
-      "type": "string | number | array",
+      "type": "string",
       "defaultValue": ""
     },
     {
       "name": "defaultValue",
       "description": "初始默认选中的值",
       "label": "默认值",
-      "type": "string | number | array",
+      "type": "string",
       "defaultValue": ""
     },
     {
@@ -39,7 +39,30 @@
       "label": "选项列表",
       "control": "json",
       "type": "array",
-      "defaultValue": []
+      "defaultValue": [],
+      "sample": [
+        {
+          "value": "douyin",
+          "label": "抖音",
+          "otherKey": 0
+        },
+        {
+          "value": "ulikecam",
+          "label": "轻颜相机",
+          "disabled": true,
+          "otherKey": 1
+        },
+        {
+          "value": "jianying",
+          "label": "剪映",
+          "otherKey": 2
+        },
+        {
+          "value": "toutiao",
+          "label": "今日头条",
+          "otherKey": 3
+        }
+      ]
     },
     {
       "name": "placeholder",
