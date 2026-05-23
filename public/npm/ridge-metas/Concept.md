@@ -4,7 +4,7 @@ RidgeUI 页面配置速览 (Page Schema)
 version: 配置文件版本号。
 style: 页面画布设置。
 width/height: 固定尺寸。
-autoWidth: true 表示自适应宽度。
+autoWidth/autoHeight: true 表示自适应宽高
 properties: 页面级变量，作为子页面时可由父页面传入。
 jsFiles: 脚本文件路径数组（如 ["hello.js"]），用于定义状态和动作。
 elements: 页面元素数组，页面的核心内容。
@@ -17,10 +17,7 @@ title: 编辑时的名称。
 path: 组件来源路径（例：@douyinfe/semi-ui/Input）。
 props: 静态属性值（如 placeholder: "请输入"）。
 propsEx: 动态属性绑定。值为状态路径（如 Hello.state.name），状态变则视图变。
-style: 布局与显隐。
-x, y: 坐标。
-width, height: 尺寸。
-visible: 是否显示。
+style: 组件的父级对其进行定位  在页面根上，支持 x, y,width,height,visible 等
 events: 事件映射。定义组件交互行为。
 键为事件名（如 onClick）。
 值为动作数组，key 指向脚本方法（如 Hello.actions.sayHello）。
@@ -54,8 +51,8 @@ RidgeUI 采用状态驱动视图模式。
 动态数据写在 propsEx 中，值为状态路径（如 User.state.name），状态变更自动刷新视图。
 事件与动作
 UI 事件（如 onClick）通过 elements[x].events 配置。
-事件触发脚本中的 actions。
-示例：{ "onClick": [{ "key": "Hello.actions.sayHello" }] }
+事件触发脚本中的 actions
+示例：{ "onClick": [{ "id": "uuid", "key": "Hello.actions.sayHello" }] }
 双向绑定协议 (meta.sync)
 这是引擎层面的自动同步机制，无需加载组件描述文件即可生效。
 配置含义：

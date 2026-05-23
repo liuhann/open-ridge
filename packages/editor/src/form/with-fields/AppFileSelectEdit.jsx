@@ -5,6 +5,7 @@ import { getAppTreeData } from '../../panels/files/utils.js'
 import appStore from '../../store/app.store.js'
 import editorStore from '../../store/editor.store'
 import { filterTreeKeepStructure, mapTree } from '../../panels/files/buildFileTree.js'
+import { ensureLeading, hasUrlProtocol, isUrlInApp } from 'ridgejs/src/utils/string.js'
 
 // 资源文件地址选择, 支持从应用内和外部同时选择、单个或者多个。
 // 选择应用文件后 原值返回，不添加前缀
@@ -68,9 +69,9 @@ const AppFileSelectEdit = ({
   // 树组件使用原值
   const getRemovePrefixValue = () => {
     if (options.multiple) {
-      return Array.isArray(value) ? value : []
+      return Array.isArray(value) ? value.map(v => ensureLeading(v)) : []
     } else {
-      return typeof value === 'string' ? value : ''
+      return typeof value === 'string' ? ensureLeading(value) : ''
     }
   }
 
@@ -81,7 +82,9 @@ const AppFileSelectEdit = ({
         closable
         color='white'
         onClick={() => {
-          openFile(item)
+          if (isUrlInApp(item)) {
+            openFile(ensureLeading(item))
+          }
         }}
         onClose={onClose}
         style={{ margin: '2px 4px 2px 0' }}

@@ -231,41 +231,75 @@ export default class Element extends BaseNode {
 
   // ========================================================================
   // 事件 / 响应式
+  // 符合 RidgeUI 官方规范：
+  // 1. props 静态值
+  // 2. propsEx 动态绑定状态路径
+  // 3. meta.sync 双向绑定 { 属性名: { source, path } }
+  // 4. 事件按 path 提取 payload
+  // 5. 自动 dispatchChange 同步状态
   // ========================================================================
   initializeEvents () {
     const events = this.config.events || {}
+    this.events = this.events || {} // 确保事件对象存在
 
-    // 处理“双向绑定”相关
-    if (this.config.meta && this.config.meta.sync.length === 2) {
-      const [propName, eventName] = this.config.meta.sync
-      if (!this.events[eventName] && this.config.propEx[propName]) {
-        this.events[eventName] = val => {
-          this.setProperties({ [propName]: val })
+    // ======================================================
+    // 【官方规范】处理双向绑定 meta.sync
+    // 格式：meta.sync = {
+    //   value: { source: 'onChange', path: 'target.value' }
+    // }
+    // ======================================================
+    const sync = this.config.meta?.sync
+    if (sync && typeof sync === 'object' && !Array.isArray(sync)) {
+    // 遍历所有需要双向绑定的属性
+      for (const [propName, syncRule] of Object.entries(sync)) {
+        const { source: eventName, path } = syncRule // source=事件名, path=取值路径
+        if (!eventName || !this.config.propEx[propName]) continue
+
+        // 注册事件：实现自动同步到状态
+        this.events[eventName] = (...payloadArgs) => {
+        // 第一步：按规则取事件值
+          let value = payloadArgs[0] // 默认取第一个参数
+          if (path && typeof value === 'object') {
+          // 按 path 如 target.value 取值
+            value = path.split('.').reduce((obj, key) => obj?.[key], value)
+          }
+
+          // 第二步：更新组件属性
+          this.setProperties({ [propName]: value })
+
+          // 第三步：同步到全局状态（propsEx绑定的路径）
           const store = this.composite.store
           if (store) {
-            store.dispatchChange(this.config.propEx[propName], val)
+            store.dispatchChange(this.config.propEx[propName], value)
           }
         }
       }
     }
 
-    for (const [name, actions] of Object.entries(events)) {
-      this.events[name] = (...payload) => {
+    // ======================================================
+    // 【官方规范】处理配置事件：elements[x].events.onClick = [...]
+    // ======================================================
+    for (const [eventName, actions] of Object.entries(events)) {
+      this.events[eventName] = (...payloadArgs) => {
         if (!Array.isArray(actions)) return
+
         for (const act of actions) {
-          if (act.key) {
-            const [storeName, _, method] = act.key.split('.')
-            if (storeName && method) {
-              const event = {
-                payload,
-                scopedData: this.getScopedData(),
-                eventArgs: act.payload
-              }
-              const store = this.composite.store
-              if (!store) return
-              store.doStoreAction(storeName, method, event)
-            }
+          if (!act.key) continue
+
+          // 解析 store.action.method
+          const [storeName, actionName, methodName] = act.key.split('.')
+          if (!storeName || !methodName) continue
+
+          // 构造 RidgeUI 标准事件对象
+          const event = {
+            payload: payloadArgs, // 原始事件参数
+            scopedData: this.getScopedData(), // 作用域数据
+            eventArgs: act.payload // 配置中定义的事件参数结构
           }
+
+          // 执行 store 动作
+          const store = this.composite.store
+          store?.doStoreAction(storeName, methodName, event)
         }
       }
     }
