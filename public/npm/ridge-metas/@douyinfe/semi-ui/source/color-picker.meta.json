@@ -59,20 +59,6 @@
       "control": "boolean",
       "type": "boolean",
       "defaultValue": false
-    },
-    {
-      "name": "className",
-      "description": "自定义 CSS 类名",
-      "label": "自定义类名",
-      "control": "className",
-      "type": "array"
-    },
-    {
-      "name": "style",
-      "description": "组件内联样式",
-      "label": "内联样式",
-      "type": "CSSProperties",
-      "hidden": true
     }
   ],
   "events": [

@@ -2,14 +2,14 @@
   "name": "InputNumber",
   "title": "数字输入框",
   "icon": "svgs/input-number.svg",
-  "description": "用于输入数字，支持精度、步长、最小值、最大值及货币模式。",
+  "description": "用于输入数字，支持精度、步长、极值限制及前后缀展示。",
   "tags": [
     "输入",
     "数字",
     "表单"
   ],
   "category": "表单控件",
-  "version": "2.77.0",
+  "version": "2.97.0",
   "author": "LiuHan",
   "visualConfig": {
     "preferredWidth": 160,
@@ -19,12 +19,11 @@
   },
   "properties": [
     {
-      "name": "autofocus",
-      "description": "是否自动获取焦点",
-      "label": "自动聚焦",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": false
+      "name": "value",
+      "description": "当前值",
+      "label": "当前值",
+      "control": "number",
+      "type": "number"
     },
     {
       "name": "className",
@@ -32,34 +31,6 @@
       "label": "自定义类名",
       "control": "className",
       "type": "array"
-    },
-    {
-      "name": "currency",
-      "description": "是否开启货币模式，或指定货币类型（如 CNY、USD）",
-      "label": "货币模式",
-      "control": "string",
-      "type": "string",
-      "defaultValue": "false"
-    },
-    {
-      "name": "currencyDisplay",
-      "description": "货币展示方式",
-      "label": "货币展示方式",
-      "control": "select",
-      "type": "string",
-      "options": [
-        { "label": "符号", "value": "symbol" },
-        { "label": "代码", "value": "code" },
-        { "label": "名称", "value": "name" }
-      ],
-      "defaultValue": "symbol"
-    },
-    {
-      "name": "defaultValue",
-      "description": "默认值",
-      "label": "默认值",
-      "control": "number",
-      "type": "number"
     },
     {
       "name": "disabled",
@@ -76,29 +47,6 @@
       "control": "boolean",
       "type": "boolean",
       "defaultValue": false
-    },
-    {
-      "name": "innerButtons",
-      "description": "上下调整按钮是否显示在输入框内部",
-      "label": "内置按钮",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": false
-    },
-    {
-      "name": "keepFocus",
-      "description": "点击按钮时是否保持输入框聚焦",
-      "label": "保持聚焦",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": false
-    },
-    {
-      "name": "localeCode",
-      "description": "货币模式下的地区代码（如 zh-CN、en-US）",
-      "label": "地区代码",
-      "control": "string",
-      "type": "string"
     },
     {
       "name": "max",
@@ -122,19 +70,18 @@
       "type": "number"
     },
     {
-      "name": "preventScroll",
-      "description": "聚焦时是否阻止页面滚动",
-      "label": "阻止滚动",
-      "control": "boolean",
-      "type": "boolean"
+      "name": "prefix",
+      "description": "输入框前缀文字",
+      "label": "前缀",
+      "type": "string",
+      "defaultValue": ""
     },
     {
-      "name": "shiftStep",
-      "description": "按住 Shift 键时的步长",
-      "label": "Shift 步长",
-      "control": "number",
-      "type": "number",
-      "defaultValue": 10
+      "name": "suffix",
+      "description": "输入框后缀文字",
+      "label": "后缀",
+      "type": "string",
+      "defaultValue": ""
     },
     {
       "name": "showClear",
@@ -143,14 +90,6 @@
       "control": "boolean",
       "type": "boolean",
       "defaultValue": false
-    },
-    {
-      "name": "showCurrencySymbol",
-      "description": "是否显示货币符号（仅货币模式生效）",
-      "label": "显示货币符号",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": true
     },
     {
       "name": "size",
@@ -179,13 +118,6 @@
       "label": "内联样式",
       "type": "CSSProperties",
       "hidden": true
-    },
-    {
-      "name": "value",
-      "description": "当前值",
-      "label": "当前值",
-      "control": "number",
-      "type": "number"
     }
   ],
   "events": [

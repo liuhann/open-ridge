@@ -2,13 +2,12 @@
   "name": "DatePicker",
   "title": "日期选择器",
   "icon": "svgs/date-picker.svg",
-  "description": "日期、日期范围、日期时间、月份选择器，支持单选、多选、范围、快捷选择等功能",
+  "description": "用于选择日期、日期时间、月份，支持禁用、尺寸、格式与快捷操作",
   "tags": [
     "日期",
     "时间",
     "选择器",
-    "表单",
-    "基础组件"
+    "表单"
   ],
   "category": "基础组件",
   "version": "1.0.0",
@@ -28,126 +27,15 @@
       "type": "string",
       "options": [
         { "label": "日期", "value": "date" },
-        { "label": "日期范围", "value": "dateRange" },
         { "label": "日期时间", "value": "dateTime" },
-        { "label": "日期时间范围", "value": "dateTimeRange" },
-        { "label": "月份", "value": "month" },
-        { "label": "月份范围", "value": "monthRange" }
+        { "label": "月份", "value": "month" }
       ],
       "defaultValue": "date"
-    },
-    {
-      "name": "borderless",
-      "description": "无边框模式",
-      "label": "无边框模式",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": false
-    },
-    {
-      "name": "defaultOpen",
-      "description": "面板默认显示或隐藏",
-      "label": "默认展开面板",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": false
-    },
-    {
-      "name": "density",
-      "description": "面板尺寸",
-      "label": "面板密度",
-      "control": "select",
-      "type": "string",
-      "options": [
-        { "label": "默认", "value": "default" },
-        { "label": "紧凑", "value": "compact" }
-      ],
-      "defaultValue": "default"
     },
     {
       "name": "disabled",
       "description": "是否禁用",
       "label": "禁用",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": false
-    },
-    {
-      "name": "disabledTimePicker",
-      "description": "是否禁止时间选择",
-      "label": "禁用时间选择",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": false
-    },
-    {
-      "name": "hideDisabledOptions",
-      "description": "隐藏禁止选择的时间",
-      "label": "隐藏禁用时间",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": false
-    },
-    {
-      "name": "inputReadOnly",
-      "description": "文本框是否只读",
-      "label": "输入框只读",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": false
-    },
-    {
-      "name": "insetInput",
-      "description": "面板中是否嵌入输入框",
-      "label": "嵌入输入框",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": false
-    },
-    {
-      "name": "motion",
-      "description": "是否开启面板展开动画",
-      "label": "开启动画",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": true
-    },
-    {
-      "name": "multiple",
-      "description": "是否可以选择多个，仅支持date类型",
-      "label": "允许多选",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": false
-    },
-    {
-      "name": "needConfirm",
-      "description": "是否需要确认按钮，仅dateTime/dateTimeRange有效",
-      "label": "需要确认",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": false
-    },
-    {
-      "name": "open",
-      "description": "面板显示或隐藏的受控属性",
-      "label": "展开面板",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": false
-    },
-    {
-      "name": "showClear",
-      "description": "是否显示清除按钮",
-      "label": "显示清除按钮",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": true
-    },
-    {
-      "name": "syncSwitchMonth",
-      "description": "范围选择时同步切换双面板月份",
-      "label": "同步切换双月面板",
       "control": "boolean",
       "type": "boolean",
       "defaultValue": false
@@ -170,34 +58,22 @@
       "description": "输入框提示文字",
       "label": "占位提示文字",
       "type": "string",
-      "defaultValue": "Select date"
-    },
-    {
-      "name": "presetPosition",
-      "description": "快捷选择面板位置",
-      "label": "快捷选项位置",
-      "control": "select",
-      "type": "string",
-      "options": [
-        { "label": "左", "value": "left" },
-        { "label": "右", "value": "right" },
-        { "label": "上", "value": "top" },
-        { "label": "下", "value": "bottom" }
-      ],
-      "defaultValue": "bottom"
-    },
-    {
-      "name": "rangeSeparator",
-      "description": "范围选择日期分隔符",
-      "label": "日期范围分隔符",
-      "type": "string",
-      "defaultValue": "~"
+      "defaultValue": "选择日期"
     },
     {
       "name": "format",
-      "description": "输入框日期显示格式",
+      "description": "日期显示格式",
       "label": "日期格式",
-      "type": "string"
+      "type": "string",
+      "defaultValue": "YYYY-MM-DD"
+    },
+    {
+      "name": "showClear",
+      "description": "是否显示清除按钮",
+      "label": "显示清除按钮",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": true
     },
     {
       "name": "validateStatus",
@@ -214,54 +90,10 @@
     },
     {
       "name": "weekStartsOn",
-      "description": "周起始日，0=周日，1=周一",
+      "description": "周起始日（0=周日，1=周一）",
       "label": "周起始日",
       "type": "number",
-      "defaultValue": 0
-    },
-    {
-      "name": "zIndex",
-      "description": "弹出面板层级",
-      "label": "浮层层级",
-      "type": "number",
-      "defaultValue": 1030
-    },
-    {
-      "name": "max",
-      "description": "多选最大数量",
-      "label": "多选最大数目",
-      "type": "number"
-    },
-    {
-      "name": "spacing",
-      "description": "浮层与触发器距离",
-      "label": "浮层间距",
-      "type": "number",
-      "defaultValue": 4
-    },
-    {
-      "name": "startYear",
-      "description": "年份滚动开始年",
-      "label": "开始年份",
-      "type": "number"
-    },
-    {
-      "name": "endYear",
-      "description": "年份滚动结束年",
-      "label": "结束年份",
-      "type": "number"
-    },
-    {
-      "name": "className",
-      "description": "组件样式类名",
-      "label": "样式类名",
-      "type": "className"
-    },
-    {
-      "name": "style",
-      "description": "组件内联样式",
-      "label": "内联样式",
-      "type": "CSSProperties"
+      "defaultValue": 1
     }
   ],
   "events": [
@@ -276,39 +108,9 @@
       "label": "面板展开收起"
     },
     {
-      "name": "onConfirm",
-      "description": "确认选择时的回调",
-      "label": "确认选择"
-    },
-    {
       "name": "onClear",
       "description": "点击清除按钮触发",
       "label": "清除内容"
-    },
-    {
-      "name": "onFocus",
-      "description": "获得焦点时回调",
-      "label": "获得焦点"
-    },
-    {
-      "name": "onBlur",
-      "description": "失去焦点时回调",
-      "label": "失去焦点"
-    },
-    {
-      "name": "onCancel",
-      "description": "取消选择时的回调",
-      "label": "取消选择"
-    },
-    {
-      "name": "onPanelChange",
-      "description": "切换面板年月时回调",
-      "label": "面板年月切换"
-    },
-    {
-      "name": "onPresetClick",
-      "description": "点击快捷选择按钮回调",
-      "label": "快捷选项点击"
     }
   ]
 }

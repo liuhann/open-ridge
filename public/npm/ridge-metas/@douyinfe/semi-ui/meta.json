@@ -1,7 +1,7 @@
 {
   "name": "@douyinfe/semi-ui",
   "schemaVersion": "2.0",
-  "lastUpdated": "2026-05-23T08:32:23.155Z",
+  "lastUpdated": "2026-05-25T01:31:33.217Z",
   "generatedBy": "ridge-ui-cli",
   "components": [
     {
@@ -674,46 +674,6 @@
           "defaultValue": true
         },
         {
-          "name": "className",
-          "description": "卡片的样式类名",
-          "label": "样式类名",
-          "type": "className"
-        },
-        {
-          "name": "bodyStyle",
-          "description": "卡片内容区内联样式",
-          "label": "内容区样式",
-          "type": "CSSProperties"
-        },
-        {
-          "name": "footerLine",
-          "description": "卡片页脚区与内容区是否有边线",
-          "label": "页脚分割线",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
-          "name": "footerStyle",
-          "description": "卡片页脚区内联样式",
-          "label": "页脚样式",
-          "type": "CSSProperties"
-        },
-        {
-          "name": "headerLine",
-          "description": "卡片标题区与内容区是否有边线",
-          "label": "标题分割线",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": true
-        },
-        {
-          "name": "headerStyle",
-          "description": "卡片标题区内联样式",
-          "label": "标题区样式",
-          "type": "CSSProperties"
-        },
-        {
           "name": "loading",
           "description": "是否设置加载时的占位",
           "label": "加载状态",
@@ -738,12 +698,6 @@
             }
           ],
           "defaultValue": ""
-        },
-        {
-          "name": "style",
-          "description": "卡片根节点内联样式",
-          "label": "卡片样式",
-          "type": "CSSProperties"
         }
       ],
       "events": []
