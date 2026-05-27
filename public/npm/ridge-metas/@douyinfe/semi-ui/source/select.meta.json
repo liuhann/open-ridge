@@ -27,20 +27,12 @@
       "defaultValue": ""
     },
     {
-      "name": "defaultValue",
-      "description": "初始默认选中的值",
-      "label": "默认值",
-      "type": "string",
-      "defaultValue": ""
-    },
-    {
       "name": "optionList",
       "description": "下拉选项列表，每项包含label和value",
       "label": "选项列表",
       "control": "json",
       "type": "array",
-      "defaultValue": [],
-      "sample": [
+      "defaultValue": [
         {
           "value": "douyin",
           "label": "抖音",

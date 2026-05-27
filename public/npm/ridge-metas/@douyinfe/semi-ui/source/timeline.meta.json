@@ -63,7 +63,7 @@
       "label": "数据源",
       "control": "json",
       "type": "array",
-      "sample": [
+      "defaultValue": [
         {
           "time": "2019-07-14 10:35",
           "extra": "节点辅助说明信息",

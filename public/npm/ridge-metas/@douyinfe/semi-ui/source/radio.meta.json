@@ -26,12 +26,6 @@
             "type": "string"
         },
         {
-            "name": "defaultValue",
-            "description": "默认选中的值",
-            "label": "默认值",
-            "type": "string"
-        },
-        {
             "name": "disabled",
             "description": "是否禁用所有单选框",
             "label": "禁用",
@@ -104,12 +98,6 @@
                 }
             ],
             "defaultValue": "middle"
-        },
-        {
-            "name": "name",
-            "description": "单选框组的 name 属性",
-            "label": "名称",
-            "type": "string"
         },
         {
             "name": "aria-label",

@@ -1,7 +1,7 @@
 {
   "name": "@douyinfe/semi-ui",
   "schemaVersion": "2.0",
-  "lastUpdated": "2026-05-25T01:31:33.217Z",
+  "lastUpdated": "2026-05-25T03:57:28.070Z",
   "generatedBy": "ridge-ui-cli",
   "components": [
     {
@@ -213,153 +213,6 @@
           "label": "鼠标离开"
         }
       ]
-    },
-    {
-      "name": "Badge",
-      "title": "徽标",
-      "icon": "svgs/badge.svg",
-      "description": "用于展示消息通知、数量标记、状态红点、角标等场景，支持数字、圆点、自定义内容",
-      "tags": [
-        "徽标",
-        "红点",
-        "通知",
-        "角标",
-        "基础组件"
-      ],
-      "category": "基础组件",
-      "version": "1.0.0",
-      "author": "LiuHan",
-      "visualConfig": {
-        "preferredWidth": 28,
-        "preferredHeight": 28,
-        "resizable": false,
-        "aspectRatio": "no"
-      },
-      "properties": [
-        {
-          "name": "count",
-          "description": "徽章展示的内容",
-          "label": "显示数字/内容",
-          "type": "number",
-          "defaultValue": ""
-        },
-        {
-          "name": "dot",
-          "description": "不展示数字，只显示小圆点",
-          "label": "小圆点模式",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
-          "name": "overflowCount",
-          "description": "最大的展示数字值，超出显示 +",
-          "label": "最大显示数值",
-          "type": "number",
-          "defaultValue": ""
-        },
-        {
-          "name": "position",
-          "description": "徽章相对于内容的位置",
-          "label": "徽章位置",
-          "control": "select",
-          "type": "string",
-          "options": [
-            {
-              "label": "左上",
-              "value": "leftTop"
-            },
-            {
-              "label": "左下",
-              "value": "leftBottom"
-            },
-            {
-              "label": "右上",
-              "value": "rightTop"
-            },
-            {
-              "label": "右下",
-              "value": "rightBottom"
-            }
-          ],
-          "defaultValue": "rightTop"
-        },
-        {
-          "name": "theme",
-          "description": "徽章主题风格",
-          "label": "徽章主题",
-          "control": "select",
-          "type": "string",
-          "options": [
-            {
-              "label": "实心",
-              "value": "solid"
-            },
-            {
-              "label": "浅色",
-              "value": "light"
-            },
-            {
-              "label": "反色",
-              "value": "inverted"
-            }
-          ],
-          "defaultValue": "solid"
-        },
-        {
-          "name": "type",
-          "description": "徽章类型/状态色",
-          "label": "徽章类型",
-          "control": "select",
-          "type": "string",
-          "options": [
-            {
-              "label": "主要",
-              "value": "primary"
-            },
-            {
-              "label": "次要",
-              "value": "secondary"
-            },
-            {
-              "label": "三级",
-              "value": "tertiary"
-            },
-            {
-              "label": "危险",
-              "value": "danger"
-            },
-            {
-              "label": "警告",
-              "value": "warning"
-            },
-            {
-              "label": "成功",
-              "value": "success"
-            }
-          ],
-          "defaultValue": "primary"
-        },
-        {
-          "name": "className",
-          "description": "外侧样式类名",
-          "label": "外层类名",
-          "type": "className"
-        },
-        {
-          "name": "countClassName",
-          "description": "内容区域样式类名",
-          "label": "内容区类名",
-          "type": "className"
-        },
-        {
-          "name": "countStyle",
-          "description": "徽章内容的内联样式",
-          "label": "内容区样式",
-          "type": "CSSProperties"
-        }
-      ],
-      "events": []
     },
     {
       "name": "Banner",
@@ -874,20 +727,6 @@
           "control": "boolean",
           "type": "boolean",
           "defaultValue": false
-        },
-        {
-          "name": "className",
-          "description": "自定义 CSS 类名",
-          "label": "自定义类名",
-          "control": "className",
-          "type": "array"
-        },
-        {
-          "name": "style",
-          "description": "组件内联样式",
-          "label": "内联样式",
-          "type": "CSSProperties",
-          "hidden": true
         }
       ],
       "events": [
@@ -902,13 +741,12 @@
       "name": "DatePicker",
       "title": "日期选择器",
       "icon": "svgs/date-picker.svg",
-      "description": "日期、日期范围、日期时间、月份选择器，支持单选、多选、范围、快捷选择等功能",
+      "description": "用于选择日期、日期时间、月份，支持禁用、尺寸、格式与快捷操作",
       "tags": [
         "日期",
         "时间",
         "选择器",
-        "表单",
-        "基础组件"
+        "表单"
       ],
       "category": "基础组件",
       "version": "1.0.0",
@@ -932,146 +770,20 @@
               "value": "date"
             },
             {
-              "label": "日期范围",
-              "value": "dateRange"
-            },
-            {
               "label": "日期时间",
               "value": "dateTime"
             },
             {
-              "label": "日期时间范围",
-              "value": "dateTimeRange"
-            },
-            {
               "label": "月份",
               "value": "month"
-            },
-            {
-              "label": "月份范围",
-              "value": "monthRange"
             }
           ],
           "defaultValue": "date"
         },
         {
-          "name": "borderless",
-          "description": "无边框模式",
-          "label": "无边框模式",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
-          "name": "defaultOpen",
-          "description": "面板默认显示或隐藏",
-          "label": "默认展开面板",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
-          "name": "density",
-          "description": "面板尺寸",
-          "label": "面板密度",
-          "control": "select",
-          "type": "string",
-          "options": [
-            {
-              "label": "默认",
-              "value": "default"
-            },
-            {
-              "label": "紧凑",
-              "value": "compact"
-            }
-          ],
-          "defaultValue": "default"
-        },
-        {
           "name": "disabled",
           "description": "是否禁用",
           "label": "禁用",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
-          "name": "disabledTimePicker",
-          "description": "是否禁止时间选择",
-          "label": "禁用时间选择",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
-          "name": "hideDisabledOptions",
-          "description": "隐藏禁止选择的时间",
-          "label": "隐藏禁用时间",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
-          "name": "inputReadOnly",
-          "description": "文本框是否只读",
-          "label": "输入框只读",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
-          "name": "insetInput",
-          "description": "面板中是否嵌入输入框",
-          "label": "嵌入输入框",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
-          "name": "motion",
-          "description": "是否开启面板展开动画",
-          "label": "开启动画",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": true
-        },
-        {
-          "name": "multiple",
-          "description": "是否可以选择多个，仅支持date类型",
-          "label": "允许多选",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
-          "name": "needConfirm",
-          "description": "是否需要确认按钮，仅dateTime/dateTimeRange有效",
-          "label": "需要确认",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
-          "name": "open",
-          "description": "面板显示或隐藏的受控属性",
-          "label": "展开面板",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
-          "name": "showClear",
-          "description": "是否显示清除按钮",
-          "label": "显示清除按钮",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": true
-        },
-        {
-          "name": "syncSwitchMonth",
-          "description": "范围选择时同步切换双面板月份",
-          "label": "同步切换双月面板",
           "control": "boolean",
           "type": "boolean",
           "defaultValue": false
@@ -1103,46 +815,22 @@
           "description": "输入框提示文字",
           "label": "占位提示文字",
           "type": "string",
-          "defaultValue": "Select date"
-        },
-        {
-          "name": "presetPosition",
-          "description": "快捷选择面板位置",
-          "label": "快捷选项位置",
-          "control": "select",
-          "type": "string",
-          "options": [
-            {
-              "label": "左",
-              "value": "left"
-            },
-            {
-              "label": "右",
-              "value": "right"
-            },
-            {
-              "label": "上",
-              "value": "top"
-            },
-            {
-              "label": "下",
-              "value": "bottom"
-            }
-          ],
-          "defaultValue": "bottom"
-        },
-        {
-          "name": "rangeSeparator",
-          "description": "范围选择日期分隔符",
-          "label": "日期范围分隔符",
-          "type": "string",
-          "defaultValue": "~"
+          "defaultValue": "选择日期"
         },
         {
           "name": "format",
-          "description": "输入框日期显示格式",
+          "description": "日期显示格式",
           "label": "日期格式",
-          "type": "string"
+          "type": "string",
+          "defaultValue": "YYYY-MM-DD"
+        },
+        {
+          "name": "showClear",
+          "description": "是否显示清除按钮",
+          "label": "显示清除按钮",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": true
         },
         {
           "name": "validateStatus",
@@ -1168,54 +856,10 @@
         },
         {
           "name": "weekStartsOn",
-          "description": "周起始日，0=周日，1=周一",
+          "description": "周起始日（0=周日，1=周一）",
           "label": "周起始日",
           "type": "number",
-          "defaultValue": 0
-        },
-        {
-          "name": "zIndex",
-          "description": "弹出面板层级",
-          "label": "浮层层级",
-          "type": "number",
-          "defaultValue": 1030
-        },
-        {
-          "name": "max",
-          "description": "多选最大数量",
-          "label": "多选最大数目",
-          "type": "number"
-        },
-        {
-          "name": "spacing",
-          "description": "浮层与触发器距离",
-          "label": "浮层间距",
-          "type": "number",
-          "defaultValue": 4
-        },
-        {
-          "name": "startYear",
-          "description": "年份滚动开始年",
-          "label": "开始年份",
-          "type": "number"
-        },
-        {
-          "name": "endYear",
-          "description": "年份滚动结束年",
-          "label": "结束年份",
-          "type": "number"
-        },
-        {
-          "name": "className",
-          "description": "组件样式类名",
-          "label": "样式类名",
-          "type": "className"
-        },
-        {
-          "name": "style",
-          "description": "组件内联样式",
-          "label": "内联样式",
-          "type": "CSSProperties"
+          "defaultValue": 1
         }
       ],
       "events": [
@@ -1230,39 +874,9 @@
           "label": "面板展开收起"
         },
         {
-          "name": "onConfirm",
-          "description": "确认选择时的回调",
-          "label": "确认选择"
-        },
-        {
           "name": "onClear",
           "description": "点击清除按钮触发",
           "label": "清除内容"
-        },
-        {
-          "name": "onFocus",
-          "description": "获得焦点时回调",
-          "label": "获得焦点"
-        },
-        {
-          "name": "onBlur",
-          "description": "失去焦点时回调",
-          "label": "失去焦点"
-        },
-        {
-          "name": "onCancel",
-          "description": "取消选择时的回调",
-          "label": "取消选择"
-        },
-        {
-          "name": "onPanelChange",
-          "description": "切换面板年月时回调",
-          "label": "面板年月切换"
-        },
-        {
-          "name": "onPresetClick",
-          "description": "点击快捷选择按钮回调",
-          "label": "快捷选项点击"
         }
       ]
     },
@@ -1528,14 +1142,14 @@
       "name": "InputNumber",
       "title": "数字输入框",
       "icon": "svgs/input-number.svg",
-      "description": "用于输入数字，支持精度、步长、最小值、最大值及货币模式。",
+      "description": "用于输入数字，支持精度、步长、极值限制及前后缀展示。",
       "tags": [
         "输入",
         "数字",
         "表单"
       ],
       "category": "表单控件",
-      "version": "2.77.0",
+      "version": "2.97.0",
       "author": "LiuHan",
       "visualConfig": {
         "preferredWidth": 160,
@@ -1545,12 +1159,11 @@
       },
       "properties": [
         {
-          "name": "autofocus",
-          "description": "是否自动获取焦点",
-          "label": "自动聚焦",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
+          "name": "value",
+          "description": "当前值",
+          "label": "当前值",
+          "control": "number",
+          "type": "number"
         },
         {
           "name": "className",
@@ -1558,43 +1171,6 @@
           "label": "自定义类名",
           "control": "className",
           "type": "array"
-        },
-        {
-          "name": "currency",
-          "description": "是否开启货币模式，或指定货币类型（如 CNY、USD）",
-          "label": "货币模式",
-          "control": "string",
-          "type": "string",
-          "defaultValue": "false"
-        },
-        {
-          "name": "currencyDisplay",
-          "description": "货币展示方式",
-          "label": "货币展示方式",
-          "control": "select",
-          "type": "string",
-          "options": [
-            {
-              "label": "符号",
-              "value": "symbol"
-            },
-            {
-              "label": "代码",
-              "value": "code"
-            },
-            {
-              "label": "名称",
-              "value": "name"
-            }
-          ],
-          "defaultValue": "symbol"
-        },
-        {
-          "name": "defaultValue",
-          "description": "默认值",
-          "label": "默认值",
-          "control": "number",
-          "type": "number"
         },
         {
           "name": "disabled",
@@ -1611,29 +1187,6 @@
           "control": "boolean",
           "type": "boolean",
           "defaultValue": false
-        },
-        {
-          "name": "innerButtons",
-          "description": "上下调整按钮是否显示在输入框内部",
-          "label": "内置按钮",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
-          "name": "keepFocus",
-          "description": "点击按钮时是否保持输入框聚焦",
-          "label": "保持聚焦",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
-          "name": "localeCode",
-          "description": "货币模式下的地区代码（如 zh-CN、en-US）",
-          "label": "地区代码",
-          "control": "string",
-          "type": "string"
         },
         {
           "name": "max",
@@ -1657,19 +1210,18 @@
           "type": "number"
         },
         {
-          "name": "preventScroll",
-          "description": "聚焦时是否阻止页面滚动",
-          "label": "阻止滚动",
-          "control": "boolean",
-          "type": "boolean"
+          "name": "prefix",
+          "description": "输入框前缀文字",
+          "label": "前缀",
+          "type": "string",
+          "defaultValue": ""
         },
         {
-          "name": "shiftStep",
-          "description": "按住 Shift 键时的步长",
-          "label": "Shift 步长",
-          "control": "number",
-          "type": "number",
-          "defaultValue": 10
+          "name": "suffix",
+          "description": "输入框后缀文字",
+          "label": "后缀",
+          "type": "string",
+          "defaultValue": ""
         },
         {
           "name": "showClear",
@@ -1678,14 +1230,6 @@
           "control": "boolean",
           "type": "boolean",
           "defaultValue": false
-        },
-        {
-          "name": "showCurrencySymbol",
-          "description": "是否显示货币符号（仅货币模式生效）",
-          "label": "显示货币符号",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": true
         },
         {
           "name": "size",
@@ -1723,13 +1267,6 @@
           "label": "内联样式",
           "type": "CSSProperties",
           "hidden": true
-        },
-        {
-          "name": "value",
-          "description": "当前值",
-          "label": "当前值",
-          "control": "number",
-          "type": "number"
         }
       ],
       "events": [
@@ -2757,7 +2294,7 @@
           "label": "轨道底色",
           "type": "string",
           "control": "color",
-          "defaultValue": "var(--semi-color-fill-0)"
+          "defaultValue": "#eee"
         },
         {
           "name": "strokeLinecap",
@@ -2837,12 +2374,6 @@
           "type": "string"
         },
         {
-          "name": "defaultValue",
-          "description": "默认选中的值",
-          "label": "默认值",
-          "type": "string"
-        },
-        {
           "name": "disabled",
           "description": "是否禁用所有单选框",
           "label": "禁用",
@@ -2917,12 +2448,6 @@
           "defaultValue": "middle"
         },
         {
-          "name": "name",
-          "description": "单选框组的 name 属性",
-          "label": "名称",
-          "type": "string"
-        },
-        {
           "name": "aria-label",
           "description": "无障碍访问标签",
           "label": "ARIA标签",
@@ -2992,6 +2517,15 @@
       },
       "properties": [
         {
+          "name": "value",
+          "description": "组件当前评分值，支持双向绑定",
+          "label": "评分值",
+          "inputEvent": "onChange",
+          "control": "number",
+          "type": "number",
+          "defaultValue": 0
+        },
+        {
           "name": "allowClear",
           "description": "是否允许再次点击后清除评分",
           "label": "允许清除",
@@ -3003,14 +2537,6 @@
           "name": "allowHalf",
           "description": "是否允许半星选择",
           "label": "允许半选",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
-          "name": "autoFocus",
-          "description": "是否自动获取焦点",
-          "label": "自动聚焦",
           "control": "boolean",
           "type": "boolean",
           "defaultValue": false
@@ -3041,14 +2567,6 @@
           "defaultValue": false
         },
         {
-          "name": "preventScroll",
-          "description": "聚焦时是否禁止页面自动滚动",
-          "label": "禁止滚动",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
           "name": "size",
           "description": "组件尺寸，支持default/small或数字自定义",
           "label": "尺寸",
@@ -3066,15 +2584,6 @@
           ],
           "defaultValue": "default",
           "hidden": true
-        },
-        {
-          "name": "value",
-          "description": "组件当前评分值，支持双向绑定",
-          "label": "评分值",
-          "inputEvent": "onChange",
-          "control": "number",
-          "type": "number",
-          "defaultValue": 0
         },
         {
           "name": "tooltips",
@@ -3155,20 +2664,12 @@
           "defaultValue": ""
         },
         {
-          "name": "defaultValue",
-          "description": "初始默认选中的值",
-          "label": "默认值",
-          "type": "string",
-          "defaultValue": ""
-        },
-        {
           "name": "optionList",
           "description": "下拉选项列表，每项包含label和value",
           "label": "选项列表",
           "control": "json",
           "type": "array",
-          "defaultValue": [],
-          "sample": [
+          "defaultValue": [
             {
               "value": "douyin",
               "label": "抖音",
@@ -3466,15 +2967,7 @@
           "label": "当前值",
           "inputEvent": "onChange",
           "type": "number",
-          "defaultValue": 0
-        },
-        {
-          "name": "defaultValue",
-          "description": "初始默认值",
-          "label": "默认值",
-          "control": "number",
-          "type": "number",
-          "defaultValue": 0
+          "defaultValue": 20
         },
         {
           "name": "min",
@@ -3518,22 +3011,6 @@
           "defaultValue": false
         },
         {
-          "name": "marks",
-          "description": "刻度标记，键为数值，值为显示文本",
-          "label": "刻度配置",
-          "control": "json",
-          "type": "object",
-          "defaultValue": {}
-        },
-        {
-          "name": "showMarkLabel",
-          "description": "是否显示刻度标签",
-          "label": "显示刻度",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": true
-        },
-        {
           "name": "showBoundary",
           "description": "hover时是否显示最大/最小值",
           "label": "显示边界值",
@@ -3548,14 +3025,6 @@
           "control": "boolean",
           "type": "boolean",
           "defaultValue": false
-        },
-        {
-          "name": "included",
-          "description": "刻度值是否为包含关系",
-          "label": "刻度包含关系",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": true
         },
         {
           "name": "railStyle",
@@ -3859,7 +3328,7 @@
           "label": "列配置",
           "control": "json",
           "type": "array",
-          "sample": [
+          "defaultValue": [
             {
               "title": "名称",
               "dataIndex": "name"
@@ -3880,12 +3349,18 @@
           "label": "表格数据",
           "control": "json",
           "type": "array",
-          "sample": [
+          "defaultValue": [
             {
               "key": "1",
               "name": "设计文件",
               "size": "2M",
               "updateTime": "2020-02-02"
+            },
+            {
+              "key": "2",
+              "name": "AI语料文件",
+              "size": "13.2K",
+              "updateTime": "2026-02-02"
             }
           ]
         },
@@ -3951,14 +3426,6 @@
           "defaultValue": []
         },
         {
-          "name": "defaultValue",
-          "description": "初始默认标签列表",
-          "label": "默认标签",
-          "control": "json",
-          "type": "array",
-          "defaultValue": []
-        },
-        {
           "name": "inputValue",
           "description": "输入框实时内容",
           "label": "输入框内容",
@@ -3998,35 +3465,12 @@
           "defaultValue": true
         },
         {
-          "name": "addOnBlur",
-          "description": "失去焦点时自动将输入内容转为标签",
-          "label": "失焦添加",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
           "name": "showClear",
           "description": "是否显示清空所有标签按钮",
           "label": "显示清空",
           "control": "boolean",
           "type": "boolean",
           "defaultValue": false
-        },
-        {
-          "name": "autoFocus",
-          "description": "是否自动获取焦点",
-          "label": "自动聚焦",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
-          "name": "separator",
-          "description": "标签分隔符，默认逗号",
-          "label": "分隔符",
-          "type": "string",
-          "defaultValue": ","
         },
         {
           "name": "max",
@@ -4051,30 +3495,6 @@
           "control": "number",
           "type": "number",
           "min": 0
-        },
-        {
-          "name": "expandRestTagsOnClick",
-          "description": "点击组件时展开隐藏标签",
-          "label": "点击展开标签",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": true
-        },
-        {
-          "name": "showRestTagsPopover",
-          "description": "悬停+N时显示全部标签",
-          "label": "悬停显示全部",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": true
-        },
-        {
-          "name": "showContentTooltip",
-          "description": "标签过长时hover显示完整内容",
-          "label": "显示完整提示",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": true
         },
         {
           "name": "size",
@@ -4150,36 +3570,6 @@
           "name": "onRemove",
           "description": "删除标签时触发",
           "label": "删除标签"
-        },
-        {
-          "name": "onInputChange",
-          "description": "输入框内容变化时触发",
-          "label": "输入变化"
-        },
-        {
-          "name": "onExceed",
-          "description": "标签数量超出上限时触发",
-          "label": "超出数量限制"
-        },
-        {
-          "name": "onInputExceed",
-          "description": "单个标签长度超出上限时触发",
-          "label": "超出长度限制"
-        },
-        {
-          "name": "onFocus",
-          "description": "输入框获得焦点时触发",
-          "label": "获取焦点"
-        },
-        {
-          "name": "onBlur",
-          "description": "输入框失去焦点时触发",
-          "label": "失去焦点"
-        },
-        {
-          "name": "onKeyDown",
-          "description": "键盘按下时触发",
-          "label": "按键按下"
         }
       ]
     },
@@ -4259,22 +3649,6 @@
             }
           ],
           "defaultValue": "grey"
-        },
-        {
-          "name": "colorful",
-          "description": "是否开启多彩模式",
-          "label": "多彩模式",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
-          "name": "gradient",
-          "description": "是否开启渐变色（需多彩模式开启）",
-          "label": "渐变色彩",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
         },
         {
           "name": "shape",
@@ -4728,12 +4102,6 @@
           "description": "组件内联样式",
           "label": "内联样式",
           "type": "CSSProperties"
-        },
-        {
-          "name": "popupStyle",
-          "description": "时间面板弹层样式",
-          "label": "弹层样式",
-          "type": "CSSProperties"
         }
       ],
       "events": [
@@ -4824,7 +4192,7 @@
           "label": "数据源",
           "control": "json",
           "type": "array",
-          "sample": [
+          "defaultValue": [
             {
               "time": "2019-07-14 10:35",
               "extra": "节点辅助说明信息",
@@ -5082,7 +4450,7 @@
           "label": "树形数据源",
           "control": "json",
           "type": "array",
-          "sample": [
+          "defaultValue": [
             {
               "label": "一级分类",
               "value": "1",
@@ -5093,8 +4461,7 @@
                 }
               ]
             }
-          ],
-          "defaultValue": []
+          ]
         },
         {
           "name": "placeholder",

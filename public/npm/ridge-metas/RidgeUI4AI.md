@@ -5,17 +5,18 @@ version: 配置文件版本号。
 style: 页面画布设置。
 width/height: 固定尺寸。
 autoWidth/autoHeight: true 表示自适应宽高
-properties: 页面级变量，作为子页面时可由父页面传入。
-jsFiles: 脚本文件路径数组（如 ["hello.js"]），用于定义状态和动作。
+properties: 页面级变量，作为子页面时可由父页面传入,独立访问时可以通过querystring传入
+jsFiles: 页面脚本列表（如 ["hello.js"]），用于定义状态和动作。
 elements: 页面元素数组，页面的核心内容。
 name: 页面名称。
 children: 根节点元素的 ID 列表。
+
 Elements (组件节点) 配置：
-每个元素代表一个具体的 UI 组件。
+每个元素代表一个具体的 UI 组件，每个组件根据path加载和渲染， 组件不同，其属性、事件也不同， 组件定义后续描述
 id: 元素唯一标识。
 title: 编辑时的名称。
-path: 组件来源路径（例：@douyinfe/semi-ui/Input）。
-props: 静态属性值（如 placeholder: "请输入"）。
+path: 组件来源路径（例：@douyinfe/semi-ui/Input）
+props: 静态属性值对象（如 { placeholder: "请输入"}）。
 propsEx: 动态属性绑定。值为状态路径（如 Hello.state.name），状态变则视图变。
 style: 组件的父级对其进行定位  在页面根上，支持 x, y,width,height,visible 等
 events: 事件映射。定义组件交互行为。
@@ -25,12 +26,16 @@ meta: 组件元数据。
 sync: 双向绑定协议（详见核心机制）。
 children: 该元素包含的子元素 ID 列表（用于容器组件）。
 
-2. 页面脚本 (Logic Script)
+
+页面脚本 (Logic Script)：
 通过 jsFiles引入，采用 ES Module 导出对象：
 export default {
   name: 'Hello',       // 命名空间
   state: { ... },      // 响应式数据源
   setup() { ... },     // 初始化钩子
+  computed : {    // 计算的数据源，也是响应式
+
+  },
   actions: {           // 方法集合
     method() { this.state.xxx = yyy }
   }
@@ -39,10 +44,10 @@ export default {
 数据驱动：propsEx引用 State，State 变更自动更新 UI。
 事件驱动：UI 事件 → 调用 actions→ 修改 State。
 双向绑定：meta.sync自动将 UI 事件（如输入）同步回 State，无需手写 Action。
-3. 关键路径约定
 状态读：<Namespace>.state.<key>
 动作写：<Namespace>.actions.<method>
 事件传参：payload可传递事件对象中的数据。
+
 
 RidgeUI 核心机制（含双向绑定）
 数据驱动与绑定
@@ -69,3 +74,6 @@ path: 从 payload 中提取数据的路径。
 组件定义参考：
 组件描述文件中的 events 定义了数据结构，用于确定 path。
 示例：{ "name": "onChange", "payload": "target.checked" } 表示取 payload.target.checked。
+
+
+

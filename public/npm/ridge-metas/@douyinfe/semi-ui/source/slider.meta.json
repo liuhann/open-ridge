@@ -24,15 +24,7 @@
       "label": "当前值",
       "inputEvent": "onChange",
       "type": "number",
-      "defaultValue": 0
-    },
-    {
-      "name": "defaultValue",
-      "description": "初始默认值",
-      "label": "默认值",
-      "control": "number",
-      "type": "number",
-      "defaultValue": 0
+      "defaultValue": 20
     },
     {
       "name": "min",
@@ -76,22 +68,6 @@
       "defaultValue": false
     },
     {
-      "name": "marks",
-      "description": "刻度标记，键为数值，值为显示文本",
-      "label": "刻度配置",
-      "control": "json",
-      "type": "object",
-      "defaultValue": {}
-    },
-    {
-      "name": "showMarkLabel",
-      "description": "是否显示刻度标签",
-      "label": "显示刻度",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": true
-    },
-    {
       "name": "showBoundary",
       "description": "hover时是否显示最大/最小值",
       "label": "显示边界值",
@@ -106,14 +82,6 @@
       "control": "boolean",
       "type": "boolean",
       "defaultValue": false
-    },
-    {
-      "name": "included",
-      "description": "刻度值是否为包含关系",
-      "label": "刻度包含关系",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": true
     },
     {
       "name": "railStyle",

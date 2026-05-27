@@ -19,6 +19,15 @@
   },
   "properties": [
     {
+      "name": "value",
+      "description": "组件当前评分值，支持双向绑定",
+      "label": "评分值",
+      "inputEvent": "onChange",
+      "control": "number",
+      "type": "number",
+      "defaultValue": 0
+    },
+    {
       "name": "allowClear",
       "description": "是否允许再次点击后清除评分",
       "label": "允许清除",
@@ -30,14 +39,6 @@
       "name": "allowHalf",
       "description": "是否允许半星选择",
       "label": "允许半选",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": false
-    },
-    {
-      "name": "autoFocus",
-      "description": "是否自动获取焦点",
-      "label": "自动聚焦",
       "control": "boolean",
       "type": "boolean",
       "defaultValue": false
@@ -68,14 +69,6 @@
       "defaultValue": false
     },
     {
-      "name": "preventScroll",
-      "description": "聚焦时是否禁止页面自动滚动",
-      "label": "禁止滚动",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": false
-    },
-    {
       "name": "size",
       "description": "组件尺寸，支持default/small或数字自定义",
       "label": "尺寸",
@@ -93,15 +86,6 @@
       ],
       "defaultValue": "default",
       "hidden": true
-    },
-    {
-      "name": "value",
-      "description": "组件当前评分值，支持双向绑定",
-      "label": "评分值",
-      "inputEvent": "onChange",
-      "control": "number",
-      "type": "number",
-      "defaultValue": 0
     },
     {
       "name": "tooltips",

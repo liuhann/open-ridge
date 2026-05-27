@@ -183,12 +183,6 @@
       "description": "组件内联样式",
       "label": "内联样式",
       "type": "CSSProperties"
-    },
-    {
-      "name": "popupStyle",
-      "description": "时间面板弹层样式",
-      "label": "弹层样式",
-      "type": "CSSProperties"
     }
   ],
   "events": [

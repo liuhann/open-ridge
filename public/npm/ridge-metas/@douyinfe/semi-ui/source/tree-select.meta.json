@@ -37,10 +37,9 @@
       "label": "树形数据源",
       "control": "json",
       "type": "array",
-      "sample": [
+      "defaultValue": [
         {"label":"一级分类","value":"1","children":[{"label":"二级分类","value":"1-1"}]}
-      ],
-      "defaultValue": []
+      ]
     },
     {
       "name": "placeholder",

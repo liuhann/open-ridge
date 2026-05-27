@@ -76,22 +76,6 @@
       "defaultValue": "grey"
     },
     {
-      "name": "colorful",
-      "description": "是否开启多彩模式",
-      "label": "多彩模式",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": false
-    },
-    {
-      "name": "gradient",
-      "description": "是否开启渐变色（需多彩模式开启）",
-      "label": "渐变色彩",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": false
-    },
-    {
       "name": "shape",
       "description": "标签形状",
       "label": "形状",

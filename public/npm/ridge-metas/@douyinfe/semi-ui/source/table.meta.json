@@ -80,7 +80,7 @@
       "label": "列配置",
       "control": "json",
       "type": "array",
-      "sample": [
+      "defaultValue": [
         { "title": "名称", "dataIndex": "name" },
         { "title": "大小", "dataIndex": "size" },
         { "title": "更新时间", "dataIndex": "updateTime" }
@@ -92,8 +92,9 @@
       "label": "表格数据",
       "control": "json",
       "type": "array",
-      "sample": [
-        { "key": "1", "name": "设计文件", "size": "2M", "updateTime": "2020-02-02" }
+      "defaultValue": [
+        { "key": "1", "name": "设计文件", "size": "2M", "updateTime": "2020-02-02" },
+        { "key": "2", "name": "AI语料文件", "size": "13.2K", "updateTime": "2026-02-02" }
       ]
     },
     {

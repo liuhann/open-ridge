@@ -61,6 +61,7 @@ onMouseDown: 鼠标按下时触发。
 onMouseEnter: 鼠标移入时触发。
 onMouseLeave: 鼠标移出时触发。
 
+
 Checkbox (复选框)
 用途：用于多选场景，支持单独使用、组合使用、卡片样式及不确定状态。
 组件路径 (Path): @douyinfe/semi-ui/Checkbox
@@ -77,6 +78,7 @@ style: object。内联样式。
 事件 (Events)：
 onChange: 选中状态变化时触发。
 Payload: target.checked(返回布尔值)。
+
 
 Typography.Title（标题）
 用途：用于页面标题、章节标题、卡片标题等场景，支持 6 级标题、可复制、省略、颜色样式、加粗等配置。
@@ -188,7 +190,6 @@ style: object，内联样式
 事件：无
 
 
-
 Typography.ColorPicker（颜色选择器）
 路径：@douyinfe/semi-ui/ColorPicker
 用途：用于颜色选择，支持透明度调节与浮层展示，常用于表单与配置场景。
@@ -294,5 +295,226 @@ type: string，默认 "primary"，可选 primary / secondary / tertiary / quater
 underline: boolean，默认 false，是否显示下划线
 事件：无
 
+
+Typography.PinCode（验证码输入）
+路径：@douyinfe/semi-ui/PinCode
+用途：用于输入验证码，支持指定位数、尺寸与输入格式限制，常用于登录与安全校验场景。
+属性：
+autoFocus: boolean，默认 true，是否自动聚焦到第一个输入框
+className: array，自定义 CSS 类名
+count: number，默认 6，可选范围 4–8，验证码位数
+defaultValue: string，输入框默认值
+disabled: boolean，默认 false，是否禁用
+format: string，默认 "number"，可选 number / mixed，输入格式限制
+size: string，默认 "default"，可选 large / default / small，输入框尺寸
+style: object，内联样式（hidden）
+value: string，当前输入值
+事件：
+onChange：输入内容变化时触发
+onComplete：验证码全部输入完成时触发
+
+
+Typography.Progress（进度条）
+路径：@douyinfe/semi-ui/Progress
+用途：用于展示任务进度，支持线形与环形两种样式，可自定义颜色、尺寸与方向。
+属性：
+percent: number，默认 20，进度百分比（0–100）
+type: string，默认 "line"，可选 line / circle，进度条类型
+direction: string，默认 "horizontal"，可选 horizontal / vertical，线形进度条排列方向
+size: string，默认 "default"，可选 default / small / large，组件尺寸
+showInfo: boolean，默认 false，是否显示进度文本
+stroke: string，默认 "#1bcc76"，进度条填充颜色
+orbitStroke: string，默认 "#eee"，轨道底色
+strokeLinecap: string，默认 "round"，可选 round / square，环形进度条端点样式
+strokeWidth: number，默认 4，环形进度条线条宽度
+className: string，自定义 CSS 类名
+style: object，内联样式
+事件：无
+
+
+Typography.RadioGroup（单选框组）
+路径：@douyinfe/semi-ui/RadioGroup
+用途：用于在一组选项中进行单选，支持按钮、卡片等多种样式与排列方式。
+属性：
+value: string，当前选中的值
+disabled: boolean，默认 false，是否禁用整个单选组
+type: string，默认 "default"，可选 default / button / card / pureCard，单选框样式类型
+direction: string，默认 "horizontal"，可选 horizontal / vertical，排列方向（仅 default 类型生效）
+buttonSize: string，默认 "middle"，可选 small / middle / large，按钮类型时的尺寸
+options: array，默认 [{label:"Guest",value:"Guest"},{label:"Developer",value:"Developer"},{label:"Maintainer",value:"Maintainer",disabled:true}]，配置选项列表
+className: array，自定义 CSS 类名
+style: object，内联样式
+事件：
+onChange：选中值变化时触发
+
+
+Typography.Rating（评分组件）
+路径：@douyinfe/semi-ui/Rating
+用途：用于评分与星级评价，支持半选、清除、提示信息与禁用状态。
+属性：
+value: number，默认 0，当前评分值
+allowClear: boolean，默认 true，是否允许再次点击清除评分
+allowHalf: boolean，默认 false，是否允许半星选择
+count: number，默认 5，星级总数
+defaultValue: number，默认 0，默认评分值
+disabled: boolean，默认 false，是否禁用
+size: string | number，默认 "default"，可选 "default" / "small"（hidden）
+tooltips: array，默认 []，自定义星级提示信息
+className: string，自定义 CSS 类名
+style: object，内联样式
+事件：
+onBlur：失去焦点时触发
+onChange：评分改变时触发
+onFocus：获取焦点时触发
+onHoverChange：鼠标悬停星级时触发
+onKeyDown：按键按下时触发
+
+
+Typography.Select（下拉选择器）
+路径：@douyinfe/semi-ui/Select
+用途：用于从选项列表中进行单选或多选，支持搜索、创建、清除与校验状态。
+属性：
+value: string，当前选中值
+optionList: array，选项列表，每项包含 label、value、disabled 等
+placeholder: string，默认 "请选择"，占位提示文字
+disabled: boolean，默认 false，是否禁用
+multiple: boolean，默认 false，是否开启多选
+filter: boolean，默认 false，是否开启搜索筛选
+allowCreate: boolean，默认 false，是否允许创建新选项（需配合搜索）
+showClear: boolean，默认 false，是否显示清除按钮
+showArrow: boolean，默认 true，是否显示下拉箭头
+autoFocus: boolean，默认 false，是否自动聚焦
+defaultOpen: boolean，默认 false，是否默认展开下拉
+size: string，默认 "default"，可选 default / small / large（hidden）
+borderless: boolean，默认 false，是否无边框
+maxTagCount: number，默认 3，多选时最多显示标签数
+max: number，多选时最多可选数量
+loading: boolean，默认 false，是否显示加载状态
+position: string，默认 "bottomLeft"，可选 bottomLeft / bottomRight / topLeft / topRight，下拉位置
+validateStatus: string，默认 "default"，可选 default / warning / error，校验状态
+className: string，自定义 CSS 类名
+style: object，内联样式
+dropdownStyle: object，下拉弹层样式
+事件：
+onChange：选中值变化时触发
+onSelect：选中选项时触发
+onDeselect：取消选中时触发
+onClear：点击清除时触发
+onSearch：搜索内容变化时触发
+onCreate：创建新选项时触发
+onDropdownVisibleChange：下拉展开/收起时触发
+onFocus：获取焦点时触发
+onBlur：失去焦点时触发
+onExceed：多选超出限制时触发
+
+
+Typography.Slider（滑块）
+路径：@douyinfe/semi-ui/Slider
+用途：用于在数值区间内通过滑动方式选择数值，支持刻度、范围、禁用与垂直方向展示。
+属性：
+value: number，默认 20，当前选中值
+min: number，默认 0，最小值
+max: number，默认 100，最大值
+step: number，默认 1，滑动步长
+disabled: boolean，默认 false，是否禁用
+vertical: boolean，默认 false，是否垂直方向展示
+showBoundary: boolean，默认 false，hover 时是否显示最大/最小值
+tooltipVisible: boolean，默认 false，是否始终显示数值提示
+railStyle: object，滑块轨道样式
+className: string，自定义 CSS 类名
+style: object，内联样式
+事件：
+onChange：滑动值改变时触发
+onAfterChange：滑动结束后触发
+onMouseUp：鼠标松开滑块时触发
+
+
+Typography.Spin（加载）
+路径：@douyinfe/semi-ui/Spin
+用途：用于页面或区域的加载状态提示，支持延迟显示与尺寸控制。
+属性：
+spinning: boolean，默认 true，是否处于加载中状态
+size: string，默认 "middle"，可选 small / middle / large，组件大小
+delay: number，默认 0，延迟显示加载效果的毫秒数
+事件：
+onClick：点击组件时触发
+
+
+Typography.Switch（开关）
+路径：@douyinfe/semi-ui/Switch
+用途：用于状态切换，支持禁用、加载与尺寸控制。
+属性：
+checked: boolean，默认 false，是否选中
+aria-label: string，默认 ""，无障碍标签
+disabled: boolean，默认 false，是否禁用
+loading: boolean，默认 false，是否加载中
+size: string，默认 "default"，可选 large / default / small
+事件：
+onChange：状态变化时触发
+onMouseEnter：鼠标移入时触发
+onMouseLeave：鼠标移出时触发
+
+
+Typography.Table（表格）
+路径：@douyinfe/semi-ui/Table
+用途：用于数据展示、排序、筛选、分页与行操作，支持树形数据与高性能渲染。
+属性：
+className: array，自定义 CSS 类名
+style: object，内联样式
+bordered: boolean，默认 false，是否显示边框
+size: string，默认 "default"，可选 default / middle / small，表格尺寸
+loading: boolean，默认 false，是否加载中
+showHeader: boolean，默认 true，是否显示表头
+pagination: boolean，默认 true，是否开启分页
+columns: array，列配置，默认 [{title:"名称",dataIndex:"name"},{title:"大小",dataIndex:"size"},{title:"更新时间",dataIndex:"updateTime"}]
+dataSource: array，表格数据，默认 [{key:"1",name:"设计文件",size:"2M",updateTime:"2020-02-02"},{key:"2",name:"AI语料文件",size:"13.2K",updateTime:"2026-02-02"}]
+sticky: boolean，默认 false，是否固定表头
+resizable: boolean，默认 false，是否允许拖拽列宽
+事件：
+onChange：分页、排序、筛选变化时触发
+onExpand：行展开或收起时触发
+onRow：点击表格行时触发
+
+
+Typography.TagInput（标签输入框）
+路径：@douyinfe/semi-ui/TagInput
+用途：用于输入、添加、删除多个标签，支持拖拽排序、数量限制与校验状态。
+属性：
+value: array，默认 []，当前标签列表
+inputValue: string，默认 ""，输入框实时内容
+placeholder: string，默认 "请输入并按回车添加标签"，占位提示
+disabled: boolean，默认 false，是否禁用
+draggable: boolean，默认 false，是否支持拖拽排序
+allowDuplicates: boolean，默认 true，是否允许重复标签
+showClear: boolean，默认 false，是否显示清空按钮
+max: number，最大允许添加的标签数量
+maxLength: number，单个标签的最大输入长度
+maxTagCount: number，页面最多显示的标签数
+size: string，默认 "default"，可选 small / default / large（hidden）
+validateStatus: string，默认 "default"，可选 default / warning / error，校验状态
+className: string，自定义 CSS 类名
+style: object，内联样式
+事件：
+onChange：标签列表变化时触发
+onAdd：添加标签时触发
+onRemove：删除标签时触发
+
+
+Typography.Tag（标签）
+路径：@douyinfe/semi-ui/Tag
+用途：用于标记、分类与展示关键词，支持多种颜色、形状与样式类型。
+属性：
+children: string，默认 "标签"，标签显示文字
+closable: boolean，默认 false，是否显示关闭按钮
+color: string，默认 "grey"，可选 grey / blue / green / red / orange / purple / cyan / yellow，主题色
+shape: string，默认 "square"，可选 square / circle，标签形状
+size: string，默认 "small"，可选 small / large，标签尺寸
+type: string，默认 "light"，可选 light / solid / ghost，样式类型
+visible: boolean，默认 true，是否可见
+width: number，组件宽度（hidden）
+height: number，组件高度（hidden）
+事件：
+onClick：点击标签时触发
+onClose：点击关闭按钮时触发
 
 

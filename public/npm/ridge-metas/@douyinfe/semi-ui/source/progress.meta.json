@@ -108,7 +108,7 @@
       "label": "轨道底色",
       "type": "string",
       "control": "color",
-      "defaultValue": "var(--semi-color-fill-0)"
+      "defaultValue": "#eee"
     },
     {
       "name": "strokeLinecap",
