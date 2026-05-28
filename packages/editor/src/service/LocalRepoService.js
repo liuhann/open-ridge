@@ -161,7 +161,6 @@ export default class LocalRepoService {
     }
   }
 
-  // ====================== 添加到最近打开（自动去重 + 持久化） ======================
   addToRecentlyOpened (appId) {
     if (!appId) return
 

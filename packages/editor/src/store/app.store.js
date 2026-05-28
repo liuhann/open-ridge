@@ -61,10 +61,11 @@ const useStore = create((set, get) => ({
       const iconUrl = await localRepoService.getAppIcon(id)
       appService.setIconUrl(iconUrl)
       const appPackageJSON = await appService.getAppPackageJSON()
-
       await localRepoService.setCurrentApp(id, appService)
 
+      const recentAppList = await localRepoService.getRecentlyOpenedAppList()
       set({
+        recentAppList,
         currentAppInfo: appPackageJSON,
         appService,
         currentAppId: id,
