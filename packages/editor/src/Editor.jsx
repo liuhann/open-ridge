@@ -25,7 +25,6 @@ import AppListPanel from './panels/apps/AppListPanel.jsx'
 import LeftNav from './panels/left-nav/LeftNav.jsx'
 import AppPagePreviewList from './panels/files/AppPagePreviewList.jsx'
 import ComponentRegistryPanel from './panels/component/ComponentRegistryPanel.jsx'
-import componentRegistry from './service/ComponentRegistry.js'
 
 const Editor = () => {
   const codeEditorRef = useRef(null)
@@ -45,7 +44,6 @@ const Editor = () => {
 
   const currentAppName = appStore((state) => state.currentAppName)
   const isReady = appStore((state) => state.isReady)
-  const initAppStore = appStore((state) => state.initAppStore)
 
   const appTab = isReady ? (currentAppName ? 'file-list' : 'app-list') : 'loading'
   const pageOpened = openedPages.length > 0
@@ -53,7 +51,6 @@ const Editor = () => {
   useEffect(() => {
     const initialize = async () => {
       // await componentRegistry.init()
-      await initAppStore()
       initStore({
         codeEditorRef
       })
@@ -190,5 +187,4 @@ const Editor = () => {
     </div>
   )
 }
-
 export default Editor

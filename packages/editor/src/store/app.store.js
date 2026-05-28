@@ -3,7 +3,7 @@ import { alphabetid, trim, camelCase } from '../utils/string'
 import LocalRepoService from '../service/LocalRepoService'
 import ApplicationService from '../service/ApplicationService'
 import { stringToBlob } from '../utils/blob'
-import { trimLeadingSlash, addStringPrefix } from 'ridgejs/src/utils/string.js'
+import { addStringPrefix } from 'ridgejs/src/utils/string.js'
 
 import helloZipApp from '../ridge-app-hello-1.0.0.zip'
 
@@ -13,6 +13,7 @@ const localRepoService = new LocalRepoService()
 const useStore = create((set, get) => ({
   // 初始化状态（修复空值语义）
   appList: [],
+  recentAppList: [],
   currentAppInfo: null,
   currentAppName: null,
   currentAppIcon: null,
@@ -22,23 +23,24 @@ const useStore = create((set, get) => ({
   appService: null,
 
   initAppStore: async () => {
-    const { importAppFile, openApp } = get()
     try {
       const appList = await localRepoService.getLocalAppList()
+      const recentAppList = await localRepoService.getRecentlyOpenedAppList()
 
       // 无应用时自动导入 hello 模板
-      if (appList.length === 0) {
-        if (!localRepoService.importedHello()) {
-          await importAppFile(helloZipApp)
-          window.localStorage.setItem('ridge-imported-hello', 'true')
-        }
-      }
+      // if (appList.length === 0) {
+      //   if (!localRepoService.importedHello()) {
+      //     await importAppFile(helloZipApp)
+      //     window.localStorage.setItem('ridge-imported-hello', 'true')
+      //   }
+      // }
 
-      const currentAppId = localRepoService.getCurrentAppId()
-      if (currentAppId) {
-        await openApp(currentAppId)
-      }
+      // const currentAppId = localRepoService.getCurrentAppId()
+      // if (currentAppId) {
+      //   await openApp(currentAppId)
+      // }
       set({
+        recentAppList,
         isReady: true,
         appList
       })
@@ -50,7 +52,6 @@ const useStore = create((set, get) => ({
 
   openApp: async (id) => {
     if (!id) return
-
     try {
       const appInfo = await localRepoService.getApp(id)
       if (!appInfo) return

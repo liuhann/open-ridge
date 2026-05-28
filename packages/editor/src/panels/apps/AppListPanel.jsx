@@ -5,8 +5,7 @@ import CreateAppDialog from './CreateAppDialog.jsx'
 import appStore from '../../store/app.store.js'
 import selectZipFile from '../../utils/selectFileUpload.js'
 
-import { ICON_COMMON_PLUS, ICON_COMMON_DOT_VERT } from '../../icons/icons.js'
-import TitleBar from '../../components/TitleBar/TitleBar.jsx'
+import { ICON_COMMON_PLUS_SQUARE, ICON_COMMON_DOT_VERT, ICON_COMMON_PLUS } from '../../icons/icons.js'
 
 const { Text, Title } = Typography
 
@@ -28,7 +27,7 @@ const AppListPanel = () => {
   const createEmptyApp = appStore((state) => state.createEmptyApp)
 
   // 最近打开（取最近3个）
-  const recentApps = appList.slice(-3).reverse()
+  const recentApps = appStore((state) => state.recentAppList)
 
   // 推荐应用（官方示例，固定写6个占位，你后面可从接口/store取）
   const recommendApps = [
@@ -46,9 +45,27 @@ const AppListPanel = () => {
   }
 
   return (
-    <div className='app-list-panel left-panel'>
+    <div className='app-list-panel'>
+      {/* 顶部：开始创作（横贯式） */}
+      <div
+        className='btn-add-full'
+        style={{
+          background: 'linear-gradient(278deg, rgb(233, 69, 255), rgb(166, 71, 255) 30%, rgb(107, 97, 255) 60%, rgb(46, 140, 255))',
+          borderRadius: 12,
+          padding: '28px 32px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginBottom: 32,
+          cursor: 'pointer'
+        }}
+        onClick={() => setCreateDialogVisible(true)}
+      >
+        {ICON_COMMON_PLUS_SQUARE} <Title heading={4} style={{ color: '#fff' }}> 开始创作</Title>
+      </div>
+
       {/* 顶部标题 + 操作 */}
-      <TitleBar
+      {/* <TitleBar
         title='应用管理' right={
           <Button
             theme='borderless' type='tertiary'
@@ -57,10 +74,10 @@ const AppListPanel = () => {
           >新增应用
           </Button>
         }
-      />
-      <Text type='tertiary' className='panel-desc'>
+      /> */}
+      {/* <Text type='tertiary' className='panel-desc'>
         管理、创建、编辑你的所有应用
-      </Text>
+      </Text> */}
 
       {/* 创建弹窗 */}
       <CreateAppDialog
@@ -77,6 +94,27 @@ const AppListPanel = () => {
         }}
         onCancel={() => setCreateDialogVisible(false)}
       />
+
+      {/* 官方推荐 */}
+      <div className='app-section'>
+        <div className='section-header'>
+          <Text strong>官方推荐应用</Text>
+          <Text type='tertiary'>开箱即用</Text>
+        </div>
+        <div className='app-grid'>
+          {recommendApps.map(item => (
+            <div
+              key={item.id}
+              className='app-card recommend'
+              onClick={() => openRecommendApp(item)}
+            >
+              <div className='app-icon'>⭐</div>
+              <div className='app-name'>{item.name}</div>
+              <div className='app-tag'>官方</div>
+            </div>
+          ))}
+        </div>
+      </div>
 
       {/* 最近打开 */}
       <div className='app-section'>
@@ -99,27 +137,6 @@ const AppListPanel = () => {
           )}
         </div>
         {recentApps.length === 0 && <Empty layout='horizontal' description='暂无最近打开应用' />}
-      </div>
-
-      {/* 官方推荐 */}
-      <div className='app-section'>
-        <div className='section-header'>
-          <Text strong>官方推荐应用</Text>
-          <Text type='tertiary'>开箱即用</Text>
-        </div>
-        <div className='app-grid'>
-          {recommendApps.map(item => (
-            <div
-              key={item.id}
-              className='app-card recommend'
-              onClick={() => openRecommendApp(item)}
-            >
-              <div className='app-icon'>⭐</div>
-              <div className='app-name'>{item.name}</div>
-              <div className='app-tag'>官方</div>
-            </div>
-          ))}
-        </div>
       </div>
 
       {/* 全部应用 */}

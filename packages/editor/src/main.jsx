@@ -1,12 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import Editor from './Editor.jsx'
+import App from './App.jsx'
 
 export function init () {
   const root = ReactDOM.createRoot(document.getElementById('root'))
   root.render(
     <React.StrictMode>
-      <Editor />
+      <App />
     </React.StrictMode>
   )
 }
