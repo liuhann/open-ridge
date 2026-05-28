@@ -265,7 +265,8 @@ export default class ApplicationService {
     const files = await this.getFiles()
     this.fileTree = getFileTree(files)
     await this.zipFolder(zip, this.fileTree)
-    return await zip.generateAsync({ type: 'blob' })
+    const pjson = await this.getAppPackageJSON()
+    saveAs(await zip.generateAsync({ type: 'blob' }), pjson.description || pjson.name + '.zip')
   }
 
   async exportPage (id) {

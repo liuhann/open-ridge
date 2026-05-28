@@ -67,7 +67,7 @@ Checkbox (复选框)
 组件路径 (Path): @douyinfe/semi-ui/Checkbox
 属性 (Props) 配置：
 children: string，默认值“切换选框”。复选框右侧的文本内容。
-checked: boolean，默认值false。是否选中（支持双向绑定）。
+checked: boolean，默认值false。是否选中（支持双向绑定 onChange）。
 disabled: boolean，默认值false。是否禁用。
 indeterminate: boolean，默认值false。是否设为不确定状态（仅样式控制，常用于全选）。
 type: string，默认值“default”。样式类型：default（默认）, card（卡片）, pureCard（纯卡片）。

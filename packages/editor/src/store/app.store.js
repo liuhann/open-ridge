@@ -323,7 +323,14 @@ const useStore = create((set, get) => ({
     set({
       appList
     })
+  },
+
+  exportApp: async (appid) => {
+    const appService = localRepoService.getAppService(appid)
+
+    await appService.exportAppArchive()
   }
+
 }))
 
 export { localRepoService }

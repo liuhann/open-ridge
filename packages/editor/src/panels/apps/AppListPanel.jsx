@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import './app-list.less'
-import { Button, Modal, Typography, Empty, Space } from '@douyinfe/semi-ui'
+import { Button, Modal, Typography, Empty, Space, Dropdown, Menu } from '@douyinfe/semi-ui'
 import CreateAppDialog from './CreateAppDialog.jsx'
 import appStore from '../../store/app.store.js'
 import selectZipFile from '../../utils/selectFileUpload.js'
 
-import { ICON_COMMON_PLUS } from '../../icons/icons.js'
+import { ICON_COMMON_PLUS, ICON_COMMON_DOT_VERT } from '../../icons/icons.js'
 import TitleBar from '../../components/TitleBar/TitleBar.jsx'
 
 const { Text, Title } = Typography
@@ -23,6 +23,7 @@ const AppListPanel = () => {
   const appList = appStore((state) => state.appList)
   const openApp = appStore((state) => state.openApp)
   const trashApp = appStore((state) => state.trashApp)
+  const exportApp = appStore((state) => state.exportApp)
   const importAppFile = appStore((state) => state.importAppFile)
   const createEmptyApp = appStore((state) => state.createEmptyApp)
 
@@ -137,25 +138,53 @@ const AppListPanel = () => {
                 e.preventDefault()
               }}
             >
-              <div className='app-icon'>📁</div>
+              <div className='app-icon'>{getAppIcon(item.iconUrl)}</div>
               <div className='app-name'>{item.name}</div>
               <div className='app-actions'>
-                <Text
-                  size='small'
-                  type='danger'
-                  onClick={(e) => {
-                    e.stopPropagation()
-                    Modal.confirm({
-                      title: '确认删除？',
-                      content: '应用删除后不可找回，如有需要建议您先导出到本地文件系统保存',
-                      onOk: () => {
-                        trashApp(item.id)
-                      }
-                    })
-                  }}
+                <Dropdown
+                  position='bottomRight'
+                  render={
+                    <Dropdown.Menu>
+                      <Dropdown.Item onClick={e => {
+                        // 导出
+                        e.preventDefault()
+                        e.stopPropagation()
+                        exportApp(item.id)
+                        console.log('导出', item.id)
+                      }}
+                      >
+                        导出
+                      </Dropdown.Item>
+                      <Dropdown.Item onClick={e => {
+                        e.preventDefault()
+                        e.stopPropagation()
+                        // 复制
+                        console.log('复制', item.id)
+                      }}
+                      >
+                        复制
+                      </Dropdown.Item>
+                      <Dropdown.Item
+                        onClick={e => {
+                          e.preventDefault()
+                          e.stopPropagation()
+                          Modal.confirm({
+                            title: '确认删除？',
+                            content: '应用删除后不可找回，如有需要建议您先导出保存',
+                            onOk: () => trashApp(item.id)
+                          })
+                        }} type='danger'
+                      >
+                        删除
+                      </Dropdown.Item>
+                    </Dropdown.Menu>
+                  }
                 >
-                  删除
-                </Text>
+                  {/* 悬浮显示 ... */}
+                  <Typography.Text size='large' type='tertiary'>
+                    {ICON_COMMON_DOT_VERT}
+                  </Typography.Text>
+                </Dropdown>
               </div>
             </div>
           ))}
