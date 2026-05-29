@@ -8,6 +8,7 @@ const ICON_COMMON_DEVICE = <svg xmlns='http://www.w3.org/2000/svg' width='1em' h
 const ICON_COMMON_SEARCH = <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'><path fill='none' stroke='currentColor' strokeLinecap='round' strokeLinejoin='round' strokeWidth='1.5' d='m17 17l4 4m-2-10a8 8 0 1 0-16 0a8 8 0 0 0 16 0' /></svg>
 const ICON_COMMON_USER_PLUS = <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'><g fill='none' stroke='currentColor' strokeLinecap='round' strokeLinejoin='round' strokeWidth='1.5'><path d='M18.5 20v-2.03c0-1.242-.56-2.46-1.69-2.975C15.432 14.366 13.778 14 12 14s-3.431.366-4.81.995c-1.13.515-1.69 1.733-1.69 2.975V20' /><circle cx='12' cy='7.5' r='3.5' /></g></svg>
 const ICON_COMMON_HOME = <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'><g fill='none' stroke='currentColor' strokeLinecap='round' strokeLinejoin='round' strokeWidth='1.5'><path d='m12.892 2.81l8.596 6.785A1.347 1.347 0 0 1 20.653 12H20v3.5c0 2.828 0 4.243-.879 5.121c-.878.879-2.293.879-5.121.879h-4c-2.828 0-4.243 0-5.121-.879C4 19.743 4 18.328 4 15.5V12h-.653a1.347 1.347 0 0 1-.835-2.405l8.596-6.785a1.44 1.44 0 0 1 1.784 0' /><path d='M14.5 21.5V17c0-.935 0-1.402-.201-1.75a1.5 1.5 0 0 0-.549-.549c-.348-.201-.815-.201-1.75-.201s-1.402 0-1.75.201a1.5 1.5 0 0 0-.549.549c-.201.348-.201.815-.201 1.75v4.5' /></g></svg>
+const ICON_COMMON_ARROW_LEFT = <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'><path fill='none' stroke='currentColor' strokeLinecap='round' strokeLinejoin='round' strokeWidth='1.5' d='M5.5 12.002H19m-8 6s-6-4.419-6-6s6-6 6-6' /></svg>
 
 const FILE_MARKDOWN = <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'><g fill='none' stroke='currentColor' strokeLinecap='round' strokeLinejoin='round' strokeWidth='1.5'><path d='M2.5 12c0-4.478 0-6.718 1.391-8.109S7.521 2.5 12 2.5c4.478 0 6.718 0 8.109 1.391S21.5 7.521 21.5 12c0 4.478 0 6.718-1.391 8.109S16.479 21.5 12 21.5c-4.478 0-6.718 0-8.109-1.391S2.5 16.479 2.5 12' /><path d='M15.5 10.5S12.922 14 12 14s-3.5-3.5-3.5-3.5m3.5 3V7M8.5 17h7' /></g></svg>
 const FILE_FOLDER = <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'><path fill='none' stroke='currentColor' strokeLinecap='round' strokeLinejoin='round' strokeWidth='1.5' d='M12.006 18v3.985M20.5 22h-17M8 5.5h4.018m0 0H16c2.828 0 4.243 0 5.121.879C22 7.257 22 8.672 22 11.5v.5c0 2.828 0 4.243-.879 5.121C20.243 18 18.828 18 16 18H8c-2.828 0-4.243 0-5.121-.879C2 16.243 2 14.828 2 12V6.959c0-1.83 0-2.745.386-3.43a3 3 0 0 1 1.142-1.143C4.213 2 5.128 2 6.958 2c.982 0 1.472 0 1.917.142a3 3 0 0 1 .874.448c.376.279.662.677 1.235 1.473z' /></svg>
@@ -46,6 +47,7 @@ export {
   ICON_COMMON_EXPORT_ZIP,
   ICON_COMMON_DEVICE,
   ICON_COMMON_PLUS_SQUARE,
+  ICON_COMMON_ARROW_LEFT,
 
   ICON_EYE,
   ICON_EYE_CLOSE,

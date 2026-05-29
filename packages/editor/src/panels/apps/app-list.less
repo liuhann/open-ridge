@@ -6,18 +6,17 @@
   padding: 24px;
 
   .btn-add-full {
-    background: linear-gradient(278deg, rgb(233, 69, 255), rgb(166, 71, 255) 30%, rgb(107, 97, 255) 60%, rgb(46, 140, 255));
+    // background: linear-gradient(278deg, rgb(233, 69, 255), rgb(166, 71, 255) 30%, rgb(107, 97, 255) 60%, rgb(46, 140, 255));
     border-radius: 12px;
-    padding: 28px 32px;
+    padding: 38px 32px;
     display: flex;
     align-items:center;
     justify-content: center;
     margin-bottom: 32px;
     cursor: pointer;
     gap: 8px;
-
-    font-size: 26px;
-    font-weight: bold;
+    font-size: 20px;
+    // font-weight: bold;
     color: #fff;
   }
   .panel-desc {
@@ -48,11 +47,13 @@
 
   // 网格布局：每行3个
   .app-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    display: flex;
     gap: 8px;
     width: 100%;
-
+    flex-wrap: wrap;
+    .app-card {
+      width: 120px;
+    }
     :global(.semi-empty) {
       grid-column: 1 / -1;
     }

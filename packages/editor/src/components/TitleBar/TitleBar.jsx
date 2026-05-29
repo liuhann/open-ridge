@@ -5,6 +5,7 @@ import './title-bar.less'
 const { Text } = Typography
 const TitleBar = ({
   onBack,
+  icon,
   title,
   right
 }) => {
@@ -18,6 +19,7 @@ const TitleBar = ({
           theme='borderless' type='tertiary'
           onClick={onBack}
                    />}
+        {icon}
         <Text
           strong style={{
             fontSize: '16px',

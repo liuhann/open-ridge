@@ -310,7 +310,7 @@ const useStore = create((set, get) => ({
       set({
         appList,
         currentAppInfo: pkgJsonObject,
-        currentAppIcon: iconUrl,
+        currentAppIcon: await localRepoService.getAppIcon(currentAppId),
         currentAppName: pkgJsonObject.description
       })
     } catch (err) {

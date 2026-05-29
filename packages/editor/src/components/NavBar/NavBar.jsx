@@ -2,6 +2,7 @@ import React from 'react'
 import moduleStyle from './index.module.less'
 import { Button } from '@douyinfe/semi-ui'
 const NavBar = ({
+  tops,
   style,
   active = 0,
   iconSize,
@@ -12,6 +13,17 @@ const NavBar = ({
 }) => {
   return (
     <div className={moduleStyle.nav} style={style}>
+      {tops && tops.map((n, index) => {
+        return (
+          <Button
+            style={{
+              fontSize: '22px',
+              marginBottom: '12px',
+              padding: '18px 6px'
+            }} theme='borderless' type='tertiary' key={index} size={size} icon={n.icon} iconSize={iconSize || size}
+          />
+        )
+      })}
       <div className={moduleStyle.navList}>
         {navs && navs.map((n, index) => {
           return (

@@ -57,12 +57,13 @@ export const getAppTreeData = (treeData, currentAppName) => {
     }
   })
 
-  return [{
-    key: '-1',
-    label: currentAppName,
-    value: '-1',
-    icon: ICONS.folder,
-    raw: { path: '/', id: -1 },
-    children: fileTree
-  }]
+  return fileTree
+  // return [{
+  //   key: '-1',
+  //   label: currentAppName,
+  //   value: '-1',
+  //   icon: ICONS.folder,
+  //   raw: { path: '/', id: -1 },
+  //   children: fileTree
+  // }]
 }

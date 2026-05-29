@@ -9,14 +9,6 @@ import { ICON_COMMON_PLUS_SQUARE, ICON_COMMON_DOT_VERT, ICON_COMMON_PLUS } from 
 
 const { Text, Title } = Typography
 
-const getAppIcon = (item) => {
-  if (typeof item === 'string') {
-    return <img src={item} />
-  } else {
-    return item
-  }
-}
-
 const AppListPanel = () => {
   const [createDialogVisible, setCreateDialogVisible] = useState(false)
   const appList = appStore((state) => state.appList)
@@ -47,22 +39,7 @@ const AppListPanel = () => {
   return (
     <div className='app-list-panel'>
       {/* 顶部：开始创作（横贯式） */}
-      <div
-        className='btn-add-full'
-        style={{
-          background: 'linear-gradient(278deg, rgb(233, 69, 255), rgb(166, 71, 255) 30%, rgb(107, 97, 255) 60%, rgb(46, 140, 255))',
-          borderRadius: 12,
-          padding: '28px 32px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          marginBottom: 32,
-          cursor: 'pointer'
-        }}
-        onClick={() => setCreateDialogVisible(true)}
-      >
-        {ICON_COMMON_PLUS_SQUARE} <Title heading={4} style={{ color: '#fff' }}> 开始创作</Title>
-      </div>
+      <Button className='btn-add-full' onClick={() => setCreateDialogVisible(true)} icon={ICON_COMMON_PLUS_SQUARE} block colorful theme='solid' type='primary'>开始创作</Button>
 
       {/* 顶部标题 + 操作 */}
       {/* <TitleBar
@@ -129,7 +106,7 @@ const AppListPanel = () => {
                 className='app-card'
                 onClick={() => openApp(item.id)}
               >
-                <div className='app-icon'>{getAppIcon(item.iconUrl)}</div>
+                <div className='app-icon'>{item.iconUrl}</div>
                 <div className='app-name'>{item.name}</div>
                 <div className='app-desc'>最近打开</div>
               </div>
@@ -155,7 +132,7 @@ const AppListPanel = () => {
                 e.preventDefault()
               }}
             >
-              <div className='app-icon'>{getAppIcon(item.iconUrl)}</div>
+              <div className='app-icon'>{item.iconUrl}</div>
               <div className='app-name'>{item.name}</div>
               <div className='app-actions'>
                 <Dropdown

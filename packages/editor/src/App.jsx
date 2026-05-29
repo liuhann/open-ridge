@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import Editor from './Editor.jsx'
 import Home from './home/RidgeHome.jsx'
 import appStore from './store/app.store.js'
@@ -12,9 +12,9 @@ const App = () => {
   }, [])
 
   if (!currentAppId) {
-    return <Home />
+    return <Home key='home' />
   } else {
-    return <Editor />
+    return <Editor key={currentAppId} />
   }
 }
 

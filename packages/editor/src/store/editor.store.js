@@ -246,7 +246,10 @@ const editorStore = create((set, get) => ({
     pageZoomMap.clear()
     pageTransformMap.clear()
     set({
+      editorComposite: null,
+      currentEditNodeId: '',
       currentOpenPageId: null,
+      zoom: 1,
       unsavedPages: [],
       openedPages: []
     })

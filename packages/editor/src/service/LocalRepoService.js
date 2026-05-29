@@ -136,7 +136,12 @@ export default class LocalRepoService {
 
   async getAppIcon (id) {
     const iconUrl = await this.store.getItem(id)
-    return iconUrl || ICON_APP_DEFAULT
+
+    if (typeof iconUrl === 'string') {
+      return <img src={iconUrl} />
+    } else {
+      return ICON_APP_DEFAULT
+    }
   }
 
   async getLocalAppList () {
@@ -144,8 +149,7 @@ export default class LocalRepoService {
       const appList = await this.collection.find({})
 
       for (const app of appList) {
-        const iconUrl = await this.store.getItem(app.id)
-        app.iconUrl = iconUrl || ICON_APP_DEFAULT
+        app.iconUrl = await this.getAppIcon(app.id)
       }
 
       return appList

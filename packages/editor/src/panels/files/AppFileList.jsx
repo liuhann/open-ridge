@@ -13,6 +13,9 @@ import { ICON_COMMON_PLUS, ICON_COMMON_GEAR, ICON_COMMON_DOT_VERT, ICON_COMMON_E
 import PackageJsonEditorModal from '../apps/PackageJsonEditorModal.jsx'
 import { getAppTreeData } from './utils.js'
 import TitleBar from '../../components/TitleBar/TitleBar.jsx'
+import './index.less'
+import AIGenerateModal from '../ai/AIGenneratModal.jsx'
+
 const { Text } = Typography
 
 const ACCEPT_FILES = '.svg,.png,.jpg,.json,.css,.js,.md,.webp,.zip,.gif'
@@ -28,6 +31,7 @@ const AppFileList = () => {
   const [treeData, setTreeData] = useState([])
 
   const [appModalEditVisible, setAppModalEditVisible] = useState(false)
+  const [modalVisible, setModalVisible] = useState(false)
 
   const currentAppName = appStore((state) => state.currentAppName)
   const currentAppIcon = appStore((state) => state.currentAppIcon)
@@ -269,7 +273,7 @@ const AppFileList = () => {
               {data.key === '-1' && <div className='more-button'>{ICON_COMMON_PLUS}</div>}
               {data.key !== '-1' && <div className='more-button hover-show'>{ICON_COMMON_DOT_VERT}</div>}
             </Dropdown>
-            </>}
+          </>}
         {/* <Text
           onClick={() => {
             const now = new Date().getTime()
@@ -327,27 +331,14 @@ const AppFileList = () => {
     setCurrentSelected(node)
   }
 
-  const confirmExitToAppList = async () => {
-    if (openedPages.length) {
-      Modal.confirm({
-        title: '离开应用',
-        content: '确认离开应用并且关闭当前所有打开的页面',
-        onOk: async () => {
-          await closeAllPages()
-          exitToAppList()
-        }
-      })
-    } else {
-      exitToAppList()
-    }
-  }
-
   // 渲染逻辑
   return (
-    <div className='left-panel'>
+    <div className='left-panel app-file-list'>
       {/* 顶部标题栏：优化对齐，参考提供的样式 */}
       <TitleBar
-        onBack={confirmExitToAppList} title='应用文件管理'
+        // onBack={confirmExitToAppList}
+        icon={currentAppIcon}
+        title={currentAppName}
         right={
           <Button
             style={{
@@ -360,7 +351,6 @@ const AppFileList = () => {
           />
         }
       />
-
       <PackageJsonEditorModal
         visible={appModalEditVisible}
         onClose={() => setAppModalEditVisible(false)}
@@ -375,49 +365,38 @@ const AppFileList = () => {
         }}
       />
 
-      <ResizeGroup direction='vertical'>
-        <ResizeItem
-          defaultSize='60%'
-          style={{
-            overflowY: 'auto'
-          }}
-        >
-          <Tree
-            autoExpandParent
-            className='file-tree'
-            showFilteredOnly
-            draggable
-            defaultExpandedKeys={['-1']}
-            renderLabel={renderFullLabel}
-            treeData={treeData}
-            onDrop={({ node, dragNode, dropPosition, dropToGap }) => {
-              move(node, dragNode, dropToGap)
-            }}
-            onDoubleClick={(ev, node) => {
-              onOpenClicked(node)
-            }}
-            onSelect={(key, selected, node) => {
-              onNodeSelect(node)
-            }}
-          />
-        </ResizeItem>
-        <ResizeHandler
-          size='small' style={{
-            height: 4,
-            background: 'var(--semi-color-bg-0)',
-            zIndex: 99
-          }}
-        >
-          <div />
-        </ResizeHandler>
-        <ResizeItem
-          defaultSize='40%' style={{
-            borderTop: '1px solid var(--semi-color-border)',
-            overflowY: 'auto'
-          }}
-        />
+      <AIGenerateModal
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        onFinish={(data) => {
+          console.log('用户完成了向导，数据：', data)
+          // 在这里做提交、保存逻辑
+        }}
+      />
+      <div className='buttons-bar'>
+        <Button colorful theme='solid' type='tertiary' onClick={() => setModalVisible(true)}>创建页面</Button>
+        <RenderCreateDropDown />
+      </div>
+      <Tree
+        autoExpandParent
+        showRoo
+        className='file-tree'
+        showFilteredOnly
+        draggable
+        defaultExpandedKeys={['-1']}
+        renderLabel={renderFullLabel}
+        treeData={treeData}
+        onDrop={({ node, dragNode, dropPosition, dropToGap }) => {
+          move(node, dragNode, dropToGap)
+        }}
+        onDoubleClick={(ev, node) => {
+          onOpenClicked(node)
+        }}
+        onSelect={(key, selected, node) => {
+          onNodeSelect(node)
+        }}
+      />
 
-      </ResizeGroup>
     </div>
   )
 }
