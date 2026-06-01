@@ -27,7 +27,7 @@ class Loader {
     this.loadCss = loadCss
   }
 
-  getRegistry () {
+  getRegistryPackages () {
     return this.registryPackages
   }
 

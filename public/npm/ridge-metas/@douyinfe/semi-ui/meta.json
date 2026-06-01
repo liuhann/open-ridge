@@ -1,7 +1,7 @@
 {
   "name": "@douyinfe/semi-ui",
   "schemaVersion": "2.0",
-  "lastUpdated": "2026-06-01T01:29:03.113Z",
+  "lastUpdated": "2026-06-01T08:40:36.345Z",
   "generatedBy": "ridge-ui-cli",
   "components": [
     {
@@ -239,7 +239,7 @@
           "description": "是否展示边框，仅在非全屏模式下有效",
           "label": "展示边框",
           "type": "boolean",
-          "defaultValue": false
+          "defaultValue": true
         },
         {
           "name": "className",
@@ -253,7 +253,7 @@
           "description": "是否为全屏模式",
           "label": "全屏模式",
           "type": "boolean",
-          "defaultValue": true
+          "defaultValue": false
         },
         {
           "name": "style",
@@ -273,7 +273,7 @@
           "description": "横幅描述内容",
           "label": "描述",
           "type": "string",
-          "defaultValue": ""
+          "defaultValue": "警告"
         },
         {
           "name": "type",
@@ -299,7 +299,7 @@
               "value": "warning"
             }
           ],
-          "defaultValue": "info"
+          "defaultValue": "danger"
         }
       ],
       "events": [

@@ -1,45 +1,58 @@
 import React, { useState, useEffect, useMemo } from 'react'
 import { Tabs, Input, Checkbox, Typography, Tag, Icon } from '@douyinfe/semi-ui'
 import ComponentItemCard from '../ComponentItem/ComponentItemCard.jsx'
+import SelectedComponentPopOver from './SelectedComponentPopOver.jsx'
 import { ICON_COMMON_SEARCH } from '../../icons/icons.js'
 // 引入 module.less
 import styles from './ComponentMultiSelectPanel.module.less'
+import { getIconUrl } from '../../panels/component/componentUtils.js'
+import componentStore from '../../store/component.store.js'
 
 const { Text } = Typography
 const TabPane = Tabs.TabPane
 
 const ComponentMultiSelectPanel = ({
-  componentLibs = [],
-  componentDataMap = {},
-  libMetas = {},
   onSelectionChange,
   defaultSelected = []
 }) => {
+  const componentLibList = componentStore(state => state.componentLibList)
+  const getComponentLibMeta = componentStore(state => state.getComponentLibMeta)
+
   const [activeLib, setActiveLib] = useState('')
-  const [filterKeyword, setFilterKeyword] = useState('')
   const [selectedComponents, setSelectedComponents] = useState(defaultSelected)
+  const [componentLibMeta, setComponentLibMeta] = useState({})
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
+
+  const [libComponents, setLibComponents] = useState([])
 
   useEffect(() => {
-    if (componentLibs.length > 0 && !activeLib) {
-      setActiveLib(componentLibs[0].module)
+    if (componentLibList.length > 0 && !activeLib) {
+      setActiveLib(componentLibList[0].module)
     }
-  }, [componentLibs])
+  }, [componentLibList])
 
-  const currentComponents = useMemo(() => {
-    return componentDataMap[activeLib] || []
-  }, [activeLib, componentDataMap])
+  const onLibChange = async moduleName => {
+    setActiveLib(moduleName)
+    setLoading(true)
+    setError(null)
 
-  const filteredComponents = useMemo(() => {
-    if (!filterKeyword) return currentComponents
-    const kw = filterKeyword.toLowerCase()
-    return currentComponents.filter(comp => {
-      const title = (comp.title || comp.name || '').toLowerCase()
-      return title.includes(kw)
-    })
-  }, [currentComponents, filterKeyword])
+    try {
+      const componentLibMeta = await getComponentLibMeta(moduleName)
+      const mockComponents = componentLibMeta.components
+      setComponentLibMeta(componentLibMeta)
+      setLibComponents(mockComponents)
+    } catch (err) {
+      setLibComponents([])
+      setError(`加载组件库失败: ${err.message}`)
+      console.error('加载组件库失败:', err)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   const toggleComponent = (comp) => {
-    const key = `${activeLib}/${comp.name}`
+    const key = `${comp.packageName}/${comp.name}`
     const isSelected = selectedComponents.some(item => item.key === key)
 
     let newSelected
@@ -49,14 +62,13 @@ const ComponentMultiSelectPanel = ({
       newSelected = [
         ...selectedComponents,
         {
+          ...comp,
           key,
-          lib: activeLib,
-          libTitle: libMetas[activeLib]?.title || activeLib,
-          comp
+          libTitle: componentLibMeta.libEntry.title,
+          title: comp.title
         }
       ]
     }
-
     setSelectedComponents(newSelected)
     onSelectionChange?.(newSelected)
   }
@@ -66,74 +78,66 @@ const ComponentMultiSelectPanel = ({
     return selectedComponents.some(item => item.key === key)
   }
 
-  const selectedGroup = useMemo(() => {
-    return selectedComponents.reduce((acc, cur) => {
-      acc[cur.lib] = acc[cur.lib] || []
-      acc[cur.lib].push(cur)
-      return acc
-    }, {})
-  }, [selectedComponents])
-
   return (
     // 改用 styles.xxx
-    <div className={styles.componentMultiSelectPanel} style={{ width: 900, height: 320 }}>
-      <Tabs
-        type='scrollable'
-        activeKey={activeLib}
-        onChange={setActiveLib}
-      >
-        {componentLibs.map(lib => (
-          <TabPane
-            tab={lib.title}
-            key={lib.module}
-          />
-        ))}
-      </Tabs>
+    <div className={styles.componentMultiSelectPanel}>
+      <div className={styles.componentMultiSelectPanelTabs}>
+        <Tabs
+          type='button'
+          collapsible='auto'
+          activeKey={activeLib}
+          onChange={onLibChange}
+        >
+          {componentLibList.map(lib => (
+            <TabPane
+              tab={
+                <span className={styles.tabPane}>
+                  <img className={styles.imageIcon} src={getIconUrl(lib)} />
+                </span>
+              }
+              itemKey={lib.module}
+              key={lib.module}
+            />
+          ))}
+        </Tabs>
+        <SelectedComponentPopOver toggleComponent={toggleComponent} selectedComponents={selectedComponents} />
+      </div>
 
       <div className={styles.componentListWrapper}>
-        <Input
-          placeholder='搜索组件…'
-          value={filterKeyword}
-          showClear
-          onChange={setFilterKeyword}
-          prefix={<Icon svg={ICON_COMMON_SEARCH} />}
-          style={{ marginBottom: 10 }}
-        />
-
         <div className={styles.componentGrid}>
-          {filteredComponents.map(comp => (
+          {libComponents.map(comp => (
             <div key={comp.name} className={styles.componentSelectItem}>
               <Checkbox checked={isSelected(comp)} onChange={() => toggleComponent(comp)} />
               <ComponentItemCard
-                packageName={activeLib}
+                packageName={componentLibMeta.module}
                 item={comp}
                 onItemClick={() => toggleComponent(comp)}
               />
             </div>
           ))}
 
-          {filteredComponents.length === 0 && (
+          {libComponents.length === 0 && (
             <div className={styles.emptyTip}>暂无匹配组件</div>
           )}
         </div>
       </div>
 
-      <div className={styles.selectedFooter}>
+      {/* <div className={styles.selectedFooter}>
         <Text strong>已选组件：</Text>
         <div className={styles.selectedTags}>
           {Object.entries(selectedGroup).map(([lib, items]) => (
             <React.Fragment key={lib}>
               <Text type='tertiary' className={styles.libLabel}>
-                {libMetas[lib]?.title || lib}：
+                {lib}：
               </Text>
               {items.map(item => (
                 <Tag
                   key={item.key}
                   size='small'
                   closable
-                  onClose={() => toggleComponent(item.comp)}
+                  onClose={() => toggleComponent(item)}
                 >
-                  {getDisplayName(item.comp)}
+                  {item.title}
                 </Tag>
               ))}
             </React.Fragment>
@@ -143,7 +147,7 @@ const ComponentMultiSelectPanel = ({
             <Text type='tertiary'>未选择任何组件</Text>
           )}
         </div>
-      </div>
+      </div> */}
     </div>
   )
 }

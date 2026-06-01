@@ -7,10 +7,11 @@ import componentStore from './store/component.store.js'
 const App = () => {
   const initAppStore = appStore((state) => state.initAppStore)
   const currentAppId = appStore((state) => state.currentAppId)
-  const init = componentStore((state) => state.init)
+  const initRegistry = componentStore((state) => state.initRegistry)
 
   useEffect(() => {
     initAppStore()
+    initRegistry()
   }, [])
 
   if (!currentAppId) {

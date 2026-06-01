@@ -7,7 +7,7 @@ class ComponentRegistry {
       return ComponentRegistry.instance
     }
 
-    this.registry = []
+    this.registryPackages = []
     this.loadedLibs = new Map() // 缓存已加载的库元数据
     this.loadedComponents = new Map() // 缓存组件定义
     this.initialized = false
@@ -19,31 +19,27 @@ class ComponentRegistry {
     if (this.initialized) return
 
     await loader.confirmExternalsMemoized()
-    this.registry = loader.getRegistry()
+    this.registryPackages = loader.getRegistryPackages()
     this.initialized = true
   }
 
-  async loadLibMeta (libName) {
+  async getComponentLibMeta (componentLibName) {
+    const componentLib = this.registryPackages.find(it => it.module === componentLibName)
+
+    const metaPath = componentLib.meta || `ridge-metas/${componentLib.module}/meta.json`
+
     // 如果已加载，直接返回缓存的元数据
-    if (this.loadedLibs.has(libName)) {
-      return this.loadedLibs.get(libName)
-    }
-
-    // 在注册表中查找库
-    const libItem = this.registry.find(item => item.module === libName)
-    if (!libItem) {
-      throw new Error(`组件库 ${libName} 未在注册表中找到`)
-    }
-
-    if (!libItem.meta) {
-      throw new Error(`组件库 ${libName} 没有定义元数据文件`)
+    if (this.loadedLibs.has(componentLib.module)) {
+      return this.loadedLibs.get(componentLib.module)
     }
 
     // 加载元数据
-    const meta = await loader.loadJSON(libItem.meta)
+    const meta = await loader.loadJSON(metaPath)
+
+    Object.assign(meta, { libEntry: componentLib })
 
     // 缓存结果
-    this.loadedLibs.set(libName, meta)
+    this.loadedLibs.set(componentLib.module, meta)
 
     // 预缓存所有组件定义
     if (meta.components && Array.isArray(meta.components)) {
@@ -52,7 +48,7 @@ class ComponentRegistry {
         component.packageName = meta.name
         componentCache.set(component.name, component)
       })
-      this.loadedComponents.set(libName, componentCache)
+      this.loadedComponents.set(componentLib.module, componentCache)
     }
 
     return meta
@@ -128,8 +124,8 @@ class ComponentRegistry {
     return this.loadedLibs.has(libName)
   }
 
-  getRegistry () {
-    return [...this.registry]
+  getRegistryPackages () {
+    return [...this.registryPackages]
   }
 
   getLoadedLibs () {

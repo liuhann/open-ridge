@@ -1,15 +1,31 @@
 .componentMultiSelectPanel {
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
-  border: 1px solid var(--semi-color-border);
-  border-radius: 8px;
   padding: 12px;
   background: #fff;
   box-sizing: border-box;
   overflow: hidden;
 
+  .componentMultiSelectPanelTabs {
+    display: flex;
+    justify-content: space-between;
+
+  }
+  .tabPane {
+    .imageIcon {
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  :global(.semi-tabs-content) {
+    padding: 0;
+  }
+
   :global(.semi-tabs) {
-    margin-bottom: 12px;
+    margin-bottom: 2px;
   }
 }
 
@@ -53,22 +69,30 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  padding-top: 10px;
-  margin-top: 10px;
-  border-top: 1px solid var(--semi-color-border);
   overflow: hidden;
 }
 
 .selectedTags {
   display: flex;
+  max-width: 480px;
   align-items: center;
+  padding: 12px;
   gap: 6px;
   flex-wrap: nowrap;
   overflow-x: auto;
-  padding-bottom: 4px;
+  .libLabel {
+    margin-bottom: 12px;
+  }
+  .libGroup {
+    .selectedList {
+      margin-top: 12px;
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+  }
 }
 
 .libLabel {
   margin-left: 4px;
-  white-space: nowrap;
 }

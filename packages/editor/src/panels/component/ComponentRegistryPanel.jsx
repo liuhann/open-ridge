@@ -1,11 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react'
 import { Button, Empty, Spin, Typography, Tag, Input, Icon } from '@douyinfe/semi-ui'
 import { CATEGORIES, getDisplayName } from './componentUtils'
-import componentRegistry from '../../service/ComponentRegistry'
 import ComponentLibCard from './ComponentLibCard.jsx'
 import ComponentItemCard from '../../components/ComponentItem/ComponentItemCard.jsx'
 import CategoryHeader from './CategoryHeader.jsx'
 import TitleBar from '../../components/TitleBar/TitleBar.jsx'
+import componentStore from '../../store/component.store'
 import './ComponentRegistryPanel.less'
 import { ICON_COMMON_SEARCH } from '../../icons/icons.js'
 
@@ -17,28 +17,13 @@ const ComponentRegistryPanel = () => {
   const [libComponents, setLibComponents] = useState([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
-  const [componentData, setComponentData] = useState([])
   const [componentLibMeta, setComponentLibMeta] = useState({})
   // 搜索过滤关键词
   const [filterKeyword, setFilterKeyword] = useState('')
+  const componentLibList = componentStore(state => state.componentLibList)
+  const getComponentLibMeta = componentStore(state => state.getComponentLibMeta)
 
-  useEffect(() => {
-    // 初始化组件注册表
-    const initRegistry = async () => {
-      try {
-        await componentRegistry.init()
-        const reg = componentRegistry.getRegistry()
-        const filteredRegistry = reg.filter(item => item.category !== 'base')
-        setComponentData(filteredRegistry)
-      } catch (err) {
-        console.error('初始化组件注册表失败:', err)
-      }
-    }
-
-    initRegistry()
-  }, [])
-
-  const groupedData = componentData.reduce((acc, item) => {
+  const groupedData = componentLibList.reduce((acc, item) => {
     if (!acc[item.category]) {
       acc[item.category] = []
     }
@@ -46,18 +31,14 @@ const ComponentRegistryPanel = () => {
     return acc
   }, {})
 
-  const loadLibComponents = useCallback(async (libItem) => {
-    if (!libItem.meta) {
-      libItem.meta = `ridge-metas/${libItem.module}/meta.json`
-    }
-
+  const loadLibComponents = async (libItem) => {
     setLoading(true)
     setError(null)
     setCurrentLib(libItem)
     setFilterKeyword('') // 切换库时清空搜索
 
     try {
-      const componentLibMeta = await componentRegistry.loadLibMeta(libItem.module)
+      const componentLibMeta = await getComponentLibMeta(libItem.module)
       const mockComponents = componentLibMeta.components
 
       setComponentLibMeta(componentLibMeta)
@@ -69,7 +50,7 @@ const ComponentRegistryPanel = () => {
     } finally {
       setLoading(false)
     }
-  }, [])
+  }
 
   const handleBackToLibs = () => {
     setCurrentView('libs')
@@ -120,7 +101,7 @@ const ComponentRegistryPanel = () => {
 
       <div className='component-grid-footer'>
         <Text className='component-grid-count'>
-          已加载 {componentData.length} 个组件库 | 悬停查看详情
+          已加载 {componentLibList.length} 个组件库 | 悬停查看详情
         </Text>
       </div>
     </>

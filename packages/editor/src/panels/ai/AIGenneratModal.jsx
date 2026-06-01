@@ -7,6 +7,8 @@ const { Title, Text } = Typography
 export default function AIGenerateModal (props) {
   const { visible, onClose, onFinish } = props
 
+  const [selectedComponents, setSelectedComponents] = useState([])
+
   const [current, setCurrent] = useState(0)
   const [prompt, setPrompt] = useState('')
   const [copyText, setCopyText] = useState('')
@@ -84,10 +86,17 @@ export default function AIGenerateModal (props) {
           {/* ========== 第一步 ========== */}
           {current === 0 && (
             <div>
-              <Title heading={6}>第一步：输入应用提示词</Title>
-              <Text type='tertiary' style={{ marginBottom: 16, display: 'block' }}>
-                描述你想要生成的应用，下方可选择组件库
-              </Text>
+              <div style={{
+                display: 'flex',
+                gap: '20px',
+                alignItems: 'bottom'
+              }}
+              >
+                <Title heading={6}>第一步：输入应用提示词</Title>
+                <Text type='tertiary' style={{ marginBottom: 16, display: 'block' }}>
+                  描述你想要生成的应用，下方可选择组件库
+                </Text>
+              </div>
 
               <TextArea
                 placeholder='请输入提示词，例如：生成一个数据可视化大屏'
@@ -97,9 +106,17 @@ export default function AIGenerateModal (props) {
                 style={{ marginBottom: 20 }}
               />
 
-              <Title heading={6} style={{ marginBottom: 12 }}>
-                选择组件库（待实现）
-              </Title>
+              <div style={{
+                display: 'flex',
+                gap: '20px',
+                alignItems: 'bottom'
+              }}
+              >
+                <Title heading={6} style={{ marginBottom: 12 }}>
+                  选择组件库
+                </Title>
+              </div>
+
               <div
                 style={{
                   height: 320,
@@ -108,7 +125,11 @@ export default function AIGenerateModal (props) {
                   marginBottom: 20
                 }}
               >
-                <ComponentMultiSelectPanel />
+                <ComponentMultiSelectPanel
+                  defaultSelected={selectedComponents} onSelectionChange={selected => {
+                    setSelectedComponents(selected)
+                  }}
+                />
               </div>
               <Space>
                 <Button onClick={handleClose}>取消</Button>

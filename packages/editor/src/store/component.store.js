@@ -4,55 +4,23 @@ import componentRegistry from '../service/ComponentRegistry'
 
 const componentStore = create((set, get) => ({
   registry: [],
-  // 缓存已加载的库元数据
-  loadedLibs: new Map(),
-  // 缓存组件定义
-  loadedComponents: new Map(),
+  componentLibList: [], // 组件库列表信息
 
-  init: async () => {
+  initRegistry: async () => {
     await componentRegistry.init()
 
-    // await loader.confirmExternalsMemoized()
-    // set({
-    //   registry: loader.getRegistry()
-    // })
+    const registryPackages = componentRegistry.getRegistryPackages()
+    const filteredRegistry = registryPackages.filter(item => item.category !== 'base')
+
+    set({
+      componentLibList: filteredRegistry
+    })
   },
 
-  loadLib: async libName => {
-    const { loadedLibs, registry } = get()
+  getComponentLibMeta: async componentLib => {
+    const libMeta = await componentRegistry.getComponentLibMeta(componentLib)
 
-    // 如果已加载，直接返回缓存的元数据
-    if (loadedLibs.has(libName)) {
-      return loadedLibs.get(libName)
-    }
-
-    // 在注册表中查找库
-    const libItem = registry.find(item => item.module === libName)
-    if (!libItem) {
-      throw new Error(`组件库 ${libName} 未在注册表中找到`)
-    }
-
-    if (!libItem.meta) {
-      throw new Error(`组件库 ${libName} 没有定义元数据文件`)
-    }
-
-    // 加载元数据
-    const meta = await loader.loadJSON(libItem.meta)
-
-    // 缓存结果
-    loadedLibs.set(libName, meta)
-
-    // 预缓存所有组件定义
-    if (meta.components && Array.isArray(meta.components)) {
-      const componentCache = new Map()
-      meta.components.forEach(component => {
-        componentCache.set(component.name, component)
-      })
-      get().loadedComponents.set(libName, componentCache)
-    }
-
-    set({ loadedLibs })
-    return meta
+    return libMeta
   },
 
   getLibComponent: async (componentPath) => {

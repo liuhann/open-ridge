@@ -1,30 +1,32 @@
 // components/PopoverDetailContent.jsx
-import React from 'react';
-import { Typography } from '@douyinfe/semi-ui';
-import { loader } from 'ridgejs';
-import { getDisplayName, getInitial, getIconUrl, estimateBundleSize, CATEGORIES } from './componentUtils.js';
+import React from 'react'
+import { Typography } from '@douyinfe/semi-ui'
+import { loader } from 'ridgejs'
+import { getDisplayName, getInitial, getIconUrl, estimateBundleSize, CATEGORIES } from './componentUtils.js'
 
-const { Text } = Typography;
+const { Text } = Typography
 
 const PopoverDetailContent = ({ item }) => {
-  const displayName = getDisplayName(item);
-  const version = item.version || '未知';
-  const iconUrl = getIconUrl(item);
-  const dependencies = item.dependencies || [];
-  const bundleSize = estimateBundleSize(item.dist);
-  const categoryInfo = CATEGORIES[item.category] || {};
+  const displayName = getDisplayName(item)
+  const version = item.version || '未知'
+  const iconUrl = getIconUrl(item)
+  const dependencies = item.dependencies || []
+  const bundleSize = estimateBundleSize(item.dist)
+  const categoryInfo = CATEGORIES[item.category] || {}
 
   return (
     <div className='popover-detail'>
       <div className='popover-detail-header'>
         <div className='popover-detail-title'>
-          {iconUrl ? (
-            <img src={iconUrl} alt={displayName} className='popover-detail-icon' />
-          ) : (
-            <div className='popover-detail-icon'>
-              {getInitial(displayName)}
-            </div>
-          )}
+          {iconUrl
+            ? (
+              <img src={iconUrl} alt={displayName} className='popover-detail-icon' />
+              )
+            : (
+              <div className='popover-detail-icon'>
+                {getInitial(displayName)}
+              </div>
+              )}
           <div>
             <h3 className='popover-detail-name'>{displayName}</h3>
             <div className='popover-detail-meta'>
@@ -84,13 +86,15 @@ const PopoverDetailContent = ({ item }) => {
         <div className='popover-detail-section'>
           <h4 className='popover-detail-section-title'>组件示例</h4>
           <div className='popover-detail-image'>
-            {item.splash ? (
-              <img src={loader.addUrlPrefix(item.splash)} alt={`${displayName}示例`} />
-            ) : (
-              <div className='image-placeholder'>
-                暂无示例图片
-              </div>
-            )}
+            {item.splash
+              ? (
+                <img src={loader.addUrlPrefix(item.splash)} alt={`${displayName}示例`} />
+                )
+              : (
+                <div className='image-placeholder'>
+                  暂无示例图片
+                </div>
+                )}
           </div>
         </div>
       </div>
@@ -101,7 +105,7 @@ const PopoverDetailContent = ({ item }) => {
         </Text>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default PopoverDetailContent;
+export default PopoverDetailContent
