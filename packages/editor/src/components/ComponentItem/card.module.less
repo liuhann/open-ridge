@@ -1,0 +1,123 @@
+.root {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--semi-color-bg-1);
+  border: 1px solid var(--semi-color-border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  gap: 8px;
+  padding: 8px;
+  box-sizing: border-box;
+
+  /* 👇 强制卡片本身不被内容撑大 */
+  contain: layout paint size;
+}
+
+/* 👇 最关键：组件渲染容器 —— 固定宽高 + 隐藏溢出 */
+.renderContainer {
+  position: relative;
+  width: 100%;
+  height: 80px;      /* 固定高度，你可以自己调 */
+  overflow: hidden;  /* 超出隐藏 */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  contain: layout paint size;
+}
+
+/* 👇 组件内容等比缩放容器 */
+.scaleWrapper {
+  transform-origin: center center;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 下面保持不变 */
+.content {
+  width: 100%;
+  text-align: center;
+  height: 22px;
+}
+.name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--semi-color-text-0);
+  margin: 0 0 4px 0;
+  line-height: 1.4;
+  word-break: break-word;
+  max-height: 2.8em;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.hoverOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(var(--semi-color-primary), 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  .semi-typography {
+    color: white;
+    font-weight: 500;
+    font-size: 12px;
+  }
+}
+.root:hover .hoverOverlay {
+  opacity: 1;
+}
+.tooltip {
+  max-width: 250px;
+  padding: 12px;
+}
+.tooltipHeader {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.tooltipThumbnail {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  object-fit: cover;
+}
+.tooltipTitle {
+  margin: 0;
+  font-size: 14px;
+  color: var(--semi-color-text-0);
+}
+.tooltipDescription {
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--semi-color-text-1);
+  margin-bottom: 8px;
+}
+.tooltipTags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+.tooltipTag {
+  font-size: 11px;
+  padding: 2px 6px;
+  background: var(--semi-color-fill-0);
+  border-radius: 4px;
+  color: var(--semi-color-text-2);
+}

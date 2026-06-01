@@ -3,7 +3,7 @@ import { Button, Empty, Spin, Typography, Tag, Input, Icon } from '@douyinfe/sem
 import { CATEGORIES, getDisplayName } from './componentUtils'
 import componentRegistry from '../../service/ComponentRegistry'
 import ComponentLibCard from './ComponentLibCard.jsx'
-import ComponentItemCard from './ComponentItemCard.jsx'
+import ComponentItemCard from '../../components/ComponentItem/ComponentItemCard.jsx'
 import CategoryHeader from './CategoryHeader.jsx'
 import TitleBar from '../../components/TitleBar/TitleBar.jsx'
 import './ComponentRegistryPanel.less'

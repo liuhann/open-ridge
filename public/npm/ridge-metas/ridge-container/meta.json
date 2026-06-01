@@ -1,7 +1,7 @@
 {
   "name": "ridge-container",
   "schemaVersion": "2.0",
-  "lastUpdated": "2026-05-25T03:57:28.074Z",
+  "lastUpdated": "2026-06-01T01:29:03.120Z",
   "generatedBy": "ridge-ui-cli",
   "components": [
     {
@@ -176,14 +176,14 @@
         },
         {
           "name": "autoWidth",
-          "description": "子项在主轴上的伸缩比例（例如 1, 2, \"none\"）",
+          "description": "设置后，子节点宽度根据内容自动变化",
           "label": "宽度自动",
           "control": "boolean",
           "type": "boolean"
         },
         {
           "name": "autoHeight",
-          "description": "子项在主轴上的伸缩比例（例如 1, 2, \"none\"）",
+          "description": "设置后，子节点高度根据内容自动变化",
           "label": "高度自动",
           "control": "boolean",
           "type": "boolean"

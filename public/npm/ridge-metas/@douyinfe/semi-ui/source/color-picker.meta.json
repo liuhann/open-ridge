@@ -12,8 +12,8 @@
   "version": "1.0.0",
   "author": "LiuHan",
   "visualConfig": {
-    "preferredWidth": 280,
-    "preferredHeight": 320,
+    "preferredWidth": 26,
+    "preferredHeight": 26,
     "resizable": true,
     "aspectRatio": "no"
   },
@@ -58,7 +58,7 @@
       "label": "使用浮层",
       "control": "boolean",
       "type": "boolean",
-      "defaultValue": false
+      "defaultValue": true
     }
   ],
   "events": [

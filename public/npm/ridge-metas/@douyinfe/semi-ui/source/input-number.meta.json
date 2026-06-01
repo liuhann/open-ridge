@@ -12,8 +12,8 @@
   "version": "2.97.0",
   "author": "LiuHan",
   "visualConfig": {
-    "preferredWidth": 160,
-    "preferredHeight": 32,
+    "preferredWidth": 96,
+    "preferredHeight": 36,
     "resizable": true,
     "aspectRatio": "no"
   },
@@ -23,7 +23,8 @@
       "description": "当前值",
       "label": "当前值",
       "control": "number",
-      "type": "number"
+      "type": "number",
+      "defaultValue": 996
     },
     {
       "name": "className",

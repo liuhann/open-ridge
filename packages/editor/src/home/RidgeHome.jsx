@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
-import { Layout, Nav, Button, Typography, Empty, Icon, Modal, Avatar } from '@douyinfe/semi-ui'
-import { IconHome, IconTemplate, IconApps } from '@douyinfe/semi-icons'
+import { Layout, Nav, Button, Typography, Empty, Icon, Modal, Avatar, Descriptions } from '@douyinfe/semi-ui'
 import { ICON_COMMON_USER_PLUS, ICON_COMMON_HOME, ICON_MENU_STAR, ICON_COMMON_PLUS, FILE_FOLDER } from '../icons/icons.js'
 import AppListPanel from '../panels/apps/AppListPanel.jsx'
 import './home.less'
@@ -32,6 +31,16 @@ const RidgeUHomePage = () => {
     <Layout style={{ height: '100vh', border: '1px solid var(--semi-color-border)' }}>
       {/* 👇 完全按你给的官方写法实现 */}
       <Sider className='nav-sider' style={{ backgroundColor: 'var(--semi-color-bg-1)' }}>
+        <Descriptions
+          data={[
+            { key: '实际用户数量', value: '1,480,000' },
+            {
+              key: '7天留存',
+              value: '98%'
+            },
+            { key: '安全等级', value: '3级' }
+          ]} row size='small'
+        />
         <Nav
           className='nav-sider-nav'
           style={{ maxWidth: 220, height: '100%' }}

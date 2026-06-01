@@ -1,7 +1,7 @@
 {
   "name": "@douyinfe/semi-ui",
   "schemaVersion": "2.0",
-  "lastUpdated": "2026-05-25T03:57:28.070Z",
+  "lastUpdated": "2026-06-01T01:29:03.113Z",
   "generatedBy": "ridge-ui-cli",
   "components": [
     {
@@ -19,8 +19,8 @@
       "version": "1.0.0",
       "author": "LiuHan",
       "visualConfig": {
-        "preferredWidth": 60,
-        "preferredHeight": 60,
+        "preferredWidth": 48,
+        "preferredHeight": 48,
         "resizable": true,
         "aspectRatio": "1:1"
       },
@@ -228,8 +228,8 @@
       "version": "1.0.0",
       "author": "",
       "visualConfig": {
-        "preferredWidth": 520,
-        "preferredHeight": 60,
+        "preferredWidth": 130,
+        "preferredHeight": 42,
         "resizable": true,
         "aspectRatio": "no"
       },
@@ -471,91 +471,6 @@
       ]
     },
     {
-      "name": "Card",
-      "title": "卡片",
-      "icon": "svgs/card.svg",
-      "description": "基础卡片容器组件，用于信息模块、内容分组、数据卡片等业务场景",
-      "tags": [
-        "卡片",
-        "容器",
-        "基础组件"
-      ],
-      "category": "基础组件",
-      "version": "1.0.0",
-      "author": "LiuHan",
-      "visualConfig": {
-        "preferredWidth": 300,
-        "preferredHeight": 180,
-        "resizable": true,
-        "aspectRatio": "no"
-      },
-      "properties": [
-        {
-          "name": "children",
-          "description": "卡片内部的文本内容",
-          "label": "卡片内容",
-          "type": "string",
-          "defaultValue": ""
-        },
-        {
-          "name": "title",
-          "description": "卡片标题",
-          "label": "卡片标题",
-          "type": "string",
-          "defaultValue": ""
-        },
-        {
-          "name": "headerExtraContent",
-          "description": "卡片标题右侧的额外内容",
-          "label": "标题右侧附加内容",
-          "type": "string",
-          "defaultValue": ""
-        },
-        {
-          "name": "footer",
-          "description": "自定义卡片页脚",
-          "label": "自定义页脚",
-          "type": "string",
-          "defaultValue": ""
-        },
-        {
-          "name": "bordered",
-          "description": "是否设置卡片的外边框",
-          "label": "显示外边框",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": true
-        },
-        {
-          "name": "loading",
-          "description": "是否设置加载时的占位",
-          "label": "加载状态",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
-          "name": "shadows",
-          "description": "设置显示阴影的时机，不设置则无阴影",
-          "label": "阴影显示时机",
-          "control": "select",
-          "type": "string",
-          "options": [
-            {
-              "label": "悬浮时显示",
-              "value": "hover"
-            },
-            {
-              "label": "一直显示",
-              "value": "always"
-            }
-          ],
-          "defaultValue": ""
-        }
-      ],
-      "events": []
-    },
-    {
       "name": "Checkbox",
       "title": "复选框",
       "icon": "svgs/checkbox.svg",
@@ -570,8 +485,8 @@
       "version": "1.0.0",
       "author": "LiuHan",
       "visualConfig": {
-        "preferredWidth": 140,
-        "preferredHeight": 36,
+        "preferredWidth": 86,
+        "preferredHeight": 24,
         "resizable": false,
         "aspectRatio": "no"
       },
@@ -680,8 +595,8 @@
       "version": "1.0.0",
       "author": "LiuHan",
       "visualConfig": {
-        "preferredWidth": 280,
-        "preferredHeight": 320,
+        "preferredWidth": 26,
+        "preferredHeight": 26,
         "resizable": true,
         "aspectRatio": "no"
       },
@@ -726,7 +641,7 @@
           "label": "使用浮层",
           "control": "boolean",
           "type": "boolean",
-          "defaultValue": false
+          "defaultValue": true
         }
       ],
       "events": [
@@ -752,7 +667,7 @@
       "version": "1.0.0",
       "author": "LiuHan",
       "visualConfig": {
-        "preferredWidth": 220,
+        "preferredWidth": 108,
         "preferredHeight": 36,
         "resizable": false,
         "aspectRatio": "no"
@@ -895,8 +810,8 @@
       "version": "1.0.0",
       "author": "RidgeUI",
       "visualConfig": {
-        "preferredWidth": 540,
-        "preferredHeight": 240,
+        "preferredWidth": 144,
+        "preferredHeight": 98,
         "resizable": true,
         "aspectRatio": "no"
       },
@@ -907,24 +822,20 @@
           "label": "数据项",
           "control": "json",
           "type": "array",
-          "sample": [
+          "defaultValue": [
             {
               "key": "姓名",
-              "value": "张三",
-              "span": 1
+              "value": "张三"
             },
             {
               "key": "年龄",
-              "value": "28",
-              "span": 1
+              "value": "28"
             },
             {
               "key": "地址",
-              "value": "北京市朝阳区",
-              "span": 2
+              "value": "北京市朝阳区"
             }
-          ],
-          "defaultValue": []
+          ]
         },
         {
           "name": "layout",
@@ -1040,8 +951,8 @@
       "author": "",
       "visualConfig": {
         "thumbnail": "",
-        "preferredWidth": 280,
-        "preferredHeight": 200,
+        "preferredWidth": 96,
+        "preferredHeight": 96,
         "resizable": true,
         "aspectRatio": "auto"
       },
@@ -1094,30 +1005,12 @@
           "defaultValue": ""
         },
         {
-          "name": "crossOrigin",
-          "description": "图片跨域配置",
-          "label": "跨域模式",
-          "control": "select",
-          "type": "string",
-          "options": [
-            {
-              "label": "anonymous",
-              "value": "anonymous"
-            },
-            {
-              "label": "use-credentials",
-              "value": "use-credentials"
-            }
-          ],
-          "defaultValue": ""
-        },
-        {
           "name": "preview",
           "description": "是否开启图片预览",
           "label": "开启预览",
           "control": "boolean",
           "type": "boolean",
-          "defaultValue": true
+          "defaultValue": false
         }
       ],
       "events": [
@@ -1152,8 +1045,8 @@
       "version": "2.97.0",
       "author": "LiuHan",
       "visualConfig": {
-        "preferredWidth": 160,
-        "preferredHeight": 32,
+        "preferredWidth": 96,
+        "preferredHeight": 36,
         "resizable": true,
         "aspectRatio": "no"
       },
@@ -1163,7 +1056,8 @@
           "description": "当前值",
           "label": "当前值",
           "control": "number",
-          "type": "number"
+          "type": "number",
+          "defaultValue": 996
         },
         {
           "name": "className",
@@ -1308,8 +1202,8 @@
       "author": "",
       "visualConfig": {
         "thumbnail": "",
-        "preferredWidth": 280,
-        "preferredHeight": 32,
+        "preferredWidth": 96,
+        "preferredHeight": 36,
         "resizable": true,
         "aspectRatio": "no"
       },
@@ -1826,12 +1720,6 @@
           "label": "条数可选值",
           "control": "json",
           "type": "array",
-          "sample": [
-            10,
-            20,
-            40,
-            100
-          ],
           "defaultValue": [
             10,
             20,
@@ -1854,19 +1742,6 @@
           "control": "boolean",
           "type": "boolean",
           "defaultValue": false
-        },
-        {
-          "name": "className",
-          "description": "分页器自定义类名",
-          "label": "自定义类名",
-          "control": "className",
-          "type": "string"
-        },
-        {
-          "name": "style",
-          "description": "分页器内联样式",
-          "label": "内联样式",
-          "type": "CSSProperties"
         }
       ],
       "events": [
@@ -1902,8 +1777,8 @@
       "version": "1.0.0",
       "author": "LiuHan",
       "visualConfig": {
-        "preferredWidth": 380,
-        "preferredHeight": 80,
+        "preferredWidth": 150,
+        "preferredHeight": 90,
         "resizable": true,
         "aspectRatio": "no"
       },
@@ -1913,7 +1788,7 @@
           "description": "显示的段落文本内容",
           "label": "段落内容",
           "type": "string",
-          "defaultValue": "这是一段段落文本"
+          "defaultValue": "段落文本组件，用于展示多行文字内容，支持省略、可复制、行距调整、样式修饰等排版能力"
         },
         {
           "name": "copyable",

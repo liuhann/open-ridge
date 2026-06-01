@@ -12,8 +12,8 @@
   "version": "1.0.0",
   "author": "",
   "visualConfig": {
-    "preferredWidth": 520,
-    "preferredHeight": 60,
+    "preferredWidth": 130,
+    "preferredHeight": 42,
     "resizable": true,
     "aspectRatio": "no"
   },

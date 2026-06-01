@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { loader } from 'ridgejs'
+import componentRegistry from '../service/ComponentRegistry'
 
 const componentStore = create((set, get) => ({
   registry: [],
@@ -9,10 +10,12 @@ const componentStore = create((set, get) => ({
   loadedComponents: new Map(),
 
   init: async () => {
-    await loader.confirmExternalsMemoized()
-    set({
-      registry: loader.getRegistry()
-    })
+    await componentRegistry.init()
+
+    // await loader.confirmExternalsMemoized()
+    // set({
+    //   registry: loader.getRegistry()
+    // })
   },
 
   loadLib: async libName => {

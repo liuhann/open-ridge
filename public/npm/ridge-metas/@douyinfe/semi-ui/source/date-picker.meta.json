@@ -13,7 +13,7 @@
   "version": "1.0.0",
   "author": "LiuHan",
   "visualConfig": {
-    "preferredWidth": 220,
+    "preferredWidth": 108,
     "preferredHeight": 36,
     "resizable": false,
     "aspectRatio": "no"

@@ -14,8 +14,8 @@
   "author": "",
   "visualConfig": {
     "thumbnail": "",
-    "preferredWidth": 280,
-    "preferredHeight": 32,
+    "preferredWidth": 96,
+    "preferredHeight": 36,
     "resizable": true,
     "aspectRatio": "no"
   },

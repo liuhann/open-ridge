@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Modal, Steps, TextArea, Button, Space, Typography, Card } from '@douyinfe/semi-ui'
+import ComponentMultiSelectPanel from '../../components/ComponentMultiSelect/ComponentMultiSelectPanel.jsx'
 
 const { Title, Text } = Typography
 
@@ -106,8 +107,9 @@ export default function AIGenerateModal (props) {
                   borderRadius: 8,
                   marginBottom: 20
                 }}
-              />
-
+              >
+                <ComponentMultiSelectPanel />
+              </div>
               <Space>
                 <Button onClick={handleClose}>取消</Button>
                 <Button type='primary' onClick={() => setCurrent(1)}>

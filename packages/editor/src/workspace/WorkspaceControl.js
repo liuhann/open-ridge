@@ -577,12 +577,14 @@ export default class WorkSpaceControl {
       doDropComposite(dragData)
     } else {
       // ✅ 组件创建：先留白
-      const node = this.currentComposite.createNewElement({
-        meta: dragData.item,
-        path: dragData.packageName + '/' + dragData.componentName
-      })
-      this.placeElementAt(node.el, ev.pageX, ev.pageY)
-      this.moveable.target = node.el
+      setTimeout(() => {
+        const node = this.currentComposite.createNewElement({
+          meta: dragData.item,
+          path: dragData.packageName + '/' + dragData.componentName
+        })
+        this.placeElementAt(node.el, ev.pageX, ev.pageY)
+        this.moveable.target = node.el
+      }, 10)
     }
   }
 

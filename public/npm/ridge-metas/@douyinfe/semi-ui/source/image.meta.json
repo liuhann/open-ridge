@@ -13,8 +13,8 @@
   "author": "",
   "visualConfig": {
     "thumbnail": "",
-    "preferredWidth": 280,
-    "preferredHeight": 200,
+    "preferredWidth": 96,
+    "preferredHeight": 96,
     "resizable": true,
     "aspectRatio": "auto"
   },
@@ -67,30 +67,12 @@
       "defaultValue": ""
     },
     {
-      "name": "crossOrigin",
-      "description": "图片跨域配置",
-      "label": "跨域模式",
-      "control": "select",
-      "type": "string",
-      "options": [
-        {
-          "label": "anonymous",
-          "value": "anonymous"
-        },
-        {
-          "label": "use-credentials",
-          "value": "use-credentials"
-        }
-      ],
-      "defaultValue": ""
-    },
-    {
       "name": "preview",
       "description": "是否开启图片预览",
       "label": "开启预览",
       "control": "boolean",
       "type": "boolean",
-      "defaultValue": true
+      "defaultValue": false
     }
   ],
   "events": [

@@ -5,15 +5,15 @@ window.baseUrl = baseUrl
 
 // 1) CSS 并行加载
 const cssAssets = [
-  '/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css',
-  '/@douyinfe/semi-ui/dist/css/semi.min.css'
+  // '/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css',
+  // '/@douyinfe/semi-ui/dist/css/semi.min.css'
 ]
 
 // 2) JS 必须按顺序加载
 const jsAssets = [
   '/react@18.3.1/umd/react.production.min.js',
-  '/react-dom@18.3.1/umd/react-dom.production.min.js',
-  '/@douyinfe/semi-ui/dist/umd/semi-ui.min.js'
+  '/react-dom@18.3.1/umd/react-dom.production.min.js'
+  // '/@douyinfe/semi-ui/dist/umd/semi-ui.min.js'
 ]
 
 const allAssets = [...cssAssets, ...jsAssets]

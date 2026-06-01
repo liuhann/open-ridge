@@ -100,7 +100,6 @@
       "label": "条数可选值",
       "control": "json",
       "type": "array",
-      "sample": [10, 20, 40, 100],
       "defaultValue": [10, 20, 40, 100]
     },
     {
@@ -118,19 +117,6 @@
       "control": "boolean",
       "type": "boolean",
       "defaultValue": false
-    },
-    {
-      "name": "className",
-      "description": "分页器自定义类名",
-      "label": "自定义类名",
-      "control": "className",
-      "type": "string"
-    },
-    {
-      "name": "style",
-      "description": "分页器内联样式",
-      "label": "内联样式",
-      "type": "CSSProperties"
     }
   ],
   "events": [

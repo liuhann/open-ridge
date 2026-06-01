@@ -13,8 +13,8 @@
   "version": "1.0.0",
   "author": "RidgeUI",
   "visualConfig": {
-    "preferredWidth": 540,
-    "preferredHeight": 240,
+    "preferredWidth": 144,
+    "preferredHeight": 98,
     "resizable": true,
     "aspectRatio": "no"
   },
@@ -25,12 +25,11 @@
       "label": "数据项",
       "control": "json",
       "type": "array",
-      "sample": [
-        { "key": "姓名", "value": "张三", "span": 1 },
-        { "key": "年龄", "value": "28", "span": 1 },
-        { "key": "地址", "value": "北京市朝阳区", "span": 2 }
-      ],
-      "defaultValue": []
+      "defaultValue": [
+        { "key": "姓名", "value": "张三" },
+        { "key": "年龄", "value": "28"},
+        { "key": "地址", "value": "北京市朝阳区" }
+      ]
     },
     {
       "name": "layout",

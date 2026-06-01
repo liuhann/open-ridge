@@ -8,7 +8,6 @@ import {
   Space,
   Select,
   withField,
-  message,
   Tooltip,
   Divider,
   Popover
@@ -74,7 +73,7 @@ const OptionsEdit = ({
         if (index === editingIndex) {
           setEditingIndex(-1)
         }
-        message.success('选项已删除')
+        // message.success('选项已删除')
       }
     })
   }

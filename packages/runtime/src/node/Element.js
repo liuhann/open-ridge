@@ -71,7 +71,9 @@ export default class Element extends BaseNode {
     }
     if (this.config.meta && Array.isArray(this.config.meta.url)) {
       for (const propName of this.config.meta.url) {
-        properties[propName] = this.getBlobUrl(properties[propName])
+        if (properties[propName]) {
+          properties[propName] = this.getBlobUrl(properties[propName])
+        }
       }
     }
     return properties
