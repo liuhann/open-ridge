@@ -9,7 +9,7 @@ import DialogCreate from './DialogCreate.jsx'
 
 import appStore from '../../store/app.store.js'
 import editorStore from '../../store/editor.store.js'
-import { ICON_COMMON_PLUS, ICON_COMMON_GEAR, ICON_COMMON_DOT_VERT, ICON_COMMON_EXPORT_ZIP, FILE_CREATE_FOLDER } from '../../icons/icons.js'
+import { ICON_COMMON_PLUS, ICON_COMMON_GEAR, ICON_COMMON_DOT_VERT, ICON_COMMON_AI_NEW } from '../../icons/icons.js'
 import PackageJsonEditorModal from '../apps/PackageJsonEditorModal.jsx'
 import { getAppTreeData } from './utils.js'
 import TitleBar from '../../components/TitleBar/TitleBar.jsx'
@@ -166,7 +166,7 @@ const AppFileList = () => {
   // }
 
   const CREATE_MENUS = [
-    <Dropdown.Item key='page' onClick={() => showCreateDialog('page')}>创建页面</Dropdown.Item>,
+    <Dropdown.Item key='page' onClick={() => showCreateDialog('page')}>手动创建空白页面</Dropdown.Item>,
     <Dropdown.Divider key='d1' />,
     <Dropdown.Item key='folder' onClick={() => showCreateDialog('folder')}>创建目录</Dropdown.Item>,
     <Dropdown.Item key='js' onClick={() => showCreateDialog('js')}>创建脚本库</Dropdown.Item>,
@@ -306,8 +306,7 @@ const AppFileList = () => {
       >
         <Button
           theme='borderless' type='primary' icon={ICON_COMMON_PLUS}
-        >创建
-        </Button>
+        />
       </Dropdown>
     )
   }
@@ -374,7 +373,12 @@ const AppFileList = () => {
         }}
       />
       <div className='buttons-bar'>
-        <Button colorful theme='solid' type='tertiary' onClick={() => setModalVisible(true)}>创建页面</Button>
+        <Button
+          style={{
+            flex: 1
+          }} colorful theme='solid' type='tertiary' onClick={() => setModalVisible(true)}
+        >创建页面
+        </Button>
         <RenderCreateDropDown />
       </div>
       <Tree

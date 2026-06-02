@@ -32,8 +32,6 @@ const SelectedComponentPopOver = ({
                 closable
                 onClose={(e) => {
                   // 阻止冒泡，避免点击关闭时触发 Popover 关闭
-                  e.preventDefault()
-                  e.stopPropagation()
                   toggleComponent(item)
                 }}
               >
@@ -54,6 +52,7 @@ const SelectedComponentPopOver = ({
   return (
     <Popover
       content={popoverContent}
+      position='topRight'
       title='已选组件'
       trigger='hover'
       placement='bottomLeft'

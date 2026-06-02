@@ -19,6 +19,9 @@
   /* 👇 强制卡片本身不被内容撑大 */
   contain: layout paint size;
 }
+.rootSelected {
+  border: 1px solid var(--semi-color-primary);
+}
 
 /* 👇 最关键：组件渲染容器 —— 固定宽高 + 隐藏溢出 */
 .renderContainer {
@@ -63,17 +66,17 @@
 }
 .hoverOverlay {
   position: absolute;
-  top: 0;
+  height: 32px;
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(var(--semi-color-primary), 0.9);
+  background: var( --semi-color-tertiary);
   display: flex;
   align-items: center;
   justify-content: center;
   opacity: 0;
   transition: opacity 0.2s ease;
-  .semi-typography {
+  .text {
     color: white;
     font-weight: 500;
     font-size: 12px;
@@ -83,7 +86,7 @@
   opacity: 1;
 }
 .tooltip {
-  max-width: 250px;
+  max-width: 480px;
   padding: 12px;
 }
 .tooltipHeader {
@@ -99,9 +102,11 @@
   object-fit: cover;
 }
 .tooltipTitle {
-  margin: 0;
   font-size: 14px;
   color: var(--semi-color-text-0);
+}
+.previewWrapper {
+  padding: 12px 0;
 }
 .tooltipDescription {
   font-size: 12px;
@@ -112,6 +117,7 @@
 .tooltipTags {
   display: flex;
   flex-wrap: wrap;
+  margin: 12px 0;
   gap: 4px;
 }
 .tooltipTag {

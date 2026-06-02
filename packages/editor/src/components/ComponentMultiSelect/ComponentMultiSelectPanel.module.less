@@ -52,7 +52,13 @@
   padding: 4px;
   border-radius: 4px;
   cursor: pointer;
-
+  position: relative;
+  .checkBox {
+    position: absolute;
+    z-index: 111;
+    right: 16px;
+    top: 16px;
+  }
   &:hover {
     background: var(--semi-color-fill-0);
   }
@@ -75,15 +81,17 @@
 .selectedTags {
   display: flex;
   max-width: 480px;
-  align-items: center;
-  padding: 12px;
+  align-items: start;
+  flex-direction: column;
+  padding: 12px 24px;
   gap: 6px;
   flex-wrap: nowrap;
   overflow-x: auto;
   .libLabel {
-    margin-bottom: 12px;
+    margin-bottom: 24px;
   }
   .libGroup {
+    margin-bottom: 24px;
     .selectedList {
       margin-top: 12px;
       display: flex;

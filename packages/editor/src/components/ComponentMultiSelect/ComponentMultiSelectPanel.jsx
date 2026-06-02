@@ -107,10 +107,11 @@ const ComponentMultiSelectPanel = ({
         <div className={styles.componentGrid}>
           {libComponents.map(comp => (
             <div key={comp.name} className={styles.componentSelectItem}>
-              <Checkbox checked={isSelected(comp)} onChange={() => toggleComponent(comp)} />
+              <Checkbox className={styles.checkBox} checked={isSelected(comp)} onChange={() => toggleComponent(comp)} />
               <ComponentItemCard
-                packageName={componentLibMeta.module}
+                packageName={componentLibMeta.name}
                 item={comp}
+                selected={isSelected(comp)}
                 onItemClick={() => toggleComponent(comp)}
               />
             </div>

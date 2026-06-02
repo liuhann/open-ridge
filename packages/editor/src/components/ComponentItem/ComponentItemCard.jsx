@@ -8,12 +8,13 @@ import styles from './card.module.less'
 
 const { Text } = Typography
 
-const ComponentItemCard = ({ packageName, item, onItemClick }) => {
+const ComponentItemCard = ({ packageName, item, selected }) => {
   const displayName = item.title || '未命名'
   const description = item.description || '无描述'
   // const iconUrl = getIconUrl(item, packageName)
   const tags = item.tags || []
   const containerRef = useRef(null)
+  const detailContainerRef = useRef(null)
   const scaleRef = useRef(null)
   const [isHovered, setIsHovered] = useState(false)
   const meta = item
@@ -24,27 +25,7 @@ const ComponentItemCard = ({ packageName, item, onItemClick }) => {
 
   useEffect(() => {
     if (!containerRef.current) return
-
-    const elementConfig = {
-      title: meta?.title || meta?.name || '未命名组件',
-      path: packageName + '/' + item.name,
-      id: nanoid(10),
-      editor: { hidden: false, locked: false },
-      styleEx: {},
-      propEx: {},
-      events: {}
-    }
-
-    containerRef.current.style.width = compWidth + 'px'
-    containerRef.current.style.height = compHeight + 'px'
-    const element = new EditorElement({
-      composite: { loader },
-      config: elementConfig,
-      componentMeta: item
-    })
-    element.initPropsOnCreate()
-    element.mount(containerRef.current)
-
+    mountElementInstance(containerRef.current)
     // ========== ✅ 正确：等比缩放 + 只缩小不放大 + 完全居中 ==========
     const updateScale = () => {
       const wrap = scaleRef.current
@@ -83,9 +64,33 @@ const ComponentItemCard = ({ packageName, item, onItemClick }) => {
     return () => window.removeEventListener('resize', updateScale)
   }, [item, packageName, compWidth, compHeight])
 
+  const mountElementInstance = (el) => {
+    const elementConfig = {
+      title: meta?.title || meta?.name || '未命名组件',
+      path: packageName + '/' + item.name,
+      id: nanoid(10),
+      editor: { hidden: false, locked: false },
+      styleEx: {},
+      propEx: {},
+      events: {}
+    }
+
+    el.style.width = compWidth + 'px'
+    el.style.height = compHeight + 'px'
+    const element = new EditorElement({
+      composite: { loader },
+      config: elementConfig,
+      componentMeta: item
+    })
+    element.initPropsOnCreate()
+    element.mount(el)
+  }
   return (
     <Popover
       trigger='click'
+      onVisibleChange={visible => {
+        mountElementInstance(detailContainerRef.current)
+      }}
       content={
         <div className={styles.tooltip}>
           <div className={styles.tooltipHeader}>
@@ -99,6 +104,10 @@ const ComponentItemCard = ({ packageName, item, onItemClick }) => {
               ))}
             </div>
           )}
+          <h3 className={styles.tooltipTitle}>示例</h3>
+          <div className={styles.previewWrapper}>
+            <div ref={detailContainerRef} />
+          </div>
         </div>
       }
       position='top'
@@ -106,7 +115,7 @@ const ComponentItemCard = ({ packageName, item, onItemClick }) => {
       mouseEnterDelay={300}
     >
       <div
-        className={styles.root}
+        className={styles.root + ' ' + (selected ? styles.rootSelected : '')}
         draggable
         onDragStart={() => DragStore.setDragData({ type: 'component', packageName, componentName: item.name, item })}
         onMouseEnter={() => setIsHovered(true)}
@@ -118,7 +127,6 @@ const ComponentItemCard = ({ packageName, item, onItemClick }) => {
             alt={displayName}
           />
         </div> */}
-
         {/* 👇 固定宽高 + 溢出隐藏 */}
         <div className={styles.renderContainer} ref={scaleRef}>
           <div ref={containerRef} style={{ position: 'absolute', top: 0, left: 0 }} />
@@ -127,7 +135,7 @@ const ComponentItemCard = ({ packageName, item, onItemClick }) => {
         <div className={styles.content}>
           <Text strong className={styles.name}>{displayName}</Text>
         </div>
-        <div className={styles.hoverOverlay}><Text>点击查看详情</Text></div>
+        <div className={styles.hoverOverlay}><Text className={styles.text}>点击查看详情</Text></div>
       </div>
     </Popover>
   )
