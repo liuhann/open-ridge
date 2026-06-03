@@ -10,8 +10,3 @@ export function init () {
     </React.StrictMode>
   )
 }
-
-// 开发环境如果被热加载，也可以自动执行
-if (process.env.NODE_ENV === 'development' && module.hot) {
-  // init()
-}

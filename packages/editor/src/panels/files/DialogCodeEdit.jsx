@@ -161,8 +161,8 @@ export default forwardRef((props, pref) => {
     }
   }
   const loadExtensions = async () => {
-    const { tooltips, keymap } = await import('@codemirror/view')
-    const { indentWithTab } = await import('@codemirror/commands')
+    const { tooltips, keymap } = await import(/* webpackChunkName: "codemirror-common" */ '@codemirror/view')
+    const { indentWithTab } = await import(/* webpackChunkName: "codemirror-common" */ '@codemirror/commands')
 
     // -------------- 语言包（单独分包）--------------
     const { javascript, esLint } = await import(/* webpackChunkName: "codemirror-js" */ '@codemirror/lang-javascript')
@@ -170,7 +170,7 @@ export default forwardRef((props, pref) => {
     const { markdown } = await import(/* webpackChunkName: "codemirror-md" */ '@codemirror/lang-markdown')
 
     // -------------- Lint 核心 --------------
-    const { linter, lintGutter } = await import('@codemirror/lint')
+    const { linter, lintGutter } = await import(/* webpackChunkName: "codemirror-linter" */ '@codemirror/lint')
 
     // 基础配置
     const base = [

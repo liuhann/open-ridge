@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
-import { withField, Button, Modal, JsonViewer } from '@douyinfe/semi-ui'
+import { withField, Button, Modal, Input } from '@douyinfe/semi-ui'
+
+const { TextArea } = Input
 
 const JSONEdit = ({
   value,
@@ -36,7 +38,7 @@ const JSONEdit = ({
           }
         }}
       >
-        <JsonViewer ref={ref} height={480} width={790} value={value ? JSON.stringify(value, null, 2) : ''} />
+        <TextArea ref={ref} height={480} width={790} value={value ? JSON.stringify(value, null, 2) : ''} />
       </Modal>
       <Button
         size='small' type='tertiary' onClick={() => {

@@ -29,7 +29,8 @@ module.exports = {
       template: path.resolve(__dirname, './src/index.html'),
       title: 'Output Management'
     }),
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new MiniCssExtractPlugin()
   ],
   resolve: {
     extensions: ['.tsx', '.ts', '.js', 'jsx']
@@ -61,7 +62,7 @@ module.exports = {
       },
       {
         test: /\.css$/i,
-        use: ['style-loader', 'css-loader']
+        use: [styleLoader, 'css-loader']
       },
       {
         test: /\.zip$/,

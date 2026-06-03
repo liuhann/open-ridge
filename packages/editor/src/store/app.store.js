@@ -226,8 +226,8 @@ const useStore = create((set, get) => ({
         }
 
         // 删除冲突文件
-        if (pageConflict) await deleteFile('/' + pageName)
-        if (scriptConflict) await deleteFile('/' + scriptFileName)
+        if (pageConflict) await deleteFile(pageConflict.id)
+        if (scriptConflict) await deleteFile(scriptConflict.id)
       }
 
       // ======================

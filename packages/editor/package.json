@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "webpack --config webpack.prod.js",
+    "build": "set NODE_ENV=production&&webpack --config webpack.prod.js",
     "build-src": "webpack --config webpack.config.js",
     "prodana": "webpack --config webpack.prodana.js",
     "start": "webpack serve --config webpack.config.js"
