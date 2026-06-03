@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { Modal, Steps, TextArea, Button, Space, Typography, Card } from '@douyinfe/semi-ui'
+import { Modal, Steps, TextArea, Button, Space, Typography, Card, Toast } from '@douyinfe/semi-ui'
 import ComponentMultiSelectPanel from '../../components/ComponentMultiSelect/ComponentMultiSelectPanel.jsx'
+import { generateAIPrompt } from './utils.js'
 
 const { Title, Text } = Typography
 
@@ -14,6 +15,9 @@ export default function AIGenerateModal (props) {
   const [copyText, setCopyText] = useState('')
   const [pageJson, setPageJson] = useState('')
   const [scriptJson, setScriptJson] = useState('')
+
+  // ✅ 增加 loading 状态
+  const [generating, setGenerating] = useState(false)
 
   const handleClose = () => {
     setCurrent(0)
@@ -36,6 +40,7 @@ export default function AIGenerateModal (props) {
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(copyText)
+      Toast.success('内容复制成功')
     } catch (err) {
       console.log('复制失败', err)
     }
@@ -46,18 +51,24 @@ export default function AIGenerateModal (props) {
     try {
       const text = await navigator.clipboard.readText()
       setter(text)
+      Toast.success('内容粘贴完成')
     } catch (err) {
       console.log('粘贴失败', err)
     }
   }
-
-  // 进入第二步自动生成提示词
-  React.useEffect(() => {
-    if (current === 1) {
-      const fullText = `根据需求生成前端JSON配置：${prompt || '暂无提示词'}`
-      setCopyText(fullText)
+  // ✅ 异步等待 + 加载状态
+  const onStep1Click = async () => {
+    try {
+      setGenerating(true) // 开启 loading
+      const copyText = await generateAIPrompt(selectedComponents) + prompt
+      setCopyText(copyText)
+      setCurrent(1)
+    } catch (err) {
+      console.error('生成提示词失败', err)
+    } finally {
+      setGenerating(false) // 无论成功失败都关闭 loading
     }
-  }, [current, prompt])
+  }
 
   return (
     <Modal
@@ -127,13 +138,14 @@ export default function AIGenerateModal (props) {
               >
                 <ComponentMultiSelectPanel
                   defaultSelected={selectedComponents} onSelectionChange={selected => {
+                    console.log('selected', selected)
                     setSelectedComponents(selected)
                   }}
                 />
               </div>
               <Space>
                 <Button onClick={handleClose}>取消</Button>
-                <Button type='primary' onClick={() => setCurrent(1)}>
+                <Button type='primary' loading={generating} onClick={() => onStep1Click()}>
                   下一步
                 </Button>
               </Space>
@@ -207,7 +219,7 @@ export default function AIGenerateModal (props) {
               <div style={{ marginBottom: 20 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
                   <Text strong>页面脚本(JS)</Text>
-                  <Button size='small' onClick={() => handlePaste(scriptJson)}>
+                  <Button size='small' onClick={() => handlePaste(setScriptJson)}>
                     粘贴剪贴板
                   </Button>
                 </div>
@@ -223,7 +235,6 @@ export default function AIGenerateModal (props) {
                   }}
                 />
               </div>
-
               <Space>
                 <Button onClick={() => setCurrent(1)}>上一步</Button>
                 <Button type='primary' onClick={handleFinish}>

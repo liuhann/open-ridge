@@ -1,7 +1,7 @@
 import debug from 'debug'
 import memoize from 'lodash/memoize'
 
-import { loadCss, loadWebFont, loadScript, loadJSON } from '../utils/load'
+import { loadCss, loadWebFont, loadScript, loadJSON, loadTextContent } from '../utils/load'
 import { addStringPrefix, extractPackageAndPath, concatToPath, isUrlInApp, removeUrlProtocol } from '../utils/string'
 const log = debug('ridge:loader')
 
@@ -191,6 +191,11 @@ class Loader {
 
   async loadJSON (path) {
     return await loadJSON(addStringPrefix(this.baseUrl, path))
+  }
+
+  // 加载一个
+  async loadTextContent (path) {
+    return await loadTextContent(addStringPrefix(this.baseUrl, path))
   }
 
   /**

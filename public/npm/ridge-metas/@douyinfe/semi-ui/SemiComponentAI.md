@@ -122,7 +122,7 @@ underline: boolean，默认 false，下划线
 
 
 
-Typography.Avatar（头像）
+Avatar（头像）
 路径：@douyinfe/semi-ui/Avatar
 用途：展示用户头像，支持图片、文字与图标，常用于用户中心、评论区与列表。
 属性：
@@ -141,7 +141,7 @@ onMouseEnter：鼠标进入
 onMouseLeave：鼠标离开
 
 
-Typography.Card（卡片）
+Card（卡片）
 路径：@douyinfe/semi-ui/Card
 用途：基础容器组件，用于信息分组、数据展示与操作聚合。
 属性：
@@ -155,7 +155,7 @@ shadows: string，默认 ""，可选 hover / always，控制阴影显示时机
 事件：无
 
 
-Typography.DatePicker（日期选择器）
+DatePicker（日期选择器）
 路径：@douyinfe/semi-ui/DatePicker
 用途：用于选择日期、日期时间和月份，适用于表单与时间筛选场景。
 属性：
@@ -175,7 +175,7 @@ onOpenChange：面板展开或收起时触发
 onClear：点击清除按钮时触发
 
 
-Typography.Descriptions（描述列表）
+Descriptions（描述列表）
 路径：@douyinfe/semi-ui/Descriptions
 用途：用于展示详情信息，如表单结果、基础资料、对象属性，支持垂直与水平布局。
 属性：
@@ -190,7 +190,7 @@ style: object，内联样式
 事件：无
 
 
-Typography.ColorPicker（颜色选择器）
+ColorPicker（颜色选择器）
 路径：@douyinfe/semi-ui/ColorPicker
 用途：用于颜色选择，支持透明度调节与浮层展示，常用于表单与配置场景。
 属性：
@@ -205,7 +205,7 @@ style: object，内联样式（hidden）
 onChange：颜色变化时触发
 
 
-Typography.Image（图片）
+Image（图片）
 路径：@douyinfe/semi-ui/Image
 用途：用于展示图片，支持地址配置、跨域设置、预览控制与加载状态反馈。
 属性：
@@ -223,7 +223,7 @@ onLoad：图片加载成功时触发
 onError：图片加载失败时触发
 
 
-Typography.InputNumber（数字输入框）
+InputNumber（数字输入框）
 路径：@douyinfe/semi-ui/InputNumber
 用途：用于输入数字，支持精度、步长、极值限制及货币模式展示。
 属性：
@@ -251,7 +251,7 @@ onFocus：获得焦点时触发
 onNumberChange：纯数字值变化时触发
 
 
-Typography.InputNumber（数字输入框）
+InputNumber（数字输入框）
 路径：@douyinfe/semi-ui/InputNumber
 用途：用于输入数字，支持精度、步长、极值限制及前后缀展示。
 属性：
@@ -277,7 +277,7 @@ onFocus：获得焦点时触发
 onNumberChange：纯数字值变化时触发
 
 
-Typography.Paragraph（段落）
+Paragraph（段落）
 路径：@douyinfe/semi-ui/Typography.Paragraph
 用途：用于展示多行段落文本，支持省略、复制、行距与样式修饰，适合详情描述与正文展示。
 属性：
@@ -296,7 +296,7 @@ underline: boolean，默认 false，是否显示下划线
 事件：无
 
 
-Typography.PinCode（验证码输入）
+PinCode（验证码输入）
 路径：@douyinfe/semi-ui/PinCode
 用途：用于输入验证码，支持指定位数、尺寸与输入格式限制，常用于登录与安全校验场景。
 属性：
@@ -314,7 +314,7 @@ onChange：输入内容变化时触发
 onComplete：验证码全部输入完成时触发
 
 
-Typography.Progress（进度条）
+Progress（进度条）
 路径：@douyinfe/semi-ui/Progress
 用途：用于展示任务进度，支持线形与环形两种样式，可自定义颜色、尺寸与方向。
 属性：
@@ -332,7 +332,7 @@ style: object，内联样式
 事件：无
 
 
-Typography.RadioGroup（单选框组）
+RadioGroup（单选框组）
 路径：@douyinfe/semi-ui/RadioGroup
 用途：用于在一组选项中进行单选，支持按钮、卡片等多种样式与排列方式。
 属性：
@@ -348,7 +348,7 @@ style: object，内联样式
 onChange：选中值变化时触发
 
 
-Typography.Rating（评分组件）
+Rating（评分组件）
 路径：@douyinfe/semi-ui/Rating
 用途：用于评分与星级评价，支持半选、清除、提示信息与禁用状态。
 属性：
@@ -370,7 +370,7 @@ onHoverChange：鼠标悬停星级时触发
 onKeyDown：按键按下时触发
 
 
-Typography.Select（下拉选择器）
+Select（下拉选择器）
 路径：@douyinfe/semi-ui/Select
 用途：用于从选项列表中进行单选或多选，支持搜索、创建、清除与校验状态。
 属性：
@@ -408,7 +408,7 @@ onBlur：失去焦点时触发
 onExceed：多选超出限制时触发
 
 
-Typography.Slider（滑块）
+Slider（滑块）
 路径：@douyinfe/semi-ui/Slider
 用途：用于在数值区间内通过滑动方式选择数值，支持刻度、范围、禁用与垂直方向展示。
 属性：
@@ -429,7 +429,7 @@ onAfterChange：滑动结束后触发
 onMouseUp：鼠标松开滑块时触发
 
 
-Typography.Spin（加载）
+Spin（加载）
 路径：@douyinfe/semi-ui/Spin
 用途：用于页面或区域的加载状态提示，支持延迟显示与尺寸控制。
 属性：
@@ -440,7 +440,7 @@ delay: number，默认 0，延迟显示加载效果的毫秒数
 onClick：点击组件时触发
 
 
-Typography.Switch（开关）
+Switch（开关）
 路径：@douyinfe/semi-ui/Switch
 用途：用于状态切换，支持禁用、加载与尺寸控制。
 属性：
@@ -455,7 +455,7 @@ onMouseEnter：鼠标移入时触发
 onMouseLeave：鼠标移出时触发
 
 
-Typography.Table（表格）
+Table（表格）
 路径：@douyinfe/semi-ui/Table
 用途：用于数据展示、排序、筛选、分页与行操作，支持树形数据与高性能渲染。
 属性：
@@ -476,7 +476,7 @@ onExpand：行展开或收起时触发
 onRow：点击表格行时触发
 
 
-Typography.TagInput（标签输入框）
+TagInput（标签输入框）
 路径：@douyinfe/semi-ui/TagInput
 用途：用于输入、添加、删除多个标签，支持拖拽排序、数量限制与校验状态。
 属性：
@@ -500,7 +500,7 @@ onAdd：添加标签时触发
 onRemove：删除标签时触发
 
 
-Typography.Tag（标签）
+Tag（标签）
 路径：@douyinfe/semi-ui/Tag
 用途：用于标记、分类与展示关键词，支持多种颜色、形状与样式类型。
 属性：

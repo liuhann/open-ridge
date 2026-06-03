@@ -21,7 +21,7 @@ version：固定为 2.0.0
 style：页面尺寸，width/height 固定宽高；autoWidth/autoHeight: true 自适应
 properties：字符串键值对，子页面由上级传参，独立访问可通过 URL query 传值
 jsFiles：页面依赖脚本，填写相对路径
-elements：所有组件扁平数组，每个组件拥有全局唯一 id
+elements：页面内所有组件，列表形式，具体描述见后组件元素配置
 name：页面名称
 children：页面一级渲染节点，仅存放组件 id 数组
 
@@ -30,9 +30,9 @@ children：页面一级渲染节点，仅存放组件 id 数组
 
 ```json
 {
+  "id": "全局唯一ID",
   "title": "组件名称",
   "path": "组件引用路径",
-  "id": "全局唯一ID",
   "style": {},
   "props": {},
   "propEx": {},
@@ -44,9 +44,9 @@ children：页面一级渲染节点，仅存放组件 id 数组
 ```
 
 字段说明
+id：每个组件拥有的全局唯一标识
 title：组件标识名
 path：组件库路径，例：@douyinfe/semi-ui/Input
-id：全局唯一标识
 style：控制组件坐标 (x/y)、尺寸 (width/height)、显隐 (visible)、是否铺满 (full)
 props：静态属性，固定不变的值
 propEx：动态属性，绑定格式：脚本名.state.字段 / 脚本名.computed.计算字段，状态变更自动更新视图
@@ -88,6 +88,7 @@ computed：计算属性，包含 get 计算函数、dependencies 依赖字段数
 setup：页面初始化执行函数
 actions：事件触发的动作方法，可直接读写 this 访问状态
 
+setup和actions中， 通过this.state.xxx 去读取或者设置状态值
 
 6. 事件机制
 
@@ -146,8 +147,9 @@ Payload: target.checked(返回布尔值)。
 所有 id 全局唯一，children 只存组件 id。
 计算属性必须配置 dependencies，脚本、事件、绑定路径名称统一。
 
-9. 完整可直接模仿示例
-页面：
+9. 完整示例
+
+JSON 配置
 ```json
 {
   "version": "2.0.0",
@@ -174,6 +176,7 @@ Payload: target.checked(返回布尔值)。
 }
 
 ```
+JS 脚本
 
 ```javascript
 export default {
@@ -191,5 +194,4 @@ export default {
   }
 };
 ```
-
 

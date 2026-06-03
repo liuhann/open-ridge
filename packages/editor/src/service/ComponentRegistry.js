@@ -46,6 +46,7 @@ class ComponentRegistry {
       const componentCache = new Map()
       meta.components.forEach(component => {
         component.packageName = meta.name
+        component.libAImdPath = componentLib.ai
         componentCache.set(component.name, component)
       })
       this.loadedComponents.set(componentLib.module, componentCache)

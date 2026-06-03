@@ -393,8 +393,33 @@ async function loadScript (url) {
   })
 }
 
+// 根据地址加载文本类型的内容， 包括但不限于 html、md等
+async function loadTextContent (url) {
+  try {
+    const response = await window.fetch(url, {
+      mode: 'cors',
+      credentials: 'include', // 保持和项目一致：携带cookie
+      headers: {
+        'Content-Type': 'text/plain;charset=UTF-8'
+      }
+    })
+
+    // 请求成功返回文本
+    if (response.ok) {
+      return await response.text()
+    } else {
+      trace(`loadTextContent failed: ${url}, status: ${response.status}`)
+      return null
+    }
+  } catch (e) {
+    trace(`loadTextContent error: ${url}`, e)
+    return null
+  }
+}
+
 export {
   loadJSON,
+  loadTextContent,
   loadCss,
   loadScript,
   loadWebFont,

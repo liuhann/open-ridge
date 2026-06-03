@@ -48,7 +48,7 @@
   },
   {
     "module": "@douyinfe/semi-ui",
-    "version": "2.61.0",
+    "version": "2.99.2",
     "root": "RidgeSemiUI",
     "title": "SemiUI",
     "icon": "icon.png",
@@ -57,7 +57,8 @@
     "dist": ["dist/umd/ridge-semi-ui.min.js", "dist/css/semi.min.css"],
     "category": "interaction",
     "type": "ui",
-    "description": "字节跳动Semi Design组件库"
+    "description": "字节跳动Semi Design组件库",
+    "ai": "ridge-metas/@douyinfe/semi-ui/SemiComponentAI.md"
   },
   {
     "module": "@mui/material",
