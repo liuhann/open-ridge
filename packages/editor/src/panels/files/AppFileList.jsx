@@ -1,15 +1,13 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import {
-  Button, Tree, Dropdown, Typography, Toast, Upload, Modal, Input, Space, ResizeGroup,
-  ResizeItem,
-  ResizeHandler
+  Button, Tree, Dropdown, Typography, Toast, Upload, Modal, Input
 } from '@douyinfe/semi-ui'
 import DialogCreate from './DialogCreate.jsx'
 
 import appStore from '../../store/app.store.js'
 import editorStore from '../../store/editor.store.js'
-import { ICON_COMMON_PLUS, ICON_COMMON_GEAR, ICON_COMMON_DOT_VERT, ICON_COMMON_AI_NEW } from '../../icons/icons.js'
+import { ICON_COMMON_PLUS, ICON_COMMON_GEAR, ICON_COMMON_DOT_VERT } from '../../icons/icons.js'
 import PackageJsonEditorModal from '../apps/PackageJsonEditorModal.jsx'
 import { getAppTreeData } from './utils.js'
 import TitleBar from '../../components/TitleBar/TitleBar.jsx'
@@ -42,6 +40,7 @@ const AppFileList = () => {
   const moveFile = appStore((state) => state.moveFile)
   const deleteFile = appStore((state) => state.deleteFile)
   const exportFile = appStore((state) => state.exportFile)
+  const finishAI = appStore((state) => state.finishAI)
 
   const openFile = editorStore(state => state.openFile)
   const openedPages = editorStore(state => state.openedPages)
@@ -273,7 +272,7 @@ const AppFileList = () => {
               {data.key === '-1' && <div className='more-button'>{ICON_COMMON_PLUS}</div>}
               {data.key !== '-1' && <div className='more-button hover-show'>{ICON_COMMON_DOT_VERT}</div>}
             </Dropdown>
-          </>}
+            </>}
         {/* <Text
           onClick={() => {
             const now = new Date().getTime()
@@ -367,9 +366,25 @@ const AppFileList = () => {
       <AIGenerateModal
         visible={modalVisible}
         onClose={() => setModalVisible(false)}
-        onFinish={(data) => {
-          console.log('用户完成了向导，数据：', data)
-          // 在这里做提交、保存逻辑
+        onFinish={async ({
+          userPrompt,
+          pageJson,
+          scriptContent
+        }) => {
+          const result = await finishAI(pageJson, scriptContent, userPrompt)
+          if (result) {
+            // 提示成功  打开页面
+            Modal.success({
+              title: '页面已生成',
+              content: '请点击确定打开预览您的杰作！',
+              onOk: () => {
+                openFile(result.id)
+              }
+            })
+            return true
+          } else {
+            return false
+          }
         }}
       />
       <div className='buttons-bar'>

@@ -88,10 +88,59 @@ export default class ApplicationService {
     return dir
   }
 
-  async createFile (parentId, name, blob, mimeType) {
+  // ==============================
+  // 🔥 核心：自动生成唯一文件名（完美保留后缀）
+  // ==============================
+  async getUniqueFileName (parentId, originalName) {
+  // 1. 拆分文件名 + 后缀（只切最后一个 . 作为后缀）
+    const lastDotIndex = originalName.lastIndexOf('.')
+    let baseName = originalName
+    let ext = ''
+
+    if (lastDotIndex !== -1) {
+      baseName = originalName.slice(0, lastDotIndex)
+      ext = originalName.slice(lastDotIndex) // 保留 .
+    }
+
+    let counter = 1
+    let newName = originalName
+
+    // 2. 循环查找，直到找到不存在的文件名
+    while (true) {
+      const exists = await this.collection.findOne({
+        parent: parentId,
+        name: newName
+      })
+
+      if (!exists) break
+
+      // 3. 拼接新名称：base-1.ext
+      newName = `${baseName}-${counter}${ext}`
+      counter++
+
+      // 安全锁
+      if (counter > 1000) {
+        throw new Error('文件名冲突过多，无法自动重命名')
+      }
+    }
+
+    return newName
+  }
+
+  async createFile (parentId, name, blob, mimeType, renOnConflict) {
     trace('createFile', parentId, name)
-    const one = await this.collection.findOne({ parent: parentId, name })
-    if (one) throw new Error('File existed: ' + name)
+
+    let finalName = name
+
+    // ==============================
+    // 🔥 自动重命名（完美保留后缀）
+    // ==============================
+    if (renOnConflict) {
+      finalName = await this.getUniqueFileName(parentId, name)
+    } else {
+      const one = await this.collection.findOne({ parent: parentId, name: finalName })
+      if (one) throw new Error('File existed: ' + finalName)
+    }
 
     const id = nanoid(10)
     const dataUrl = await blobToDataUrl(blob, mimeType)
@@ -106,7 +155,7 @@ export default class ApplicationService {
       id,
       mimeType: mtype,
       size: blob.size,
-      name,
+      name: finalName, // ✅ 使用不冲突的文件名
       parent: parentId
     })
 

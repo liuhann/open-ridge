@@ -1,8 +1,10 @@
 import { create } from 'zustand'
+import { Modal } from '@douyinfe/semi-ui'
 import { alphabetid, trim, camelCase } from '../utils/string'
 import LocalRepoService from '../service/LocalRepoService'
 import ApplicationService from '../service/ApplicationService'
 import { stringToBlob } from '../utils/blob'
+import { getByMimeType } from '../utils/mimeTypes.js'
 import { addStringPrefix } from 'ridgejs/src/utils/string.js'
 
 import helloZipApp from '../ridge-app-hello-1.0.0.zip'
@@ -188,19 +190,88 @@ const useStore = create((set, get) => ({
     }
   },
 
-  createFile: async (parentId, name, fileContent, mimeType) => {
+  finishAI: async (pageJSONContent, scriptContent, userPrompt) => {
+    try {
+      const { createFile, deleteFile } = get()
+      const appService = localRepoService.getCurrentAppService()
+
+      // 安全获取页面名称
+      const title = pageJSONContent?.title || 'AI-Generated'
+      const pageName = `${title}.json`
+      const scriptFileName = pageJSONContent?.jsFiles?.[0]
+
+      // 绑定用户提示词
+      if (userPrompt) {
+        pageJSONContent.userPrompt = userPrompt
+      }
+
+      // 检查文件是否冲突
+      const pageConflict = appService.getFile('/' + pageName)
+      const scriptConflict = scriptFileName ? appService.getFile('/' + scriptFileName) : null
+
+      // 如果有冲突，弹出确认框
+      if (pageConflict || scriptConflict) {
+        const confirmed = await new Promise((resolve) => {
+          Modal.confirm({
+            title: '文件已经存在',
+            content: '冲突文件：' + (pageConflict ? pageName : '') + ' ' + (scriptConflict ? scriptFileName : '') + ' 点击确定将覆盖到现有文件',
+            onOk: () => resolve(true),
+            onCancel: () => resolve(false)
+          })
+        })
+
+        // 用户取消 → 终止操作
+        if (!confirmed) {
+          return null
+        }
+
+        // 删除冲突文件
+        if (pageConflict) await deleteFile('/' + pageName)
+        if (scriptConflict) await deleteFile('/' + scriptFileName)
+      }
+
+      // ======================
+      // 按你原有格式创建文件 ✅
+      // ======================
+      const createdPage = await createFile(
+        -1,
+        pageName,
+        JSON.stringify(pageJSONContent, null, 2), // 直接传文本
+        getByMimeType('json')
+      )
+
+      // 如果有脚本才创建
+      if (scriptFileName && scriptContent) {
+        await createFile(
+          -1,
+          scriptFileName,
+          scriptContent, // 直接传文本
+          getByMimeType('js')
+        )
+      }
+
+      return createdPage
+    } catch (err) {
+      console.error('AI生成页面失败：', err)
+      throw err
+    }
+  },
+  createFile: async (parentId, name, fileContent, mimeType, renameOnConflict) => {
     const appService = localRepoService.getCurrentAppService()
     if (!appService) return
 
     try {
-      await appService.createFile(
+      const createdFile = await appService.createFile(
         parentId,
         name,
-        stringToBlob(fileContent, mimeType)
+        stringToBlob(fileContent, mimeType),
+        mimeType,
+        renameOnConflict
       )
       set({
         currentAppFilesTree: appService.getFileTree()
       })
+      return createdFile
     } catch (err) {
       console.error('createFile 失败:', err)
     }
