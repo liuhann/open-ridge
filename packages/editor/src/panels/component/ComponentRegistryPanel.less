@@ -32,6 +32,59 @@
     flex: 1;
     overflow-y: auto;
     padding: 0 12px;
+      
+  .component-card {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--semi-color-bg-1);
+    border: 1px solid var(--semi-color-border);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 6px;
+    box-sizing: border-box;
+
+    &:hover {
+      border-color: var(--semi-color-primary);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    &-image {
+      width: 64px;
+      height: 64px;
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      border-radius: 8px;
+      
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+      }
+    }
+
+    &-name {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--semi-color-text-0);
+      text-align: center;
+      margin: 0;
+      line-height: 1.4;
+      word-break: break-word;
+      max-height: 2.8em;
+      overflow: hidden;
+      display: -webkit-box;
+    }
+  }
+
   }
 
   &-list {
@@ -50,58 +103,6 @@
   &-count {
     font-size: 12px;
     color: var(--semi-color-text-2);
-  }
-}
-
-.component-card {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--semi-color-bg-1);
-  border: 1px solid var(--semi-color-border);
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  padding: 6px;
-  box-sizing: border-box;
-
-  &:hover {
-    border-color: var(--semi-color-primary);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  }
-
-  &-image {
-    width: 64px;
-    height: 64px;
-    margin-bottom: 6px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    border-radius: 8px;
-    
-    img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-  }
-
-  &-name {
-    font-size: 12px;
-    font-weight: 600;
-    color: var(--semi-color-text-0);
-    text-align: center;
-    margin: 0;
-    line-height: 1.4;
-    word-break: break-word;
-    max-height: 2.8em;
-    overflow: hidden;
-    display: -webkit-box;
   }
 }
 
