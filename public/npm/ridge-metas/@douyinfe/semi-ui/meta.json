@@ -1,7 +1,7 @@
 {
   "name": "@douyinfe/semi-ui",
   "schemaVersion": "2.0",
-  "lastUpdated": "2026-06-04T03:24:12.628Z",
+  "lastUpdated": "2026-06-04T10:29:57.793Z",
   "generatedBy": "ridge-ui-cli",
   "components": [
     {
@@ -1210,13 +1210,6 @@
           "defaultValue": ""
         },
         {
-          "name": "defaultValue",
-          "description": "输入框默认内容",
-          "label": "默认内容",
-          "type": "string",
-          "defaultValue": ""
-        },
-        {
           "name": "type",
           "description": "input 类型，同原生 input",
           "label": "输入框类型",
@@ -1321,20 +1314,6 @@
           "defaultValue": "default"
         },
         {
-          "name": "aria-label",
-          "description": "无障碍标签",
-          "label": "ARIA 标签",
-          "type": "string",
-          "defaultValue": ""
-        },
-        {
-          "name": "aria-required",
-          "description": "是否必填",
-          "label": "ARIA 必填",
-          "type": "string",
-          "defaultValue": ""
-        },
-        {
           "name": "className",
           "description": "自定义类名",
           "label": "类名",
@@ -1403,7 +1382,7 @@
       "author": "LiuHan",
       "visualConfig": {
         "thumbnail": "",
-        "preferredWidth": 200,
+        "preferredWidth": 78,
         "preferredHeight": 32,
         "resizable": true,
         "aspectRatio": "no"
@@ -1553,8 +1532,8 @@
       "version": "1.0.0",
       "author": "RidgeUI",
       "visualConfig": {
-        "preferredWidth": 480,
-        "preferredHeight": 48,
+        "preferredWidth": 200,
+        "preferredHeight": 36,
         "resizable": true,
         "aspectRatio": "no"
       },
@@ -1568,20 +1547,13 @@
           "defaultValue": 1
         },
         {
-          "name": "defaultCurrentPage",
-          "description": "初始默认页码",
-          "label": "默认页码",
-          "type": "number",
-          "defaultValue": 1
-        },
-        {
           "name": "total",
           "description": "数据总条数",
           "label": "总条数",
           "control": "number",
           "type": "number",
           "min": 1,
-          "defaultValue": 1
+          "defaultValue": 21
         },
         {
           "name": "pageSize",
@@ -1744,22 +1716,6 @@
           "defaultValue": false
         },
         {
-          "name": "link",
-          "description": "是否作为链接样式",
-          "label": "链接样式",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
-          "name": "mark",
-          "description": "是否高亮标记",
-          "label": "高亮标记",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
           "name": "size",
           "description": "文本大小",
           "label": "文本大小",
@@ -1866,7 +1822,7 @@
       "version": "2.x",
       "author": "LiuHan",
       "visualConfig": {
-        "preferredWidth": 260,
+        "preferredWidth": 240,
         "preferredHeight": 48,
         "resizable": true,
         "aspectRatio": "no"
@@ -1994,8 +1950,8 @@
       "version": "1.0.0",
       "author": "LiuHan",
       "visualConfig": {
-        "preferredWidth": 200,
-        "preferredHeight": 80,
+        "preferredWidth": 96,
+        "preferredHeight": 18,
         "resizable": true,
         "aspectRatio": "no"
       },
@@ -2066,7 +2022,7 @@
               "value": "large"
             }
           ],
-          "defaultValue": "default"
+          "defaultValue": "large"
         },
         {
           "name": "showInfo",
@@ -2093,24 +2049,6 @@
           "defaultValue": "#eee"
         },
         {
-          "name": "strokeLinecap",
-          "description": "环形进度条端点样式",
-          "label": "端点样式",
-          "control": "select",
-          "type": "string",
-          "options": [
-            {
-              "label": "圆角",
-              "value": "round"
-            },
-            {
-              "label": "方角",
-              "value": "square"
-            }
-          ],
-          "defaultValue": "round"
-        },
-        {
           "name": "strokeWidth",
           "description": "环形进度条线条宽度",
           "label": "线条宽度",
@@ -2125,19 +2063,6 @@
           "label": "环形宽度",
           "type": "number",
           "hidden": true
-        },
-        {
-          "name": "className",
-          "description": "自定义样式类名",
-          "label": "自定义类名",
-          "type": "string",
-          "defaultValue": ""
-        },
-        {
-          "name": "style",
-          "description": "组件内联样式配置",
-          "label": "内联样式",
-          "type": "CSSProperties"
         }
       ],
       "events": []
@@ -2157,8 +2082,8 @@
       "version": "1.0.0",
       "author": "LiuHan",
       "visualConfig": {
-        "preferredWidth": 280,
-        "preferredHeight": 40,
+        "preferredWidth": 127,
+        "preferredHeight": 105,
         "resizable": false,
         "aspectRatio": "no"
       },
@@ -2306,8 +2231,8 @@
       "version": "1.0.0",
       "author": "RidgeUI",
       "visualConfig": {
-        "preferredWidth": 240,
-        "preferredHeight": 48,
+        "preferredWidth": 128,
+        "preferredHeight": 30,
         "resizable": true,
         "aspectRatio": "no"
       },
@@ -2319,7 +2244,7 @@
           "inputEvent": "onChange",
           "control": "number",
           "type": "number",
-          "defaultValue": 0
+          "defaultValue": 3.5
         },
         {
           "name": "allowClear",
@@ -2335,7 +2260,7 @@
           "label": "允许半选",
           "control": "boolean",
           "type": "boolean",
-          "defaultValue": false
+          "defaultValue": true
         },
         {
           "name": "count",
@@ -2345,14 +2270,6 @@
           "type": "number",
           "min": 1,
           "defaultValue": 5
-        },
-        {
-          "name": "defaultValue",
-          "description": "组件默认评分值",
-          "label": "默认评分",
-          "control": "number",
-          "type": "number",
-          "defaultValue": 0
         },
         {
           "name": "disabled",
@@ -2380,54 +2297,13 @@
           ],
           "defaultValue": "default",
           "hidden": true
-        },
-        {
-          "name": "tooltips",
-          "description": "自定义每项星级的提示信息",
-          "label": "星级提示",
-          "control": "json",
-          "type": "array",
-          "defaultValue": []
-        },
-        {
-          "name": "className",
-          "description": "组件自定义CSS类名",
-          "label": "自定义类名",
-          "control": "className",
-          "type": "string"
-        },
-        {
-          "name": "style",
-          "description": "组件内联样式",
-          "label": "内联样式",
-          "type": "CSSProperties"
         }
       ],
       "events": [
         {
-          "name": "onBlur",
-          "description": "组件失去焦点时触发",
-          "label": "失去焦点"
-        },
-        {
           "name": "onChange",
           "description": "选择评分时触发，返回当前评分值",
           "label": "评分改变"
-        },
-        {
-          "name": "onFocus",
-          "description": "组件获取焦点时触发",
-          "label": "获取焦点"
-        },
-        {
-          "name": "onHoverChange",
-          "description": "鼠标经过星级时数值变化触发",
-          "label": "悬停改变"
-        },
-        {
-          "name": "onKeyDown",
-          "description": "组件内按键时触发",
-          "label": "按键按下"
         }
       ]
     },
@@ -2445,8 +2321,8 @@
       "version": "1.0.0",
       "author": "RidgeUI",
       "visualConfig": {
-        "preferredWidth": 280,
-        "preferredHeight": 40,
+        "preferredWidth": 88,
+        "preferredHeight": 34,
         "resizable": true,
         "aspectRatio": "no"
       },
@@ -2521,14 +2397,6 @@
           "defaultValue": false
         },
         {
-          "name": "allowCreate",
-          "description": "是否允许创建新的选项，需配合搜索使用",
-          "label": "允许创建",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
           "name": "showClear",
           "description": "是否显示清除选中值的按钮",
           "label": "显示清除",
@@ -2543,22 +2411,6 @@
           "control": "boolean",
           "type": "boolean",
           "defaultValue": true
-        },
-        {
-          "name": "autoFocus",
-          "description": "是否自动获取焦点",
-          "label": "自动聚焦",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
-          "name": "defaultOpen",
-          "description": "是否默认展开下拉列表",
-          "label": "默认展开",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
         },
         {
           "name": "size",
@@ -2587,31 +2439,6 @@
           "name": "borderless",
           "description": "是否开启无边框模式",
           "label": "无边框",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
-          "name": "maxTagCount",
-          "description": "多选时最多显示的标签数量，超出显示+N",
-          "label": "最大标签数",
-          "control": "number",
-          "type": "number",
-          "min": 0,
-          "defaultValue": 3
-        },
-        {
-          "name": "max",
-          "description": "多选时最多可选数量",
-          "label": "最大可选数",
-          "control": "number",
-          "type": "number",
-          "min": 0
-        },
-        {
-          "name": "loading",
-          "description": "下拉列表是否显示加载动画",
-          "label": "加载中",
           "control": "boolean",
           "type": "boolean",
           "defaultValue": false
@@ -2663,25 +2490,6 @@
             }
           ],
           "defaultValue": "default"
-        },
-        {
-          "name": "className",
-          "description": "组件自定义CSS类名",
-          "label": "自定义类名",
-          "control": "className",
-          "type": "string"
-        },
-        {
-          "name": "style",
-          "description": "组件内联样式",
-          "label": "内联样式",
-          "type": "CSSProperties"
-        },
-        {
-          "name": "dropdownStyle",
-          "description": "下拉弹层自定义样式",
-          "label": "弹层样式",
-          "type": "CSSProperties"
         }
       ],
       "events": [
@@ -2689,51 +2497,6 @@
           "name": "onChange",
           "description": "选中值变化时触发",
           "label": "值改变"
-        },
-        {
-          "name": "onSelect",
-          "description": "选项被选中时触发",
-          "label": "选中"
-        },
-        {
-          "name": "onDeselect",
-          "description": "多选取消选中时触发",
-          "label": "取消选中"
-        },
-        {
-          "name": "onClear",
-          "description": "点击清除按钮时触发",
-          "label": "清除"
-        },
-        {
-          "name": "onSearch",
-          "description": "搜索框内容变化时触发",
-          "label": "搜索"
-        },
-        {
-          "name": "onCreate",
-          "description": "创建新选项时触发",
-          "label": "创建选项"
-        },
-        {
-          "name": "onDropdownVisibleChange",
-          "description": "下拉列表展开/收起时触发",
-          "label": "展开状态改变"
-        },
-        {
-          "name": "onFocus",
-          "description": "组件获取焦点时触发",
-          "label": "获取焦点"
-        },
-        {
-          "name": "onBlur",
-          "description": "组件失去焦点时触发",
-          "label": "失去焦点"
-        },
-        {
-          "name": "onExceed",
-          "description": "多选超出最大可选数量时触发",
-          "label": "超出限制"
         }
       ]
     },
@@ -2751,8 +2514,8 @@
       "version": "1.0.0",
       "author": "RidgeUI",
       "visualConfig": {
-        "preferredWidth": 320,
-        "preferredHeight": 48,
+        "preferredWidth": 178,
+        "preferredHeight": 37,
         "resizable": true,
         "aspectRatio": "no"
       },
@@ -2873,8 +2636,8 @@
       "version": "1.0.0",
       "author": "RidgeUI",
       "visualConfig": {
-        "preferredWidth": 120,
-        "preferredHeight": 60,
+        "preferredWidth": 36,
+        "preferredHeight": 36,
         "resizable": true,
         "aspectRatio": "no"
       },
@@ -2916,18 +2679,6 @@
           "control": "number",
           "type": "number",
           "defaultValue": 0
-        },
-        {
-          "name": "style",
-          "description": "组件内联样式",
-          "label": "内联样式",
-          "type": "CSSProperties"
-        },
-        {
-          "name": "childStyle",
-          "description": "内部子元素的样式",
-          "label": "子元素样式",
-          "type": "CSSProperties"
         }
       ],
       "events": [
@@ -3048,8 +2799,8 @@
       "version": "1.0.0",
       "author": "",
       "visualConfig": {
-        "preferredWidth": 720,
-        "preferredHeight": 480,
+        "preferredWidth": 320,
+        "preferredHeight": 200,
         "resizable": true,
         "aspectRatio": "no"
       },
@@ -3114,7 +2865,6 @@
           "name": "pagination",
           "description": "是否显示分页/分页配置",
           "label": "分页配置",
-          "control": "json",
           "type": "boolean",
           "defaultValue": true
         },
@@ -3182,11 +2932,6 @@
           "label": "数据变化"
         },
         {
-          "name": "onExpand",
-          "description": "行展开/收起时触发",
-          "label": "行展开"
-        },
-        {
           "name": "onRow",
           "description": "点击表格行时触发",
           "label": "行点击"
@@ -3207,8 +2952,8 @@
       "version": "1.0.0",
       "author": "RidgeUI",
       "visualConfig": {
-        "preferredWidth": 360,
-        "preferredHeight": 56,
+        "preferredWidth": 160,
+        "preferredHeight": 32,
         "resizable": true,
         "aspectRatio": "no"
       },
@@ -3219,7 +2964,10 @@
           "label": "标签值",
           "inputEvent": "onChange",
           "type": "array",
-          "defaultValue": []
+          "defaultValue": [
+            "电子产品",
+            "在售"
+          ]
         },
         {
           "name": "inputValue",
@@ -3267,22 +3015,6 @@
           "control": "boolean",
           "type": "boolean",
           "defaultValue": false
-        },
-        {
-          "name": "max",
-          "description": "最大允许添加的标签数量",
-          "label": "最大标签数",
-          "control": "number",
-          "type": "number",
-          "min": 0
-        },
-        {
-          "name": "maxLength",
-          "description": "单个标签的最大输入长度",
-          "label": "标签最大长度",
-          "control": "number",
-          "type": "number",
-          "min": 0
         },
         {
           "name": "maxTagCount",
@@ -3336,19 +3068,6 @@
             }
           ],
           "defaultValue": "default"
-        },
-        {
-          "name": "className",
-          "description": "自定义CSS类名",
-          "label": "自定义类名",
-          "control": "className",
-          "type": "string"
-        },
-        {
-          "name": "style",
-          "description": "组件内联样式",
-          "label": "内联样式",
-          "type": "CSSProperties"
         }
       ],
       "events": [
@@ -3383,8 +3102,8 @@
       "version": "1.0.0",
       "author": "LiuHan",
       "visualConfig": {
-        "preferredWidth": 80,
-        "preferredHeight": 32,
+        "preferredWidth": 42,
+        "preferredHeight": 36,
         "resizable": false,
         "aspectRatio": "no"
       },
@@ -3444,7 +3163,7 @@
               "value": "yellow"
             }
           ],
-          "defaultValue": "grey"
+          "defaultValue": "green"
         },
         {
           "name": "shape",
@@ -3555,8 +3274,8 @@
       "version": "1.0.0",
       "author": "LiuHan",
       "visualConfig": {
-        "preferredWidth": 240,
-        "preferredHeight": 32,
+        "preferredWidth": 120,
+        "preferredHeight": 30,
         "resizable": true,
         "aspectRatio": "no"
       },
@@ -3727,8 +3446,8 @@
       "version": "1.0.0",
       "author": "RidgeUI",
       "visualConfig": {
-        "preferredWidth": 280,
-        "preferredHeight": 40,
+        "preferredWidth": 132,
+        "preferredHeight": 32,
         "resizable": true,
         "aspectRatio": "no"
       },
@@ -3738,33 +3457,8 @@
           "description": "当前选中时间，配合onChange实现双向绑定",
           "label": "时间值",
           "inputEvent": "onChange",
-          "type": "string | Date",
-          "defaultValue": ""
-        },
-        {
-          "name": "defaultValue",
-          "description": "初始默认时间",
-          "label": "默认时间",
-          "type": "string | Date",
-          "defaultValue": ""
-        },
-        {
-          "name": "type",
-          "description": "选择类型：普通时间 / 时间范围",
-          "label": "选择类型",
-          "control": "radiogroup",
           "type": "string",
-          "options": [
-            {
-              "label": "时间",
-              "value": "time"
-            },
-            {
-              "label": "时间范围",
-              "value": "timeRange"
-            }
-          ],
-          "defaultValue": "time"
+          "defaultValue": ""
         },
         {
           "name": "placeholder",
@@ -3848,22 +3542,6 @@
           "defaultValue": 1
         },
         {
-          "name": "hideDisabledOptions",
-          "description": "是否隐藏禁止选择的选项",
-          "label": "隐藏禁用选项",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
-          "name": "inputReadOnly",
-          "description": "输入框只读，避免移动端弹出键盘",
-          "label": "输入框只读",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
           "name": "size",
           "description": "组件尺寸大小",
           "label": "尺寸",
@@ -3885,19 +3563,6 @@
           ],
           "defaultValue": "default",
           "hidden": true
-        },
-        {
-          "name": "className",
-          "description": "组件自定义CSS类名",
-          "label": "自定义类名",
-          "control": "className",
-          "type": "string"
-        },
-        {
-          "name": "style",
-          "description": "组件内联样式",
-          "label": "内联样式",
-          "type": "CSSProperties"
         }
       ],
       "events": [
@@ -3905,21 +3570,6 @@
           "name": "onChange",
           "description": "选中时间变化时触发",
           "label": "时间改变"
-        },
-        {
-          "name": "onOpenChange",
-          "description": "时间面板展开/收起时触发",
-          "label": "面板展开状态"
-        },
-        {
-          "name": "onFocus",
-          "description": "输入框获得焦点时触发",
-          "label": "获取焦点"
-        },
-        {
-          "name": "onBlur",
-          "description": "输入框失去焦点时触发",
-          "label": "失去焦点"
         }
       ]
     },
@@ -3937,19 +3587,12 @@
       "version": "1.0.0",
       "author": "",
       "visualConfig": {
-        "preferredWidth": 520,
-        "preferredHeight": 400,
+        "preferredWidth": 250,
+        "preferredHeight": 131,
         "resizable": true,
         "aspectRatio": "no"
       },
       "properties": [
-        {
-          "name": "className",
-          "description": "组件自定义 CSS 类名",
-          "label": "自定义类名",
-          "control": "className",
-          "type": "array"
-        },
         {
           "name": "mode",
           "description": "时间轴与内容的相对位置",
@@ -3974,13 +3617,7 @@
               "value": "alternate"
             }
           ],
-          "defaultValue": "left"
-        },
-        {
-          "name": "style",
-          "description": "组件内联样式",
-          "label": "内联样式",
-          "type": "CSSProperties"
+          "defaultValue": "center"
         },
         {
           "name": "dataSource",
@@ -4021,8 +3658,8 @@
       "version": "1.0.0",
       "author": "LiuHan",
       "visualConfig": {
-        "preferredWidth": 320,
-        "preferredHeight": 48,
+        "preferredWidth": 98,
+        "preferredHeight": 52,
         "resizable": true,
         "aspectRatio": "no"
       },
@@ -4032,7 +3669,7 @@
           "description": "显示的文本内容",
           "label": "文本内容",
           "type": "string",
-          "defaultValue": "文本内容"
+          "defaultValue": "标题1"
         },
         {
           "name": "heading",
@@ -4077,46 +3714,6 @@
           "defaultValue": false
         },
         {
-          "name": "delete",
-          "description": "是否显示删除线",
-          "label": "删除线",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
-          "name": "disabled",
-          "description": "是否置灰禁用",
-          "label": "禁用",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
-          "name": "ellipsis",
-          "description": "内容超长时自动省略",
-          "label": "自动省略",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
-          "name": "link",
-          "description": "是否作为链接样式",
-          "label": "链接样式",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
-          "name": "mark",
-          "description": "是否高亮标记",
-          "label": "高亮标记",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
           "name": "type",
           "description": "标题颜色类型",
           "label": "颜色类型",
@@ -4153,48 +3750,6 @@
             }
           ],
           "defaultValue": "primary"
-        },
-        {
-          "name": "underline",
-          "description": "是否显示下划线",
-          "label": "下划线",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
-          "name": "weight",
-          "description": "字体粗细",
-          "label": "字重",
-          "control": "select",
-          "type": "string",
-          "options": [
-            {
-              "label": "细体",
-              "value": "light"
-            },
-            {
-              "label": "常规",
-              "value": "regular"
-            },
-            {
-              "label": "中等",
-              "value": "medium"
-            },
-            {
-              "label": "半粗",
-              "value": "semibold"
-            },
-            {
-              "label": "粗体",
-              "value": "bold"
-            },
-            {
-              "label": "默认",
-              "value": "default"
-            }
-          ],
-          "defaultValue": "default"
         }
       ],
       "events": []
@@ -4213,8 +3768,8 @@
       "version": "1.0.0",
       "author": "LiuHan",
       "visualConfig": {
-        "preferredWidth": 320,
-        "preferredHeight": 40,
+        "preferredWidth": 120,
+        "preferredHeight": 32,
         "resizable": true,
         "aspectRatio": "no"
       },
@@ -4224,20 +3779,7 @@
           "description": "组件选中值，单选单值，多选数组",
           "label": "选中值",
           "inputEvent": "onChange",
-          "type": "string|number|array",
-          "sample": [
-            "1001"
-          ],
-          "defaultValue": ""
-        },
-        {
-          "name": "defaultValue",
-          "description": "组件默认选中值",
-          "label": "默认值",
-          "type": "string|number|array",
-          "sample": [
-            "1002"
-          ],
+          "type": "string",
           "defaultValue": ""
         },
         {
@@ -4248,12 +3790,19 @@
           "type": "array",
           "defaultValue": [
             {
-              "label": "一级分类",
-              "value": "1",
+              "label": "中国",
+              "value": "China",
+              "key": "0-0",
               "children": [
                 {
-                  "label": "二级分类",
-                  "value": "1-1"
+                  "label": "北京",
+                  "value": "Beijing",
+                  "key": "0-0-0"
+                },
+                {
+                  "label": "上海",
+                  "value": "Shanghai",
+                  "key": "0-0-1"
                 }
               ]
             }
@@ -4386,80 +3935,25 @@
       "version": "1.0.0",
       "author": "LiuHan",
       "visualConfig": {
-        "preferredWidth": 360,
-        "preferredHeight": 480,
+        "preferredWidth": 220,
+        "preferredHeight": 180,
         "resizable": true,
         "aspectRatio": "no"
       },
       "properties": [
         {
-          "name": "disabled",
-          "description": "是否禁用整个树形组件",
-          "label": "禁用组件",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
-          "name": "multiple",
-          "description": "是否开启多选模式",
-          "label": "多选模式",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
           "name": "defaultExpandAll",
           "description": "初始化是否展开全部节点",
           "label": "默认展开全部",
-          "control": "boolean",
           "type": "boolean",
           "defaultValue": false
-        },
-        {
-          "name": "defaultExpandedKeys",
-          "description": "默认展开指定节点key数组",
-          "label": "默认展开节点",
-          "control": "json",
-          "type": "array"
-        },
-        {
-          "name": "defaultValue",
-          "description": "组件默认选中值",
-          "label": "默认选中值",
-          "control": "json",
-          "type": "string"
         },
         {
           "name": "value",
           "description": "受控选中节点值",
           "label": "选中值",
-          "control": "json",
           "type": "string",
           "inputEvent": "onChange"
-        },
-        {
-          "name": "expandedKeys",
-          "description": "受控展开节点key集合",
-          "label": "展开节点",
-          "control": "json",
-          "type": "array"
-        },
-        {
-          "name": "showLine",
-          "description": "是否显示节点连接线",
-          "label": "显示连接线",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
-          "name": "directory",
-          "description": "是否开启目录树样式",
-          "label": "目录树模式",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
         },
         {
           "name": "leafOnly",
@@ -4470,41 +3964,30 @@
           "defaultValue": false
         },
         {
-          "name": "labelEllipsis",
-          "description": "节点文字超出自动省略",
-          "label": "文字省略",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
           "name": "treeData",
           "description": "树形结构数据源",
           "label": "树形数据",
           "control": "json",
           "type": "array",
-          "defaultValue": []
-        },
-        {
-          "name": "searchPlaceholder",
-          "description": "搜索框占位提示文字",
-          "label": "搜索提示文案",
-          "type": "string"
-        },
-        {
-          "name": "showClear",
-          "description": "搜索框显示清空按钮",
-          "label": "显示清空按钮",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": true
-        },
-        {
-          "name": "treeNodeFilterProp",
-          "description": "搜索匹配字段名",
-          "label": "搜索匹配字段",
-          "type": "string",
-          "defaultValue": "label"
+          "defaultValue": [
+            {
+              "label": "中国",
+              "value": "China",
+              "key": "0-0",
+              "children": [
+                {
+                  "label": "北京",
+                  "value": "Beijing",
+                  "key": "0-0-0"
+                },
+                {
+                  "label": "上海",
+                  "value": "Shanghai",
+                  "key": "0-0-1"
+                }
+              ]
+            }
+          ]
         }
       ],
       "events": [
@@ -4517,16 +4000,6 @@
           "name": "onSelect",
           "description": "点击选中单个节点触发",
           "label": "节点选中"
-        },
-        {
-          "name": "onExpand",
-          "description": "节点展开收起触发",
-          "label": "展开变更"
-        },
-        {
-          "name": "onSearch",
-          "description": "搜索框内容变化触发",
-          "label": "搜索事件"
         },
         {
           "name": "onDoubleClick",

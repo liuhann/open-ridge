@@ -12,8 +12,8 @@
   "version": "1.0.0",
   "author": "RidgeUI",
   "visualConfig": {
-    "preferredWidth": 360,
-    "preferredHeight": 56,
+    "preferredWidth": 164,
+    "preferredHeight": 32,
     "resizable": true,
     "aspectRatio": "no"
   },
@@ -24,7 +24,7 @@
       "label": "标签值",
       "inputEvent": "onChange",
       "type": "array",
-      "defaultValue": []
+      "defaultValue": ["电子产品", "在售"]
     },
     {
       "name": "inputValue",
@@ -72,22 +72,6 @@
       "control": "boolean",
       "type": "boolean",
       "defaultValue": false
-    },
-    {
-      "name": "max",
-      "description": "最大允许添加的标签数量",
-      "label": "最大标签数",
-      "control": "number",
-      "type": "number",
-      "min": 0
-    },
-    {
-      "name": "maxLength",
-      "description": "单个标签的最大输入长度",
-      "label": "标签最大长度",
-      "control": "number",
-      "type": "number",
-      "min": 0
     },
     {
       "name": "maxTagCount",
@@ -141,19 +125,6 @@
         }
       ],
       "defaultValue": "default"
-    },
-    {
-      "name": "className",
-      "description": "自定义CSS类名",
-      "label": "自定义类名",
-      "control": "className",
-      "type": "string"
-    },
-    {
-      "name": "style",
-      "description": "组件内联样式",
-      "label": "内联样式",
-      "type": "CSSProperties"
     }
   ],
   "events": [

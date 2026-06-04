@@ -12,8 +12,8 @@
   "version": "1.0.0",
   "author": "RidgeUI",
   "visualConfig": {
-    "preferredWidth": 480,
-    "preferredHeight": 48,
+    "preferredWidth": 200,
+    "preferredHeight": 36,
     "resizable": true,
     "aspectRatio": "no"
   },
@@ -33,7 +33,7 @@
       "control": "number",
       "type": "number",
       "min": 1,
-      "defaultValue": 1
+      "defaultValue": 21
     },
     {
       "name": "pageSize",

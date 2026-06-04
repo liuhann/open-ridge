@@ -59,22 +59,6 @@
       "defaultValue": false
     },
     {
-      "name": "link",
-      "description": "是否作为链接样式",
-      "label": "链接样式",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": false
-    },
-    {
-      "name": "mark",
-      "description": "是否高亮标记",
-      "label": "高亮标记",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": false
-    },
-    {
       "name": "size",
       "description": "文本大小",
       "label": "文本大小",

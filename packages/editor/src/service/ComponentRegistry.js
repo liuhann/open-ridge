@@ -65,7 +65,7 @@ class ComponentRegistry {
     let libName = ''
 
     // 先尝试完全匹配
-    for (const lib of this.registry) {
+    for (const lib of this.registryPackages) {
       if (componentPath.startsWith(lib.module + '/')) {
         foundLib = lib
         libName = lib.module
@@ -92,7 +92,7 @@ class ComponentRegistry {
     }
 
     // 加载库
-    await this.loadLibMeta(libName)
+    await this.getComponentLibMeta(libName)
 
     // 再次尝试从缓存获取
     const libCache = this.loadedComponents.get(libName)

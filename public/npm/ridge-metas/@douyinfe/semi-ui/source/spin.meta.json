@@ -11,8 +11,8 @@
   "version": "1.0.0",
   "author": "RidgeUI",
   "visualConfig": {
-    "preferredWidth": 120,
-    "preferredHeight": 60,
+    "preferredWidth": 36,
+    "preferredHeight": 36,
     "resizable": true,
     "aspectRatio": "no"
   },
@@ -54,18 +54,6 @@
       "control": "number",
       "type": "number",
       "defaultValue": 0
-    },
-    {
-      "name": "style",
-      "description": "组件内联样式",
-      "label": "内联样式",
-      "type": "CSSProperties"
-    },
-    {
-      "name": "childStyle",
-      "description": "内部子元素的样式",
-      "label": "子元素样式",
-      "type": "CSSProperties"
     }
   ],
   "events": [

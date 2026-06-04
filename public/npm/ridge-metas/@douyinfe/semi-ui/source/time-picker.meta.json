@@ -12,8 +12,8 @@
   "version": "1.0.0",
   "author": "RidgeUI",
   "visualConfig": {
-    "preferredWidth": 280,
-    "preferredHeight": 40,
+    "preferredWidth": 132,
+    "preferredHeight": 32,
     "resizable": true,
     "aspectRatio": "no"
   },
@@ -23,33 +23,8 @@
       "description": "当前选中时间，配合onChange实现双向绑定",
       "label": "时间值",
       "inputEvent": "onChange",
-      "type": "string | Date",
-      "defaultValue": ""
-    },
-    {
-      "name": "defaultValue",
-      "description": "初始默认时间",
-      "label": "默认时间",
-      "type": "string | Date",
-      "defaultValue": ""
-    },
-    {
-      "name": "type",
-      "description": "选择类型：普通时间 / 时间范围",
-      "label": "选择类型",
-      "control": "radiogroup",
       "type": "string",
-      "options": [
-        {
-          "label": "时间",
-          "value": "time"
-        },
-        {
-          "label": "时间范围",
-          "value": "timeRange"
-        }
-      ],
-      "defaultValue": "time"
+      "defaultValue": ""
     },
     {
       "name": "placeholder",
@@ -133,22 +108,6 @@
       "defaultValue": 1
     },
     {
-      "name": "hideDisabledOptions",
-      "description": "是否隐藏禁止选择的选项",
-      "label": "隐藏禁用选项",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": false
-    },
-    {
-      "name": "inputReadOnly",
-      "description": "输入框只读，避免移动端弹出键盘",
-      "label": "输入框只读",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": false
-    },
-    {
       "name": "size",
       "description": "组件尺寸大小",
       "label": "尺寸",
@@ -170,19 +129,6 @@
       ],
       "defaultValue": "default",
       "hidden": true
-    },
-    {
-      "name": "className",
-      "description": "组件自定义CSS类名",
-      "label": "自定义类名",
-      "control": "className",
-      "type": "string"
-    },
-    {
-      "name": "style",
-      "description": "组件内联样式",
-      "label": "内联样式",
-      "type": "CSSProperties"
     }
   ],
   "events": [
@@ -190,21 +136,6 @@
       "name": "onChange",
       "description": "选中时间变化时触发",
       "label": "时间改变"
-    },
-    {
-      "name": "onOpenChange",
-      "description": "时间面板展开/收起时触发",
-      "label": "面板展开状态"
-    },
-    {
-      "name": "onFocus",
-      "description": "输入框获得焦点时触发",
-      "label": "获取焦点"
-    },
-    {
-      "name": "onBlur",
-      "description": "输入框失去焦点时触发",
-      "label": "失去焦点"
     }
   ]
 }

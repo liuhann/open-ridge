@@ -8,80 +8,25 @@
   "version": "1.0.0",
   "author": "LiuHan",
   "visualConfig": {
-    "preferredWidth": 360,
-    "preferredHeight": 480,
+    "preferredWidth": 220,
+    "preferredHeight": 180,
     "resizable": true,
     "aspectRatio": "no"
   },
   "properties": [
     {
-      "name": "disabled",
-      "description": "是否禁用整个树形组件",
-      "label": "禁用组件",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": false
-    },
-    {
-      "name": "multiple",
-      "description": "是否开启多选模式",
-      "label": "多选模式",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": false
-    },
-    {
       "name": "defaultExpandAll",
       "description": "初始化是否展开全部节点",
       "label": "默认展开全部",
-      "control": "boolean",
       "type": "boolean",
       "defaultValue": false
-    },
-    {
-      "name": "defaultExpandedKeys",
-      "description": "默认展开指定节点key数组",
-      "label": "默认展开节点",
-      "control": "json",
-      "type": "array"
-    },
-    {
-      "name": "defaultValue",
-      "description": "组件默认选中值",
-      "label": "默认选中值",
-      "control": "json",
-      "type": "string"
     },
     {
       "name": "value",
       "description": "受控选中节点值",
       "label": "选中值",
-      "control": "json",
       "type": "string",
       "inputEvent": "onChange"
-    },
-    {
-      "name": "expandedKeys",
-      "description": "受控展开节点key集合",
-      "label": "展开节点",
-      "control": "json",
-      "type": "array"
-    },
-    {
-      "name": "showLine",
-      "description": "是否显示节点连接线",
-      "label": "显示连接线",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": false
-    },
-    {
-      "name": "directory",
-      "description": "是否开启目录树样式",
-      "label": "目录树模式",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": false
     },
     {
       "name": "leafOnly",
@@ -92,41 +37,12 @@
       "defaultValue": false
     },
     {
-      "name": "labelEllipsis",
-      "description": "节点文字超出自动省略",
-      "label": "文字省略",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": false
-    },
-    {
       "name": "treeData",
       "description": "树形结构数据源",
       "label": "树形数据",
       "control": "json",
       "type": "array",
-      "defaultValue": []
-    },
-    {
-      "name": "searchPlaceholder",
-      "description": "搜索框占位提示文字",
-      "label": "搜索提示文案",
-      "type": "string"
-    },
-    {
-      "name": "showClear",
-      "description": "搜索框显示清空按钮",
-      "label": "显示清空按钮",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": true
-    },
-    {
-      "name": "treeNodeFilterProp",
-      "description": "搜索匹配字段名",
-      "label": "搜索匹配字段",
-      "type": "string",
-      "defaultValue": "label"
+      "defaultValue": [{"label":"中国","value":"China","key":"0-0","children":[{"label":"北京","value":"Beijing","key":"0-0-0"},{"label":"上海","value":"Shanghai","key":"0-0-1"}]}]
     }
   ],
   "events": [
@@ -139,16 +55,6 @@
       "name": "onSelect",
       "description": "点击选中单个节点触发",
       "label": "节点选中"
-    },
-    {
-      "name": "onExpand",
-      "description": "节点展开收起触发",
-      "label": "展开变更"
-    },
-    {
-      "name": "onSearch",
-      "description": "搜索框内容变化触发",
-      "label": "搜索事件"
     },
     {
       "name": "onDoubleClick",

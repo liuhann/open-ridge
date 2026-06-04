@@ -12,8 +12,8 @@
   "version": "1.0.0",
   "author": "RidgeUI",
   "visualConfig": {
-    "preferredWidth": 320,
-    "preferredHeight": 48,
+    "preferredWidth": 178,
+    "preferredHeight": 37,
     "resizable": true,
     "aspectRatio": "no"
   },

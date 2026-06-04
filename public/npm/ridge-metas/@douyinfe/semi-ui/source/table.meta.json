@@ -13,8 +13,8 @@
   "version": "1.0.0",
   "author": "",
   "visualConfig": {
-    "preferredWidth": 720,
-    "preferredHeight": 480,
+    "preferredWidth": 320,
+    "preferredHeight": 200,
     "resizable": true,
     "aspectRatio": "no"
   },
@@ -70,7 +70,6 @@
       "name": "pagination",
       "description": "是否显示分页/分页配置",
       "label": "分页配置",
-      "control": "json",
       "type": "boolean",
       "defaultValue": true
     },
@@ -117,11 +116,6 @@
       "name": "onChange",
       "description": "分页、排序、筛选变化时触发",
       "label": "数据变化"
-    },
-    {
-      "name": "onExpand",
-      "description": "行展开/收起时触发",
-      "label": "行展开"
     },
     {
       "name": "onRow",

@@ -40,7 +40,7 @@ export default class EditorElement extends Element {
 
   // 获取组件元数据
   getComponentMeta () {
-    return this.componentMeta || {}
+    return this.componentMeta
   }
 
   // 检查是否已加载组件元数据

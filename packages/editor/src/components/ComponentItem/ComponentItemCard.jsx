@@ -52,7 +52,7 @@ const ComponentItemCard = ({ packageName, item, selected }) => {
 
       // ✅ 设置缩放 + 居中（必须同时定位居中）
       content.style.transform = `scale(${scale})`
-      content.style.transformOrigin = 'center center'
+      content.style.transformOrigin = 'top left'
       content.style.left = '50%'
       content.style.top = '50%'
       content.style.marginLeft = (-compW * scale) / 2 + 'px'

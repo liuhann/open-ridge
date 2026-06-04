@@ -12,8 +12,8 @@
   "version": "1.0.0",
   "author": "LiuHan",
   "visualConfig": {
-    "preferredWidth": 80,
-    "preferredHeight": 32,
+    "preferredWidth": 42,
+    "preferredHeight": 36,
     "resizable": false,
     "aspectRatio": "no"
   },
@@ -73,7 +73,7 @@
           "value": "yellow"
         }
       ],
-      "defaultValue": "grey"
+      "defaultValue": "green"
     },
     {
       "name": "shape",

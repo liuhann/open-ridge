@@ -8,8 +8,8 @@
   "version": "1.0.0",
   "author": "LiuHan",
   "visualConfig": {
-    "preferredWidth": 320,
-    "preferredHeight": 40,
+    "preferredWidth": 120,
+    "preferredHeight": 32,
     "resizable": true,
     "aspectRatio": "no"
   },
@@ -19,16 +19,7 @@
       "description": "组件选中值，单选单值，多选数组",
       "label": "选中值",
       "inputEvent": "onChange",
-      "type": "string|number|array",
-      "sample": ["1001"],
-      "defaultValue": ""
-    },
-    {
-      "name": "defaultValue",
-      "description": "组件默认选中值",
-      "label": "默认值",
-      "type": "string|number|array",
-      "sample": ["1002"],
+      "type": "string",
       "defaultValue": ""
     },
     {
@@ -37,9 +28,7 @@
       "label": "树形数据源",
       "control": "json",
       "type": "array",
-      "defaultValue": [
-        {"label":"一级分类","value":"1","children":[{"label":"二级分类","value":"1-1"}]}
-      ]
+      "defaultValue": [{"label":"中国","value":"China","key":"0-0","children":[{"label":"北京","value":"Beijing","key":"0-0-0"},{"label":"上海","value":"Shanghai","key":"0-0-1"}]}]
     },
     {
       "name": "placeholder",

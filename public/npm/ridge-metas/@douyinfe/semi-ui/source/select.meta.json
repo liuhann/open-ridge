@@ -12,8 +12,8 @@
   "version": "1.0.0",
   "author": "RidgeUI",
   "visualConfig": {
-    "preferredWidth": 280,
-    "preferredHeight": 40,
+    "preferredWidth": 88,
+    "preferredHeight": 34,
     "resizable": true,
     "aspectRatio": "no"
   },
@@ -88,14 +88,6 @@
       "defaultValue": false
     },
     {
-      "name": "allowCreate",
-      "description": "是否允许创建新的选项，需配合搜索使用",
-      "label": "允许创建",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": false
-    },
-    {
       "name": "showClear",
       "description": "是否显示清除选中值的按钮",
       "label": "显示清除",
@@ -110,22 +102,6 @@
       "control": "boolean",
       "type": "boolean",
       "defaultValue": true
-    },
-    {
-      "name": "autoFocus",
-      "description": "是否自动获取焦点",
-      "label": "自动聚焦",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": false
-    },
-    {
-      "name": "defaultOpen",
-      "description": "是否默认展开下拉列表",
-      "label": "默认展开",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": false
     },
     {
       "name": "size",
@@ -154,31 +130,6 @@
       "name": "borderless",
       "description": "是否开启无边框模式",
       "label": "无边框",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": false
-    },
-    {
-      "name": "maxTagCount",
-      "description": "多选时最多显示的标签数量，超出显示+N",
-      "label": "最大标签数",
-      "control": "number",
-      "type": "number",
-      "min": 0,
-      "defaultValue": 3
-    },
-    {
-      "name": "max",
-      "description": "多选时最多可选数量",
-      "label": "最大可选数",
-      "control": "number",
-      "type": "number",
-      "min": 0
-    },
-    {
-      "name": "loading",
-      "description": "下拉列表是否显示加载动画",
-      "label": "加载中",
       "control": "boolean",
       "type": "boolean",
       "defaultValue": false
@@ -230,25 +181,6 @@
         }
       ],
       "defaultValue": "default"
-    },
-    {
-      "name": "className",
-      "description": "组件自定义CSS类名",
-      "label": "自定义类名",
-      "control": "className",
-      "type": "string"
-    },
-    {
-      "name": "style",
-      "description": "组件内联样式",
-      "label": "内联样式",
-      "type": "CSSProperties"
-    },
-    {
-      "name": "dropdownStyle",
-      "description": "下拉弹层自定义样式",
-      "label": "弹层样式",
-      "type": "CSSProperties"
     }
   ],
   "events": [
@@ -256,51 +188,6 @@
       "name": "onChange",
       "description": "选中值变化时触发",
       "label": "值改变"
-    },
-    {
-      "name": "onSelect",
-      "description": "选项被选中时触发",
-      "label": "选中"
-    },
-    {
-      "name": "onDeselect",
-      "description": "多选取消选中时触发",
-      "label": "取消选中"
-    },
-    {
-      "name": "onClear",
-      "description": "点击清除按钮时触发",
-      "label": "清除"
-    },
-    {
-      "name": "onSearch",
-      "description": "搜索框内容变化时触发",
-      "label": "搜索"
-    },
-    {
-      "name": "onCreate",
-      "description": "创建新选项时触发",
-      "label": "创建选项"
-    },
-    {
-      "name": "onDropdownVisibleChange",
-      "description": "下拉列表展开/收起时触发",
-      "label": "展开状态改变"
-    },
-    {
-      "name": "onFocus",
-      "description": "组件获取焦点时触发",
-      "label": "获取焦点"
-    },
-    {
-      "name": "onBlur",
-      "description": "组件失去焦点时触发",
-      "label": "失去焦点"
-    },
-    {
-      "name": "onExceed",
-      "description": "多选超出最大可选数量时触发",
-      "label": "超出限制"
     }
   ]
 }

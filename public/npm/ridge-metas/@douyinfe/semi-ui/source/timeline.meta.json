@@ -12,19 +12,12 @@
   "version": "1.0.0",
   "author": "",
   "visualConfig": {
-    "preferredWidth": 520,
-    "preferredHeight": 400,
+    "preferredWidth": 250,
+    "preferredHeight": 131,
     "resizable": true,
     "aspectRatio": "no"
   },
   "properties": [
-    {
-      "name": "className",
-      "description": "组件自定义 CSS 类名",
-      "label": "自定义类名",
-      "control": "className",
-      "type": "array"
-    },
     {
       "name": "mode",
       "description": "时间轴与内容的相对位置",
@@ -49,13 +42,7 @@
           "value": "alternate"
         }
       ],
-      "defaultValue": "left"
-    },
-    {
-      "name": "style",
-      "description": "组件内联样式",
-      "label": "内联样式",
-      "type": "CSSProperties"
+      "defaultValue": "center"
     },
     {
       "name": "dataSource",

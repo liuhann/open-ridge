@@ -12,8 +12,8 @@
   "version": "1.0.0",
   "author": "LiuHan",
   "visualConfig": {
-    "preferredWidth": 200,
-    "preferredHeight": 80,
+    "preferredWidth": 96,
+    "preferredHeight": 18,
     "resizable": true,
     "aspectRatio": "no"
   },
@@ -84,7 +84,7 @@
           "value": "large"
         }
       ],
-      "defaultValue": "default"
+      "defaultValue": "large"
     },
     {
       "name": "showInfo",
@@ -111,24 +111,6 @@
       "defaultValue": "#eee"
     },
     {
-      "name": "strokeLinecap",
-      "description": "环形进度条端点样式",
-      "label": "端点样式",
-      "control": "select",
-      "type": "string",
-      "options": [
-        {
-          "label": "圆角",
-          "value": "round"
-        },
-        {
-          "label": "方角",
-          "value": "square"
-        }
-      ],
-      "defaultValue": "round"
-    },
-    {
       "name": "strokeWidth",
       "description": "环形进度条线条宽度",
       "label": "线条宽度",
@@ -143,19 +125,6 @@
       "label": "环形宽度",
       "type": "number",
       "hidden": true
-    },
-    {
-      "name": "className",
-      "description": "自定义样式类名",
-      "label": "自定义类名",
-      "type": "string",
-      "defaultValue": ""
-    },
-    {
-      "name": "style",
-      "description": "组件内联样式配置",
-      "label": "内联样式",
-      "type": "CSSProperties"
     }
   ],
   "events": []
