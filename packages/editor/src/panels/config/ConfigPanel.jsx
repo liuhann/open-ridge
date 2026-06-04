@@ -186,7 +186,7 @@ const ConfigPanel = () => {
 
       // 修改：只从element.config?.path加载，不考虑element.componentDefinition缓存
       let componentMeta = element.getComponentMeta()
-      if (element.config?.path) {
+      if (!componentMeta && element.config?.path) {
         try {
           componentMeta = await componentRegistry.getComponentMeta(`${element.config.path}`)
           if (componentMeta) {

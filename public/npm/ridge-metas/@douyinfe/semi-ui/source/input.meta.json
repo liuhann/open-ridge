@@ -29,13 +29,6 @@
       "defaultValue": ""
     },
     {
-      "name": "defaultValue",
-      "description": "输入框默认内容",
-      "label": "默认内容",
-      "type": "string",
-      "defaultValue": ""
-    },
-    {
       "name": "type",
       "description": "input 类型，同原生 input",
       "label": "输入框类型",
@@ -108,20 +101,6 @@
         { "label": "警告", "value": "warning" }
       ],
       "defaultValue": "default"
-    },
-    {
-      "name": "aria-label",
-      "description": "无障碍标签",
-      "label": "ARIA 标签",
-      "type": "string",
-      "defaultValue": ""
-    },
-    {
-      "name": "aria-required",
-      "description": "是否必填",
-      "label": "ARIA 必填",
-      "type": "string",
-      "defaultValue": ""
     },
     {
       "name": "className",

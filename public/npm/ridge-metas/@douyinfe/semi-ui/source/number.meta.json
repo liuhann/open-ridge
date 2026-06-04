@@ -41,7 +41,7 @@
         { "label": "百分比", "value": "percentages" },
         { "label": "科学计数法", "value": "exponential" }
       ],
-      "defaultValue": "text"
+      "defaultValue": "bytes-decimal"
     },
     {
       "name": "precision",
@@ -49,7 +49,7 @@
       "label": "小数精度",
       "control": "number",
       "type": "number",
-      "defaultValue": 0
+      "defaultValue": 2
     },
     {
       "name": "truncate",
@@ -65,62 +65,6 @@
       "defaultValue": "round"
     },
     {
-      "name": "code",
-      "description": "是否以代码样式展示",
-      "label": "代码样式",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": false
-    },
-    {
-      "name": "copyable",
-      "description": "是否允许点击复制",
-      "label": "可复制",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": false
-    },
-    {
-      "name": "delete",
-      "description": "是否显示删除线",
-      "label": "删除线",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": false
-    },
-    {
-      "name": "disabled",
-      "description": "是否禁用置灰",
-      "label": "禁用",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": false
-    },
-    {
-      "name": "ellipsis",
-      "description": "内容超长自动省略",
-      "label": "自动省略",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": false
-    },
-    {
-      "name": "link",
-      "description": "是否为链接样式",
-      "label": "链接样式",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": false
-    },
-    {
-      "name": "mark",
-      "description": "是否高亮标记",
-      "label": "高亮标记",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": false
-    },
-    {
       "name": "size",
       "description": "文本大小",
       "label": "大小",
@@ -131,15 +75,7 @@
         { "label": "小", "value": "small" }
       ],
       "defaultValue": "normal"
-    },
-    {
-      "name": "strong",
-      "description": "是否加粗",
-      "label": "加粗",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": false
-    },
+    },    
     {
       "name": "type",
       "description": "文本颜色类型",
@@ -156,14 +92,6 @@
         { "label": "成功", "value": "success" }
       ],
       "defaultValue": "primary"
-    },
-    {
-      "name": "underline",
-      "description": "是否显示下划线",
-      "label": "下划线",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": false
     }
   ],
   "events": []

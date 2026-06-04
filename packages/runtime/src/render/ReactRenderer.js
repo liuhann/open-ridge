@@ -45,7 +45,7 @@ export default class ReactRenderer extends Renderer {
   }
 
   mount (el) {
-    debug('mount with props', this.props)
+    debug('mount with props', this.JSXComponent, this.props)
     this.el = el
     this.root = ReactDOM.createRoot(el)
     this.root.render(this.getRenderInstance())

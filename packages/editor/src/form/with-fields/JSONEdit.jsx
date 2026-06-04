@@ -1,7 +1,5 @@
 import React, { useState } from 'react'
-import { withField, Button, Modal, Input } from '@douyinfe/semi-ui'
-
-const { TextArea } = Input
+import { withField, Button, Modal, TextArea } from '@douyinfe/semi-ui'
 
 const JSONEdit = ({
   value,

@@ -61,13 +61,6 @@
       "defaultValue": "选择日期"
     },
     {
-      "name": "format",
-      "description": "日期显示格式",
-      "label": "日期格式",
-      "type": "string",
-      "defaultValue": "YYYY-MM-DD"
-    },
-    {
       "name": "showClear",
       "description": "是否显示清除按钮",
       "label": "显示清除按钮",

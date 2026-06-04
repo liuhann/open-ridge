@@ -27,13 +27,6 @@
       "defaultValue": 1
     },
     {
-      "name": "defaultCurrentPage",
-      "description": "初始默认页码",
-      "label": "默认页码",
-      "type": "number",
-      "defaultValue": 1
-    },
-    {
       "name": "total",
       "description": "数据总条数",
       "label": "总条数",

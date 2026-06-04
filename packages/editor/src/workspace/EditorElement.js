@@ -55,8 +55,8 @@ export default class EditorElement extends Element {
     return {
       ...super.getProperties(),
       __isEdit: true,
-      __el: this.el,
-      __composite: this.composite
+      __el: this.el
+      // __composite: this.composite
     }
   }
 

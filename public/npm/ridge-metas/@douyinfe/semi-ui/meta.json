@@ -1,7 +1,7 @@
 {
   "name": "@douyinfe/semi-ui",
   "schemaVersion": "2.0",
-  "lastUpdated": "2026-06-01T08:40:36.345Z",
+  "lastUpdated": "2026-06-04T03:24:12.628Z",
   "generatedBy": "ridge-ui-cli",
   "components": [
     {
@@ -472,7 +472,7 @@
     },
     {
       "name": "Checkbox",
-      "title": "复选框",
+      "title": "切换选框",
       "icon": "svgs/checkbox.svg",
       "description": "复选框组件，支持单独使用、组合使用、卡片样式、不确定状态等交互场景",
       "tags": [
@@ -731,13 +731,6 @@
           "label": "占位提示文字",
           "type": "string",
           "defaultValue": "选择日期"
-        },
-        {
-          "name": "format",
-          "description": "日期显示格式",
-          "label": "日期格式",
-          "type": "string",
-          "defaultValue": "YYYY-MM-DD"
         },
         {
           "name": "showClear",
@@ -1455,7 +1448,7 @@
               "value": "exponential"
             }
           ],
-          "defaultValue": "text"
+          "defaultValue": "bytes-decimal"
         },
         {
           "name": "precision",
@@ -1463,7 +1456,7 @@
           "label": "小数精度",
           "control": "number",
           "type": "number",
-          "defaultValue": 0
+          "defaultValue": 2
         },
         {
           "name": "truncate",
@@ -1488,62 +1481,6 @@
           "defaultValue": "round"
         },
         {
-          "name": "code",
-          "description": "是否以代码样式展示",
-          "label": "代码样式",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
-          "name": "copyable",
-          "description": "是否允许点击复制",
-          "label": "可复制",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
-          "name": "delete",
-          "description": "是否显示删除线",
-          "label": "删除线",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
-          "name": "disabled",
-          "description": "是否禁用置灰",
-          "label": "禁用",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
-          "name": "ellipsis",
-          "description": "内容超长自动省略",
-          "label": "自动省略",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
-          "name": "link",
-          "description": "是否为链接样式",
-          "label": "链接样式",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
-          "name": "mark",
-          "description": "是否高亮标记",
-          "label": "高亮标记",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
           "name": "size",
           "description": "文本大小",
           "label": "大小",
@@ -1560,14 +1497,6 @@
             }
           ],
           "defaultValue": "normal"
-        },
-        {
-          "name": "strong",
-          "description": "是否加粗",
-          "label": "加粗",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
         },
         {
           "name": "type",
@@ -1606,14 +1535,6 @@
             }
           ],
           "defaultValue": "primary"
-        },
-        {
-          "name": "underline",
-          "description": "是否显示下划线",
-          "label": "下划线",
-          "control": "boolean",
-          "type": "boolean",
-          "defaultValue": false
         }
       ],
       "events": []

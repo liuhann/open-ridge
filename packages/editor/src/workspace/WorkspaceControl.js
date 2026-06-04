@@ -582,8 +582,8 @@ export default class WorkSpaceControl {
           meta: dragData.item,
           path: dragData.packageName + '/' + dragData.componentName
         })
-        this.placeElementAt(node.el, ev.pageX, ev.pageY)
-        this.moveable.target = node.el
+        // this.placeElementAt(node.el, ev.pageX, ev.pageY)
+        // this.moveable.target = node.el
       }, 10)
     }
   }

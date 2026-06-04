@@ -1,6 +1,6 @@
 {
   "name": "Checkbox",
-  "title": "复选框",
+  "title": "切换选框",
   "icon": "svgs/checkbox.svg",
   "description": "复选框组件，支持单独使用、组合使用、卡片样式、不确定状态等交互场景",
   "tags": [
