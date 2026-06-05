@@ -37,7 +37,7 @@ export const getIconUrl = (item, packageName) => {
       const finalPkgName = packageName || item.packageName || item.module
       if (finalPkgName) {
         // 获取图标
-        return replaceDoubleSlashWithHttpProtocal(`${window.RidgeUI?.baseUrl ?? '/npm'}/ridge-metas/${finalPkgName}/${item.icon}`)
+        return replaceDoubleSlashWithHttpProtocal(`${window.RidgeUI?.baseUrl ?? '/npm'}/${finalPkgName}/${item.icon}`)
       } else {
         return item.icon
       }

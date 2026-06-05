@@ -163,6 +163,7 @@ const ConfigPanel = () => {
   const [nodeEventFields, setNodeEventFields] = useState([]) // 当前节点事件
 
   const editorComposite = editorStore(state => state.editorComposite)
+  const currentOpenPageId = editorStore(state => state.currentOpenPageId)
   const currentEditNodeId = editorStore(state => state.currentEditNodeId)
   const updateElementConfig = editorStore(state => state.updateElementConfig)
   const updatePageConfig = editorStore(state => state.updatePageConfig)
@@ -329,13 +330,16 @@ const ConfigPanel = () => {
   }
 
   useEffect(() => {
-    if (!editorComposite) return
+    if (!editorComposite) {
+      setPagePropFields([])
+      return
+    }
     if (currentEditNodeId) { // 选中节点
       updateElementFields(currentEditNodeId)
     } else {
       updatePageFields()
     }
-  }, [currentEditNodeId, editorComposite])
+  }, [currentEditNodeId, currentOpenPageId, editorComposite])
 
   useEffect(() => {
     if (currentEditNodeId) {

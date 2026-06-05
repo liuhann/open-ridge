@@ -33,18 +33,19 @@
     "type": "base"
   },
   {
-    "module": "antd",
+    "module": "ridge-antd",
     "version": "5.12.8",
     "title": "Antd",
     "license": "MIT",
-    "root": "Antd",
+    "root": "RidgeAntd",
     "icon": "antd.svg",
     "dependencies": ["react", "react-dom"],
-    "dist": ["dist/antd.min.js", "dist/antd.min.css"],
-    "splash": "ridge-externals/splash/antd.png",
+    "meta": "ridge-antd/meta.json",
+    "dist": ["dist/ridge-antd.min.js"],
+    "splash": "ridge-antd/splash.png",
     "category": "interaction",
     "type": "ui",
-    "description": "企业级UI设计语言和React组件库"
+    "description": "阿里的开源企业级UI设计语言和组件库"
   },
   {
     "module": "@douyinfe/semi-ui",

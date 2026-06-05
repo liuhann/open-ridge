@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Divider, Space, Dropdown } from '@douyinfe/semi-ui'
 import './style.less'
-import { ICON_COMMON_DEVICE } from '../../icons/icons.js'
+import { ICON_COMMON_DEVICE, ICON_COMMON_CLOSE, ICON_COMMON_REFRESH } from '../../icons/icons.js'
 import editorStore from '../../store/editor.store.js'
 const PreviewMenuBar = ({ onClose, onRefresh, onDeviceChange, onOpenNewWindow }) => {
   const closePreviewPage = editorStore(state => state.closePreviewPage)
@@ -22,7 +22,7 @@ const PreviewMenuBar = ({ onClose, onRefresh, onDeviceChange, onOpenNewWindow })
         <Button
           type='tertiary'
           theme='borderless'
-          icon={<i className='bi bi-x-lg' />}
+          icon={ICON_COMMON_CLOSE}
           onClick={closePreviewPage}
         />
 
@@ -32,7 +32,7 @@ const PreviewMenuBar = ({ onClose, onRefresh, onDeviceChange, onOpenNewWindow })
         <Button
           type='tertiary'
           theme='borderless'
-          icon={<i className='bi bi-arrow-clockwise' />}
+          icon={ICON_COMMON_REFRESH}
           onClick={refreshPreviewPage}
         />
 

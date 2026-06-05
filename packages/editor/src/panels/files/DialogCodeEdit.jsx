@@ -1,6 +1,7 @@
 import React, { useRef, useState, forwardRef, useEffect, useImperativeHandle } from 'react'
 import { SideSheet, Spin, Tabs, TabPane, Modal, Toast, Typography, Button } from '@douyinfe/semi-ui'
 import editorStore from '../../store/editor.store.js'
+import { ICON_COMMON_CLOSE, ICON_COMMON_SAVE, ICON_COMMON_DOWNLOAD } from '../../icons/icons.js'
 // import context from '../../service/RidgeEditorContext.js'
 import CodeMirror from '@uiw/react-codemirror'
 
@@ -317,7 +318,7 @@ export default forwardRef((props, pref) => {
         <Text className='flex-1'>代码编辑</Text>
         <Button
           ref={saveBtnRef}
-          disabled={!hasOpenFile} icon={<i className='bi bi-copy' />} onClick={async () => {
+          disabled={!hasOpenFile} icon={ICON_COMMON_SAVE} onClick={async () => {
             handleSave()
           }}
         >
@@ -344,14 +345,13 @@ export default forwardRef((props, pref) => {
         >粘贴
         </Button>
         <Button
-          disabled={!hasOpenFile} type='tertiary' icon={<i
-            class='bi bi-download' onClick={async () => {
-              downloadTextAsFile(currentEditText, tabs.find(tab => tab.id === currentTab).name)
-            }}
-                                                        />}
+          disabled={!hasOpenFile} type='tertiary' icon={ICON_COMMON_DOWNLOAD}
+          onClick={async () => {
+            downloadTextAsFile(currentEditText, tabs.find(tab => tab.id === currentTab).name)
+          }}
         />
         <Button
-          type='tertiary' icon={<i className='bi bi-x-lg' />} onClick={() => {
+          type='tertiary' icon={ICON_COMMON_CLOSE} onClick={() => {
             setVisible(false)
           }}
         />

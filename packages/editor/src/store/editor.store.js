@@ -51,6 +51,11 @@ const editorStore = create((set, get) => ({
     })
   },
 
+  getCurrentComposite: () => {
+    const { editorComposite } = get()
+    return editorComposite
+  },
+
   updateTreeData: () => {
     const { editorComposite } = get()
     if (editorComposite) {
@@ -299,6 +304,8 @@ const editorStore = create((set, get) => ({
       })
       if (leftOpenedPages.length > 0) {
         await openPage(leftOpenedPages[0].id, openedFileContentMap.get(leftOpenedPages[0].id))
+      } else {
+
       }
     }
     set({

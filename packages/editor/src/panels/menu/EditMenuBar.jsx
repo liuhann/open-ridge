@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Button, Divider, HotKeys, confirm, Space, ButtonGroup, Modal, Dropdown, InputNumber, Tooltip, Tabs, TabPane, Popover } from '@douyinfe/semi-ui'
 import './style.less'
-import { ICON_NAV_COMPONENTS, ICON_NAV_FOLDERS, ICON_NAV_RUN, ICON_COMMON_GEAR } from '../../icons/icons.js'
+import { ICON_NAV_COMPONENTS, ICON_COMMON_DOT, ICON_NAV_RUN, ICON_COMMON_SAVE } from '../../icons/icons.js'
 
 import editorStore from '../../store/editor.store.js'
 import ScaleController from './ScaleController.jsx'
@@ -49,7 +49,7 @@ const EditorMenuBar = () => {
         className='page-tabs' type='card' activeKey={currentOpenPageId} onTabClose={onTabClose} onTabClick={switchToPage}
       >
         {openedPages.map(t => (
-          <TabPane icon={unsavedPages.indexOf(t.id) > -1 ? <i class='bi bi-circle-fill' /> : null} closable tab={t.name} itemKey={t.id} key={t.id} />
+          <TabPane icon={unsavedPages.indexOf(t.id) > -1 ? ICON_COMMON_DOT : null} closable tab={t.name} itemKey={t.id} key={t.id} />
         ))}
       </Tabs>
       <Space gap={4}>
@@ -65,7 +65,7 @@ const EditorMenuBar = () => {
           </Popover> */}
         <Button
           disabled={!currentOpenPageId}
-          type='tertiary' icon={<i className='bi bi-floppy' />} theme='borderless' onClick={savePage}
+          type='tertiary' icon={ICON_COMMON_SAVE} theme='borderless' onClick={savePage}
         />
 
         <Tooltip content='预览页面'>

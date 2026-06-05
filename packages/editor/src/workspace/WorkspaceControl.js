@@ -698,6 +698,8 @@ export default class WorkSpaceControl {
    * @param {*} disableClickThrough 选择后是否可以直接选择当前节点的下级节点, 从面板发起的选择一般不允许向下选择
    */
   selectElements (elements, disableClickThrough) {
+    if (!this.enabled) return
+
     this.disableClickThrough = disableClickThrough
 
     // 去除之前选中状态
