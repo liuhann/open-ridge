@@ -83,12 +83,12 @@ async function mergeMetaJsonWithGlob () {
  */
 function copyNpmPackageToTarget (currentFolderName) {
   // 源目录（你的构建产物）
-  const sourceDir = path.resolve(process.cwd(), 'dist')
+  const sourceDir = path.resolve(process.cwd())
 
   // 目标目录：../../public/npm/当前目录名
   const targetDir = path.resolve(
     __dirname,
-    '../../public/npm',
+    '../../../public/npm',
     currentFolderName
   )
 

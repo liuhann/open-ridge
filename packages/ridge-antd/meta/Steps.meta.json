@@ -1,0 +1,138 @@
+{
+  "name": "Steps",
+  "title": "步骤条",
+  "icon": "svgs/steps.svg",
+  "description": "用于展示任务、表单等流程的步骤进度，支持水平/垂直、多种类型与状态",
+  "tags": [
+    "步骤",
+    "流程",
+    "导航",
+    "表单"
+  ],
+  "category": "导航组件",
+  "version": "1.0.0",
+  "author": "ridge-antd",
+  "visualConfig": {
+    "preferredWidth": 353,
+    "preferredHeight": 69,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "items",
+      "label": "步骤项配置",
+      "description": "配置步骤列表，包含 title、description、status、icon 等",
+      "control": "json",
+      "type": "array",
+      "defaultValue": [
+        { "title": "已完成", "content": "步骤描述" },
+        { "title": "处理中", "content": "步骤描述" },
+        { "title": "待开始", "content": "步骤描述" }
+      ],
+      "sample": [
+        { "title": "填写信息", "status": "finish" },
+        { "title": "上传附件", "status": "process" },
+        { "title": "提交审核", "status": "wait" }
+      ]
+    },
+    {
+      "name": "current",
+      "label": "当前步骤",
+      "description": "指定当前步骤，从 0 开始计数",
+      "type": "number",
+      "defaultValue": 0
+    },
+    {
+      "name": "initial",
+      "label": "起始序号",
+      "description": "起始序号，从 0 开始计数",
+      "type": "number",
+      "defaultValue": 0
+    },
+    {
+      "name": "status",
+      "label": "步骤状态",
+      "control": "select",
+      "type": "string",
+      "options": [
+        { "label": "等待", "value": "wait" },
+        { "label": "处理中", "value": "process" },
+        { "label": "完成", "value": "finish" },
+        { "label": "错误", "value": "error" }
+      ],
+      "defaultValue": "process"
+    },
+    {
+      "name": "orientation",
+      "label": "步骤方向",
+      "control": "select",
+      "type": "string",
+      "options": [
+        { "label": "水平", "value": "horizontal" },
+        { "label": "垂直", "value": "vertical" }
+      ],
+      "defaultValue": "horizontal"
+    },
+    {
+      "name": "type",
+      "label": "步骤类型",
+      "control": "select",
+      "type": "string",
+      "options": [
+        { "label": "默认", "value": "default" },
+        { "label": "点状", "value": "dot" },
+        { "label": "行内", "value": "inline" },
+        { "label": "导航", "value": "navigation" },
+        { "label": "面板", "value": "panel" }
+      ],
+      "defaultValue": "default"
+    },
+    {
+      "name": "variant",
+      "label": "样式变体",
+      "control": "select",
+      "type": "string",
+      "options": [
+        { "label": "填充", "value": "filled" },
+        { "label": "描边", "value": "outlined" }
+      ],
+      "defaultValue": "filled"
+    },
+    {
+      "name": "titlePlacement",
+      "label": "标题位置",
+      "control": "select",
+      "type": "string",
+      "options": [
+        { "label": "水平(右侧)", "value": "horizontal" },
+        { "label": "垂直(下方)", "value": "vertical" }
+      ],
+      "defaultValue": "horizontal"
+    },
+    {
+      "name": "size",
+      "label": "组件尺寸",
+      "control": "select",
+      "type": "string",
+      "options": [
+        { "label": "标准", "value": "medium" },
+        { "label": "迷你", "value": "small" }
+      ],
+      "defaultValue": "medium"
+    },
+    {
+      "name": "percent",
+      "label": "进度百分比",
+      "description": "当前步骤进度条百分比 0-100",
+      "type": "number"
+    }
+  ],
+  "events": [
+    {
+      "name": "onChange",
+      "label": "步骤切换",
+      "description": "点击切换步骤时触发，返回当前步骤序号"
+    }
+  ]
+}

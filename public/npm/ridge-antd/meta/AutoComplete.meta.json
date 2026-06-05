@@ -1,0 +1,113 @@
+{
+  "name": "AutoComplete",
+  "title": "自动完成",
+  "icon": "svgs/auto-complete.svg",
+  "description": "输入框自动提示补全组件，支持搜索、清除、自定义下拉、选中事件等功能",
+  "tags": [
+    "输入",
+    "自动完成",
+    "搜索",
+    "表单"
+  ],
+  "category": "表单组件",
+  "version": "1.0.0",
+  "author": "ridge-antd",
+  "visualConfig": {
+    "preferredWidth": 110,
+    "preferredHeight": 36,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "value",
+      "label": "当前值",
+      "description": "指定当前选中的条目",
+      "type": "string",
+      "defaultValue": ""
+    },
+    {
+      "name": "placeholder",
+      "label": "提示文字",
+      "description": "输入框提示内容",
+      "type": "string",
+      "defaultValue": "请输入内容"
+    },
+    {
+      "name": "allowClear",
+      "label": "支持清除",
+      "description": "是否显示清除按钮",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "disabled",
+      "label": "禁用",
+      "description": "是否禁用组件",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "size",
+      "label": "组件大小",
+      "control": "select",
+      "type": "string",
+      "options": [
+        { "label": "大", "value": "large" },
+        { "label": "中", "value": "medium" },
+        { "label": "小", "value": "small" }
+      ],
+      "defaultValue": "medium"
+    },
+    {
+      "name": "variant",
+      "label": "样式形态",
+      "control": "select",
+      "type": "string",
+      "options": [
+        { "label": "描边", "value": "outlined" },
+        { "label": "无边框", "value": "borderless" },
+        { "label": "填充", "value": "filled" },
+        { "label": "下划线", "value": "underlined" }
+      ],
+      "defaultValue": "outlined"
+    },
+    {
+      "name": "status",
+      "label": "校验状态",
+      "control": "select",
+      "type": "string",
+      "options": [
+        { "label": "错误", "value": "error" },
+        { "label": "警告", "value": "warning" }
+      ],
+      "defaultValue": ""
+    },
+    {
+      "name": "options",
+      "label": "选项配置",
+      "description": "数据化配置下拉选项 { label, value }",
+      "control": "json",
+      "type": "array",
+      "defaultValue": [
+        { "label": "选项一", "value": "1" },
+        { "label": "选项二", "value": "2" },
+        { "label": "选项三", "value": "3" }
+      ]
+    }
+  ],
+  "events": [
+    {
+      "name": "onChange",
+      "label": "值改变",
+      "description": "选中选项或输入框内容变化时触发，返回当前 value"
+    },
+    {
+      "name": "onSelect",
+      "label": "选项选中",
+      "description": "选中某一项时触发，返回 value 和 option 对象"
+    }
+  ]
+}

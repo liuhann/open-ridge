@@ -1,0 +1,147 @@
+{
+  "name": "Pagination",
+  "title": "分页",
+  "icon": "svgs/pagination.svg",
+  "description": "用于长列表数据的分页展示，支持切换页码、调整每页条数、快速跳转、显示总数等功能",
+  "tags": [
+    "分页",
+    "数据",
+    "列表",
+    "导航"
+  ],
+  "category": "数据组件",
+  "version": "1.0.0",
+  "author": "ridge-antd",
+  "visualConfig": {
+    "preferredWidth": 152,
+    "preferredHeight": 36,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "total",
+      "label": "数据总数",
+      "description": "数据总数",
+      "type": "number",
+      "defaultValue": 0
+    },
+    {
+      "name": "current",
+      "label": "当前页数",
+      "description": "当前页数",
+      "type": "number",
+      "defaultValue": 1
+    },
+    {
+      "name": "defaultCurrent",
+      "label": "默认当前页数",
+      "description": "默认的当前页数",
+      "type": "number",
+      "defaultValue": 1
+    },
+    {
+      "name": "pageSize",
+      "label": "每页条数",
+      "description": "每页条数",
+      "type": "number",
+      "defaultValue": 10
+    },
+    {
+      "name": "defaultPageSize",
+      "label": "默认每页条数",
+      "description": "默认的每页条数",
+      "type": "number",
+      "defaultValue": 10
+    },
+    {
+      "name": "align",
+      "label": "对齐方式",
+      "description": "对齐方式",
+      "control": "select",
+      "type": "string",
+      "options": [
+        { "label": "左对齐", "value": "start" },
+        { "label": "居中", "value": "center" },
+        { "label": "右对齐", "value": "end" }
+      ],
+      "defaultValue": ""
+    },
+    {
+      "name": "size",
+      "label": "组件尺寸",
+      "description": "组件尺寸",
+      "control": "select",
+      "type": "string",
+      "options": [
+        { "label": "大", "value": "large" },
+        { "label": "中", "value": "medium" },
+        { "label": "小", "value": "small" }
+      ],
+      "defaultValue": "medium"
+    },
+    {
+      "name": "pageSizeOptions",
+      "label": "每页条数选项",
+      "description": "指定每页可以显示多少条",
+      "type": "array",
+      "control": "json",
+      "defaultValue": [10, 20, 50, 100]
+    },
+    {
+      "name": "disabled",
+      "label": "禁用分页",
+      "description": "禁用分页",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "hideOnSinglePage",
+      "label": "单页隐藏",
+      "description": "只有一页时是否隐藏分页器",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "showLessItems",
+      "label": "显示较少页码",
+      "description": "是否显示较少页面内容",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "showQuickJumper",
+      "label": "快速跳转",
+      "description": "是否可以快速跳转至某页",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "showSizeChanger",
+      "label": "显示条数切换器",
+      "description": "是否展示 pageSize 切换器",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "simple",
+      "label": "简洁模式",
+      "description": "当添加该属性时，显示为简单分页",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    }
+  ],
+  "events": [
+    {
+      "name": "onChange",
+      "label": "页码或条数改变",
+      "description": "页码或 pageSize 改变的回调，参数是改变后的页码及每页条数"
+    }
+  ]
+}

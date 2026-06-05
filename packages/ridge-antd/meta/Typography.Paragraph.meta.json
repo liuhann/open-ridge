@@ -1,0 +1,134 @@
+{
+  "name": "Typography.Paragraph",
+  "title": "段落文本",
+  "icon": "svgs/typography-paragraph.svg",
+  "description": "用于大段正文内容展示，支持省略多行、可复制、可编辑、多种文本装饰样式",
+  "tags": [
+    "文本",
+    "段落",
+    "展示组件"
+  ],
+  "category": "展示组件",
+  "version": "1.0.0",
+  "author": "ridge-antd",
+  "visualConfig": {
+    "preferredWidth": 218,
+    "preferredHeight": 110,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "children",
+      "label": "段落内容",
+      "description": "段落展示正文内容",
+      "type": "string",
+      "defaultValue": "当需要展示标题、段落、列表内容时使用，如文章/博客/日志的文本样式。 当需要一列基于文本的基础操作时，如拷贝/省略/可编辑。"
+    },
+    {
+      "name": "type",
+      "label": "文本类型",
+      "description": "设置文本状态颜色类型",
+      "control": "select",
+      "type": "string",
+      "options": [
+        {
+          "label": "次要",
+          "value": "secondary"
+        },
+        {
+          "label": "成功",
+          "value": "success"
+        },
+        {
+          "label": "警告",
+          "value": "warning"
+        },
+        {
+          "label": "危险",
+          "value": "danger"
+        }
+      ],
+      "defaultValue": ""
+    },
+    {
+      "name": "strong",
+      "label": "加粗",
+      "description": "文字加粗样式",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "italic",
+      "label": "斜体",
+      "description": "文字斜体样式",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "delete",
+      "label": "删除线",
+      "description": "添加删除线样式",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "underline",
+      "label": "下划线",
+      "description": "添加下划线样式",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "code",
+      "label": "代码样式",
+      "description": "代码格式展示",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "mark",
+      "label": "高亮标记",
+      "description": "底色高亮标记文本",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "disabled",
+      "label": "禁用",
+      "description": "禁用段落文本样式",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "copyable",
+      "label": "可复制",
+      "description": "开启点击复制文本",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "ellipsis",
+      "label": "文本省略",
+      "description": "内容超出自动折叠省略、支持展开查看",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    }
+  ],
+  "events": [
+    {
+      "name": "onClick",
+      "description": "点击段落区域触发",
+      "label": "点击事件"
+    }
+  ]
+}

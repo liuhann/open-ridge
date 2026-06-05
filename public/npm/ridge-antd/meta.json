@@ -1,9 +1,207 @@
 {
   "name": "ridge-antd",
   "schemaVersion": "2.0",
-  "lastUpdated": "2026-06-05T06:16:44.466Z",
+  "lastUpdated": "2026-06-05T10:27:09.612Z",
   "generatedBy": "ridge-ui-cli",
   "components": [
+    {
+      "name": "AutoComplete",
+      "title": "自动完成",
+      "icon": "svgs/auto-complete.svg",
+      "description": "输入框自动提示补全组件，支持搜索、清除、自定义下拉、选中事件等功能",
+      "tags": [
+        "输入",
+        "自动完成",
+        "搜索",
+        "表单"
+      ],
+      "category": "表单组件",
+      "version": "1.0.0",
+      "author": "ridge-antd",
+      "visualConfig": {
+        "preferredWidth": 110,
+        "preferredHeight": 36,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "value",
+          "label": "当前值",
+          "description": "指定当前选中的条目",
+          "type": "string",
+          "defaultValue": ""
+        },
+        {
+          "name": "placeholder",
+          "label": "提示文字",
+          "description": "输入框提示内容",
+          "type": "string",
+          "defaultValue": "请输入内容"
+        },
+        {
+          "name": "allowClear",
+          "label": "支持清除",
+          "description": "是否显示清除按钮",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "disabled",
+          "label": "禁用",
+          "description": "是否禁用组件",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "size",
+          "label": "组件大小",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "大",
+              "value": "large"
+            },
+            {
+              "label": "中",
+              "value": "medium"
+            },
+            {
+              "label": "小",
+              "value": "small"
+            }
+          ],
+          "defaultValue": "medium"
+        },
+        {
+          "name": "variant",
+          "label": "样式形态",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "描边",
+              "value": "outlined"
+            },
+            {
+              "label": "无边框",
+              "value": "borderless"
+            },
+            {
+              "label": "填充",
+              "value": "filled"
+            },
+            {
+              "label": "下划线",
+              "value": "underlined"
+            }
+          ],
+          "defaultValue": "outlined"
+        },
+        {
+          "name": "status",
+          "label": "校验状态",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "错误",
+              "value": "error"
+            },
+            {
+              "label": "警告",
+              "value": "warning"
+            }
+          ],
+          "defaultValue": ""
+        },
+        {
+          "name": "options",
+          "label": "选项配置",
+          "description": "数据化配置下拉选项 { label, value }",
+          "control": "json",
+          "type": "array",
+          "defaultValue": [
+            {
+              "label": "选项一",
+              "value": "1"
+            },
+            {
+              "label": "选项二",
+              "value": "2"
+            },
+            {
+              "label": "选项三",
+              "value": "3"
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "name": "onChange",
+          "label": "值改变",
+          "description": "选中选项或输入框内容变化时触发，返回当前 value"
+        },
+        {
+          "name": "onSelect",
+          "label": "选项选中",
+          "description": "选中某一项时触发，返回 value 和 option 对象"
+        }
+      ]
+    },
+    {
+      "name": "Breadcrumb",
+      "title": "面包屑",
+      "icon": "svgs/breadcrumb.svg",
+      "description": "用于展示当前页面路径层级，支持点击跳转、自定义路径项",
+      "tags": [
+        "导航",
+        "路径",
+        "布局组件"
+      ],
+      "category": "导航组件",
+      "version": "1.0.0",
+      "author": "ridge-antd",
+      "visualConfig": {
+        "preferredWidth": 156,
+        "preferredHeight": 27,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "items",
+          "label": "面包屑路径项",
+          "description": "配置面包屑导航路径",
+          "control": "json",
+          "type": "array",
+          "defaultValue": [
+            {
+              "label": "首页",
+              "href": "/"
+            },
+            {
+              "label": "列表页",
+              "href": "/list"
+            },
+            {
+              "label": "详情页"
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "name": "onClick",
+          "description": "点击面包屑项时触发",
+          "label": "点击事件"
+        }
+      ]
+    },
     {
       "name": "Button",
       "title": "按钮",
@@ -18,8 +216,8 @@
       "version": "1.0.0",
       "author": "ridge-ui",
       "visualConfig": {
-        "preferredWidth": 120,
-        "preferredHeight": 40,
+        "preferredWidth": 65,
+        "preferredHeight": 35,
         "resizable": true,
         "aspectRatio": "no"
       },
@@ -140,13 +338,6 @@
           "defaultValue": "medium"
         },
         {
-          "name": "color",
-          "description": "设置按钮的颜色，会覆盖 danger 属性",
-          "label": "按钮颜色",
-          "type": "color",
-          "defaultValue": "default"
-        },
-        {
           "name": "disabled",
           "description": "设置按钮失效状态",
           "label": "禁用",
@@ -210,12 +401,2412 @@
               "fontSize": "16px"
             }
           }
+        },
+        {
+          "name": "danger",
+          "description": "危险按钮，设置 color 时会被覆盖",
+          "label": "危险按钮",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
         }
       ],
       "events": [
         {
           "name": "onClick",
           "description": "点击按钮时触发",
+          "label": "点击事件"
+        }
+      ]
+    },
+    {
+      "name": "Cascader",
+      "title": "级联选择",
+      "icon": "svgs/cascader.svg",
+      "description": "级联选择器，用于多层级数据选择，支持单选、多选、搜索、清除等功能",
+      "tags": [
+        "级联",
+        "选择",
+        "表单",
+        "多层级"
+      ],
+      "category": "表单组件",
+      "version": "1.0.0",
+      "author": "ridge-antd",
+      "visualConfig": {
+        "preferredWidth": 180,
+        "preferredHeight": 36,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "value",
+          "label": "选中值",
+          "description": "指定选中项",
+          "type": "array",
+          "defaultValue": []
+        },
+        {
+          "name": "options",
+          "label": "选项数据",
+          "description": "可选项数据源，支持多层级 children",
+          "control": "json",
+          "type": "array",
+          "defaultValue": [
+            {
+              "label": "浙江",
+              "value": "zj",
+              "children": [
+                {
+                  "label": "杭州",
+                  "value": "hz"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "placeholder",
+          "label": "占位提示",
+          "description": "输入框占位文本",
+          "type": "string",
+          "defaultValue": "请选择"
+        },
+        {
+          "name": "disabled",
+          "label": "禁用",
+          "description": "是否禁用",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "multiple",
+          "label": "多选",
+          "description": "支持多选节点",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "size",
+          "label": "组件大小",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "大",
+              "value": "large"
+            },
+            {
+              "label": "中",
+              "value": "medium"
+            },
+            {
+              "label": "小",
+              "value": "small"
+            }
+          ],
+          "defaultValue": "medium"
+        },
+        {
+          "name": "variant",
+          "label": "样式形态",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "描边",
+              "value": "outlined"
+            },
+            {
+              "label": "无边框",
+              "value": "borderless"
+            },
+            {
+              "label": "填充",
+              "value": "filled"
+            },
+            {
+              "label": "下划线",
+              "value": "underlined"
+            }
+          ],
+          "defaultValue": "outlined"
+        },
+        {
+          "name": "status",
+          "label": "校验状态",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "错误",
+              "value": "error"
+            },
+            {
+              "label": "警告",
+              "value": "warning"
+            }
+          ],
+          "defaultValue": ""
+        }
+      ],
+      "events": [
+        {
+          "name": "onChange",
+          "label": "选择变化",
+          "description": "选择完成后的回调，返回 value 和选中项列表"
+        }
+      ]
+    },
+    {
+      "name": "Checkbox.Group",
+      "title": "多选框组",
+      "icon": "svgs/checkbox-group.svg",
+      "description": "多选框组，支持批量配置选项、多选、默认选中、全组禁用等功能",
+      "tags": [
+        "多选框",
+        "选择",
+        "表单",
+        "批量选择"
+      ],
+      "category": "表单组件",
+      "version": "1.0.0",
+      "author": "ridge-antd",
+      "visualConfig": {
+        "preferredWidth": 320,
+        "preferredHeight": 100,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "value",
+          "label": "选中值",
+          "description": "指定选中的选项",
+          "type": "array",
+          "defaultValue": []
+        },
+        {
+          "name": "options",
+          "label": "选项配置",
+          "description": "指定可选项，支持 label、value、disabled",
+          "control": "json",
+          "type": "array",
+          "defaultValue": [
+            {
+              "label": "选项一",
+              "value": "1"
+            },
+            {
+              "label": "选项二",
+              "value": "2"
+            },
+            {
+              "label": "选项三",
+              "value": "3",
+              "disabled": true
+            }
+          ]
+        },
+        {
+          "name": "disabled",
+          "label": "整组禁用",
+          "description": "是否整组失效",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        }
+      ],
+      "events": [
+        {
+          "name": "onChange",
+          "label": "选中项变化",
+          "description": "多选框组选中项改变时触发，返回选中值数组"
+        }
+      ]
+    },
+    {
+      "name": "Checkbox",
+      "title": "切换选框",
+      "icon": "svgs/checkbox.svg",
+      "description": "单项复选框，支持选中、禁用、半选状态，用于开关、勾选、同意条款等场景",
+      "tags": [
+        "复选框",
+        "勾选",
+        "开关",
+        "表单"
+      ],
+      "category": "表单组件",
+      "version": "1.0.0",
+      "author": "ridge-antd",
+      "visualConfig": {
+        "preferredWidth": 120,
+        "preferredHeight": 32,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "children",
+          "description": "显示的文字",
+          "label": "内容文字",
+          "type": "string",
+          "defaultValue": "切换选择"
+        },
+        {
+          "name": "checked",
+          "label": "是否选中",
+          "description": "指定当前是否选中",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "disabled",
+          "label": "禁用",
+          "description": "是否禁用复选框",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        }
+      ],
+      "events": [
+        {
+          "name": "onChange",
+          "label": "选中状态变化",
+          "description": "勾选/取消勾选时触发，返回当前选中状态"
+        }
+      ]
+    },
+    {
+      "name": "ColorPicker",
+      "title": "颜色选择器",
+      "icon": "svgs/color-picker.svg",
+      "description": "用于选择颜色值，支持单色/渐变、多种格式、预设颜色、透明度、文本显示等功能",
+      "tags": [
+        "颜色",
+        "选择器",
+        "表单",
+        "样式"
+      ],
+      "category": "表单组件",
+      "version": "1.0.0",
+      "author": "ridge-antd",
+      "visualConfig": {
+        "preferredWidth": 98,
+        "preferredHeight": 36,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "value",
+          "label": "颜色值",
+          "description": "当前选中的颜色值",
+          "type": "string",
+          "defaultValue": "#1677ff"
+        },
+        {
+          "name": "mode",
+          "label": "选择模式",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "单色",
+              "value": "single"
+            },
+            {
+              "label": "渐变",
+              "value": "gradient"
+            }
+          ],
+          "defaultValue": "single"
+        },
+        {
+          "name": "allowClear",
+          "label": "允许清除",
+          "description": "是否显示清除按钮",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "showText",
+          "label": "显示颜色文本",
+          "description": "是否显示颜色值文本",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": true
+        },
+        {
+          "name": "disabled",
+          "label": "禁用",
+          "description": "是否禁用组件",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "size",
+          "label": "组件大小",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "大",
+              "value": "large"
+            },
+            {
+              "label": "中",
+              "value": "medium"
+            },
+            {
+              "label": "小",
+              "value": "small"
+            }
+          ],
+          "defaultValue": "medium"
+        }
+      ],
+      "events": [
+        {
+          "name": "onChange",
+          "label": "颜色变化",
+          "description": "颜色值改变时触发，返回颜色对象和CSS字符串"
+        }
+      ]
+    },
+    {
+      "name": "DatePicker",
+      "title": "日期选择器",
+      "icon": "svgs/date-picker.svg",
+      "description": "日期选择器，支持日期、周、月、季度、年份选择，用于表单时间选择场景",
+      "tags": [
+        "日期",
+        "选择",
+        "时间",
+        "表单"
+      ],
+      "category": "表单组件",
+      "version": "1.0.0",
+      "author": "ridge-antd",
+      "visualConfig": {
+        "preferredWidth": 144,
+        "preferredHeight": 36,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "value",
+          "label": "日期值",
+          "description": "当前选中的日期",
+          "type": "string",
+          "defaultValue": ""
+        },
+        {
+          "name": "picker",
+          "label": "选择器类型",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "日期",
+              "value": "date"
+            },
+            {
+              "label": "周",
+              "value": "week"
+            },
+            {
+              "label": "月",
+              "value": "month"
+            },
+            {
+              "label": "季度",
+              "value": "quarter"
+            },
+            {
+              "label": "年",
+              "value": "year"
+            }
+          ],
+          "defaultValue": "date"
+        },
+        {
+          "name": "placeholder",
+          "label": "提示文字",
+          "type": "string",
+          "defaultValue": "请选择"
+        },
+        {
+          "name": "allowClear",
+          "label": "允许清除",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": true
+        },
+        {
+          "name": "disabled",
+          "label": "禁用",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "size",
+          "label": "组件大小",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "大",
+              "value": "large"
+            },
+            {
+              "label": "中",
+              "value": "medium"
+            },
+            {
+              "label": "小",
+              "value": "small"
+            }
+          ],
+          "defaultValue": "medium"
+        },
+        {
+          "name": "variant",
+          "label": "样式形态",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "描边",
+              "value": "outlined"
+            },
+            {
+              "label": "无边框",
+              "value": "borderless"
+            },
+            {
+              "label": "填充",
+              "value": "filled"
+            },
+            {
+              "label": "下划线",
+              "value": "underlined"
+            }
+          ],
+          "defaultValue": "outlined"
+        },
+        {
+          "name": "status",
+          "label": "校验状态",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "错误",
+              "value": "error"
+            },
+            {
+              "label": "警告",
+              "value": "warning"
+            }
+          ],
+          "defaultValue": ""
+        }
+      ],
+      "events": [
+        {
+          "name": "onChange",
+          "label": "日期变化",
+          "description": "选中日期后触发，返回选中的日期值"
+        }
+      ]
+    },
+    {
+      "name": "Divider",
+      "title": "分割线",
+      "icon": "svgs/divider.svg",
+      "description": "用于区域、模块、列表之间的分隔，支持水平/垂直、实线/虚线/点线、带标题等样式",
+      "tags": [
+        "分割线",
+        "布局",
+        "装饰组件"
+      ],
+      "category": "布局组件",
+      "version": "1.0.0",
+      "author": "ridge-antd",
+      "visualConfig": {
+        "preferredWidth": 200,
+        "preferredHeight": 60,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "children",
+          "label": "标题内容",
+          "description": "分割线中间显示的标题",
+          "type": "string",
+          "defaultValue": "分割线"
+        },
+        {
+          "name": "variant",
+          "label": "线条样式",
+          "description": "设置分割线为虚线、点线还是实线",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "实线",
+              "value": "solid"
+            },
+            {
+              "label": "虚线",
+              "value": "dashed"
+            },
+            {
+              "label": "点线",
+              "value": "dotted"
+            }
+          ],
+          "defaultValue": "solid"
+        },
+        {
+          "name": "titlePlacement",
+          "label": "标题位置",
+          "description": "分割线标题的显示位置",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "居左",
+              "value": "start"
+            },
+            {
+              "label": "居中",
+              "value": "center"
+            },
+            {
+              "label": "居右",
+              "value": "end"
+            }
+          ],
+          "defaultValue": "center"
+        },
+        {
+          "name": "size",
+          "label": "间距大小",
+          "description": "间距大小，仅对水平布局有效",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "小",
+              "value": "small"
+            },
+            {
+              "label": "中",
+              "value": "medium"
+            },
+            {
+              "label": "大",
+              "value": "large"
+            }
+          ],
+          "defaultValue": ""
+        },
+        {
+          "name": "plain",
+          "label": "普通文字样式",
+          "description": "标题文字是否显示为普通正文样式",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "dashed",
+          "label": "虚线样式",
+          "description": "是否显示为虚线（兼容旧版）",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        }
+      ],
+      "events": []
+    },
+    {
+      "name": "Dropdown",
+      "title": "下拉菜单",
+      "icon": "svgs/dropdown.svg",
+      "description": "按钮触发下拉菜单，支持箭头显示、弹出位置、按钮样式、菜单项点击事件",
+      "tags": [
+        "下拉",
+        "菜单",
+        "交互",
+        "按钮"
+      ],
+      "category": "交互组件",
+      "version": "1.0.0",
+      "author": "ridge-antd",
+      "visualConfig": {
+        "preferredWidth": 90,
+        "preferredHeight": 34,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "buttonText",
+          "label": "按钮文字",
+          "type": "string",
+          "defaultValue": "下拉菜单"
+        },
+        {
+          "name": "type",
+          "label": "按钮类型",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "默认",
+              "value": "default"
+            },
+            {
+              "label": "主要",
+              "value": "primary"
+            },
+            {
+              "label": "虚线",
+              "value": "dashed"
+            },
+            {
+              "label": "文字",
+              "value": "text"
+            },
+            {
+              "label": "链接",
+              "value": "link"
+            }
+          ],
+          "defaultValue": "primary"
+        },
+        {
+          "name": "size",
+          "label": "按钮尺寸",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "大",
+              "value": "large"
+            },
+            {
+              "label": "中",
+              "value": "middle"
+            },
+            {
+              "label": "小",
+              "value": "small"
+            }
+          ],
+          "defaultValue": "middle"
+        },
+        {
+          "name": "arrow",
+          "label": "显示箭头",
+          "description": "下拉框是否显示箭头",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "placement",
+          "label": "弹出位置",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "下左",
+              "value": "bottomLeft"
+            },
+            {
+              "label": "下中",
+              "value": "bottom"
+            },
+            {
+              "label": "下右",
+              "value": "bottomRight"
+            },
+            {
+              "label": "上左",
+              "value": "topLeft"
+            },
+            {
+              "label": "上中",
+              "value": "top"
+            },
+            {
+              "label": "上右",
+              "value": "topRight"
+            }
+          ],
+          "defaultValue": "bottomLeft"
+        },
+        {
+          "name": "trigger",
+          "label": "触发方式",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "悬浮",
+              "value": "hover"
+            },
+            {
+              "label": "点击",
+              "value": "click"
+            }
+          ],
+          "defaultValue": "hover"
+        },
+        {
+          "name": "items",
+          "label": "菜单项",
+          "description": "下拉菜单配置项，支持label、disabled、danger、key",
+          "control": "json",
+          "type": "array",
+          "defaultValue": [
+            {
+              "key": "1",
+              "label": "选项一"
+            },
+            {
+              "key": "2",
+              "label": "选项二"
+            },
+            {
+              "key": "3",
+              "label": "禁用项",
+              "disabled": true
+            },
+            {
+              "key": "4",
+              "label": "危险操作",
+              "danger": true
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "name": "onItemClick",
+          "label": "菜单点击",
+          "description": "点击菜单项时触发，返回当前项完整对象"
+        }
+      ]
+    },
+    {
+      "name": "Input",
+      "title": "输入框",
+      "icon": "svgs/input.svg",
+      "description": "基础文本输入框，支持清除、字数统计、校验状态、大小样式等核心功能",
+      "tags": [
+        "输入",
+        "文本",
+        "表单",
+        "基础组件"
+      ],
+      "category": "表单组件",
+      "version": "1.0.0",
+      "author": "ridge-antd",
+      "visualConfig": {
+        "preferredWidth": 150,
+        "preferredHeight": 36,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "value",
+          "label": "输入内容",
+          "description": "输入框内容",
+          "type": "string",
+          "defaultValue": ""
+        },
+        {
+          "name": "placeholder",
+          "label": "提示文字",
+          "type": "string",
+          "defaultValue": "请输入"
+        },
+        {
+          "name": "allowClear",
+          "label": "允许清除",
+          "description": "可以点击清除图标删除内容",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": true
+        },
+        {
+          "name": "showCount",
+          "label": "显示字数",
+          "description": "是否展示字数统计",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "disabled",
+          "label": "禁用",
+          "description": "是否禁用状态",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "size",
+          "label": "组件大小",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "大",
+              "value": "large"
+            },
+            {
+              "label": "中",
+              "value": "medium"
+            },
+            {
+              "label": "小",
+              "value": "small"
+            }
+          ],
+          "defaultValue": "medium"
+        },
+        {
+          "name": "variant",
+          "label": "样式形态",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "描边",
+              "value": "outlined"
+            },
+            {
+              "label": "无边框",
+              "value": "borderless"
+            },
+            {
+              "label": "填充",
+              "value": "filled"
+            },
+            {
+              "label": "下划线",
+              "value": "underlined"
+            }
+          ],
+          "defaultValue": "outlined"
+        },
+        {
+          "name": "status",
+          "label": "校验状态",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "错误",
+              "value": "error"
+            },
+            {
+              "label": "警告",
+              "value": "warning"
+            }
+          ],
+          "defaultValue": ""
+        },
+        {
+          "name": "type",
+          "label": "输入类型",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "文本",
+              "value": "text"
+            },
+            {
+              "label": "密码",
+              "value": "password"
+            },
+            {
+              "label": "数字",
+              "value": "number"
+            }
+          ],
+          "defaultValue": "text"
+        }
+      ],
+      "events": [
+        {
+          "name": "onChange",
+          "label": "内容变化",
+          "description": "输入框内容变化时触发"
+        },
+        {
+          "name": "onPressEnter",
+          "label": "按下回车",
+          "description": "按下回车键时触发"
+        },
+        {
+          "name": "onClear",
+          "label": "清除内容",
+          "description": "点击清除按钮时触发"
+        }
+      ]
+    },
+    {
+      "name": "Input.OTP",
+      "title": "验证码输入",
+      "icon": "svgs/input-otp.svg",
+      "description": "用于短信验证码、邮箱验证码等一次性密码输入，支持多格输入、格式化、掩码",
+      "tags": [
+        "验证码",
+        "OTP",
+        "输入",
+        "表单"
+      ],
+      "category": "表单组件",
+      "version": "1.0.0",
+      "author": "ridge-antd",
+      "visualConfig": {
+        "preferredWidth": 210,
+        "preferredHeight": 34,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "value",
+          "label": "输入内容",
+          "description": "验证码输入框内容",
+          "type": "string",
+          "defaultValue": "398"
+        },
+        {
+          "name": "length",
+          "label": "输入位数",
+          "description": "输入框格子数量",
+          "type": "number",
+          "defaultValue": 6
+        },
+        {
+          "name": "size",
+          "label": "组件大小",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "小",
+              "value": "small"
+            },
+            {
+              "label": "中",
+              "value": "medium"
+            },
+            {
+              "label": "大",
+              "value": "large"
+            }
+          ],
+          "defaultValue": "medium"
+        },
+        {
+          "name": "variant",
+          "label": "样式形态",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "描边",
+              "value": "outlined"
+            },
+            {
+              "label": "无边框",
+              "value": "borderless"
+            },
+            {
+              "label": "填充",
+              "value": "filled"
+            },
+            {
+              "label": "下划线",
+              "value": "underlined"
+            }
+          ],
+          "defaultValue": "outlined"
+        },
+        {
+          "name": "mask",
+          "label": "掩码显示",
+          "description": "是否隐藏输入内容（显示为圆点）",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "status",
+          "label": "校验状态",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "错误",
+              "value": "error"
+            },
+            {
+              "label": "警告",
+              "value": "warning"
+            }
+          ],
+          "defaultValue": ""
+        }
+      ],
+      "events": [
+        {
+          "name": "onChange",
+          "label": "内容变化",
+          "description": "输入内容变化时触发，返回完整字符串"
+        },
+        {
+          "name": "onInput",
+          "label": "实时输入",
+          "description": "每一格输入变化时触发，返回数组"
+        }
+      ]
+    },
+    {
+      "name": "Input.TextArea",
+      "title": "文本域",
+      "icon": "svgs/textarea.svg",
+      "description": "多行文本输入框，支持自适应高度、清除、字数统计、校验状态等核心功能",
+      "tags": [
+        "输入",
+        "多行文本",
+        "文本域",
+        "表单"
+      ],
+      "category": "表单组件",
+      "version": "1.0.0",
+      "author": "ridge-antd",
+      "visualConfig": {
+        "preferredWidth": 180,
+        "preferredHeight": 56,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "value",
+          "label": "输入内容",
+          "description": "输入框内容",
+          "type": "string",
+          "defaultValue": ""
+        },
+        {
+          "name": "placeholder",
+          "label": "提示文字",
+          "type": "string",
+          "defaultValue": "请输入内容"
+        },
+        {
+          "name": "allowClear",
+          "label": "允许清除",
+          "description": "可以点击清除图标删除内容",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": true
+        },
+        {
+          "name": "showCount",
+          "label": "显示字数",
+          "description": "是否展示字数统计",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "maxLength",
+          "label": "最大长度",
+          "description": "输入内容最大长度",
+          "type": "number"
+        },
+        {
+          "name": "autoSize",
+          "label": "自适应高度",
+          "description": "自动根据内容调整高度",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "disabled",
+          "label": "禁用",
+          "description": "是否禁用状态",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "size",
+          "label": "组件大小",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "大",
+              "value": "large"
+            },
+            {
+              "label": "中",
+              "value": "medium"
+            },
+            {
+              "label": "小",
+              "value": "small"
+            }
+          ],
+          "defaultValue": "medium"
+        },
+        {
+          "name": "variant",
+          "label": "样式形态",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "描边",
+              "value": "outlined"
+            },
+            {
+              "label": "无边框",
+              "value": "borderless"
+            },
+            {
+              "label": "填充",
+              "value": "filled"
+            },
+            {
+              "label": "下划线",
+              "value": "underlined"
+            }
+          ],
+          "defaultValue": "outlined"
+        },
+        {
+          "name": "status",
+          "label": "校验状态",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "错误",
+              "value": "error"
+            },
+            {
+              "label": "警告",
+              "value": "warning"
+            }
+          ],
+          "defaultValue": ""
+        }
+      ],
+      "events": [
+        {
+          "name": "onChange",
+          "label": "内容变化",
+          "description": "输入框内容变化时触发"
+        },
+        {
+          "name": "onClear",
+          "label": "清除内容",
+          "description": "点击清除按钮时触发"
+        }
+      ]
+    },
+    {
+      "name": "InputNumber",
+      "title": "数字输入框",
+      "icon": "svgs/input-number.svg",
+      "description": "数字输入组件，支持加减、最大最小值、精度控制，用于数量、金额、年龄等数字输入场景",
+      "tags": [
+        "数字",
+        "输入",
+        "计数",
+        "表单"
+      ],
+      "category": "表单组件",
+      "version": "1.0.0",
+      "author": "ridge-antd",
+      "visualConfig": {
+        "preferredWidth": 160,
+        "preferredHeight": 36,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "value",
+          "label": "当前值",
+          "description": "数字输入框当前值",
+          "type": "number",
+          "defaultValue": null
+        },
+        {
+          "name": "placeholder",
+          "label": "提示文字",
+          "type": "string",
+          "defaultValue": "请输入数字"
+        },
+        {
+          "name": "min",
+          "label": "最小值",
+          "description": "可输入的最小数值",
+          "type": "number",
+          "defaultValue": 0
+        },
+        {
+          "name": "max",
+          "label": "最大值",
+          "description": "可输入的最大数值",
+          "type": "number",
+          "defaultValue": 99999
+        },
+        {
+          "name": "step",
+          "label": "每次增减步数",
+          "description": "点击上下箭头每次改变的数值",
+          "type": "number",
+          "defaultValue": 1
+        },
+        {
+          "name": "precision",
+          "label": "小数精度",
+          "description": "保留小数点后几位",
+          "type": "number"
+        },
+        {
+          "name": "controls",
+          "label": "显示增减按钮",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": true
+        },
+        {
+          "name": "disabled",
+          "label": "禁用",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "readOnly",
+          "label": "只读",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "size",
+          "label": "组件大小",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "大",
+              "value": "large"
+            },
+            {
+              "label": "中",
+              "value": "medium"
+            },
+            {
+              "label": "小",
+              "value": "small"
+            }
+          ],
+          "defaultValue": "medium"
+        },
+        {
+          "name": "variant",
+          "label": "样式形态",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "描边",
+              "value": "outlined"
+            },
+            {
+              "label": "无边框",
+              "value": "borderless"
+            },
+            {
+              "label": "填充",
+              "value": "filled"
+            },
+            {
+              "label": "下划线",
+              "value": "underlined"
+            }
+          ],
+          "defaultValue": "outlined"
+        },
+        {
+          "name": "status",
+          "label": "校验状态",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "错误",
+              "value": "error"
+            },
+            {
+              "label": "警告",
+              "value": "warning"
+            }
+          ],
+          "defaultValue": ""
+        }
+      ],
+      "events": [
+        {
+          "name": "onChange",
+          "label": "数值变化",
+          "description": "数字发生改变时触发回调"
+        },
+        {
+          "name": "onPressEnter",
+          "label": "按下回车",
+          "description": "按下回车键时触发"
+        }
+      ]
+    },
+    {
+      "name": "Pagination",
+      "title": "分页",
+      "icon": "svgs/pagination.svg",
+      "description": "用于长列表数据的分页展示，支持切换页码、调整每页条数、快速跳转、显示总数等功能",
+      "tags": [
+        "分页",
+        "数据",
+        "列表",
+        "导航"
+      ],
+      "category": "数据组件",
+      "version": "1.0.0",
+      "author": "ridge-antd",
+      "visualConfig": {
+        "preferredWidth": 152,
+        "preferredHeight": 36,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "total",
+          "label": "数据总数",
+          "description": "数据总数",
+          "type": "number",
+          "defaultValue": 0
+        },
+        {
+          "name": "current",
+          "label": "当前页数",
+          "description": "当前页数",
+          "type": "number",
+          "defaultValue": 1
+        },
+        {
+          "name": "defaultCurrent",
+          "label": "默认当前页数",
+          "description": "默认的当前页数",
+          "type": "number",
+          "defaultValue": 1
+        },
+        {
+          "name": "pageSize",
+          "label": "每页条数",
+          "description": "每页条数",
+          "type": "number",
+          "defaultValue": 10
+        },
+        {
+          "name": "defaultPageSize",
+          "label": "默认每页条数",
+          "description": "默认的每页条数",
+          "type": "number",
+          "defaultValue": 10
+        },
+        {
+          "name": "align",
+          "label": "对齐方式",
+          "description": "对齐方式",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "左对齐",
+              "value": "start"
+            },
+            {
+              "label": "居中",
+              "value": "center"
+            },
+            {
+              "label": "右对齐",
+              "value": "end"
+            }
+          ],
+          "defaultValue": ""
+        },
+        {
+          "name": "size",
+          "label": "组件尺寸",
+          "description": "组件尺寸",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "大",
+              "value": "large"
+            },
+            {
+              "label": "中",
+              "value": "medium"
+            },
+            {
+              "label": "小",
+              "value": "small"
+            }
+          ],
+          "defaultValue": "medium"
+        },
+        {
+          "name": "pageSizeOptions",
+          "label": "每页条数选项",
+          "description": "指定每页可以显示多少条",
+          "type": "array",
+          "control": "json",
+          "defaultValue": [
+            10,
+            20,
+            50,
+            100
+          ]
+        },
+        {
+          "name": "disabled",
+          "label": "禁用分页",
+          "description": "禁用分页",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "hideOnSinglePage",
+          "label": "单页隐藏",
+          "description": "只有一页时是否隐藏分页器",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "showLessItems",
+          "label": "显示较少页码",
+          "description": "是否显示较少页面内容",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "showQuickJumper",
+          "label": "快速跳转",
+          "description": "是否可以快速跳转至某页",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "showSizeChanger",
+          "label": "显示条数切换器",
+          "description": "是否展示 pageSize 切换器",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "simple",
+          "label": "简洁模式",
+          "description": "当添加该属性时，显示为简单分页",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        }
+      ],
+      "events": [
+        {
+          "name": "onChange",
+          "label": "页码或条数改变",
+          "description": "页码或 pageSize 改变的回调，参数是改变后的页码及每页条数"
+        }
+      ]
+    },
+    {
+      "name": "Radio.Group",
+      "title": "单选框组",
+      "icon": "svgs/radio-group.svg",
+      "description": "单选框组，用于一组互斥选项中选择一个，支持普通/按钮样式、水平/垂直排列",
+      "tags": [
+        "单选",
+        "选择",
+        "表单",
+        "互斥选项"
+      ],
+      "category": "表单组件",
+      "version": "1.0.0",
+      "author": "ridge-antd",
+      "visualConfig": {
+        "preferredWidth": 320,
+        "preferredHeight": 40,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "value",
+          "label": "选中值",
+          "description": "当前选中的值",
+          "type": "string",
+          "defaultValue": ""
+        },
+        {
+          "name": "options",
+          "label": "选项配置",
+          "description": "选项列表，包含 label、value、disabled",
+          "control": "json",
+          "type": "array",
+          "defaultValue": [
+            {
+              "label": "选项一",
+              "value": "1"
+            },
+            {
+              "label": "选项二",
+              "value": "2"
+            },
+            {
+              "label": "选项三",
+              "value": "3",
+              "disabled": true
+            }
+          ]
+        },
+        {
+          "name": "optionType",
+          "label": "选项样式",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "默认",
+              "value": "default"
+            },
+            {
+              "label": "按钮",
+              "value": "button"
+            }
+          ],
+          "defaultValue": "default"
+        },
+        {
+          "name": "buttonStyle",
+          "label": "按钮风格",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "描边",
+              "value": "outline"
+            },
+            {
+              "label": "填充",
+              "value": "solid"
+            }
+          ],
+          "defaultValue": "outline"
+        },
+        {
+          "name": "orientation",
+          "label": "排列方向",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "水平",
+              "value": "horizontal"
+            },
+            {
+              "label": "垂直",
+              "value": "vertical"
+            }
+          ],
+          "defaultValue": "horizontal"
+        },
+        {
+          "name": "disabled",
+          "label": "整组禁用",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "size",
+          "label": "组件大小",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "大",
+              "value": "large"
+            },
+            {
+              "label": "中",
+              "value": "medium"
+            },
+            {
+              "label": "小",
+              "value": "small"
+            }
+          ],
+          "defaultValue": "medium"
+        }
+      ],
+      "events": [
+        {
+          "name": "onChange",
+          "label": "选中变化",
+          "description": "切换选中选项时触发，返回当前选中值"
+        }
+      ]
+    },
+    {
+      "name": "Rate",
+      "title": "评分",
+      "icon": "svgs/rate.svg",
+      "description": "星级评分组件，用于评价、打分、满意度反馈等场景，支持全星/半星选择",
+      "tags": [
+        "评分",
+        "星级",
+        "评价",
+        "表单"
+      ],
+      "category": "表单组件",
+      "version": "1.0.0",
+      "author": "ridge-antd",
+      "visualConfig": {
+        "preferredWidth": 200,
+        "preferredHeight": 32,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "value",
+          "label": "评分值",
+          "description": "当前选中的评分",
+          "type": "number",
+          "defaultValue": 0
+        },
+        {
+          "name": "count",
+          "label": "星星总数",
+          "description": "总共显示多少个星星",
+          "type": "number",
+          "defaultValue": 5
+        },
+        {
+          "name": "allowHalf",
+          "label": "允许半星",
+          "description": "是否可以选择 0.5 颗星",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "allowClear",
+          "label": "允许清除",
+          "description": "点击已选中星星是否清空评分",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": true
+        },
+        {
+          "name": "disabled",
+          "label": "禁用/只读",
+          "description": "是否禁用交互，仅用于展示",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "size",
+          "label": "星星大小",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "小",
+              "value": "small"
+            },
+            {
+              "label": "中",
+              "value": "medium"
+            },
+            {
+              "label": "大",
+              "value": "large"
+            }
+          ],
+          "defaultValue": "medium"
+        }
+      ],
+      "events": [
+        {
+          "name": "onChange",
+          "label": "评分改变",
+          "description": "选择评分时触发，返回当前分数"
+        },
+        {
+          "name": "onHoverChange",
+          "label": "悬停变化",
+          "description": "鼠标悬停时触发，返回悬停分数"
+        }
+      ]
+    },
+    {
+      "name": "Steps",
+      "title": "步骤条",
+      "icon": "svgs/steps.svg",
+      "description": "用于展示任务、表单等流程的步骤进度，支持水平/垂直、多种类型与状态",
+      "tags": [
+        "步骤",
+        "流程",
+        "导航",
+        "表单"
+      ],
+      "category": "导航组件",
+      "version": "1.0.0",
+      "author": "ridge-antd",
+      "visualConfig": {
+        "preferredWidth": 353,
+        "preferredHeight": 69,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "items",
+          "label": "步骤项配置",
+          "description": "配置步骤列表，包含 title、description、status、icon 等",
+          "control": "json",
+          "type": "array",
+          "defaultValue": [
+            {
+              "title": "已完成",
+              "content": "步骤描述"
+            },
+            {
+              "title": "处理中",
+              "content": "步骤描述"
+            },
+            {
+              "title": "待开始",
+              "content": "步骤描述"
+            }
+          ],
+          "sample": [
+            {
+              "title": "填写信息",
+              "status": "finish"
+            },
+            {
+              "title": "上传附件",
+              "status": "process"
+            },
+            {
+              "title": "提交审核",
+              "status": "wait"
+            }
+          ]
+        },
+        {
+          "name": "current",
+          "label": "当前步骤",
+          "description": "指定当前步骤，从 0 开始计数",
+          "type": "number",
+          "defaultValue": 0
+        },
+        {
+          "name": "initial",
+          "label": "起始序号",
+          "description": "起始序号，从 0 开始计数",
+          "type": "number",
+          "defaultValue": 0
+        },
+        {
+          "name": "status",
+          "label": "步骤状态",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "等待",
+              "value": "wait"
+            },
+            {
+              "label": "处理中",
+              "value": "process"
+            },
+            {
+              "label": "完成",
+              "value": "finish"
+            },
+            {
+              "label": "错误",
+              "value": "error"
+            }
+          ],
+          "defaultValue": "process"
+        },
+        {
+          "name": "orientation",
+          "label": "步骤方向",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "水平",
+              "value": "horizontal"
+            },
+            {
+              "label": "垂直",
+              "value": "vertical"
+            }
+          ],
+          "defaultValue": "horizontal"
+        },
+        {
+          "name": "type",
+          "label": "步骤类型",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "默认",
+              "value": "default"
+            },
+            {
+              "label": "点状",
+              "value": "dot"
+            },
+            {
+              "label": "行内",
+              "value": "inline"
+            },
+            {
+              "label": "导航",
+              "value": "navigation"
+            },
+            {
+              "label": "面板",
+              "value": "panel"
+            }
+          ],
+          "defaultValue": "default"
+        },
+        {
+          "name": "variant",
+          "label": "样式变体",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "填充",
+              "value": "filled"
+            },
+            {
+              "label": "描边",
+              "value": "outlined"
+            }
+          ],
+          "defaultValue": "filled"
+        },
+        {
+          "name": "titlePlacement",
+          "label": "标题位置",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "水平(右侧)",
+              "value": "horizontal"
+            },
+            {
+              "label": "垂直(下方)",
+              "value": "vertical"
+            }
+          ],
+          "defaultValue": "horizontal"
+        },
+        {
+          "name": "size",
+          "label": "组件尺寸",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "标准",
+              "value": "medium"
+            },
+            {
+              "label": "迷你",
+              "value": "small"
+            }
+          ],
+          "defaultValue": "medium"
+        },
+        {
+          "name": "percent",
+          "label": "进度百分比",
+          "description": "当前步骤进度条百分比 0-100",
+          "type": "number"
+        }
+      ],
+      "events": [
+        {
+          "name": "onChange",
+          "label": "步骤切换",
+          "description": "点击切换步骤时触发，返回当前步骤序号"
+        }
+      ]
+    },
+    {
+      "name": "Typography.Text",
+      "title": "文本",
+      "icon": "svgs/typography-text.svg",
+      "description": "用于展示普通文本、加粗、斜体、删除线、代码、标记等样式",
+      "tags": [
+        "文本",
+        "展示",
+        "基础组件"
+      ],
+      "category": "展示组件",
+      "version": "1.0.0",
+      "author": "ridge-ui",
+      "visualConfig": {
+        "preferredWidth": 64,
+        "preferredHeight": 32,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "children",
+          "label": "文本内容",
+          "description": "显示的文本内容",
+          "type": "string",
+          "defaultValue": "文本内容"
+        },
+        {
+          "name": "type",
+          "label": "文本类型",
+          "description": "设置文本状态类型",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "次要",
+              "value": "secondary"
+            },
+            {
+              "label": "成功",
+              "value": "success"
+            },
+            {
+              "label": "警告",
+              "value": "warning"
+            },
+            {
+              "label": "危险",
+              "value": "danger"
+            }
+          ],
+          "defaultValue": ""
+        },
+        {
+          "name": "strong",
+          "label": "加粗",
+          "description": "是否加粗显示",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "italic",
+          "label": "斜体",
+          "description": "是否斜体显示",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "delete",
+          "label": "删除线",
+          "description": "是否添加删除线样式",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "underline",
+          "label": "下划线",
+          "description": "是否添加下划线样式",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "code",
+          "label": "代码样式",
+          "description": "是否添加代码样式",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "mark",
+          "label": "标记高亮",
+          "description": "是否添加标记高亮样式",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "keyboard",
+          "label": "键盘样式",
+          "description": "是否添加键盘样式",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "disabled",
+          "label": "禁用",
+          "description": "是否禁用文本",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "ellipsis",
+          "label": "自动省略",
+          "description": "内容超出宽度时自动显示省略号",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "className",
+          "label": "自定义类名",
+          "description": "自定义CSS类名",
+          "control": "className",
+          "type": "array"
+        },
+        {
+          "name": "style",
+          "label": "内联样式",
+          "description": "组件内联样式",
+          "type": "CSSProperties"
+        },
+        {
+          "name": "width",
+          "label": "宽度",
+          "type": "number",
+          "hidden": true
+        },
+        {
+          "name": "height",
+          "label": "高度",
+          "type": "number",
+          "hidden": true
+        }
+      ],
+      "events": [
+        {
+          "name": "onClick",
+          "description": "点击文本时触发",
+          "label": "点击事件"
+        }
+      ]
+    },
+    {
+      "name": "Typography.Paragraph",
+      "title": "段落文本",
+      "icon": "svgs/typography-paragraph.svg",
+      "description": "用于大段正文内容展示，支持省略多行、可复制、可编辑、多种文本装饰样式",
+      "tags": [
+        "文本",
+        "段落",
+        "展示组件"
+      ],
+      "category": "展示组件",
+      "version": "1.0.0",
+      "author": "ridge-antd",
+      "visualConfig": {
+        "preferredWidth": 218,
+        "preferredHeight": 110,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "children",
+          "label": "段落内容",
+          "description": "段落展示正文内容",
+          "type": "string",
+          "defaultValue": "当需要展示标题、段落、列表内容时使用，如文章/博客/日志的文本样式。 当需要一列基于文本的基础操作时，如拷贝/省略/可编辑。"
+        },
+        {
+          "name": "type",
+          "label": "文本类型",
+          "description": "设置文本状态颜色类型",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "次要",
+              "value": "secondary"
+            },
+            {
+              "label": "成功",
+              "value": "success"
+            },
+            {
+              "label": "警告",
+              "value": "warning"
+            },
+            {
+              "label": "危险",
+              "value": "danger"
+            }
+          ],
+          "defaultValue": ""
+        },
+        {
+          "name": "strong",
+          "label": "加粗",
+          "description": "文字加粗样式",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "italic",
+          "label": "斜体",
+          "description": "文字斜体样式",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "delete",
+          "label": "删除线",
+          "description": "添加删除线样式",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "underline",
+          "label": "下划线",
+          "description": "添加下划线样式",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "code",
+          "label": "代码样式",
+          "description": "代码格式展示",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "mark",
+          "label": "高亮标记",
+          "description": "底色高亮标记文本",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "disabled",
+          "label": "禁用",
+          "description": "禁用段落文本样式",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "copyable",
+          "label": "可复制",
+          "description": "开启点击复制文本",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "ellipsis",
+          "label": "文本省略",
+          "description": "内容超出自动折叠省略、支持展开查看",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        }
+      ],
+      "events": [
+        {
+          "name": "onClick",
+          "description": "点击段落区域触发",
+          "label": "点击事件"
+        }
+      ]
+    },
+    {
+      "name": "Typography.Title",
+      "title": "标题",
+      "icon": "svgs/typography-title.svg",
+      "description": "用于页面标题展示，支持h1-h5等级、省略、可编辑、可复制、加粗、斜体等样式",
+      "tags": [
+        "标题",
+        "文本",
+        "展示组件"
+      ],
+      "category": "展示组件",
+      "version": "1.0.0",
+      "author": "ridge-antd",
+      "visualConfig": {
+        "preferredWidth": 168,
+        "preferredHeight": 50,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "children",
+          "label": "标题内容",
+          "description": "显示的标题文本内容",
+          "type": "string",
+          "defaultValue": "标题内容"
+        },
+        {
+          "name": "level",
+          "label": "标题等级",
+          "description": "标题重要程度，对应h1-h5",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "H1",
+              "value": 1
+            },
+            {
+              "label": "H2",
+              "value": 2
+            },
+            {
+              "label": "H3",
+              "value": 3
+            },
+            {
+              "label": "H4",
+              "value": 4
+            },
+            {
+              "label": "H5",
+              "value": 5
+            }
+          ],
+          "defaultValue": 1
+        },
+        {
+          "name": "type",
+          "label": "文本类型",
+          "description": "设置文本状态类型",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "次要",
+              "value": "secondary"
+            },
+            {
+              "label": "成功",
+              "value": "success"
+            },
+            {
+              "label": "警告",
+              "value": "warning"
+            },
+            {
+              "label": "危险",
+              "value": "danger"
+            }
+          ],
+          "defaultValue": ""
+        },
+        {
+          "name": "disabled",
+          "label": "禁用",
+          "description": "是否禁用标题",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "italic",
+          "label": "斜体",
+          "description": "是否斜体显示",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": false
+        }
+      ],
+      "events": [
+        {
+          "name": "onClick",
+          "description": "点击标题时触发",
           "label": "点击事件"
         }
       ]

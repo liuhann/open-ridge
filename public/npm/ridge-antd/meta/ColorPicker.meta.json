@@ -1,0 +1,84 @@
+{
+  "name": "ColorPicker",
+  "title": "颜色选择器",
+  "icon": "svgs/color-picker.svg",
+  "description": "用于选择颜色值，支持单色/渐变、多种格式、预设颜色、透明度、文本显示等功能",
+  "tags": [
+    "颜色",
+    "选择器",
+    "表单",
+    "样式"
+  ],
+  "category": "表单组件",
+  "version": "1.0.0",
+  "author": "ridge-antd",
+  "visualConfig": {
+    "preferredWidth": 98,
+    "preferredHeight": 36,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "value",
+      "label": "颜色值",
+      "description": "当前选中的颜色值",
+      "type": "string",
+      "defaultValue": "#1677ff"
+    },
+    {
+      "name": "mode",
+      "label": "选择模式",
+      "control": "select",
+      "type": "string",
+      "options": [
+        { "label": "单色", "value": "single" },
+        { "label": "渐变", "value": "gradient" }
+      ],
+      "defaultValue": "single"
+    },
+    {
+      "name": "allowClear",
+      "label": "允许清除",
+      "description": "是否显示清除按钮",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "showText",
+      "label": "显示颜色文本",
+      "description": "是否显示颜色值文本",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": true
+    },
+    {
+      "name": "disabled",
+      "label": "禁用",
+      "description": "是否禁用组件",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "size",
+      "label": "组件大小",
+      "control": "select",
+      "type": "string",
+      "options": [
+        { "label": "大", "value": "large" },
+        { "label": "中", "value": "medium" },
+        { "label": "小", "value": "small" }
+      ],
+      "defaultValue": "medium"
+    }
+  ],
+  "events": [
+    {
+      "name": "onChange",
+      "label": "颜色变化",
+      "description": "颜色值改变时触发，返回颜色对象和CSS字符串"
+    }
+  ]
+}

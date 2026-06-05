@@ -1,0 +1,101 @@
+{
+  "name": "Radio.Group",
+  "title": "单选框组",
+  "icon": "svgs/radio-group.svg",
+  "description": "单选框组，用于一组互斥选项中选择一个，支持普通/按钮样式、水平/垂直排列",
+  "tags": [
+    "单选",
+    "选择",
+    "表单",
+    "互斥选项"
+  ],
+  "category": "表单组件",
+  "version": "1.0.0",
+  "author": "ridge-antd",
+  "visualConfig": {
+    "preferredWidth": 320,
+    "preferredHeight": 40,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "value",
+      "label": "选中值",
+      "description": "当前选中的值",
+      "type": "string",
+      "defaultValue": ""
+    },
+    {
+      "name": "options",
+      "label": "选项配置",
+      "description": "选项列表，包含 label、value、disabled",
+      "control": "json",
+      "type": "array",
+      "defaultValue": [
+        { "label": "选项一", "value": "1" },
+        { "label": "选项二", "value": "2" },
+        { "label": "选项三", "value": "3", "disabled": true }
+      ]
+    },
+    {
+      "name": "optionType",
+      "label": "选项样式",
+      "control": "select",
+      "type": "string",
+      "options": [
+        { "label": "默认", "value": "default" },
+        { "label": "按钮", "value": "button" }
+      ],
+      "defaultValue": "default"
+    },
+    {
+      "name": "buttonStyle",
+      "label": "按钮风格",
+      "control": "select",
+      "type": "string",
+      "options": [
+        { "label": "描边", "value": "outline" },
+        { "label": "填充", "value": "solid" }
+      ],
+      "defaultValue": "outline"
+    },
+    {
+      "name": "orientation",
+      "label": "排列方向",
+      "control": "select",
+      "type": "string",
+      "options": [
+        { "label": "水平", "value": "horizontal" },
+        { "label": "垂直", "value": "vertical" }
+      ],
+      "defaultValue": "horizontal"
+    },
+    {
+      "name": "disabled",
+      "label": "整组禁用",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "size",
+      "label": "组件大小",
+      "control": "select",
+      "type": "string",
+      "options": [
+        { "label": "大", "value": "large" },
+        { "label": "中", "value": "medium" },
+        { "label": "小", "value": "small" }
+      ],
+      "defaultValue": "medium"
+    }
+  ],
+  "events": [
+    {
+      "name": "onChange",
+      "label": "选中变化",
+      "description": "切换选中选项时触发，返回当前选中值"
+    }
+  ]
+}

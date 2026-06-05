@@ -473,17 +473,31 @@ RidgeUI前端组件需要使用下面格式进行描述。 框架按这个文件
 5. 复杂类型，给出sample 样例 JSON数据
 6. type 统一为单值：仅保留基础string，移除联合类型写法
 
-给出的UI组件表格如下：
+另外，还要生成一份供AI引擎读取的语料，要实现上面JSON同样的效果，AI可以知道有哪些属性、如何配置。 例如
 
-Banner
-属性	说明	类型	默认值	版本
-bordered	是否展示边框，仅在非全屏模式下有效	boolean	false	1.0
-className	类名	string	-	-
-closeIcon	自定义关闭icon，为 null 时不显示关闭按钮	string| ReactNode	-	1.0
-description	描述内容	ReactNode	-	1.0
-fullMode	是否为全屏模式	boolean	true	1.0
-icon	自定义 icon，为 null 时不显示 icon	string| ReactNode	-	1.0
-onClose	关闭时的回调函数	function	-	-
-style	样式名	object	-	-
-title	标题	ReactNode	-	1.0
-type	类型，支持 info, success, danger, warning	string	info	-
+Button (按钮)
+用途：用于页面点击操作、提交表单、确认取消等交互场景。
+组件路径 (Path): @douyinfe/semi-ui/Button
+属性 (Props) 配置：
+children: string，默认值“按钮”。必填，按钮上显示的文字。
+aria-label: string，默认值“”。无障碍辅助阅读标签。
+block: boolean，默认值false。是否占满整行宽度。
+disabled: boolean，默认值false。是否禁用按钮。
+loading: boolean，默认值false。是否显示加载中状态（此时不可点击）。
+size: string，默认值“default”。可选值：large（大）, default（默认）, small（小）。
+theme: string，默认值“light”。显示风格：solid（实色背景）, borderless（无背景）, light（浅背景）, outline（边框样式）。
+type: string，默认值“primary”。用途类型：primary（主要）, secondary（次要）, tertiary（三级）, warning（警告）, danger（危险）。
+事件 (Events)：
+onClick: 点击按钮时触发。
+onMouseDown: 鼠标按下时触发。
+onMouseEnter: 鼠标移入时触发。
+onMouseLeave: 鼠标移出时触发。
+
+
+现在我给出的组件表格如下，为我生成2份文件， 供编辑器和AI读取。  
+
+
+
+
+
+

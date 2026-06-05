@@ -1,19 +1,24 @@
 const fs = require('fs')
 const path = require('path')
 const glob = require('glob')
+const { copySync } = require('fs-extra') // 必须装：npm i fs-extra --save-dev
 
 /**
- * 按目录自动扫描 **\/source\/* .meta.json
+ * 按目录自动扫描 **\/meta/*.meta.json
  * 自动生成同级 meta.json，name 使用 根 package.json 的 name
+ * 构建完自动复制 → ../../public/npm/[当前文件夹名]
  */
 async function mergeMetaJsonWithGlob () {
-  const pattern = '**/source/*.meta.json'
+  const pattern = '**/meta/*.meta.json'
   console.log(`🔍 扫描所有组件: ${pattern}\n`)
 
-  // 🔥 读取根 package.json
+  // 读取根 package.json
   const rootPkgPath = path.resolve(process.cwd(), 'package.json')
   const rootPkg = JSON.parse(fs.readFileSync(rootPkgPath, 'utf8'))
-  const rootPackageName = rootPkg.name || 'unknown-package' // 取 name
+  const rootPackageName = rootPkg.name || 'unknown-package'
+
+  // 🔥 获取 **当前包所在目录名称**（用于拼接到目标路径）
+  const currentFolderName = path.basename(process.cwd())
 
   glob(pattern, (err, files) => {
     if (err) {
@@ -25,27 +30,23 @@ async function mergeMetaJsonWithGlob () {
       return
     }
 
-    // 按【组件根目录】分组（source 的上一级）
     const group = {}
     files.forEach(file => {
       const sourceDir = path.dirname(file)
-      const rootDir = path.resolve(path.join(sourceDir, '..')) // 组件根目录
+      const rootDir = path.resolve(path.join(sourceDir, '..'))
       if (!group[rootDir]) group[rootDir] = []
       group[rootDir].push(file)
     })
 
-    // 遍历每个组件目录，生成各自的 meta.json
     Object.keys(group).forEach(rootDir => {
       const metaFile = path.join(rootDir, 'meta.json')
       const fileList = group[rootDir]
-
-      // 🔥 这里直接用根 package.json 的 name
       const name = rootPackageName
+
       console.log(`📦 包名: ${name}`)
       console.log(`├─ 来源: ${fileList.length} 个文件`)
       console.log(`└─ 输出: ${metaFile}`)
 
-      // 合并
       const components = []
       fileList.forEach(file => {
         try {
@@ -54,13 +55,12 @@ async function mergeMetaJsonWithGlob () {
           if (Array.isArray(data)) components.push(...data)
           else components.push(data)
         } catch (e) {
-          console.warn(`⚠️  跳过 ${path.basename(file)}: ${e.message}`)
+          console.warn(`⚠️ 跳过 ${path.basename(file)}: ${e.message}`)
         }
       })
 
-      // 输出最终 meta.json
       const output = {
-        name, // 👈 这里已经是根 package.json 的 name
+        name,
         schemaVersion: '2.0',
         lastUpdated: new Date().toISOString(),
         generatedBy: 'ridge-ui-cli',
@@ -72,7 +72,38 @@ async function mergeMetaJsonWithGlob () {
     })
 
     console.log('🎉 所有组件 meta.json 生成完毕！')
+
+    // ✅ 开始复制
+    copyNpmPackageToTarget(currentFolderName)
   })
+}
+
+/**
+ * 复制构建好的 dist 目录 → ../../public/npm/[当前目录名]
+ */
+function copyNpmPackageToTarget (currentFolderName) {
+  // 源目录（你的构建产物）
+  const sourceDir = path.resolve(process.cwd())
+
+  // 目标目录：../../public/npm/当前目录名
+  const targetDir = path.resolve(
+    __dirname,
+    '../../../public/npm',
+    currentFolderName
+  )
+
+  try {
+    console.log('\n🚀 开始复制构建产物...')
+    console.log(`📂 源: ${sourceDir}`)
+    console.log(`📂 目标: ${targetDir}`)
+
+    // 覆盖复制
+    copySync(sourceDir, targetDir, { overwrite: true, recursive: true })
+
+    console.log('✅ 复制并覆盖完成！')
+  } catch (err) {
+    console.error('❌ 复制失败:', err.message)
+  }
 }
 
 // 运行
