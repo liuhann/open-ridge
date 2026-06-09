@@ -13,8 +13,8 @@
   "version": "1.0.0",
   "author": "ridge-antd",
   "visualConfig": {
-    "preferredWidth": 320,
-    "preferredHeight": 40,
+    "preferredWidth": 120,
+    "preferredHeight": 78,
     "resizable": true,
     "aspectRatio": "no"
   },
@@ -89,6 +89,15 @@
         { "label": "小", "value": "small" }
       ],
       "defaultValue": "medium"
+    },
+    {
+      "name": "style",
+      "label": "内联样式",
+      "description": "组件内联样式",
+      "type": "CSSProperties",
+      "defaultValue": {
+        "width": "100%"
+      }
     }
   ],
   "events": [

@@ -14,14 +14,14 @@
   "version": "1.0.0",
   "author": "ridge-antd",
   "visualConfig": {
-    "preferredWidth": 80,
-    "preferredHeight": 32,
+    "preferredWidth": 52,
+    "preferredHeight": 24,
     "resizable": true,
     "aspectRatio": "no"
   },
   "properties": [
     {
-      "name": "text",
+      "name": "children",
       "label": "标签文字",
       "type": "string",
       "defaultValue": "标签"
@@ -44,7 +44,7 @@
         { "label": "geekblue", "value": "geekblue" },
         { "label": "purple", "value": "purple" }
       ],
-      "defaultValue": ""
+      "defaultValue": "green"
     },
     {
       "name": "variant",
@@ -56,14 +56,14 @@
         { "label": "solid", "value": "solid" },
         { "label": "outlined", "value": "outlined" }
       ],
-      "defaultValue": "filled"
+      "defaultValue": "solid"
     },
     {
       "name": "closeIcon",
       "label": "显示关闭按钮",
       "control": "boolean",
       "type": "boolean",
-      "defaultValue": false
+      "defaultValue": true
     },
     {
       "name": "disabled",

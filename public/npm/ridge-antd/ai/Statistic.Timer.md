@@ -4,7 +4,7 @@ Statistic.Timer (计时/倒计时)
 属性 (Props) 配置：
 type: string，默认countdown。计时类型：countdown(倒计时) / countup(正计时)
 value: number，默认0。时间值（倒计时=结束时间戳，正计时=开始时间戳）
-format: string，默认HH:mm:ss。时间格式化字符串
+format: string，默认HH:mm:ss。时间格式化字符串 支持：D天H时m分s秒S毫秒
 title: string，默认空。组件标题
 prefix: string，默认空。时间前缀
 suffix: string，默认空。时间后缀

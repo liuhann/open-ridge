@@ -40,16 +40,14 @@ import {
   Tooltip,
   Transfer,
   Tree,
-  TreeSelect,
-  Upload
+  TreeSelect
 } from 'antd'
 
 import Breadcrumb from './Breadcrumb.jsx'
 import Dropdown from './Dropdown.jsx'
 import AvatarGroup from './AvatarGroup.jsx'
 import Carousel from './Carousel.jsx'
-
-dayjs.locale('zh-cn')
+import Upload from './RidgeUpload.jsx'
 
 export {
   Select,
@@ -71,10 +69,6 @@ export {
   Alert,
   Avatar,
   Badge,
-  AvatarGroup,
-  Breadcrumb,
-  Carousel,
-  Dropdown,
   Calendar,
   Drawer,
   Form,
@@ -98,5 +92,9 @@ export {
   Transfer,
   Tree,
   TreeSelect,
+  AvatarGroup,
+  Breadcrumb,
+  Carousel,
+  Dropdown,
   Upload
 }

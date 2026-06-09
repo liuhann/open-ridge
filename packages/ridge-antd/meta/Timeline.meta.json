@@ -14,8 +14,8 @@
   "version": "1.0.0",
   "author": "ridge-antd",
   "visualConfig": {
-    "preferredWidth": 600,
-    "preferredHeight": 400,
+    "preferredWidth": 253,
+    "preferredHeight": 83,
     "resizable": true,
     "aspectRatio": "no"
   },
@@ -27,11 +27,19 @@
       "control": "json",
       "type": "array",
       "defaultValue": [
-        { "title": "05:10", "content": "Create a services" },
-        { "title": "09:03", "content": "Solve initial network problems" },
-        { "content": "Technical testing" },
-        { "title": "11:28", "content": "Network problems being solved" }
-      ]
+          {
+            "title": "05:10",
+            "content": "起床"
+          },
+          {
+            "title": "09:03",
+            "content": "进入办公室"
+          },
+          {
+            "title": "11:28",
+            "content": "奔向食堂"
+          }
+        ]
     },
     {
       "name": "mode",
@@ -54,7 +62,7 @@
         { "label": "垂直", "value": "vertical" },
         { "label": "水平", "value": "horizontal" }
       ],
-      "defaultValue": "vertical"
+      "defaultValue": "horizontal"
     },
     {
       "name": "variant",

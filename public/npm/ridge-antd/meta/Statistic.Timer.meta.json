@@ -14,8 +14,8 @@
   "version": "1.0.0",
   "author": "ridge-antd",
   "visualConfig": {
-    "preferredWidth": 240,
-    "preferredHeight": 120,
+    "preferredWidth": 164,
+    "preferredHeight": 72,
     "resizable": true,
     "aspectRatio": "no"
   },
@@ -36,19 +36,19 @@
       "label": "时间戳/毫秒数",
       "description": "倒计时：结束时间戳 / 正计时：开始时间戳",
       "type": "number",
-      "defaultValue": 0
+      "defaultValue": 1801411200000
     },
     {
       "name": "format",
       "label": "时间格式",
       "type": "string",
-      "defaultValue": "HH:mm:ss"
+      "defaultValue": "D 天 H 小时"
     },
     {
       "name": "title",
       "label": "标题",
       "type": "string",
-      "defaultValue": ""
+      "defaultValue": "距离春节还有"
     },
     {
       "name": "prefix",

@@ -187,7 +187,7 @@ export default class Element extends BaseNode {
       const properties = this.getProperties()
       if (VanillaRender.isComponent(this.definition)) {
         this.renderer = new VanillaRender(this.definition, properties)
-      } else if (ReactRenderer.isComponent(this.definition)) {
+      } else {
         this.renderer = new ReactRenderer(this.definition, properties)
       }
       debug('this.renderer?.mount', properties)

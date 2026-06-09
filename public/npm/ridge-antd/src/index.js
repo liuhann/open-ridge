@@ -1,8 +1,3 @@
-import locale from 'antd/locale/zh_CN'
-import dayjs from 'dayjs'
-
-import 'dayjs/locale/zh-cn'
-
 import {
   Button,
   Typography,
@@ -45,16 +40,14 @@ import {
   Tooltip,
   Transfer,
   Tree,
-  TreeSelect,
-  Upload
+  TreeSelect
 } from 'antd'
 
 import Breadcrumb from './Breadcrumb.jsx'
 import Dropdown from './Dropdown.jsx'
 import AvatarGroup from './AvatarGroup.jsx'
 import Carousel from './Carousel.jsx'
-
-dayjs.locale('zh-cn')
+import Upload from './RidgeUpload.jsx'
 
 export {
   Select,
@@ -75,13 +68,9 @@ export {
   // 👇 下面是补齐导出
   Alert,
   Avatar,
-  AvatarGroup,
   Badge,
-  Breadcrumb,
   Calendar,
-  Carousel,
   Drawer,
-  Dropdown,
   Form,
   Image,
   Menu,
@@ -103,5 +92,9 @@ export {
   Transfer,
   Tree,
   TreeSelect,
+  AvatarGroup,
+  Breadcrumb,
+  Carousel,
+  Dropdown,
   Upload
 }

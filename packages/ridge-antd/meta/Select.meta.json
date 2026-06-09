@@ -14,7 +14,7 @@
   "version": "1.0.0",
   "author": "ridge-antd",
   "visualConfig": {
-    "preferredWidth": 280,
+    "preferredWidth": 140,
     "preferredHeight": 36,
     "resizable": true,
     "aspectRatio": "no"
@@ -25,7 +25,7 @@
       "label": "选中值",
       "description": "当前选中的条目",
       "type": "string",
-      "defaultValue": ""
+      "defaultValue": "1"
     },
     {
       "name": "options",
@@ -104,6 +104,15 @@
         { "label": "警告", "value": "warning" }
       ],
       "defaultValue": ""
+    },
+    {
+      "name": "style",
+      "label": "内联样式",
+      "description": "组件内联样式",
+      "type": "CSSProperties",
+      "defaultValue": {
+        "width": "100%"
+      }
     }
   ],
   "events": [

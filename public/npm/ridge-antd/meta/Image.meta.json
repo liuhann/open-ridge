@@ -14,8 +14,8 @@
   "version": "1.0.0",
   "author": "ridge-antd",
   "visualConfig": {
-    "preferredWidth": 400,
-    "preferredHeight": 300,
+    "preferredWidth": 100,
+    "preferredHeight": 82,
     "resizable": true,
     "aspectRatio": "auto"
   },
@@ -25,14 +25,7 @@
       "label": "图片地址",
       "description": "图片资源地址",
       "type": "string",
-      "defaultValue": ""
-    },
-    {
-      "name": "alt",
-      "label": "图像描述",
-      "description": "图片的描述文本，用于无障碍和加载失败",
-      "type": "string",
-      "defaultValue": ""
+      "defaultValue": "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
     },
     {
       "name": "width",
@@ -62,7 +55,7 @@
       "description": "图片加载中显示占位效果",
       "control": "boolean",
       "type": "boolean",
-      "defaultValue": false
+      "defaultValue": true
     },
     {
       "name": "fallback",

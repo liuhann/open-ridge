@@ -1,7 +1,7 @@
 {
   "name": "ridge-antd",
   "schemaVersion": "2.0",
-  "lastUpdated": "2026-06-09T07:26:06.889Z",
+  "lastUpdated": "2026-06-09T10:47:32.733Z",
   "generatedBy": "ridge-ui-cli",
   "components": [
     {
@@ -1804,8 +1804,8 @@
       "version": "1.0.0",
       "author": "ridge-antd",
       "visualConfig": {
-        "preferredWidth": 400,
-        "preferredHeight": 300,
+        "preferredWidth": 100,
+        "preferredHeight": 82,
         "resizable": true,
         "aspectRatio": "auto"
       },
@@ -1815,14 +1815,7 @@
           "label": "图片地址",
           "description": "图片资源地址",
           "type": "string",
-          "defaultValue": ""
-        },
-        {
-          "name": "alt",
-          "label": "图像描述",
-          "description": "图片的描述文本，用于无障碍和加载失败",
-          "type": "string",
-          "defaultValue": ""
+          "defaultValue": "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
         },
         {
           "name": "width",
@@ -1852,7 +1845,7 @@
           "description": "图片加载中显示占位效果",
           "control": "boolean",
           "type": "boolean",
-          "defaultValue": false
+          "defaultValue": true
         },
         {
           "name": "fallback",
@@ -2785,8 +2778,8 @@
       "version": "1.0.0",
       "author": "ridge-antd",
       "visualConfig": {
-        "preferredWidth": 200,
-        "preferredHeight": 200,
+        "preferredWidth": 160,
+        "preferredHeight": 160,
         "resizable": true,
         "aspectRatio": "1:1"
       },
@@ -2911,8 +2904,8 @@
       "version": "1.0.0",
       "author": "ridge-antd",
       "visualConfig": {
-        "preferredWidth": 320,
-        "preferredHeight": 40,
+        "preferredWidth": 120,
+        "preferredHeight": 78,
         "resizable": true,
         "aspectRatio": "no"
       },
@@ -3024,6 +3017,15 @@
             }
           ],
           "defaultValue": "medium"
+        },
+        {
+          "name": "style",
+          "label": "内联样式",
+          "description": "组件内联样式",
+          "type": "CSSProperties",
+          "defaultValue": {
+            "width": "100%"
+          }
         }
       ],
       "events": [
@@ -3049,7 +3051,7 @@
       "version": "1.0.0",
       "author": "ridge-antd",
       "visualConfig": {
-        "preferredWidth": 170,
+        "preferredWidth": 140,
         "preferredHeight": 32,
         "resizable": true,
         "aspectRatio": "no"
@@ -3271,7 +3273,7 @@
       "version": "1.0.0",
       "author": "ridge-antd",
       "visualConfig": {
-        "preferredWidth": 280,
+        "preferredWidth": 140,
         "preferredHeight": 36,
         "resizable": true,
         "aspectRatio": "no"
@@ -3282,7 +3284,7 @@
           "label": "选中值",
           "description": "当前选中的条目",
           "type": "string",
-          "defaultValue": ""
+          "defaultValue": "1"
         },
         {
           "name": "options",
@@ -3397,6 +3399,15 @@
             }
           ],
           "defaultValue": ""
+        },
+        {
+          "name": "style",
+          "label": "内联样式",
+          "description": "组件内联样式",
+          "type": "CSSProperties",
+          "defaultValue": {
+            "width": "100%"
+          }
         }
       ],
       "events": [
@@ -3658,8 +3669,8 @@
       "version": "1.0.0",
       "author": "ridge-antd",
       "visualConfig": {
-        "preferredWidth": 240,
-        "preferredHeight": 120,
+        "preferredWidth": 164,
+        "preferredHeight": 72,
         "resizable": true,
         "aspectRatio": "no"
       },
@@ -3686,19 +3697,19 @@
           "label": "时间戳/毫秒数",
           "description": "倒计时：结束时间戳 / 正计时：开始时间戳",
           "type": "number",
-          "defaultValue": 0
+          "defaultValue": 1801411200000
         },
         {
           "name": "format",
           "label": "时间格式",
           "type": "string",
-          "defaultValue": "HH:mm:ss"
+          "defaultValue": "D 天 H 小时"
         },
         {
           "name": "title",
           "label": "标题",
           "type": "string",
-          "defaultValue": ""
+          "defaultValue": "距离春节还有"
         },
         {
           "name": "prefix",
@@ -4025,8 +4036,8 @@
       "version": "1.0.0",
       "author": "ridge-antd",
       "visualConfig": {
-        "preferredWidth": 800,
-        "preferredHeight": 400,
+        "preferredWidth": 269,
+        "preferredHeight": 168,
         "resizable": true,
         "aspectRatio": "no"
       },
@@ -4162,14 +4173,14 @@
       "version": "1.0.0",
       "author": "ridge-antd",
       "visualConfig": {
-        "preferredWidth": 80,
-        "preferredHeight": 32,
+        "preferredWidth": 52,
+        "preferredHeight": 24,
         "resizable": true,
         "aspectRatio": "no"
       },
       "properties": [
         {
-          "name": "text",
+          "name": "children",
           "label": "标签文字",
           "type": "string",
           "defaultValue": "标签"
@@ -4225,7 +4236,7 @@
               "value": "purple"
             }
           ],
-          "defaultValue": ""
+          "defaultValue": "green"
         },
         {
           "name": "variant",
@@ -4246,14 +4257,14 @@
               "value": "outlined"
             }
           ],
-          "defaultValue": "filled"
+          "defaultValue": "solid"
         },
         {
           "name": "closeIcon",
           "label": "显示关闭按钮",
           "control": "boolean",
           "type": "boolean",
-          "defaultValue": false
+          "defaultValue": true
         },
         {
           "name": "disabled",
@@ -4446,8 +4457,8 @@
       "version": "1.0.0",
       "author": "ridge-antd",
       "visualConfig": {
-        "preferredWidth": 600,
-        "preferredHeight": 400,
+        "preferredWidth": 253,
+        "preferredHeight": 83,
         "resizable": true,
         "aspectRatio": "no"
       },
@@ -4461,18 +4472,15 @@
           "defaultValue": [
             {
               "title": "05:10",
-              "content": "Create a services"
+              "content": "起床"
             },
             {
               "title": "09:03",
-              "content": "Solve initial network problems"
-            },
-            {
-              "content": "Technical testing"
+              "content": "进入办公室"
             },
             {
               "title": "11:28",
-              "content": "Network problems being solved"
+              "content": "奔向食堂"
             }
           ]
         },
@@ -4512,7 +4520,7 @@
               "value": "horizontal"
             }
           ],
-          "defaultValue": "vertical"
+          "defaultValue": "horizontal"
         },
         {
           "name": "variant",
@@ -4562,8 +4570,8 @@
       "version": "1.0.0",
       "author": "ridge-antd",
       "visualConfig": {
-        "preferredWidth": 240,
-        "preferredHeight": 36,
+        "preferredWidth": 136,
+        "preferredHeight": 32,
         "resizable": true,
         "aspectRatio": "no"
       },
@@ -4692,8 +4700,8 @@
       "version": "1.0.0",
       "author": "ridge-antd",
       "visualConfig": {
-        "preferredWidth": 300,
-        "preferredHeight": 400,
+        "preferredWidth": 175,
+        "preferredHeight": 170,
         "resizable": true,
         "aspectRatio": "no"
       },
@@ -4799,7 +4807,7 @@
           "label": "选中值",
           "description": "当前选中的条目",
           "type": "string",
-          "defaultValue": ""
+          "defaultValue": "1"
         },
         {
           "name": "treeData",
@@ -4814,7 +4822,7 @@
               "children": [
                 {
                   "value": "1-1",
-                  "label": "选项一-1"
+                  "label": "选项三"
                 }
               ]
             },
@@ -4931,6 +4939,15 @@
             }
           ],
           "defaultValue": ""
+        },
+        {
+          "name": "style",
+          "label": "内联样式",
+          "description": "组件内联样式",
+          "type": "CSSProperties",
+          "defaultValue": {
+            "width": "100%"
+          }
         }
       ],
       "events": [
