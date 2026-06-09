@@ -1,0 +1,146 @@
+{
+  "name": "InputNumber",
+  "title": "数字输入框",
+  "icon": "svgs/input-number.svg",
+  "description": "用于输入数字，支持精度、步长、极值限制及前后缀展示。",
+  "tags": [
+    "输入",
+    "数字",
+    "表单"
+  ],
+  "category": "表单控件",
+  "version": "2.97.0",
+  "author": "LiuHan",
+  "visualConfig": {
+    "preferredWidth": 96,
+    "preferredHeight": 36,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "value",
+      "description": "当前值",
+      "label": "当前值",
+      "control": "number",
+      "type": "number",
+      "defaultValue": 996
+    },
+    {
+      "name": "className",
+      "description": "自定义 CSS 类名",
+      "label": "自定义类名",
+      "control": "className",
+      "type": "array"
+    },
+    {
+      "name": "disabled",
+      "description": "是否禁用",
+      "label": "禁用",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "hideButtons",
+      "description": "是否隐藏上下调整按钮",
+      "label": "隐藏按钮",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "max",
+      "description": "最大值",
+      "label": "最大值",
+      "control": "number",
+      "type": "number"
+    },
+    {
+      "name": "min",
+      "description": "最小值",
+      "label": "最小值",
+      "control": "number",
+      "type": "number"
+    },
+    {
+      "name": "precision",
+      "description": "数值精度（小数位数）",
+      "label": "精度",
+      "control": "number",
+      "type": "number"
+    },
+    {
+      "name": "prefix",
+      "description": "输入框前缀文字",
+      "label": "前缀",
+      "type": "string",
+      "defaultValue": ""
+    },
+    {
+      "name": "suffix",
+      "description": "输入框后缀文字",
+      "label": "后缀",
+      "type": "string",
+      "defaultValue": ""
+    },
+    {
+      "name": "showClear",
+      "description": "是否显示清除按钮",
+      "label": "显示清除",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "size",
+      "description": "输入框尺寸",
+      "label": "尺寸",
+      "control": "select",
+      "type": "string",
+      "options": [
+        { "label": "默认", "value": "default" },
+        { "label": "小", "value": "small" },
+        { "label": "大", "value": "large" }
+      ],
+      "defaultValue": "default"
+    },
+    {
+      "name": "step",
+      "description": "每次调整步长",
+      "label": "步长",
+      "control": "number",
+      "type": "number",
+      "defaultValue": 1
+    },
+    {
+      "name": "style",
+      "description": "组件内联样式",
+      "label": "内联样式",
+      "type": "CSSProperties",
+      "hidden": true
+    }
+  ],
+  "events": [
+    {
+      "name": "onBlur",
+      "description": "失去焦点时触发",
+      "label": "失去焦点"
+    },
+    {
+      "name": "onChange",
+      "description": "数值变化时触发",
+      "label": "值改变"
+    },
+    {
+      "name": "onFocus",
+      "description": "获得焦点时触发",
+      "label": "获得焦点"
+    },
+    {
+      "name": "onNumberChange",
+      "description": "数字值变化时触发",
+      "label": "数字改变"
+    }
+  ]
+}

@@ -1,0 +1,123 @@
+{
+  "name": "Slider",
+  "title": "滑块",
+  "icon": "svgs/slider.svg",
+  "description": "用于在数值区间内通过滑动方式选择数值的表单组件，支持刻度、范围、禁用等常用功能",
+  "tags": [
+    "表单",
+    "滑块",
+    "数值选择"
+  ],
+  "category": "表单",
+  "version": "1.0.0",
+  "author": "RidgeUI",
+  "visualConfig": {
+    "preferredWidth": 178,
+    "preferredHeight": 37,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "value",
+      "description": "当前选中值，配合onChange实现双向绑定",
+      "label": "当前值",
+      "inputEvent": "onChange",
+      "type": "number",
+      "defaultValue": 20
+    },
+    {
+      "name": "min",
+      "description": "最小值",
+      "label": "最小值",
+      "control": "number",
+      "type": "number",
+      "defaultValue": 0
+    },
+    {
+      "name": "max",
+      "description": "最大值",
+      "label": "最大值",
+      "control": "number",
+      "type": "number",
+      "defaultValue": 100
+    },
+    {
+      "name": "step",
+      "description": "滑动步长",
+      "label": "步长",
+      "control": "number",
+      "type": "number",
+      "min": 1,
+      "defaultValue": 1
+    },
+    {
+      "name": "disabled",
+      "description": "是否禁用滑块，禁用后无法交互",
+      "label": "禁用",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "vertical",
+      "description": "是否垂直方向展示",
+      "label": "垂直方向",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "showBoundary",
+      "description": "hover时是否显示最大/最小值",
+      "label": "显示边界值",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "tooltipVisible",
+      "description": "是否始终显示数值提示",
+      "label": "常驻提示",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "railStyle",
+      "description": "滑块轨道样式",
+      "label": "轨道样式",
+      "type": "CSSProperties"
+    },
+    {
+      "name": "className",
+      "description": "自定义CSS类名",
+      "label": "自定义类名",
+      "control": "className",
+      "type": "string"
+    },
+    {
+      "name": "style",
+      "description": "组件内联样式",
+      "label": "内联样式",
+      "type": "CSSProperties"
+    }
+  ],
+  "events": [
+    {
+      "name": "onChange",
+      "description": "滑动值改变时触发",
+      "label": "值改变"
+    },
+    {
+      "name": "onAfterChange",
+      "description": "滑动结束后触发",
+      "label": "滑动结束"
+    },
+    {
+      "name": "onMouseUp",
+      "description": "鼠标松开滑块时触发",
+      "label": "鼠标松开"
+    }
+  ]
+}

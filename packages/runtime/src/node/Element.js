@@ -8,7 +8,6 @@ import {
 } from '../utils/pseudo.js'
 import { isObject, isObjectsEqual } from '../utils/is.js'
 import { cloneDeep } from '../utils/object.js'
-import { IN_APP_FILE_PREFIEX, ridgeBaseUrl } from '../index'
 import createDebugger from 'debug'
 
 const debug = createDebugger('ridge:element')
@@ -165,19 +164,21 @@ export default class Element extends BaseNode {
     // 异步不阻塞
     this.load().then(() => {
       if (!this.definition) return
+      // 组件可加载后
+      // this.parent?.updateChildStyle(this)
+      // this.styleUpdated && this.styleUpdated()
+
       this.initializeEvents()
       this.initSubscription()
-      this.updateConnectedProperties()
       this.createRenderer()
       this.mounted()
-      this.parent?.updateChildStyle(this)
-      this.styleUpdated && this.styleUpdated()
     })
   }
 
   createRenderer () {
     if (!this.definition) return
     try {
+      this.updateProps()
       const properties = this.getProperties()
       if (VanillaRender.isComponent(this.definition)) {
         this.renderer = new VanillaRender(this.definition, properties)
@@ -328,7 +329,6 @@ export default class Element extends BaseNode {
   }
 
   forceUpdateProperty () {
-    this.updateConnectedProperties()
     this.updateProps()
   }
 
@@ -362,17 +362,6 @@ export default class Element extends BaseNode {
     }
   }
 
-  updateConnectedProperties () {
-    const store = this.composite.store
-    if (!store || !isObject(this.config.propEx)) return
-    for (const [key, expr] of Object.entries(this.config.propEx)) {
-      if (!expr) continue
-      try {
-        this.properties[key] = store.getStoreValue(expr, this.getScopedData())
-      } catch (e) {}
-    }
-  }
-
   // ========================================================================
   // 插槽 / 特殊属性
   // ========================================================================
@@ -394,7 +383,11 @@ export default class Element extends BaseNode {
   }
 
   getHidden () {
-    return this.config?.editor?.hidden
+    if (this.style.visible === false) {
+      return true
+    } else {
+      return this.config?.editor?.hidden
+    }
   }
 
   // 修改：更新样式时使用计算后的值
@@ -466,6 +459,19 @@ export default class Element extends BaseNode {
     this.mounteds.forEach(fn => fn(this))
     this.el?.setAttribute('ridge-mount', 'mounted')
     this.removeStatus()
+  }
+
+  styleUpdated () {
+    if (this.config.meta) {
+      if (this.config.meta.width && this.el?.clientWidth) {
+        // 组件定义要求接受当前宽高
+        this.properties.width = this.el?.clientWidth
+      }
+      if (this.config.meta.height && this.el?.clientHeight) {
+        // 组件定义要求接受当前宽高
+        this.properties.height = this.el?.clientHeight
+      }
+    }
   }
 
   // 新增：计算运行时样式（合并固定和动态）

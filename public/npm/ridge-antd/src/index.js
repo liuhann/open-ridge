@@ -11,13 +11,19 @@ import {
   Input,
   InputNumber,
   Radio,
+  Rate,
+  Select,
   Divider
 } from 'antd'
 
 import Breadcrumb from './Breadcrumb.jsx'
 import Dropdown from './Dropdown.jsx'
+import AvatarGroup from './AvatarGroup.jsx'
+import Carousel from './Carousel.jsx'
 
 export {
+  Select,
+  Rate,
   InputNumber,
   Input,
   Cascader,
@@ -29,8 +35,10 @@ export {
   Pagination,
   ColorPicker,
   Radio,
-  Breadcrumb,
   Typography,
   DatePicker,
-  Dropdown
+  Breadcrumb,
+  Dropdown,
+  AvatarGroup,
+  Carousel
 }

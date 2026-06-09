@@ -1,0 +1,95 @@
+{
+  "name": "Image",
+  "title": "图片",
+  "icon": "svgs/image.svg",
+  "description": "图片组件，支持地址配置、尺寸设置、加载状态、预览控制、图片描述等基础配置",
+  "tags": [
+    "图片",
+    "展示",
+    "预览"
+  ],
+  "category": "展示组件",
+  "version": "1.0.0",
+  "author": "",
+  "visualConfig": {
+    "thumbnail": "",
+    "preferredWidth": 96,
+    "preferredHeight": 96,
+    "resizable": true,
+    "aspectRatio": "auto"
+  },
+  "properties": [
+    {
+      "name": "src",
+      "description": "图片地址",
+      "label": "图片地址",
+      "required": true,
+      "type": "image",
+      "defaultValue": ""
+    },
+    {
+      "name": "alt",
+      "description": "图像描述",
+      "label": "图像描述",
+      "type": "string",
+      "defaultValue": ""
+    },
+    {
+      "name": "width",
+      "description": "图片显示宽度",
+      "label": "宽度",
+      "type": "string",
+      "required": true,
+      "hidden": true,
+      "defaultValue": "100%"
+    },
+    {
+      "name": "height",
+      "description": "图片显示高度",
+      "label": "高度",
+      "required": true,
+      "hidden": true,
+      "type": "string",
+      "defaultValue": "100%"
+    },
+    {
+      "name": "className",
+      "description": "自定义样式类名",
+      "label": "自定义类名",
+      "type": "string",
+      "defaultValue": ""
+    },
+    {
+      "name": "imgCls",
+      "description": "图片节点自定义类名",
+      "label": "图片节点类名",
+      "type": "className",
+      "defaultValue": ""
+    },
+    {
+      "name": "preview",
+      "description": "是否开启图片预览",
+      "label": "开启预览",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    }
+  ],
+  "events": [
+    {
+      "name": "onClick",
+      "description": "点击图片时触发",
+      "label": "点击事件"
+    },
+    {
+      "name": "onLoad",
+      "description": "图片加载成功时触发",
+      "label": "加载完成"
+    },
+    {
+      "name": "onError",
+      "description": "图片加载失败时触发",
+      "label": "加载失败"
+    }
+  ]
+}

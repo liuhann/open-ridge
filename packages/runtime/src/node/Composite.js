@@ -7,7 +7,7 @@ import { cloneDeep } from '../utils/object.js'
 import Debug from 'debug'
 import { generateUrlFontName, toCSSLength, addJsonSuffix, removeUrlProtocol, cleanMultiSlash, isUrlInApp, ensureLeading } from '../utils/string'
 import { loadRemoteJsModule, loadLocalJsModule } from '../utils/load.js'
-import { IN_APP_FILE_PREFIEX, ridgeBaseUrl } from '..'
+import { ridgeBaseUrl } from '..'
 const debug = Debug('ridge:composite')
 
 /**
@@ -307,8 +307,8 @@ class Composite extends BaseNode {
         childNode.el.style.width = ''
         childNode.el.style.height = ''
       } else {
-        const style = childNode.style
         childNode.el.classList.remove('ridge-is-full')
+        const style = childNode.style
         childNode.el.style.position = 'absolute'
         childNode.el.style.left = 0
         childNode.el.style.top = 0
@@ -316,10 +316,11 @@ class Composite extends BaseNode {
 
         childNode.el.style.width = style.width ? toCSSLength(style.width) : ''
         childNode.el.style.height = style.height ? toCSSLength(style.height) : ''
-        if (style.portalled && !this.isEdit) {
-          childNode.el.style.width = 0
-          childNode.el.style.height = 0
-        }
+        // TODO Remote Later?
+        // if (style.portalled && !this.isEdit) {
+        //   childNode.el.style.width = 0
+        //   childNode.el.style.height = 0
+        // }
       }
     }
   }

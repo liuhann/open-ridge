@@ -1,0 +1,102 @@
+{
+  "name": "TimePicker",
+  "title": "时间选择器",
+  "icon": "svgs/time-picker.svg",
+  "description": "时间选择框，支持时、分、秒选择，用于表单时间输入场景",
+  "tags": [
+    "时间",
+    "选择",
+    "时分秒",
+    "表单"
+  ],
+  "category": "表单组件",
+  "version": "1.0.0",
+  "author": "ridge-antd",
+  "visualConfig": {
+    "preferredWidth": 240,
+    "preferredHeight": 36,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "value",
+      "label": "时间值",
+      "description": "当前选中的时间",
+      "type": "string",
+      "defaultValue": ""
+    },
+    {
+      "name": "placeholder",
+      "label": "提示文字",
+      "type": "string",
+      "defaultValue": "请选择时间"
+    },
+    {
+      "name": "allowClear",
+      "label": "允许清除",
+      "description": "是否显示清除按钮",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": true
+    },
+    {
+      "name": "use12Hours",
+      "label": "12小时制",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "disabled",
+      "label": "禁用",
+      "description": "是否禁用时间选择器",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "size",
+      "label": "组件大小",
+      "control": "select",
+      "type": "string",
+      "options": [
+        { "label": "大", "value": "large" },
+        { "label": "中", "value": "medium" },
+        { "label": "小", "value": "small" }
+      ],
+      "defaultValue": "medium"
+    },
+    {
+      "name": "variant",
+      "label": "样式形态",
+      "control": "select",
+      "type": "string",
+      "options": [
+        { "label": "描边", "value": "outlined" },
+        { "label": "无边框", "value": "borderless" },
+        { "label": "填充", "value": "filled" },
+        { "label": "下划线", "value": "underlined" }
+      ],
+      "defaultValue": "outlined"
+    },
+    {
+      "name": "status",
+      "label": "校验状态",
+      "control": "select",
+      "type": "string",
+      "options": [
+        { "label": "错误", "value": "error" },
+        { "label": "警告", "value": "warning" }
+      ],
+      "defaultValue": ""
+    }
+  ],
+  "events": [
+    {
+      "name": "onChange",
+      "label": "时间变化",
+      "description": "选中时间后触发，返回选中的时间值"
+    }
+  ]
+}

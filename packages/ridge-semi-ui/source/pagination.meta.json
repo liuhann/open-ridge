@@ -1,0 +1,132 @@
+{
+  "name": "Pagination",
+  "title": "分页器",
+  "icon": "svgs/pagination.svg",
+  "description": "用于多页数据导航的分页组件，支持页码切换、每页条数、快速跳转、总条数显示",
+  "tags": [
+    "导航",
+    "分页",
+    "数据"
+  ],
+  "category": "导航",
+  "version": "1.0.0",
+  "author": "RidgeUI",
+  "visualConfig": {
+    "preferredWidth": 200,
+    "preferredHeight": 36,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "currentPage",
+      "description": "当前页码，受控值，配合onPageChange使用",
+      "label": "当前页码",
+      "inputEvent": "onPageChange",
+      "type": "number",
+      "defaultValue": 1
+    },
+    {
+      "name": "total",
+      "description": "数据总条数",
+      "label": "总条数",
+      "control": "number",
+      "type": "number",
+      "min": 1,
+      "defaultValue": 21
+    },
+    {
+      "name": "pageSize",
+      "description": "每页显示条数",
+      "label": "每页条数",
+      "control": "number",
+      "type": "number",
+      "min": 1,
+      "defaultValue": 10
+    },
+    {
+      "name": "disabled",
+      "description": "是否禁用分页器",
+      "label": "禁用",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "size",
+      "description": "分页器尺寸",
+      "label": "尺寸",
+      "control": "select",
+      "type": "string",
+      "options": [
+        {
+          "label": "小",
+          "value": "small"
+        },
+        {
+          "label": "默认",
+          "value": "default"
+        }
+      ],
+      "defaultValue": "default",
+      "hidden": true
+    },
+    {
+      "name": "showTotal",
+      "description": "是否显示总页数/总条数信息",
+      "label": "显示总计",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "showSizeChanger",
+      "description": "是否允许切换每页条数",
+      "label": "切换每页条数",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "pageSizeOpts",
+      "description": "每页条数可选值数组",
+      "label": "条数可选值",
+      "control": "json",
+      "type": "array",
+      "defaultValue": [10, 20, 40, 100]
+    },
+    {
+      "name": "showQuickJumper",
+      "description": "是否显示快速跳转到指定页码",
+      "label": "快速跳转",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "hideOnSinglePage",
+      "description": "只有一页时是否隐藏分页器",
+      "label": "单页隐藏",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    }
+  ],
+  "events": [
+    {
+      "name": "onPageChange",
+      "description": "页码变更时触发",
+      "label": "页码改变"
+    },
+    {
+      "name": "onPageSizeChange",
+      "description": "每页条数变更时触发",
+      "label": "条数改变"
+    },
+    {
+      "name": "onChange",
+      "description": "页码或每页条数任意变化时触发",
+      "label": "变更事件"
+    }
+  ]
+}

@@ -1,0 +1,210 @@
+{
+  "name": "Avatar",
+  "title": "头像",
+  "icon": "svgs/avatar.svg",
+  "description": "头像组件，用于展示用户头像、字符头像、图标头像，支持图片、文字、自定义内容及上下角标展示",
+  "tags": [
+    "头像",
+    "用户",
+    "展示",
+    "基础组件"
+  ],
+  "category": "基础组件",
+  "version": "1.0.0",
+  "author": "LiuHan",
+  "visualConfig": {
+    "preferredWidth": 48,
+    "preferredHeight": 48,
+    "resizable": true,
+    "aspectRatio": "1:1"
+  },
+  "properties": [
+    {
+      "name": "children",
+      "description": "显示的文字",
+      "label": "文字",
+      "type": "string",
+      "defaultValue": "刘"
+    },
+    {
+      "name": "src",
+      "description": "图片类头像的资源地址",
+      "label": "图片地址",
+      "type": "image",
+      "defaultValue": ""
+    },
+    {
+      "name": "alt",
+      "description": "图像的替代文本描述",
+      "label": "图片描述",
+      "type": "string",
+      "defaultValue": ""
+    },
+    {
+      "name": "shape",
+      "description": "指定头像的形状",
+      "label": "头像形状",
+      "control": "select",
+      "type": "string",
+      "options": [
+        {
+          "label": "圆形",
+          "value": "circle"
+        },
+        {
+          "label": "方形",
+          "value": "square"
+        }
+      ],
+      "defaultValue": "circle"
+    },
+    {
+      "name": "size",
+      "description": "设置头像的大小",
+      "label": "头像尺寸",
+      "control": "select",
+      "type": "string",
+      "options": [
+        {
+          "label": "超小",
+          "value": "extra-extra-small"
+        },
+        {
+          "label": "极小",
+          "value": "extra-small"
+        },
+        {
+          "label": "小",
+          "value": "small"
+        },
+        {
+          "label": "默认",
+          "value": "default"
+        },
+        {
+          "label": "中等",
+          "value": "medium"
+        },
+        {
+          "label": "大",
+          "value": "large"
+        },
+        {
+          "label": "超大",
+          "value": "extra-large"
+        }
+      ],
+      "defaultValue": "medium"
+    },
+    {
+      "name": "color",
+      "description": "指定头像的颜色",
+      "label": "头像背景色",
+      "control": "select",
+      "type": "string",
+      "options": [
+        {
+          "label": "琥珀色",
+          "value": "amber"
+        },
+        {
+          "label": "蓝色",
+          "value": "blue"
+        },
+        {
+          "label": "青色",
+          "value": "cyan"
+        },
+        {
+          "label": "绿色",
+          "value": "green"
+        },
+        {
+          "label": "灰色",
+          "value": "grey"
+        },
+        {
+          "label": "靛蓝色",
+          "value": "indigo"
+        },
+        {
+          "label": "浅蓝色",
+          "value": "light-blue"
+        },
+        {
+          "label": "浅绿色",
+          "value": "light-green"
+        },
+        {
+          "label": "青柠色",
+          "value": "lime"
+        },
+        {
+          "label": "橙色",
+          "value": "orange"
+        },
+        {
+          "label": "粉色",
+          "value": "pink"
+        },
+        {
+          "label": "紫色",
+          "value": "purple"
+        },
+        {
+          "label": "红色",
+          "value": "red"
+        },
+        {
+          "label": "青色",
+          "value": "teal"
+        },
+        {
+          "label": "紫罗兰色",
+          "value": "violet"
+        },
+        {
+          "label": "黄色",
+          "value": "yellow"
+        }
+      ],
+      "defaultValue": "grey"
+    },
+    {
+      "name": "border",
+      "description": "头像额外边框配置，支持颜色与动画",
+      "label": "额外边框",
+      "type": "boolean"
+    },
+    {
+      "name": "contentMotion",
+      "description": "头像内容区域动效",
+      "label": "内容动效",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    }
+  ],
+  "events": [
+    {
+      "name": "onClick",
+      "description": "单击头像的回调",
+      "label": "点击事件"
+    },
+    {
+      "name": "onError",
+      "description": "图片加载失败的事件",
+      "label": "图片加载失败"
+    },
+    {
+      "name": "onMouseEnter",
+      "description": "鼠标进入事件",
+      "label": "鼠标进入"
+    },
+    {
+      "name": "onMouseLeave",
+      "description": "鼠标离开事件",
+      "label": "鼠标离开"
+    }
+  ]
+}

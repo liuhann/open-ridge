@@ -1,0 +1,62 @@
+{
+  "name": "Calendar",
+  "title": "日历",
+  "icon": "svgs/calendar.svg",
+  "description": "日历面板，支持日期展示、月份/年份切换、日期选择",
+  "tags": [
+    "日历",
+    "日期选择",
+    "日期面板",
+    "展示组件"
+  ],
+  "category": "展示组件",
+  "version": "1.0.0",
+  "author": "ridge-antd",
+  "visualConfig": {
+    "preferredWidth": 600,
+    "preferredHeight": 500,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "value",
+      "label": "当前选中日期",
+      "description": "受控的选中日期",
+      "type": "string",
+      "defaultValue": ""
+    },
+    {
+      "name": "mode",
+      "label": "显示模式",
+      "control": "select",
+      "type": "string",
+      "options": [
+        {
+          "label": "月视图",
+          "value": "month"
+        },
+        {
+          "label": "年视图",
+          "value": "year"
+        }
+      ],
+      "defaultValue": "month"
+    },
+    {
+      "name": "showWeek",
+      "label": "显示周数",
+      "description": "是否显示左侧周数列",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    }
+  ],
+  "events": [
+    {
+      "name": "onChange",
+      "label": "日期变化",
+      "description": "选中日期时触发，返回选中的日期"
+    }
+  ]
+}

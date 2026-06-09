@@ -1,0 +1,193 @@
+{
+  "name": "Select",
+  "title": "下拉选择器",
+  "icon": "svgs/select.svg",
+  "description": "用于从选项列表中单选/多选的下拉选择组件，支持搜索、清除、远程搜索等常用功能",
+  "tags": [
+    "表单",
+    "选择器",
+    "下拉框"
+  ],
+  "category": "表单",
+  "version": "1.0.0",
+  "author": "RidgeUI",
+  "visualConfig": {
+    "preferredWidth": 88,
+    "preferredHeight": 34,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "value",
+      "description": "当前选中的值，配合onChange实现双向绑定",
+      "label": "选中值",
+      "inputEvent": "onChange",
+      "type": "string",
+      "defaultValue": ""
+    },
+    {
+      "name": "optionList",
+      "description": "下拉选项列表，每项包含label和value",
+      "label": "选项列表",
+      "control": "json",
+      "type": "array",
+      "defaultValue": [
+        {
+          "value": "douyin",
+          "label": "抖音",
+          "otherKey": 0
+        },
+        {
+          "value": "ulikecam",
+          "label": "轻颜相机",
+          "disabled": true,
+          "otherKey": 1
+        },
+        {
+          "value": "jianying",
+          "label": "剪映",
+          "otherKey": 2
+        },
+        {
+          "value": "toutiao",
+          "label": "今日头条",
+          "otherKey": 3
+        }
+      ]
+    },
+    {
+      "name": "placeholder",
+      "description": "选择框默认提示文字",
+      "label": "提示文字",
+      "type": "string",
+      "defaultValue": "请选择"
+    },
+    {
+      "name": "disabled",
+      "description": "是否禁用组件，禁用后无法交互",
+      "label": "禁用",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "multiple",
+      "description": "是否开启多选模式",
+      "label": "多选",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "filter",
+      "description": "是否开启搜索筛选功能",
+      "label": "可搜索",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "showClear",
+      "description": "是否显示清除选中值的按钮",
+      "label": "显示清除",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "showArrow",
+      "description": "是否显示下拉箭头图标",
+      "label": "显示箭头",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": true
+    },
+    {
+      "name": "size",
+      "description": "组件尺寸大小",
+      "label": "尺寸",
+      "control": "select",
+      "type": "string",
+      "options": [
+        {
+          "label": "默认",
+          "value": "default"
+        },
+        {
+          "label": "小",
+          "value": "small"
+        },
+        {
+          "label": "大",
+          "value": "large"
+        }
+      ],
+      "defaultValue": "default",
+      "hidden": true
+    },
+    {
+      "name": "borderless",
+      "description": "是否开启无边框模式",
+      "label": "无边框",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "position",
+      "description": "下拉菜单展开位置",
+      "label": "展开位置",
+      "control": "select",
+      "type": "string",
+      "options": [
+        {
+          "label": "左下",
+          "value": "bottomLeft"
+        },
+        {
+          "label": "右下",
+          "value": "bottomRight"
+        },
+        {
+          "label": "左上",
+          "value": "topLeft"
+        },
+        {
+          "label": "右上",
+          "value": "topRight"
+        }
+      ],
+      "defaultValue": "bottomLeft"
+    },
+    {
+      "name": "validateStatus",
+      "description": "校验状态样式",
+      "label": "校验状态",
+      "control": "select",
+      "type": "string",
+      "options": [
+        {
+          "label": "默认",
+          "value": "default"
+        },
+        {
+          "label": "警告",
+          "value": "warning"
+        },
+        {
+          "label": "错误",
+          "value": "error"
+        }
+      ],
+      "defaultValue": "default"
+    }
+  ],
+  "events": [
+    {
+      "name": "onChange",
+      "description": "选中值变化时触发",
+      "label": "值改变"
+    }
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "name": "DatePicker",
+  "title": "日期选择器",
+  "icon": "svgs/date-picker.svg",
+  "description": "用于选择日期、日期时间、月份，支持禁用、尺寸、格式与快捷操作",
+  "tags": [
+    "日期",
+    "时间",
+    "选择器",
+    "表单"
+  ],
+  "category": "基础组件",
+  "version": "1.0.0",
+  "author": "LiuHan",
+  "visualConfig": {
+    "preferredWidth": 108,
+    "preferredHeight": 36,
+    "resizable": false,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "type",
+      "description": "选择器类型",
+      "label": "选择器类型",
+      "control": "select",
+      "type": "string",
+      "options": [
+        { "label": "日期", "value": "date" },
+        { "label": "日期时间", "value": "dateTime" },
+        { "label": "月份", "value": "month" }
+      ],
+      "defaultValue": "date"
+    },
+    {
+      "name": "disabled",
+      "description": "是否禁用",
+      "label": "禁用",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "size",
+      "description": "输入框尺寸",
+      "label": "尺寸",
+      "control": "select",
+      "type": "string",
+      "options": [
+        { "label": "小", "value": "small" },
+        { "label": "默认", "value": "default" },
+        { "label": "大", "value": "large" }
+      ],
+      "defaultValue": "default"
+    },
+    {
+      "name": "placeholder",
+      "description": "输入框提示文字",
+      "label": "占位提示文字",
+      "type": "string",
+      "defaultValue": "选择日期"
+    },
+    {
+      "name": "showClear",
+      "description": "是否显示清除按钮",
+      "label": "显示清除按钮",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": true
+    },
+    {
+      "name": "validateStatus",
+      "description": "校验状态",
+      "label": "校验状态",
+      "control": "select",
+      "type": "string",
+      "options": [
+        { "label": "默认", "value": "default" },
+        { "label": "错误", "value": "error" },
+        { "label": "警告", "value": "warning" }
+      ],
+      "defaultValue": "default"
+    },
+    {
+      "name": "weekStartsOn",
+      "description": "周起始日（0=周日，1=周一）",
+      "label": "周起始日",
+      "type": "number",
+      "defaultValue": 1
+    }
+  ],
+  "events": [
+    {
+      "name": "onChange",
+      "description": "值变化时的回调",
+      "label": "值改变"
+    },
+    {
+      "name": "onOpenChange",
+      "description": "面板显示/隐藏切换回调",
+      "label": "面板展开收起"
+    },
+    {
+      "name": "onClear",
+      "description": "点击清除按钮触发",
+      "label": "清除内容"
+    }
+  ]
+}

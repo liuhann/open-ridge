@@ -1,0 +1,68 @@
+{
+  "name": "Avatar",
+  "title": "头像",
+  "icon": "svgs/avatar.svg",
+  "description": "头像组件，支持图片、图标、文字，可设置圆形/方形、大小样式",
+  "tags": [
+    "头像",
+    "用户信息",
+    "展示",
+    "媒体"
+  ],
+  "category": "展示组件",
+  "version": "1.0.0",
+  "author": "ridge-antd",
+  "visualConfig": {
+    "preferredWidth": 64,
+    "preferredHeight": 64,
+    "resizable": true,
+    "aspectRatio": "1:1"
+  },
+  "properties": [
+    {
+      "name": "src",
+      "label": "图片地址",
+      "description": "头像图片链接",
+      "type": "string",
+      "control": "image",
+      "defaultValue": ""
+    },
+    {
+      "name": "alt",
+      "label": "图片描述",
+      "description": "图片加载失败时显示的文字",
+      "type": "string",
+      "defaultValue": ""
+    },
+    {
+      "name": "shape",
+      "label": "头像形状",
+      "control": "select",
+      "type": "string",
+      "options": [
+        { "label": "圆形", "value": "circle" },
+        { "label": "方形", "value": "square" }
+      ],
+      "defaultValue": "circle"
+    },
+    {
+      "name": "size",
+      "label": "头像大小",
+      "control": "select",
+      "type": "string | number",
+      "options": [
+        { "label": "小", "value": "small" },
+        { "label": "中", "value": "medium" },
+        { "label": "大", "value": "large" }
+      ],
+      "defaultValue": "medium"
+    }
+  ],
+  "events": [
+    {
+      "name": "onError",
+      "label": "图片加载失败",
+      "description": "图片加载错误时触发"
+    }
+  ]
+}

@@ -1,0 +1,113 @@
+{
+  "name": "PinCode",
+  "title": "验证码输入",
+  "icon": "svgs/pincode.svg",
+  "description": "用于输入验证码，支持指定位数、大小与格式限制。",
+  "tags": [
+    "验证码",
+    "输入",
+    "安全"
+  ],
+  "category": "表单控件",
+  "version": "2.x",
+  "author": "LiuHan",
+  "visualConfig": {
+    "preferredWidth": 240,
+    "preferredHeight": 48,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "autoFocus",
+      "description": "是否自动聚焦到第一个输入框",
+      "label": "自动聚焦",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": true
+    },
+    {
+      "name": "className",
+      "description": "自定义 CSS 类名",
+      "label": "自定义类名",
+      "control": "className",
+      "type": "array"
+    },
+    {
+      "name": "count",
+      "description": "验证码位数",
+      "label": "位数",
+      "control": "number",
+      "type": "number",
+      "min": 4,
+      "max": 8,
+      "defaultValue": 6
+    },
+    {
+      "name": "defaultValue",
+      "description": "输入框默认值",
+      "label": "默认值",
+      "control": "string",
+      "type": "string"
+    },
+    {
+      "name": "disabled",
+      "description": "是否禁用",
+      "label": "禁用",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "format",
+      "description": "验证码字符格式限制（number / mixed / 正则）",
+      "label": "格式限制",
+      "control": "select",
+      "type": "string",
+      "options": [
+        { "label": "数字", "value": "number" },
+        { "label": "数字+字母", "value": "mixed" }
+      ],
+      "defaultValue": "number"
+    },
+    {
+      "name": "size",
+      "description": "输入框尺寸",
+      "label": "尺寸",
+      "control": "select",
+      "type": "string",
+      "options": [
+        { "label": "大", "value": "large" },
+        { "label": "默认", "value": "default" },
+        { "label": "小", "value": "small" }
+      ],
+      "defaultValue": "default"
+    },
+    {
+      "name": "style",
+      "description": "组件内联样式",
+      "label": "内联样式",
+      "type": "CSSProperties",
+      "hidden": true
+    },
+    {
+      "name": "value",
+      "description": "当前输入值",
+      "label": "当前值",
+      "control": "string",
+      "type": "string"
+    }
+  ],
+  "events": [
+    {
+      "name": "onChange",
+      "description": "输入内容发生变化时触发",
+      "label": "值改变"
+    },
+    {
+      "name": "onComplete",
+      "description": "所有验证码输入完成时触发",
+      "label": "输入完成"
+    }
+  ]
+}

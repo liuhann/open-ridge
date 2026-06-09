@@ -1,0 +1,70 @@
+{
+  "name": "Timeline",
+  "title": "时间轴",
+  "icon": "svgs/timeline.svg",
+  "description": "垂直展示时间顺序类信息，支持不同位置、类型、颜色展示。",
+  "tags": [
+    "展示",
+    "时间",
+    "流程"
+  ],
+  "category": "展示",
+  "version": "1.0.0",
+  "author": "",
+  "visualConfig": {
+    "preferredWidth": 250,
+    "preferredHeight": 131,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "mode",
+      "description": "时间轴与内容的相对位置",
+      "label": "展示模式",
+      "control": "select",
+      "type": "string",
+      "options": [
+        {
+          "label": "左侧",
+          "value": "left"
+        },
+        {
+          "label": "右侧",
+          "value": "right"
+        },
+        {
+          "label": "居中",
+          "value": "center"
+        },
+        {
+          "label": "交替",
+          "value": "alternate"
+        }
+      ],
+      "defaultValue": "center"
+    },
+    {
+      "name": "dataSource",
+      "description": "时间轴数据源，包含时间、内容、类型、颜色、图标等",
+      "label": "数据源",
+      "control": "json",
+      "type": "array",
+      "defaultValue": [
+        {
+          "time": "2019-07-14 10:35",
+          "extra": "节点辅助说明信息",
+          "content": "第一个节点内容",
+          "type": "ongoing"
+        },
+        {
+          "time": "2019-06-13 16:17",
+          "extra": "节点辅助说明信息",
+          "content": "第二个节点内容",
+          "color": "pink"
+        }
+      ]
+    }
+  ],
+  "events": []
+}

@@ -1,0 +1,65 @@
+{
+  "name": "Tree",
+  "title": "树形组件",
+  "icon": "svgs/tree.svg",
+  "description": "展示层级树形数据，支持节点选中、展开、搜索等常用功能",
+  "tags": ["树形", "层级", "选择", "导航"],
+  "category": "数据",
+  "version": "1.0.0",
+  "author": "LiuHan",
+  "visualConfig": {
+    "preferredWidth": 220,
+    "preferredHeight": 180,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "defaultExpandAll",
+      "description": "初始化是否展开全部节点",
+      "label": "默认展开全部",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "value",
+      "description": "受控选中节点值",
+      "label": "选中值",
+      "type": "string",
+      "inputEvent": "onChange"
+    },
+    {
+      "name": "leafOnly",
+      "description": "仅可选择叶子节点",
+      "label": "仅选叶子节点",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "treeData",
+      "description": "树形结构数据源",
+      "label": "树形数据",
+      "control": "json",
+      "type": "array",
+      "defaultValue": [{"label":"中国","value":"China","key":"0-0","children":[{"label":"北京","value":"Beijing","key":"0-0-0"},{"label":"上海","value":"Shanghai","key":"0-0-1"}]}]
+    }
+  ],
+  "events": [
+    {
+      "name": "onChange",
+      "description": "选中节点值改变触发",
+      "label": "选中变更"
+    },
+    {
+      "name": "onSelect",
+      "description": "点击选中单个节点触发",
+      "label": "节点选中"
+    },
+    {
+      "name": "onDoubleClick",
+      "description": "双击节点触发",
+      "label": "双击节点"
+    }
+  ]
+}

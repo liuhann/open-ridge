@@ -1,0 +1,111 @@
+{
+  "name": "Checkbox",
+  "title": "切换选框",
+  "icon": "svgs/checkbox.svg",
+  "description": "复选框组件，支持单独使用、组合使用、卡片样式、不确定状态等交互场景",
+  "tags": [
+    "复选框",
+    "选择",
+    "表单",
+    "基础组件"
+  ],
+  "category": "基础组件",
+  "version": "1.0.0",
+  "author": "LiuHan",
+  "visualConfig": {
+    "preferredWidth": 86,
+    "preferredHeight": 24,
+    "resizable": false,
+    "aspectRatio": "no"
+  },
+  "properties": [
+     {
+      "name": "children",
+      "description": "指定文本内容",
+      "label": "内容",
+      "type": "string",
+      "defaultValue": "切换选框"
+    },
+    {
+      "name": "checked",
+      "description": "指定当前Checkbox是否选中",
+      "label": "是否选中",
+      "control": "boolean",
+      "inputEvent": "onChange",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "disabled",
+      "description": "失效状态",
+      "label": "禁用",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "indeterminate",
+      "description": "设置 indeterminate 状态，只负责样式控制",
+      "label": "不确定状态",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "type",
+      "description": "设置checkbox 的样式类型",
+      "label": "样式类型",
+      "control": "select",
+      "type": "string",
+      "options": [
+        {
+          "label": "默认",
+          "value": "default"
+        },
+        {
+          "label": "卡片",
+          "value": "card"
+        },
+        {
+          "label": "纯卡片",
+          "value": "pureCard"
+        }
+      ],
+      "defaultValue": "default"
+    },
+    {
+      "name": "extra",
+      "description": "副文本",
+      "label": "副文本内容",
+      "type": "string",
+      "defaultValue": ""
+    },
+    {
+      "name": "aria-label",
+      "description": "定义 Checkbox 的作用",
+      "label": "ARIA标签",
+      "type": "string",
+      "defaultValue": ""
+    },
+    {
+      "name": "className",
+      "description": "组件样式类名",
+      "label": "样式类名",
+      "type": "className"
+    },
+    {
+      "name": "style",
+      "description": "组件内联样式",
+      "label": "内联样式",
+      "type": "CSSProperties"
+    }
+  ],
+  "events": [
+    {
+      "name": "onChange",
+      "description": "变化时回调函数",
+      "payload": "target.checked",
+      "label": "状态变化"
+    }
+  ]
+}

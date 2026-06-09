@@ -13,8 +13,8 @@
   "version": "1.0.0",
   "author": "ridge-antd",
   "visualConfig": {
-    "preferredWidth": 160,
-    "preferredHeight": 36,
+    "preferredWidth": 92,
+    "preferredHeight": 33,
     "resizable": true,
     "aspectRatio": "no"
   },

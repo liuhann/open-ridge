@@ -1,0 +1,141 @@
+{
+  "name": "TimePicker",
+  "title": "时间选择器",
+  "icon": "svgs/time-picker.svg",
+  "description": "用于选择时间或时间范围的组件，支持时分秒、12/24小时制、步长、禁用等常用功能",
+  "tags": [
+    "表单",
+    "时间",
+    "选择器"
+  ],
+  "category": "表单",
+  "version": "1.0.0",
+  "author": "RidgeUI",
+  "visualConfig": {
+    "preferredWidth": 132,
+    "preferredHeight": 32,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "value",
+      "description": "当前选中时间，配合onChange实现双向绑定",
+      "label": "时间值",
+      "inputEvent": "onChange",
+      "type": "string",
+      "defaultValue": ""
+    },
+    {
+      "name": "placeholder",
+      "description": "输入框占位提示文字",
+      "label": "提示文字",
+      "type": "string",
+      "defaultValue": "请选择时间"
+    },
+    {
+      "name": "disabled",
+      "description": "是否禁用组件，无法交互",
+      "label": "禁用",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "showClear",
+      "description": "是否显示清除按钮",
+      "label": "显示清除",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": true
+    },
+    {
+      "name": "autoFocus",
+      "description": "是否自动获取焦点",
+      "label": "自动聚焦",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "borderless",
+      "description": "是否开启无边框模式",
+      "label": "无边框",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "use12Hours",
+      "description": "是否使用12小时制（AM/PM）",
+      "label": "12小时制",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "format",
+      "description": "时间显示格式",
+      "label": "时间格式",
+      "type": "string",
+      "defaultValue": "HH:mm:ss"
+    },
+    {
+      "name": "hourStep",
+      "description": "小时选项间隔",
+      "label": "小时步长",
+      "control": "number",
+      "type": "number",
+      "min": 1,
+      "defaultValue": 1
+    },
+    {
+      "name": "minuteStep",
+      "description": "分钟选项间隔",
+      "label": "分钟步长",
+      "control": "number",
+      "type": "number",
+      "min": 1,
+      "defaultValue": 1
+    },
+    {
+      "name": "secondStep",
+      "description": "秒选项间隔",
+      "label": "秒步长",
+      "control": "number",
+      "type": "number",
+      "min": 1,
+      "defaultValue": 1
+    },
+    {
+      "name": "size",
+      "description": "组件尺寸大小",
+      "label": "尺寸",
+      "control": "select",
+      "type": "string",
+      "options": [
+        {
+          "label": "小",
+          "value": "small"
+        },
+        {
+          "label": "默认",
+          "value": "default"
+        },
+        {
+          "label": "大",
+          "value": "large"
+        }
+      ],
+      "defaultValue": "default",
+      "hidden": true
+    }
+  ],
+  "events": [
+    {
+      "name": "onChange",
+      "description": "选中时间变化时触发",
+      "label": "时间改变"
+    }
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "name": "TreeSelect",
+  "title": "树形选择器",
+  "icon": "svgs/tree-select.svg",
+  "description": "层级树形结构选择组件，支持单选多选、搜索、清空",
+  "tags": ["表单", "树形选择", "下拉"],
+  "category": "表单",
+  "version": "1.0.0",
+  "author": "LiuHan",
+  "visualConfig": {
+    "preferredWidth": 120,
+    "preferredHeight": 32,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "value",
+      "description": "组件选中值，单选单值，多选数组",
+      "label": "选中值",
+      "inputEvent": "onChange",
+      "type": "string",
+      "defaultValue": ""
+    },
+    {
+      "name": "treeData",
+      "description": "树形数据源，嵌套层级结构",
+      "label": "树形数据源",
+      "control": "json",
+      "type": "array",
+      "defaultValue": [{"label":"中国","value":"China","key":"0-0","children":[{"label":"北京","value":"Beijing","key":"0-0-0"},{"label":"上海","value":"Shanghai","key":"0-0-1"}]}]
+    },
+    {
+      "name": "placeholder",
+      "description": "输入框空白提示文案",
+      "label": "占位提示",
+      "type": "string",
+      "defaultValue": "请选择分类"
+    },
+    {
+      "name": "disabled",
+      "description": "是否禁用组件",
+      "label": "禁用",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "multiple",
+      "description": "开启多选模式",
+      "label": "多选",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "filterTreeNode",
+      "description": "开启树形搜索筛选",
+      "label": "可搜索",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "showClear",
+      "description": "显示一键清空选中项按钮",
+      "label": "显示清空",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "defaultExpandAll",
+      "description": "默认展开全部树形节点",
+      "label": "默认全展开",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "size",
+      "description": "组件尺寸大小",
+      "label": "尺寸",
+      "control": "select",
+      "type": "string",
+      "options": [
+        {"label":"小","value":"small"},
+        {"label":"默认","value":"default"},
+        {"label":"大","value":"large"}
+      ],
+      "defaultValue": "default",
+      "hidden": true
+    },
+    {
+      "name": "className",
+      "description": "自定义CSS类名",
+      "label": "自定义类名",
+      "control": "className",
+      "type": "string"
+    },
+    {
+      "name": "style",
+      "description": "组件内联样式",
+      "label": "内联样式",
+      "type": "CSSProperties"
+    }
+  ],
+  "events": [
+    {
+      "name": "onChange",
+      "description": "选中节点变更触发",
+      "label": "值变更"
+    },
+    {
+      "name": "onSearch",
+      "description": "搜索关键词输入触发",
+      "label": "搜索事件"
+    },
+    {
+      "name": "onClear",
+      "description": "点击清空按钮触发",
+      "label": "清空事件"
+    },
+    {
+      "name": "onFocus",
+      "description": "获取焦点",
+      "label": "获取焦点"
+    },
+    {
+      "name": "onBlur",
+      "description": "失去焦点",
+      "label": "失去焦点"
+    }
+  ]
+}

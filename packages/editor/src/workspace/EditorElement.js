@@ -89,6 +89,10 @@ export default class EditorElement extends Element {
       this.el.classList.remove('ridge-is-hidden')
     }
     if (this.isContainer()) this.el.classList.add('ridge-container')
+
+    if (super.styleUpdated) {
+      super.styleUpdated()
+    }
   }
 
   isContainer () {
@@ -279,7 +283,9 @@ export default class EditorElement extends Element {
     // 3. 保存完整的 meta 结构（符合 RidgeUI 规范）
     this.config.meta = {
       sync: syncConfig, // 现在是对象格式，不是数组
-      url: urlProps
+      url: urlProps,
+      width: propsDef.some(p => p.name === 'width') != null,
+      height: propsDef.some(p => p.name === 'height') != null
     }
   }
 
@@ -309,6 +315,10 @@ export default class EditorElement extends Element {
 
     this.composite.nodes[cloned.getId()] = cloned
     return cloned
+  }
+
+  getHidden () {
+    return this.config?.editor?.hidden
   }
 
   getLocked () {

@@ -1,0 +1,71 @@
+{
+  "name": "ColorPicker",
+  "title": "颜色选择器",
+  "icon": "svgs/color-platte.svg",
+  "description": "用于选择颜色，支持透明度调节与弹层展示。",
+  "tags": [
+    "颜色",
+    "选择器",
+    "表单"
+  ],
+  "category": "表单控件",
+  "version": "1.0.0",
+  "author": "LiuHan",
+  "visualConfig": {
+    "preferredWidth": 26,
+    "preferredHeight": 26,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "alpha",
+      "description": "是否开启透明度选择",
+      "label": "开启透明度",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": true
+    },
+    {
+      "name": "width",
+      "description": "组件宽度（单位：px）",
+      "label": "宽度",
+      "control": "number",
+      "type": "number",
+      "defaultValue": 280,
+      "hidden": true
+    },
+    {
+      "name": "height",
+      "description": "组件高度（单位：px）",
+      "label": "高度",
+      "control": "number",
+      "type": "number",
+      "defaultValue": 280,
+      "hidden": true
+    },
+    {
+      "name": "eyeDropper",
+      "description": "是否启用吸色器功能",
+      "label": "启用吸色器",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": true
+    },
+    {
+      "name": "usePopover",
+      "description": "是否使用浮层（Popover）展示选择器",
+      "label": "使用浮层",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": true
+    }
+  ],
+  "events": [
+    {
+      "name": "onChange",
+      "description": "颜色发生变化时触发",
+      "label": "颜色改变"
+    }
+  ]
+}
