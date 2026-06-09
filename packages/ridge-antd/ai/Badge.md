@@ -5,7 +5,6 @@ Badge (徽标)
 count: number，默认0。徽标显示的数字。
 dot: boolean，默认false。是否开启小红点模式（不显示数字）。
 status: string，默认空。状态点类型：success、processing、default、error、warning。
-text: string，默认空。状态点右侧显示的文字。
 color: string，默认空。自定义徽标背景颜色。
 overflowCount: number，默认99。数字封顶值，超过显示 99+。
 showZero: boolean，默认false。数值为0时是否显示徽标。

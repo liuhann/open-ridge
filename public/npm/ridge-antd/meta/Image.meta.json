@@ -1,0 +1,82 @@
+{
+  "name": "Image",
+  "title": "图片",
+  "icon": "svgs/image.svg",
+  "description": "图片展示组件，支持预览、加载占位、加载失败兜底、宽高控制、错误回调",
+  "tags": [
+    "图片",
+    "展示",
+    "预览",
+    "媒体",
+    "加载占位"
+  ],
+  "category": "展示组件",
+  "version": "1.0.0",
+  "author": "ridge-antd",
+  "visualConfig": {
+    "preferredWidth": 400,
+    "preferredHeight": 300,
+    "resizable": true,
+    "aspectRatio": "auto"
+  },
+  "properties": [
+    {
+      "name": "src",
+      "label": "图片地址",
+      "description": "图片资源地址",
+      "type": "string",
+      "defaultValue": ""
+    },
+    {
+      "name": "alt",
+      "label": "图像描述",
+      "description": "图片的描述文本，用于无障碍和加载失败",
+      "type": "string",
+      "defaultValue": ""
+    },
+    {
+      "name": "width",
+      "label": "宽度",
+      "description": "设置图片宽度",
+      "type": "number",
+      "hidden": true
+    },
+    {
+      "name": "height",
+      "label": "高度",
+      "description": "设置图片高度",
+      "type": "number",
+      "hidden": true
+    },
+    {
+      "name": "preview",
+      "label": "开启预览",
+      "description": "点击图片是否支持放大预览",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": true
+    },
+    {
+      "name": "placeholder",
+      "label": "加载占位",
+      "description": "图片加载中显示占位效果",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "fallback",
+      "label": "失败兜底图",
+      "description": "图片加载失败时显示的兜底地址",
+      "type": "string",
+      "defaultValue": ""
+    }
+  ],
+  "events": [
+    {
+      "name": "onError",
+      "label": "加载失败",
+      "description": "图片加载错误时触发回调"
+    }
+  ]
+}

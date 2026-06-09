@@ -45,6 +45,10 @@
             .semi-table-tbody>.semi-table-row {
                 .btn-code {
                     visibility:hidden;
+                    
+                    font-size: 18px;
+                    svg {
+                    }
                 }
                 .btn-code.semi-button-primary {
                     visibility: visible;
@@ -89,6 +93,9 @@
       }
       .with-code-expr {
         display: flex;
+        .btn-code {
+            font-size: 17px;
+        }
         .semi-button-tertiary.btn-code {
             visibility: hidden;
             &.semi-button-primary {
@@ -100,6 +107,7 @@
         } 
         &:hover {
             .semi-button-tertiary.btn-code {
+                font-size: 18px;
                 visibility: initial;
             } 
         }

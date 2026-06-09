@@ -1,0 +1,85 @@
+{
+  "name": "Timeline",
+  "title": "时间轴",
+  "icon": "svgs/timeline.svg",
+  "description": "时间轴组件，用于展示时间顺序、步骤流程、事件记录，支持横向/纵向、交替布局、样式变体、反向排序",
+  "tags": [
+    "时间轴",
+    "步骤",
+    "流程",
+    "事件",
+    "时间线"
+  ],
+  "category": "展示组件",
+  "version": "1.0.0",
+  "author": "ridge-antd",
+  "visualConfig": {
+    "preferredWidth": 600,
+    "preferredHeight": 400,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "items",
+      "label": "时间轴项",
+      "description": "格式：[{ title: '时间/标题', content: '内容' }]",
+      "control": "json",
+      "type": "array",
+      "defaultValue": [
+        { "title": "05:10", "content": "Create a services" },
+        { "title": "09:03", "content": "Solve initial network problems" },
+        { "content": "Technical testing" },
+        { "title": "11:28", "content": "Network problems being solved" }
+      ]
+    },
+    {
+      "name": "mode",
+      "label": "内容位置",
+      "control": "select",
+      "type": "string",
+      "options": [
+        { "label": "左侧", "value": "start" },
+        { "label": "交替", "value": "alternate" },
+        { "label": "右侧", "value": "end" }
+      ],
+      "defaultValue": "start"
+    },
+    {
+      "name": "orientation",
+      "label": "布局方向",
+      "control": "select",
+      "type": "string",
+      "options": [
+        { "label": "垂直", "value": "vertical" },
+        { "label": "水平", "value": "horizontal" }
+      ],
+      "defaultValue": "vertical"
+    },
+    {
+      "name": "variant",
+      "label": "样式变体",
+      "control": "select",
+      "type": "string",
+      "options": [
+        { "label": "outlined 描边", "value": "outlined" },
+        { "label": "filled 填充", "value": "filled" }
+      ],
+      "defaultValue": "outlined"
+    },
+    {
+      "name": "reverse",
+      "label": "反向排序",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "titleSpan",
+      "label": "标题宽度",
+      "type": "number",
+      "defaultValue": 12
+    }
+  ],
+  "events": []
+}

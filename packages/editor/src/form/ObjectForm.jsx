@@ -151,11 +151,11 @@ class ObjectForm extends React.Component {
       field.label = field.description
     }
 
-    if (field.type === 'number' || field.type === 'color' || field.type === 'boolean') {
-      if (!field.width) {
-        field.width = '50%'
-      }
-    }
+    // if (field.type === 'number' || field.type === 'color' || field.type === 'boolean') {
+    //   if (!field.width) {
+    //     field.width = '50%'
+    //   }
+    // }
 
     const RenderField = this.getRenderField(field, readonly, options)
 

@@ -14,8 +14,8 @@
   "version": "1.0.0",
   "author": "ridge-antd",
   "visualConfig": {
-    "preferredWidth": 240,
-    "preferredHeight": 48,
+    "preferredWidth": 109,
+    "preferredHeight": 38,
     "resizable": true,
     "aspectRatio": "auto"
   },
@@ -27,9 +27,20 @@
       "control": "json",
       "type": "array",
       "defaultValue": [
-        "https://api.dicebear.com/7.x/miniavs/svg?seed=1",
-        { "text": "K", "color": "#f56a00" }
-      ]
+          "https://api.dicebear.com/7.x/miniavs/svg?seed=1",
+          {
+            "text": "K",
+            "color": "#f56a00"
+          },
+          {
+            "text": "LH",
+            "color": "#f56a00"
+          },
+          {
+            "text": "UZ",
+            "color": "#f56a00"
+          }
+        ]
     },
     {
       "name": "max",

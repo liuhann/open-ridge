@@ -136,7 +136,7 @@ export default class Element extends BaseNode {
   firstPaint (el) {
     if (el) this.el = el
     if (this.firstPainted) return
-
+    debug('first paint', this.uuid, this.config)
     this.firstPainted = true
     this.setStatus('loading')
     this.el.ridgeNode = this
@@ -163,10 +163,15 @@ export default class Element extends BaseNode {
 
     // 异步不阻塞
     this.load().then(() => {
+      debug('loaded, rendering', this.uuid, this.config, this.properties)
       if (!this.definition) return
+
       // 组件可加载后
       // this.parent?.updateChildStyle(this)
       // this.styleUpdated && this.styleUpdated()
+
+      // updateChildStyle 后修改了宽高，因为浏览器渲染机制 需要reflow后才可以
+      this.styleUpdated && this.styleUpdated()
 
       this.initializeEvents()
       this.initSubscription()
@@ -394,6 +399,7 @@ export default class Element extends BaseNode {
   updateStyle () {
     if (!this.el) return
 
+    debug('updateStyle', this.uuid)
     // 计算运行时样式
     this.style = this.computeRuntimeStyle()
 
@@ -462,6 +468,7 @@ export default class Element extends BaseNode {
   }
 
   styleUpdated () {
+    debug('styleUpdated', this.uuid, this.config, this.el?.clientWidth, this.el?.clientHeight)
     if (this.config.meta) {
       if (this.config.meta.width && this.el?.clientWidth) {
         // 组件定义要求接受当前宽高

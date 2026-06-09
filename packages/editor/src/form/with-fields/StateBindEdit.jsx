@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import editorStore from '../../store/editor.store'
+import { ICON_CONNECT } from '../../icons/icons.js'
 import { withField, Popover, Button, Space, Tree, Input, Typography, Tooltip, Tabs, TabPane } from '@douyinfe/semi-ui'
 
 const { Text } = Typography
@@ -100,7 +101,7 @@ const StateBindEdit = withField(({
             onClick={() => {
               setVisible(!visible)
             }}
-            icon={<i className='bi bi-lightning-charge' style={{ margin: '0 2px', flexShrink: 0 }} />}
+            icon={ICON_CONNECT}
           />
         </Tooltip>
       </div>

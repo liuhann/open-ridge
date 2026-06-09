@@ -13,7 +13,7 @@
   "version": "1.0.0",
   "author": "ridge-antd",
   "visualConfig": {
-    "preferredWidth": 200,
+    "preferredWidth": 170,
     "preferredHeight": 32,
     "resizable": true,
     "aspectRatio": "no"
@@ -24,7 +24,7 @@
       "label": "评分值",
       "description": "当前选中的评分",
       "type": "number",
-      "defaultValue": 0
+      "defaultValue": 3.5
     },
     {
       "name": "count",
@@ -39,7 +39,7 @@
       "description": "是否可以选择 0.5 颗星",
       "control": "boolean",
       "type": "boolean",
-      "defaultValue": false
+      "defaultValue": true
     },
     {
       "name": "allowClear",

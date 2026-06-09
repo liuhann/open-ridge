@@ -13,8 +13,8 @@
   "version": "1.0.0",
   "author": "ridge-antd",
   "visualConfig": {
-    "preferredWidth": 600,
-    "preferredHeight": 500,
+    "preferredWidth": 360,
+    "preferredHeight": 360,
     "resizable": true,
     "aspectRatio": "no"
   },
@@ -42,6 +42,13 @@
         }
       ],
       "defaultValue": "month"
+    },
+     {
+      "name": "fullscreen",
+      "label": "大尺寸",
+      "description": "是否大尺寸显示",
+      "type": "boolean",
+      "defaultValue": false
     },
     {
       "name": "showWeek",

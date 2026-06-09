@@ -322,6 +322,8 @@ class Composite extends BaseNode {
         //   childNode.el.style.height = 0
         // }
       }
+
+      debug('updateChildStyle', childNode.el.style)
     }
   }
 

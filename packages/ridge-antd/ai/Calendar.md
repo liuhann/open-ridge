@@ -4,6 +4,7 @@ Calendar (日历)
 属性 (Props) 配置：
 value: string，默认空。当前选中的日期（受控值）。
 mode: string，默认month。显示模式：month(月视图)、year(年视图)。
+fullscreen: boolean, 默认false  是否大尺寸模式
 showWeek: boolean，默认false。是否显示左侧周数。
 事件：
 onChange: 选中日期、日期值发生变化时触发。

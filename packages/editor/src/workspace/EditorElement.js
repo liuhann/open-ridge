@@ -207,9 +207,7 @@ export default class EditorElement extends Element {
       try {
         const componentMeta = await componentRegistry.getComponentMeta(`${this.config.path}`)
         if (componentMeta) {
-          this.componentMeta = componentMeta
-          // 元数据加载成功后，初始化属性元信息
-          this.initPropertyMetadata()
+          this.setComponentMeta(componentMeta)
         }
       } catch (e) {}
     }

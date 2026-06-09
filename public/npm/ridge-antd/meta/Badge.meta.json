@@ -15,8 +15,8 @@
   "version": "1.0.0",
   "author": "ridge-antd",
   "visualConfig": {
-    "preferredWidth": 60,
-    "preferredHeight": 40,
+    "preferredWidth": 40,
+    "preferredHeight": 28,
     "resizable": true,
     "aspectRatio": "no"
   },
@@ -26,7 +26,7 @@
       "label": "显示数字",
       "description": "展示的数字，大于 overflowCount 时显示为 +",
       "type": "number",
-      "defaultValue": 0
+      "defaultValue": 350
     },
     {
       "name": "dot",
@@ -49,13 +49,6 @@
         { "label": "错误", "value": "error" },
         { "label": "警告", "value": "warning" }
       ],
-      "defaultValue": ""
-    },
-    {
-      "name": "text",
-      "label": "状态文字",
-      "description": "status 状态点旁边的文字",
-      "type": "string",
       "defaultValue": ""
     },
     {
