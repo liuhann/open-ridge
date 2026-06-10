@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@douyinfe/semi-ui": "^2.99.2",
-    "antd": "^6.4.3",
+    "antd": "^6.3.7",
     "dayjs": "^1.11.21"
   },
   "devDependencies": {

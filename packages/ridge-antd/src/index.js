@@ -7,7 +7,7 @@ import {
   Cascader,
   Checkbox,
   ColorPicker,
-  DatePicker,
+  // DatePicker,
   Input,
   InputNumber,
   Radio,
@@ -48,6 +48,7 @@ import Dropdown from './Dropdown.jsx'
 import AvatarGroup from './AvatarGroup.jsx'
 import Carousel from './Carousel.jsx'
 import Upload from './RidgeUpload.jsx'
+import DatePicker from './RidgeDatePicker.jsx'
 
 export {
   Select,

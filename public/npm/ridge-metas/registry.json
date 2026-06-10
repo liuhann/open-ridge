@@ -45,6 +45,7 @@
     "splash": "ridge-antd/splash.png",
     "category": "interaction",
     "type": "ui",
+    "ai": "ridge-antd/AI.md",
     "description": "阿里的开源企业级UI设计语言和组件库"
   },
   {

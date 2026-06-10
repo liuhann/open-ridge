@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react'
-import { Tabs, Input, Checkbox, Typography, Tag, Icon } from '@douyinfe/semi-ui'
+import { Tabs, Input, Checkbox, Typography, Tag, Spin } from '@douyinfe/semi-ui'
 import ComponentItemCard from '../ComponentItem/ComponentItemCard.jsx'
 import SelectedComponentPopOver from './SelectedComponentPopOver.jsx'
 import { ICON_COMMON_SEARCH } from '../../icons/icons.js'
@@ -28,7 +28,8 @@ const ComponentMultiSelectPanel = ({
 
   useEffect(() => {
     if (componentLibList.length > 0 && !activeLib) {
-      setActiveLib(componentLibList[0].module)
+      // setActiveLib(componentLibList[0].module)
+      onLibChange(componentLibList[0].module)
     }
   }, [componentLibList])
 
@@ -116,10 +117,11 @@ const ComponentMultiSelectPanel = ({
               />
             </div>
           ))}
-
-          {libComponents.length === 0 && (
-            <div className={styles.emptyTip}>暂无匹配组件</div>
-          )}
+          {loading
+            ? <Spin />
+            : (libComponents.length === 0 && (
+              <div className={styles.emptyTip}>暂无匹配组件</div>
+              ))}
         </div>
       </div>
 

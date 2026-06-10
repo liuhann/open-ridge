@@ -1,7 +1,7 @@
 {
   "name": "ridge-antd",
   "schemaVersion": "2.0",
-  "lastUpdated": "2026-06-09T10:47:32.733Z",
+  "lastUpdated": "2026-06-10T02:46:07.607Z",
   "generatedBy": "ridge-ui-cli",
   "components": [
     {
@@ -729,39 +729,6 @@
           "control": "boolean",
           "type": "boolean",
           "defaultValue": false
-        },
-        {
-          "name": "className",
-          "description": "自定义 CSS 类名",
-          "label": "自定义类名",
-          "control": "className",
-          "type": "array"
-        },
-        {
-          "name": "classNames",
-          "description": "自定义组件内部各语义化结构的 class",
-          "label": "内部样式类名",
-          "control": "json",
-          "type": "object",
-          "sample": {
-            "button": "custom-button",
-            "icon": "custom-icon"
-          }
-        },
-        {
-          "name": "styles",
-          "description": "自定义组件内部各部分行内样式",
-          "label": "内部样式",
-          "control": "json",
-          "type": "object",
-          "sample": {
-            "button": {
-              "color": "red"
-            },
-            "icon": {
-              "fontSize": "16px"
-            }
-          }
         },
         {
           "name": "danger",
@@ -5215,8 +5182,8 @@
       "version": "1.0.0",
       "author": "ridge-antd",
       "visualConfig": {
-        "preferredWidth": 300,
-        "preferredHeight": 120,
+        "preferredWidth": 85,
+        "preferredHeight": 34,
         "resizable": true,
         "aspectRatio": "no"
       },

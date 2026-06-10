@@ -73,9 +73,66 @@ async function mergeMetaJsonWithGlob () {
 
     console.log('🎉 所有组件 meta.json 生成完毕！')
 
+    // ✅ 新增：合并 ai 目录下的 md、txt 文件 → 根目录 AI.md
+    mergeAiFilesToRoot()
+
     // ✅ 开始复制
     copyNpmPackageToTarget(currentFolderName)
   })
+}
+
+/**
+ * 【新增功能】
+ * 合并当前目录下 ai/** 所有 .md / .txt 文件
+ * 内容用 2 个空行分隔，输出到 根目录 AI.md
+ */
+function mergeAiFilesToRoot () {
+  try {
+    console.log('\n📝 开始合并 ai/ 目录下的文档文件...')
+
+    // 扫描规则：当前目录下 ai 文件夹里所有子目录的 md、txt 文件
+    const aiPattern = path.join(process.cwd(), 'ai', '**', '*.{md,txt}')
+    const files = glob.sync(aiPattern)
+
+    if (files.length === 0) {
+      console.log('ℹ️ 未找到 ai/ 目录下的 md/txt 文件，跳过合并')
+      return
+    }
+
+    console.log(`✅ 找到 ${files.length} 个文件需要合并`)
+
+    // 按文件路径排序，保证合并顺序稳定
+    const sortedFiles = files.sort()
+    let mergedContent = ''
+
+    sortedFiles.forEach((file, index) => {
+      try {
+        // 读取文件内容，自动去除首尾多余空行
+        const content = fs.readFileSync(file, 'utf8').trim()
+        if (!content) return
+
+        // 不是第一个文件，前面加 2 个空行分隔
+        if (index > 0) {
+          mergedContent += '\n\n\n'
+        }
+
+        // 可选：给每个文件加一个标题（方便区分来源）
+        // const relativePath = path.relative(process.cwd(), file)
+        // mergedContent += `# 来源文件：${relativePath}\n\n`
+        mergedContent += content
+      } catch (err) {
+        console.warn(`⚠️ 跳过文件 ${path.basename(file)}：读取失败`, err.message)
+      }
+    })
+
+    // 输出到根目录 AI.md
+    const outputPath = path.join(process.cwd(), 'AI.md')
+    fs.writeFileSync(outputPath, mergedContent, 'utf8')
+
+    console.log(`✅ AI 文档合并完成！输出路径：${outputPath}`)
+  } catch (err) {
+    console.error('❌ AI 文件合并失败：', err.message)
+  }
 }
 
 /**
