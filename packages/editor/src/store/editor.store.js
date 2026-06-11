@@ -395,7 +395,7 @@ const editorStore = create((set, get) => ({
 
   backToEdit: async (id) => {
     set({
-      currentPanel: 'edit'
+      currentPanel: 'app'
     })
   },
 

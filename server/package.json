@@ -1,0 +1,12 @@
+{
+  "name": "ridge-server",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "server": "npm run start --workspace=ridge-cloud-server"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
+  "author": "LiuHan"
+}
