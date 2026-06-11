@@ -33,7 +33,7 @@ import {
   Spin,
   Statistic,
   Switch,
-  Table,
+  // Table,
   Tag,
   TimePicker,
   Timeline,
@@ -49,6 +49,7 @@ import AvatarGroup from './AvatarGroup.jsx'
 import Carousel from './Carousel.jsx'
 import Upload from './RidgeUpload.jsx'
 import DatePicker from './RidgeDatePicker.jsx'
+import Table from './RidgeTable.jsx'
 
 export {
   Select,

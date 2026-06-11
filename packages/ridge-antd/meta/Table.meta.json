@@ -2,7 +2,7 @@
   "name": "Table",
   "title": "表格",
   "icon": "svgs/table.svg",
-  "description": "基础数据表格，用于展示结构化数据，支持配置表头、数据源、边框、尺寸、分页、加载状态",
+  "description": "基础数据表格，用于展示结构化数据，支持配置表头、数据源、边框、尺寸、分页、加载状态、单选/多选行选择",
   "tags": [
     "表格",
     "数据展示",
@@ -78,7 +78,7 @@
       "name": "pagination",
       "label": "显示分页",
       "control": "boolean",
-      "type": "boolean | object",
+      "type": "boolean",
       "defaultValue": false
     },
     {
@@ -87,6 +87,26 @@
       "control": "boolean",
       "type": "boolean",
       "defaultValue": true
+    },
+    {
+      "name": "selectionType",
+      "label": "行选择类型",
+      "description": "关闭/单选/多选",
+      "control": "select",
+      "type": "string",
+      "options": [
+        { "label": "关闭选择", "value": "none" },
+        { "label": "单选", "value": "radio" },
+        { "label": "多选", "value": "checkbox" }
+      ],
+      "defaultValue": "none"
+    },
+    {
+      "name": "disabledRowField",
+      "label": "行禁用字段",
+      "description": "指定数据中用于禁用选择的字段名，示例：disabled",
+      "type": "string",
+      "defaultValue": ""
     },
     {
       "name": "width",
@@ -101,5 +121,11 @@
       "hidden": true
     }
   ],
-  "events": []
+  "events": [
+    {
+      "name": "onRowSelect",
+      "label": "行选中变更",
+      "description": "行选择改变时触发，参数：选中key数组、选中行数据数组"
+    }
+  ]
 }

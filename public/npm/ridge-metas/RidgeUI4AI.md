@@ -10,7 +10,7 @@ title：字符串，页面展示标题
 style：对象，页面全局样式，支持width、height、background等标准CSS属性
 jsFiles：字符串数组，用于引入当前页面依赖的外部JS脚本文件,可以为umd形式的js库，也可以是后面规范所指定的页面脚本形式
 elements：数组，页面所有UI组件集合，为核心配置项
-children：字符串数组，存放当前页面生效的所有组件唯一ID。
+children：字符串数组，存放当前页面生效的所有组件唯一ID。组件只有明确说明为容器类型并且children类型为子节点时，才能包含子组件
 2.2 elements组件字段说明
 elements数组内每个对象对应一个页面组件，
 全部属性释义：

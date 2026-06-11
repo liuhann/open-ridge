@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Layout, Nav, Button, Typography, Empty, Icon, Modal, Avatar, Descriptions } from '@douyinfe/semi-ui'
 import { ICON_COMMON_USER_PLUS, ICON_COMMON_HOME, ICON_MENU_STAR, ICON_COMMON_PLUS, FILE_FOLDER } from '../icons/icons.js'
-import AppListPanel from '../panels/apps/AppListPanel.jsx'
+import AppListPanel from './AppListPanel.jsx'
 import './home.less'
 
 const { Content, Sider } = Layout

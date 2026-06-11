@@ -15,6 +15,7 @@ const localRepoService = new LocalRepoService()
 const useStore = create((set, get) => ({
   // 初始化状态（修复空值语义）
   appList: [],
+  aiModalVisible: false,
   recentAppList: [],
   currentAppInfo: null,
   currentAppName: null,
@@ -135,7 +136,17 @@ const useStore = create((set, get) => ({
 
     const newAppId = await importAppFile(helloZipApp)
 
-    openApp(newAppId)
+    await openApp(newAppId)
+  },
+
+  createEmptyAppAndStartAiWizard: async () => {
+    const { createEmptyApp } = get()
+
+    await createEmptyApp()
+
+    set({
+      aiModalVisible: true
+    })
   },
 
   setCurrentAppName: (name) => {
@@ -407,8 +418,13 @@ const useStore = create((set, get) => ({
     const appService = localRepoService.getAppService(appid)
 
     await appService.exportAppArchive()
-  }
+  },
 
+  seyAiModalVisible: visible => {
+    set({
+      aiModalVisible: visible
+    })
+  }
 }))
 
 export { localRepoService }

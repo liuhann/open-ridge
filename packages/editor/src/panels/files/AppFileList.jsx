@@ -29,7 +29,9 @@ const AppFileList = () => {
   const [treeData, setTreeData] = useState([])
 
   const [appModalEditVisible, setAppModalEditVisible] = useState(false)
-  const [modalVisible, setModalVisible] = useState(false)
+
+  const modalVisible = appStore((state) => state.aiModalVisible)
+  const setModalVisible = appStore((state) => state.seyAiModalVisible)
 
   const currentAppName = appStore((state) => state.currentAppName)
   const currentAppIcon = appStore((state) => state.currentAppIcon)
@@ -272,7 +274,7 @@ const AppFileList = () => {
               {data.key === '-1' && <div className='more-button'>{ICON_COMMON_PLUS}</div>}
               {data.key !== '-1' && <div className='more-button hover-show'>{ICON_COMMON_DOT_VERT}</div>}
             </Dropdown>
-            </>}
+          </>}
         {/* <Text
           onClick={() => {
             const now = new Date().getTime()

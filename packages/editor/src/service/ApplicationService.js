@@ -42,19 +42,22 @@ export default class ApplicationService {
   async cacheLocalFileContents (files) {
     for (const file of files) {
       if (!file.mimeType) continue
+      await this.loadFileTContent(file)
+    }
+  }
 
-      if (file.mimeType.includes('image')) {
-        file.url = await this.store.getItem(file.id)
-      }
+  async loadFileTContent (file) {
+    if (file.mimeType.includes('image')) {
+      file.url = await this.store.getItem(file.id)
+    }
 
-      if (file.mimeType.includes('text')) {
-        const dataUrl = await this.store.getItem(file.id)
-        file.textContent = await dataURLToString(dataUrl)
-        if (file.mimeType === 'text/json') {
-          try {
-            file.json = JSON.parse(file.textContent)
-          } catch (e) {}
-        }
+    if (file.mimeType.includes('text')) {
+      const dataUrl = await this.store.getItem(file.id)
+      file.textContent = await dataURLToString(dataUrl)
+      if (file.mimeType === 'text/json') {
+        try {
+          file.json = JSON.parse(file.textContent)
+        } catch (e) {}
       }
     }
   }
@@ -365,12 +368,17 @@ export default class ApplicationService {
   async getAppPackageJSON () {
     if (this.appPackageJSONObject) return this.appPackageJSONObject
     const file = this.getFile('/package.json')
-    if (file?.json) {
-      this.appPackageJSONObject = file.json
-      if (!this.appPackageJSONObject.description) {
-        this.appPackageJSONObject.description = '未命名应用'
+    if (file) {
+      if (!file.json) {
+        await this.loadFileTContent(file)
       }
-      return file.json
+      if (file.json) {
+        this.appPackageJSONObject = file.json
+        if (!this.appPackageJSONObject.description) {
+          this.appPackageJSONObject.description = '未命名应用'
+        }
+        return file.json
+      }
     }
     return {}
   }

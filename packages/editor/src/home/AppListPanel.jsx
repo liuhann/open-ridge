@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react'
 import './app-list.less'
 import { Button, Modal, Typography, Empty, Space, Dropdown, Menu } from '@douyinfe/semi-ui'
 import CreateAppDialog from './CreateAppDialog.jsx'
-import appStore from '../../store/app.store.js'
-import selectZipFile from '../../utils/selectFileUpload.js'
+import appStore from '../store/app.store.js'
+import selectZipFile from '../utils/selectFileUpload.js'
 
-import { ICON_COMMON_PLUS_SQUARE, ICON_COMMON_DOT_VERT, ICON_COMMON_PLUS } from '../../icons/icons.js'
+import { ICON_COMMON_PLUS_SQUARE, ICON_COMMON_DOT_VERT, ICON_COMMON_PLUS } from '../icons/icons.js'
 
 const { Text, Title } = Typography
 
@@ -17,6 +17,7 @@ const AppListPanel = () => {
   const exportApp = appStore((state) => state.exportApp)
   const importAppFile = appStore((state) => state.importAppFile)
   const createEmptyApp = appStore((state) => state.createEmptyApp)
+  const createEmptyAppAndStartAiWizard = appStore((state) => state.createEmptyAppAndStartAiWizard)
 
   // 最近打开（取最近3个）
   const recentApps = appStore((state) => state.recentAppList)
@@ -51,6 +52,8 @@ const AppListPanel = () => {
             })
           } else if (name === 'empty') {
             createEmptyApp()
+          } else if (name === 'ai_wizard') {
+            createEmptyAppAndStartAiWizard()
           }
         }}
         onCancel={() => setCreateDialogVisible(false)}

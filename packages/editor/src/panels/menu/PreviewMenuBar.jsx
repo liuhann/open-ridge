@@ -6,6 +6,7 @@ import editorStore from '../../store/editor.store.js'
 const PreviewMenuBar = ({ onClose, onRefresh, onDeviceChange, onOpenNewWindow }) => {
   const closePreviewPage = editorStore(state => state.closePreviewPage)
   const refreshPreviewPage = editorStore(state => state.refreshPreviewPage)
+  const backToEdit = editorStore(state => state.backToEdit)
 
   // 设备切换菜单
   const deviceMenu = [
@@ -18,13 +19,14 @@ const PreviewMenuBar = ({ onClose, onRefresh, onDeviceChange, onOpenNewWindow })
     <div className='preview-menu-bar'>
       {/* 左侧按钮组 */}
       <Space spacing={4} align='center'>
-        {/* 关闭 */}
+
         <Button
           type='tertiary'
           theme='borderless'
-          icon={ICON_COMMON_CLOSE}
-          onClick={closePreviewPage}
-        />
+          onClick={backToEdit}
+        >
+          返回编辑
+        </Button>
 
         <Divider layout='vertical' />
 
@@ -59,14 +61,13 @@ const PreviewMenuBar = ({ onClose, onRefresh, onDeviceChange, onOpenNewWindow })
 
       {/* 右侧：新窗口预览 */}
       <Space>
-        {/* <Button
+        {/* 关闭 */}
+        <Button
           type='tertiary'
           theme='borderless'
-          icon={<i className='bi bi-box-arrow-up-right' />}
-          onClick={onOpenNewWindow}
-        >
-          新窗口预览
-        </Button> */}
+          icon={ICON_COMMON_CLOSE}
+          onClick={closePreviewPage}
+        />
       </Space>
     </div>
   )

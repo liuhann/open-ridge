@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { Modal, Input, Button, Typography, Space, PinCode } from '@douyinfe/semi-ui'
 // import { IconLaptop, IconPlus } from '@douyinfe/semi-icons'
-import { ICON_AI_PEN } from '../../icons/icons.js'
-import CardList from '../../components/CardList/CardList.jsx'
+import { ICON_AI_PEN } from '../icons/icons.js'
+import CardList from '../components/CardList/CardList.jsx'
 // import styles from './CreateAppDialog.module.less' // 如果你有样式文件
 
 const { Title, Text } = Typography

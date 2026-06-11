@@ -393,6 +393,12 @@ const editorStore = create((set, get) => ({
     })
   },
 
+  backToEdit: async (id) => {
+    set({
+      currentPanel: 'edit'
+    })
+  },
+
   previewPage: async (id) => {
     const appService = localRepoService.getCurrentAppService()
     const { workspaceControl, saveCurrentPage } = get()
