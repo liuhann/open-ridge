@@ -24,7 +24,7 @@
       "name": "src",
       "label": "图片地址",
       "description": "图片资源地址",
-      "type": "string",
+      "type": "image",
       "defaultValue": "data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="
     },
     {

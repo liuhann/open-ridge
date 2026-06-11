@@ -40,22 +40,6 @@ const AppListPanel = () => {
     <div className='app-list-panel'>
       {/* 顶部：开始创作（横贯式） */}
       <Button className='btn-add-full' onClick={() => setCreateDialogVisible(true)} icon={ICON_COMMON_PLUS_SQUARE} block colorful theme='solid' type='primary'>开始创作</Button>
-
-      {/* 顶部标题 + 操作 */}
-      {/* <TitleBar
-        title='应用管理' right={
-          <Button
-            theme='borderless' type='tertiary'
-            icon={ICON_COMMON_PLUS}
-            onClick={() => setCreateDialogVisible(true)}
-          >新增应用
-          </Button>
-        }
-      /> */}
-      {/* <Text type='tertiary' className='panel-desc'>
-        管理、创建、编辑你的所有应用
-      </Text> */}
-
       {/* 创建弹窗 */}
       <CreateAppDialog
         visible={createDialogVisible}

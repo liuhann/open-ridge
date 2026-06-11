@@ -117,10 +117,10 @@ export default class ValtioStoreObject {
     if (this.module.externals) {
       if (Array.isArray(this.module.externals)) { // 定义为数组
         for (const ext of this.module.externals) {
-          await this.composite.context.loadScript(ext)
+          await this.composite.loader.loadScript(ext)
         }
       } else if (typeof this.module.externals === 'string') { // 定义为string
-        await this.composite.context.loadScript(this.module.externals)
+        await this.composite.loader.loadScript(this.module.externals)
       } else { // 定义为对象 （TODO lts 后续移除)
         for (const ext of Object.keys(this.module.externals)) {
           await this.composite.context.loadScript(this.module.externals[ext])
@@ -305,7 +305,7 @@ export default class ValtioStoreObject {
           args.push(this.context)
         }
         // 1. 方法配置的参数
-        if (eventArgs !== '') {
+        if (eventArgs !== '' && eventArgs != null) {
           args.push(eventArgs)
         }
         // 2. 在列表嵌套情况下， scope信息，每层嵌套一个

@@ -320,8 +320,21 @@ export default class Element extends BaseNode {
       store.subscribe(expr, () => this.forceUpdateStyle())
     })
 
-    Object.values(this.config.propEx || {}).forEach(expr => {
+    Object.keys(this.config.propEx || {}).forEach(key => {
+      const expr = this.config.propEx[key]
       store.subscribe(expr, () => this.forceUpdateProperty())
+
+      if (key === 'value') {
+        // 注册事件：实现自动同步到状态
+        this.events.onChange = (payload) => {
+          let targetValue = payload
+          if (payload.target && payload.target.value != null) { // 处理Input原生
+            targetValue = payload.target.value
+          }
+          this.properties.value = targetValue
+          store.dispatchChange(expr, targetValue)
+        }
+      }
     })
   }
 

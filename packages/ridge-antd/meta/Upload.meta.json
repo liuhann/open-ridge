@@ -2,7 +2,7 @@
   "name": "Upload",
   "title": "文件上传",
   "icon": "svgs/upload.svg",
-  "description": "本地文件选择组件，支持多选、预览、删除，文件列表可绑定变量供脚本使用（无服务器上传）",
+  "description": "本地文件选择组件，支持按钮、拖拽、图片卡片三种形态，仅支持单选，文件可直接绑定到变量（无服务器上传）",
   "tags": [
     "文件选择",
     "上传",
@@ -20,45 +20,24 @@
   },
   "properties": [
     {
-      "name": "fileList",
-      "label": "文件列表",
-      "description": "已选择的文件列表（绑定到变量）",
-      "type": "array",
-      "inputEvent": "onChange",
-      "defaultValue": []
+      "name": "value",
+      "label": "当前文件",
+      "description": "已选择的单个文件（绑定到变量）",
+      "type": "object",
+      "defaultValue": null
     },
     {
-      "name": "multiple",
-      "label": "允许多文件",
-      "description": "是否可以一次选择多个文件",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": true
-    },
-    {
-      "name": "listType",
-      "label": "列表样式",
+      "name": "type",
+      "label": "上传形态",
+      "description": "上传组件的展示方式",
       "control": "select",
       "type": "string",
       "options": [
-        { "label": "文本", "value": "text" },
-        { "label": "图片", "value": "picture" },
-        { "label": "卡片", "value": "picture-card" }
+        { "label": "按钮", "value": "button" },
+        { "label": "拖拽", "value": "drag" },
+        { "label": "图片卡片", "value": "picture-card" }
       ],
-      "defaultValue": "text"
-    },
-    {
-      "name": "showUploadList",
-      "label": "显示文件列表",
-      "control": "boolean",
-      "type": "boolean",
-      "defaultValue": true
-    },
-    {
-      "name": "maxCount",
-      "label": "最大上传数量",
-      "description": "限制最多选择的文件数",
-      "type": "number"
+      "defaultValue": "button"
     },
     {
       "name": "accept",
@@ -79,13 +58,8 @@
   "events": [
     {
       "name": "onChange",
-      "label": "文件列表变化",
-      "description": "选择、删除文件时触发，返回最新文件列表"
-    },
-    {
-      "name": "onRemove",
-      "label": "移除文件",
-      "description": "删除文件时触发"
+      "label": "文件变化",
+      "description": "选择或删除文件时触发"
     }
   ]
 }

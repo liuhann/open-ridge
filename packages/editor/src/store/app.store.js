@@ -116,8 +116,12 @@ const useStore = create((set, get) => ({
       await appService.importAppArchive(blob)
 
       const pkg = await appService.getAppPackageJSON()
-      await localRepoService.persistApp(newAppId, pkg.description)
 
+      let iconUrl = null
+      if (pkg.icon) {
+        iconUrl = await appService.getFileUrl(addStringPrefix('/', pkg.icon))
+      }
+      await localRepoService.persistApp(newAppId, pkg.description, iconUrl)
       const appList = await localRepoService.getLocalAppList()
       set({ appList })
       return newAppId
@@ -130,6 +134,7 @@ const useStore = create((set, get) => ({
     const { importAppFile, openApp } = get()
 
     const newAppId = await importAppFile(helloZipApp)
+
     openApp(newAppId)
   },
 
