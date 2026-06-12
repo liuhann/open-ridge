@@ -2,6 +2,7 @@ ColumnChart (Highcharts 柱状图)
 用途：用于数据可视化场景，支持多组数据对比展示，自带坐标轴、悬浮提示、交叉光标等交互，适用于报表、统计面板、数据大屏等页面。
 组件路径 (Path): ridge-highcharts/ColumnChart
 属性 (Props) 配置：
+title: string，默认值 ""。设置图表顶部展示的标题文本。
 yAxisTitle: string，默认值 ""。设置 Y 坐标轴标题文本，用于标注数据含义或单位。
 valueSuffix: string，默认值 ""。鼠标悬浮提示框内数值尾部追加的单位后缀。
 xCategories: array，默认值 []。X 轴分类名称数组，控制横轴展示内容，示例：["USA","China","Brazil","EU","Argentina","India"]。

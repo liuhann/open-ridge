@@ -61,8 +61,7 @@
       "label": "图表数据系列",
       "control": "json",
       "type": "array",
-      "defaultValue": [],
-      "sample": [
+      "defaultValue": [
         {
           "name": "Corn",
           "data": [387749, 280000, 129000, 64300, 54000, 34300]

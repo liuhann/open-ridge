@@ -1,0 +1,91 @@
+{
+  "name": "RaceBarChart",
+  "title": "竞赛动态排名条形图",
+  "icon": "svgs/race-bar-chart.svg",
+  "description": "动态竞赛排名条形图，根据指定日期渲染榜单数据，内置数值动画与自动排序，日期切换由外部组件控制，适用于赛事排名、数据竞速等场景。",
+  "tags": [
+    "图表",
+    "条形图",
+    "竞赛榜单",
+    "动态数据",
+    "Highcharts"
+  ],
+  "category": "图表",
+  "version": "1.0.0",
+  "author": "LiuHan",
+  "visualConfig": {
+    "preferredWidth": 1000,
+    "preferredHeight": 600,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "data",
+      "description": "竞赛数据源，格式为 {竞赛者名称:{日期:数值}}",
+      "label": "竞赛数据源",
+      "control": "json",
+      "type": "object",
+      "defaultValue": {},
+      "sample": {
+        "选手A": {
+          "2020": 1200,
+          "2021": 1500,
+          "2022": 1800
+        },
+        "选手B": {
+          "2020": 900,
+          "2021": 1300,
+          "2022": 1600
+        }
+      }
+    },
+    {
+      "name": "currentDate",
+      "description": "当前展示的日期，由外部组件/状态控制切换",
+      "label": "当前日期",
+      "type": "string",
+      "defaultValue": ""
+    },
+    {
+      "name": "maxShowCount",
+      "description": "榜单最大展示竞赛者数量",
+      "label": "最大展示条数",
+      "control": "number",
+      "type": "number",
+      "min": 1,
+      "defaultValue": 20
+    },
+    {
+      "name": "title",
+      "description": "图表顶部主标题文本",
+      "label": "图表标题",
+      "type": "string",
+      "defaultValue": ""
+    },
+    {
+      "name": "unit",
+      "description": "数据数值单位，悬浮提示自动拼接",
+      "label": "数值单位",
+      "type": "string",
+      "defaultValue": ""
+    },
+    {
+      "name": "height",
+      "description": "图表画布高度，页面可拖拽调整，配置面板隐藏",
+      "label": "图表高度",
+      "control": "number",
+      "type": "number",
+      "min": 200,
+      "defaultValue": 600,
+      "hidden": true
+    },
+    {
+      "name": "style",
+      "description": "组件根容器内联样式",
+      "label": "内联样式",
+      "type": "CSSProperties"
+    }
+  ],
+  "events": []
+}

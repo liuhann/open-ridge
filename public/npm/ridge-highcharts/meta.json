@@ -1,9 +1,142 @@
 {
   "name": "ridge-highcharts",
   "schemaVersion": "2.0",
-  "lastUpdated": "2026-06-12T03:05:13.673Z",
+  "lastUpdated": "2026-06-12T03:29:04.678Z",
   "generatedBy": "ridge-ui-cli",
   "components": [
+    {
+      "name": "BarChart",
+      "title": "Highcharts条形图",
+      "icon": "svgs/bar-chart.svg",
+      "description": "基于Highcharts实现的横向条形图，支持多组数据对比、副标题、数据标签、自定义图例、悬浮提示等能力，常用于分类数据横向对比展示。",
+      "tags": [
+        "图表",
+        "条形图",
+        "数据可视化",
+        "Highcharts"
+      ],
+      "category": "图表",
+      "version": "1.0.0",
+      "author": "LiuHan",
+      "visualConfig": {
+        "preferredWidth": 800,
+        "preferredHeight": 400,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "title",
+          "description": "设置图表顶部主标题文本",
+          "label": "图表主标题",
+          "type": "string",
+          "defaultValue": ""
+        },
+        {
+          "name": "subtitle",
+          "description": "设置图表副标题，可填写数据来源、备注等信息",
+          "label": "图表副标题",
+          "type": "string",
+          "defaultValue": ""
+        },
+        {
+          "name": "xCategories",
+          "description": "X轴分类名称数组，对应横向分类名称",
+          "label": "X轴分类",
+          "control": "json",
+          "type": "array",
+          "defaultValue": [
+            "Africa",
+            "America",
+            "Asia",
+            "Europe"
+          ]
+        },
+        {
+          "name": "yAxisTitle",
+          "description": "设置Y坐标轴标题，用于标注数据单位",
+          "label": "Y轴标题",
+          "type": "string",
+          "defaultValue": ""
+        },
+        {
+          "name": "valueSuffix",
+          "description": "鼠标悬浮提示框内数值尾部追加的单位后缀",
+          "label": "数值后缀",
+          "type": "string",
+          "defaultValue": ""
+        },
+        {
+          "name": "series",
+          "description": "图表数据系列，支持多组条形数据，包含系列名称与对应数值数组",
+          "label": "数据系列",
+          "control": "json",
+          "type": "array",
+          "defaultValue": [
+            {
+              "name": "Year 1990",
+              "data": [
+                632,
+                727,
+                3202,
+                721
+              ]
+            },
+            {
+              "name": "Year 2000",
+              "data": [
+                814,
+                841,
+                3714,
+                726
+              ]
+            },
+            {
+              "name": "Year 2021",
+              "data": [
+                1393,
+                1031,
+                4695,
+                4695
+              ]
+            }
+          ]
+        },
+        {
+          "name": "height",
+          "description": "图表画布高度，页面可拖拽调整，配置面板默认隐藏",
+          "label": "图表高度",
+          "control": "number",
+          "type": "number",
+          "min": 100,
+          "defaultValue": 400,
+          "hidden": true
+        },
+        {
+          "name": "legendEnabled",
+          "description": "是否展示右侧悬浮图例",
+          "label": "显示图例",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": true
+        },
+        {
+          "name": "dataLabelsEnabled",
+          "description": "是否在条形图上直接显示数值标签",
+          "label": "显示数据标签",
+          "control": "boolean",
+          "type": "boolean",
+          "defaultValue": true
+        },
+        {
+          "name": "style",
+          "description": "组件根容器内联样式",
+          "label": "内联样式",
+          "type": "CSSProperties"
+        }
+      ],
+      "events": []
+    },
     {
       "name": "ColumnChart",
       "title": "Highcharts柱状图",
@@ -101,6 +234,97 @@
           "min": 100,
           "defaultValue": 400,
           "hidden": true
+        }
+      ],
+      "events": []
+    },
+    {
+      "name": "RaceBarChart",
+      "title": "竞赛动态排名条形图",
+      "icon": "svgs/race-bar-chart.svg",
+      "description": "动态竞赛排名条形图，根据指定日期渲染榜单数据，内置数值动画与自动排序，日期切换由外部组件控制，适用于赛事排名、数据竞速等场景。",
+      "tags": [
+        "图表",
+        "条形图",
+        "竞赛榜单",
+        "动态数据",
+        "Highcharts"
+      ],
+      "category": "图表",
+      "version": "1.0.0",
+      "author": "LiuHan",
+      "visualConfig": {
+        "preferredWidth": 1000,
+        "preferredHeight": 600,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "data",
+          "description": "竞赛数据源，格式为 {竞赛者名称:{日期:数值}}",
+          "label": "竞赛数据源",
+          "control": "json",
+          "type": "object",
+          "defaultValue": {},
+          "sample": {
+            "选手A": {
+              "2020": 1200,
+              "2021": 1500,
+              "2022": 1800
+            },
+            "选手B": {
+              "2020": 900,
+              "2021": 1300,
+              "2022": 1600
+            }
+          }
+        },
+        {
+          "name": "currentDate",
+          "description": "当前展示的日期，由外部组件/状态控制切换",
+          "label": "当前日期",
+          "type": "string",
+          "defaultValue": ""
+        },
+        {
+          "name": "maxShowCount",
+          "description": "榜单最大展示竞赛者数量",
+          "label": "最大展示条数",
+          "control": "number",
+          "type": "number",
+          "min": 1,
+          "defaultValue": 20
+        },
+        {
+          "name": "title",
+          "description": "图表顶部主标题文本",
+          "label": "图表标题",
+          "type": "string",
+          "defaultValue": ""
+        },
+        {
+          "name": "unit",
+          "description": "数据数值单位，悬浮提示自动拼接",
+          "label": "数值单位",
+          "type": "string",
+          "defaultValue": ""
+        },
+        {
+          "name": "height",
+          "description": "图表画布高度，页面可拖拽调整，配置面板隐藏",
+          "label": "图表高度",
+          "control": "number",
+          "type": "number",
+          "min": 200,
+          "defaultValue": 600,
+          "hidden": true
+        },
+        {
+          "name": "style",
+          "description": "组件根容器内联样式",
+          "label": "内联样式",
+          "type": "CSSProperties"
         }
       ],
       "events": []
