@@ -8,8 +8,8 @@ export const CATEGORIES = {
     title: '交互组件',
     color: 'green'
   },
-  chart: {
-    title: '图表组件',
+  display: {
+    title: '展示组件',
     color: 'purple'
   }
 }

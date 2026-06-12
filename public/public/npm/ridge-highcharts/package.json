@@ -1,0 +1,15 @@
+{
+  "name": "ridge-highcharts",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --config webpack.config.js && node scripts/merge-meta-glob.js"
+  },
+  "dependencies": {
+    "highcharts": "^13.0.0",
+    "highcharts-react-official": "^3.2.3"
+  }
+}

@@ -63,6 +63,20 @@
     "ai": "ridge-metas/@douyinfe/semi-ui/SemiComponentAI.md"
   },
   {
+    "module": "ridge-highcharts",
+    "version": "13.0.0",
+    "root": "RidgeHighcharts",
+    "title": "Highcharts",
+    "icon": "icon.svg",
+    "dependencies": ["react", "react-dom"],
+    "meta": "ridge-highcharts/meta.json",
+    "dist": ["dist/ridge-highcharts.min.js"],
+    "category": "display",
+    "type": "ui",
+    "description": "Highchart图表",
+    "ai": "ridge-highcharts/AI.md"
+  },
+  {
     "module": "@mui/material",
     "root": "MUI",
     "title": "Material UI",
@@ -87,29 +101,5 @@
     "category": "container",
     "type": "container",
     "description": "容器组件"
-  },
-  {
-    "module": "@arco-design/web-react",
-    "version": "2.52.0",
-    "root": "ArcoDesign",
-    "title": "ArcoDesign",
-    "icon": "arco.png",
-    "dependencies": ["react", "react-dom"],
-    "dist": ["dist/arco.min.js", "dist/arco.min.css"],
-    "category": "interaction",
-    "type": "ui",
-    "description": "字节跳动Arco Design组件库"
-  },
-  {
-    "module": "element-react",
-    "version": "1.4.34",
-    "root": "Element",
-    "title": "ElementUI",
-    "icon": "element.svg",
-    "dependencies": ["react", "react-dom"],
-    "dist": ["dist/index.js", "dist/theme-default/index.css"],
-    "category": "interaction",
-    "type": "ui",
-    "description": "基于Vue Element的React实现"
   }
 ]

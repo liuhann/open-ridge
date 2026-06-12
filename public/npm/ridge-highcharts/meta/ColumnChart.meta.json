@@ -1,0 +1,87 @@
+{
+  "name": "ColumnChart",
+  "title": "Highcharts柱状图",
+  "icon": "svgs/column-chart.svg",
+  "description": "基于Highcharts实现的柱状图，支持多系列数据展示、坐标轴配置、数值后缀、交叉光标等能力。",
+  "tags": [
+    "图表",
+    "柱状图",
+    "数据可视化",
+    "Highcharts"
+  ],
+  "category": "图表",
+  "version": "1.0.0",
+  "author": "LiuHan",
+  "visualConfig": {
+    "preferredWidth": 800,
+    "preferredHeight": 400,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "title",
+      "description": "图表顶部标题文本",
+      "label": "图表标题",
+      "type": "string",
+      "defaultValue": ""
+    },
+    {
+      "name": "yAxisTitle",
+      "description": "Y坐标轴标题文本",
+      "label": "Y轴标题",
+      "type": "string",
+      "defaultValue": ""
+    },
+    {
+      "name": "valueSuffix",
+      "description": "悬浮提示框中数值的后缀单位",
+      "label": "数值后缀",
+      "type": "string",
+      "defaultValue": ""
+    },
+    {
+      "name": "xCategories",
+      "description": "X轴分类名称数组，对应横轴展示文本",
+      "label": "X轴分类",
+      "control": "json",
+      "type": "array",
+      "defaultValue": [
+        "USA",
+        "China",
+        "Brazil",
+        "EU",
+        "Argentina",
+        "India"
+      ]
+    },
+    {
+      "name": "series",
+      "description": "图表数据系列，支持多组柱状数据，包含系列名称和数据集合",
+      "label": "图表数据系列",
+      "control": "json",
+      "type": "array",
+      "defaultValue": [
+        {
+          "name": "Corn",
+          "data": [387749, 280000, 129000, 64300, 54000, 34300]
+        },
+        {
+          "name": "Wheat",
+          "data": [45321, 140000, 10000, 140500, 19500, 113500]
+        }
+      ]
+    },
+    {
+      "name": "height",
+      "description": "图表整体高度（单位：像素），画布拖拽可动态调整",
+      "label": "图表高度",
+      "control": "number",
+      "type": "number",
+      "min": 100,
+      "defaultValue": 400,
+      "hidden": true
+    }
+  ],
+  "events": []
+}
