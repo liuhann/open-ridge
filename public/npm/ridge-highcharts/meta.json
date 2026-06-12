@@ -1,7 +1,7 @@
 {
   "name": "ridge-highcharts",
   "schemaVersion": "2.0",
-  "lastUpdated": "2026-06-12T09:18:26.345Z",
+  "lastUpdated": "2026-06-12T10:04:30.942Z",
   "generatedBy": "ridge-ui-cli",
   "components": [
     {
@@ -409,6 +409,101 @@
           "label": "内圈尺寸",
           "type": "string",
           "defaultValue": "75%"
+        }
+      ],
+      "events": []
+    },
+    {
+      "name": "DonutChart3D",
+      "title": "3D环形图",
+      "icon": "svgs/3d-donut-chart.svg",
+      "description": "3D样式环形饼图，可配置3D倾角、内圈大小、图形深度与业务数据",
+      "tags": [
+        "图表",
+        "饼图",
+        "环形图",
+        "3D图表",
+        "数据可视化"
+      ],
+      "category": "数据可视化",
+      "version": "1.0.0",
+      "author": "LiuHan",
+      "visualConfig": {
+        "preferredWidth": 750,
+        "preferredHeight": 500,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "data",
+          "description": "图表数据源，二维数组格式，依次为名称、数值",
+          "label": "图表数据",
+          "type": "object",
+          "defaultValue": [
+            [
+              "Norway",
+              16
+            ],
+            [
+              "Germany",
+              12
+            ],
+            [
+              "USA",
+              8
+            ],
+            [
+              "Sweden",
+              8
+            ],
+            [
+              "Netherlands",
+              8
+            ],
+            [
+              "ROC",
+              6
+            ],
+            [
+              "Austria",
+              7
+            ],
+            [
+              "Canada",
+              4
+            ],
+            [
+              "Japan",
+              3
+            ]
+          ]
+        },
+        {
+          "name": "alpha",
+          "description": "3D图表上下倾斜角度",
+          "label": "3D倾角",
+          "control": "number",
+          "type": "number",
+          "defaultValue": 45
+        },
+        {
+          "name": "innerSize",
+          "description": "环形图内圈尺寸，单位像素",
+          "label": "内圈尺寸",
+          "control": "number",
+          "type": "number",
+          "min": 0,
+          "defaultValue": 100
+        },
+        {
+          "name": "depth",
+          "description": "3D环形图形纵深厚度，单位像素",
+          "label": "图形深度",
+          "control": "number",
+          "type": "number",
+          "min": 0,
+          "defaultValue": 45
         }
       ],
       "events": []
