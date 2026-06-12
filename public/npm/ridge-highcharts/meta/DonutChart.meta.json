@@ -1,0 +1,58 @@
+{
+  "name": "DonutChart",
+  "title": "Highcharts环形图",
+  "icon": "svgs/donut-chart.svg",
+  "description": "环形饼图，支持中心总计文本、数据标签引出线、区块圆角与选中交互",
+  "tags": [
+    "图表",
+    "环形图",
+    "饼图",
+    "数据可视化",
+    "引出线"
+  ],
+  "category": "数据可视化",
+  "version": "1.0.0",
+  "author": "LiuHan",
+  "visualConfig": {
+    "preferredWidth": 700,
+    "preferredHeight": 500,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "data",
+      "description": "图表核心数据源，包含分类名称与占比数值",
+      "label": "图表数据",
+      "type": "object",
+      "defaultValue": [
+        { "name": "EV", "y": 23.9 },
+        { "name": "Hybrids", "y": 12.6 },
+        { "name": "Diesel", "y": 37.0 },
+        { "name": "Petrol", "y": 26.4 }
+      ]
+    },
+    {
+      "name": "showLeaderLines",
+      "description": "是否开启数据标签引出线",
+      "label": "显示引出线",
+      "type": "boolean",
+      "defaultValue": true
+    },
+    {
+      "name": "totalText",
+      "description": "环形图中心展示的总计文本，支持HTML换行",
+      "label": "中心总计文本",
+      "type": "string",
+      "defaultValue": "Total<br/><strong>2 877 820</strong>"
+    },
+    {
+      "name": "innerSize",
+      "description": "环形内圈大小，支持百分比",
+      "label": "内圈尺寸",
+      "type": "string",
+      "defaultValue": "75%"
+    }
+  ],
+  "events": []
+}

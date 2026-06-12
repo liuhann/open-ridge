@@ -107,14 +107,22 @@ const RaceBarChart = ({
         title: { text: null }
       },
       tooltip: { valueSuffix: unit },
+
       plotOptions: {
         series: {
+          animation: false,
           groupPadding: 0,
           pointPadding: 0.1,
           borderWidth: 0,
           colorByPoint: true,
-          dataSorting: { enabled: true, matchByName: true },
-          dataLabels: { enabled: true }
+          dataSorting: {
+            enabled: true,
+            matchByName: true
+          },
+          type: 'bar',
+          dataLabels: {
+            enabled: true
+          }
         }
       },
       series: [{
@@ -123,9 +131,32 @@ const RaceBarChart = ({
       }],
       responsive: {
         rules: [{
-          condition: { maxWidth: 550 },
+          condition: {
+            maxWidth: 550
+          },
           chartOptions: {
-            xAxis: { visible: false }
+            xAxis: {
+              visible: false
+            },
+            subtitle: {
+              x: 0
+            },
+            plotOptions: {
+              series: {
+                dataLabels: [{
+                  enabled: true,
+                  y: 8
+                }, {
+                  enabled: true,
+                  format: '{point.name}',
+                  y: -8,
+                  style: {
+                    fontWeight: 'normal',
+                    opacity: 0.7
+                  }
+                }]
+              }
+            }
           }
         }]
       }

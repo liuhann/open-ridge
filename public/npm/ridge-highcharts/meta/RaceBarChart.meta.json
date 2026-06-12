@@ -26,8 +26,7 @@
       "label": "竞赛数据源",
       "control": "json",
       "type": "object",
-      "defaultValue": {},
-      "sample": {
+      "defaultValue": {
         "选手A": {
           "2020": 1200,
           "2021": 1500,
@@ -45,7 +44,7 @@
       "description": "当前展示的日期，由外部组件/状态控制切换",
       "label": "当前日期",
       "type": "string",
-      "defaultValue": ""
+      "defaultValue": "2020"
     },
     {
       "name": "maxShowCount",

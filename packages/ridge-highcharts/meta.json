@@ -1,7 +1,7 @@
 {
   "name": "ridge-highcharts",
   "schemaVersion": "2.0",
-  "lastUpdated": "2026-06-12T03:29:04.678Z",
+  "lastUpdated": "2026-06-12T09:18:26.345Z",
   "generatedBy": "ridge-ui-cli",
   "components": [
     {
@@ -239,6 +239,379 @@
       "events": []
     },
     {
+      "name": "CylinderChart",
+      "title": "3D圆柱柱状图",
+      "icon": "svgs/cylinder-chart.svg",
+      "description": "3D圆柱样式柱状图，支持自定义3D视角、坐标轴标题、分类与数值数据",
+      "tags": [
+        "图表",
+        "柱状图",
+        "3D图表",
+        "圆柱图",
+        "数据可视化"
+      ],
+      "category": "数据可视化",
+      "version": "1.0.0",
+      "author": "LiuHan",
+      "visualConfig": {
+        "preferredWidth": 800,
+        "preferredHeight": 500,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "data",
+          "description": "柱状图数值数据数组",
+          "label": "图表数据",
+          "type": "object",
+          "defaultValue": [
+            95321,
+            169339,
+            121105,
+            136046,
+            106800,
+            58041,
+            26766,
+            14291,
+            7065,
+            3283
+          ]
+        },
+        {
+          "name": "xCategories",
+          "description": "X轴分类文本数组，与数据一一对应",
+          "label": "X轴分类",
+          "type": "object",
+          "defaultValue": [
+            "0-9",
+            "10-19",
+            "20-29",
+            "30-39",
+            "40-49",
+            "50-59",
+            "60-69",
+            "70-79",
+            "80-89",
+            "90+"
+          ]
+        },
+        {
+          "name": "xAxisTitle",
+          "description": "横坐标(X轴)标题文本",
+          "label": "X轴标题",
+          "type": "string"
+        },
+        {
+          "name": "yAxisTitle",
+          "description": "纵坐标(Y轴)标题文本",
+          "label": "Y轴标题",
+          "type": "string"
+        },
+        {
+          "name": "alpha",
+          "description": "3D图表上下倾斜角度",
+          "label": "上下倾角(alpha)",
+          "control": "number",
+          "type": "number",
+          "defaultValue": 15
+        },
+        {
+          "name": "beta",
+          "description": "3D图表左右旋转角度",
+          "label": "左右转角(beta)",
+          "control": "number",
+          "type": "number",
+          "defaultValue": 15
+        },
+        {
+          "name": "depth",
+          "description": "3D图形整体纵深厚度",
+          "label": "纵深厚度",
+          "control": "number",
+          "type": "number",
+          "defaultValue": 50
+        },
+        {
+          "name": "viewDistance",
+          "description": "相机与图表透视距离，影响视觉效果",
+          "label": "透视距离",
+          "control": "number",
+          "type": "number",
+          "defaultValue": 25
+        }
+      ],
+      "events": []
+    },
+    {
+      "name": "DonutChart",
+      "title": "Highcharts环形图",
+      "icon": "svgs/donut-chart.svg",
+      "description": "环形饼图，支持中心总计文本、数据标签引出线、区块圆角与选中交互",
+      "tags": [
+        "图表",
+        "环形图",
+        "饼图",
+        "数据可视化",
+        "引出线"
+      ],
+      "category": "数据可视化",
+      "version": "1.0.0",
+      "author": "LiuHan",
+      "visualConfig": {
+        "preferredWidth": 700,
+        "preferredHeight": 500,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "data",
+          "description": "图表核心数据源，包含分类名称与占比数值",
+          "label": "图表数据",
+          "type": "object",
+          "defaultValue": [
+            {
+              "name": "EV",
+              "y": 23.9
+            },
+            {
+              "name": "Hybrids",
+              "y": 12.6
+            },
+            {
+              "name": "Diesel",
+              "y": 37
+            },
+            {
+              "name": "Petrol",
+              "y": 26.4
+            }
+          ]
+        },
+        {
+          "name": "showLeaderLines",
+          "description": "是否开启数据标签引出线",
+          "label": "显示引出线",
+          "type": "boolean",
+          "defaultValue": true
+        },
+        {
+          "name": "totalText",
+          "description": "环形图中心展示的总计文本，支持HTML换行",
+          "label": "中心总计文本",
+          "type": "string",
+          "defaultValue": "Total<br/><strong>2 877 820</strong>"
+        },
+        {
+          "name": "innerSize",
+          "description": "环形内圈大小，支持百分比",
+          "label": "内圈尺寸",
+          "type": "string",
+          "defaultValue": "75%"
+        }
+      ],
+      "events": []
+    },
+    {
+      "name": "LineChart",
+      "title": "Highcharts折线图表",
+      "icon": "svgs/line-chart.svg",
+      "description": "基于Highcharts实现的折线图表，支持多系列数据、响应式布局、自定义标题与坐标轴",
+      "tags": [
+        "图表",
+        "折线图",
+        "数据可视化",
+        "响应式"
+      ],
+      "category": "数据可视化",
+      "version": "1.0.0",
+      "author": "LiuHan",
+      "visualConfig": {
+        "preferredWidth": 800,
+        "preferredHeight": 500,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "yAxisTitle",
+          "description": "Y轴坐标轴标题文字",
+          "label": "Y轴标题",
+          "type": "string",
+          "defaultValue": "Number of Employees"
+        },
+        {
+          "name": "series",
+          "description": "图表数据系列，包含系列名称和对应折线数据，null代表空数据点",
+          "label": "图表数据系列",
+          "type": "object",
+          "defaultValue": [
+            {
+              "name": "Installation & Developers",
+              "data": [
+                43934,
+                48656,
+                65165,
+                81827,
+                112143,
+                142383,
+                171533,
+                165174,
+                155157,
+                161454,
+                154610,
+                168960,
+                171558
+              ]
+            },
+            {
+              "name": "Manufacturing",
+              "data": [
+                24916,
+                37941,
+                29742,
+                29851,
+                32490,
+                30282,
+                38121,
+                36885,
+                33726,
+                34243,
+                31050,
+                33099,
+                33473
+              ]
+            },
+            {
+              "name": "Sales & Distribution",
+              "data": [
+                11744,
+                30000,
+                16005,
+                19771,
+                20185,
+                24377,
+                32147,
+                30912,
+                29243,
+                29213,
+                25663,
+                28978,
+                30618
+              ]
+            },
+            {
+              "name": "Operations & Maintenance",
+              "data": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                null,
+                11164,
+                11218,
+                10077,
+                12530,
+                16585
+              ]
+            },
+            {
+              "name": "Other",
+              "data": [
+                21908,
+                5548,
+                8105,
+                11248,
+                8989,
+                11816,
+                18274,
+                17300,
+                13053,
+                11906,
+                10073,
+                11471,
+                11648
+              ]
+            }
+          ]
+        }
+      ],
+      "events": []
+    },
+    {
+      "name": "PieChart",
+      "title": "Highcharts饼图",
+      "icon": "svgs/pie-chart.svg",
+      "description": "基于Highcharts实现饼图，支持缩放、平移、数据标签、区块选中突出展示",
+      "tags": [
+        "图表",
+        "饼图",
+        "数据可视化",
+        "缩放",
+        "拖拽平移"
+      ],
+      "category": "数据可视化",
+      "version": "1.0.0",
+      "author": "LiuHan",
+      "visualConfig": {
+        "preferredWidth": 700,
+        "preferredHeight": 500,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "zoomEnabled",
+          "description": "是否开启图表缩放功能",
+          "label": "开启缩放",
+          "type": "boolean",
+          "defaultValue": true
+        },
+        {
+          "name": "seriesName",
+          "description": "数据系列名称，用于提示框展示",
+          "label": "系列名称",
+          "type": "string",
+          "defaultValue": "Percentage"
+        },
+        {
+          "name": "data",
+          "description": "饼图核心数据源，支持设置名称、数值、是否突出、是否选中",
+          "label": "图表数据",
+          "type": "object",
+          "defaultValue": [
+            {
+              "name": "Water",
+              "y": 55.02
+            },
+            {
+              "name": "Fat",
+              "sliced": true,
+              "selected": true,
+              "y": 26.71
+            },
+            {
+              "name": "Carbohydrates",
+              "y": 1.09
+            },
+            {
+              "name": "Protein",
+              "y": 15.5
+            },
+            {
+              "name": "Ash",
+              "y": 1.68
+            }
+          ]
+        }
+      ],
+      "events": []
+    },
+    {
       "name": "RaceBarChart",
       "title": "竞赛动态排名条形图",
       "icon": "svgs/race-bar-chart.svg",
@@ -266,8 +639,7 @@
           "label": "竞赛数据源",
           "control": "json",
           "type": "object",
-          "defaultValue": {},
-          "sample": {
+          "defaultValue": {
             "选手A": {
               "2020": 1200,
               "2021": 1500,
@@ -285,7 +657,7 @@
           "description": "当前展示的日期，由外部组件/状态控制切换",
           "label": "当前日期",
           "type": "string",
-          "defaultValue": ""
+          "defaultValue": "2020"
         },
         {
           "name": "maxShowCount",

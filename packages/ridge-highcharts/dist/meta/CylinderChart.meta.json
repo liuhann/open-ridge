@@ -1,0 +1,89 @@
+{
+  "name": "CylinderChart",
+  "title": "3D圆柱柱状图",
+  "icon": "svgs/cylinder-chart.svg",
+  "description": "3D圆柱样式柱状图，支持自定义3D视角、坐标轴标题、分类与数值数据",
+  "tags": [
+    "图表",
+    "柱状图",
+    "3D图表",
+    "圆柱图",
+    "数据可视化"
+  ],
+  "category": "数据可视化",
+  "version": "1.0.0",
+  "author": "LiuHan",
+  "visualConfig": {
+    "preferredWidth": 800,
+    "preferredHeight": 500,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "data",
+      "description": "柱状图数值数据数组",
+      "label": "图表数据",
+      "type": "object",
+      "defaultValue": [
+        95321, 169339, 121105, 136046, 106800,
+        58041, 26766, 14291, 7065, 3283
+      ]
+    },
+    {
+      "name": "xCategories",
+      "description": "X轴分类文本数组，与数据一一对应",
+      "label": "X轴分类",
+      "type": "object",
+      "defaultValue": [
+        "0-9", "10-19", "20-29", "30-39", "40-49",
+        "50-59", "60-69", "70-79", "80-89", "90+"
+      ]
+    },
+    {
+      "name": "xAxisTitle",
+      "description": "横坐标(X轴)标题文本",
+      "label": "X轴标题",
+      "type": "string"
+    },
+    {
+      "name": "yAxisTitle",
+      "description": "纵坐标(Y轴)标题文本",
+      "label": "Y轴标题",
+      "type": "string"
+    },
+    {
+      "name": "alpha",
+      "description": "3D图表上下倾斜角度",
+      "label": "上下倾角(alpha)",
+      "control": "number",
+      "type": "number",
+      "defaultValue": 15
+    },
+    {
+      "name": "beta",
+      "description": "3D图表左右旋转角度",
+      "label": "左右转角(beta)",
+      "control": "number",
+      "type": "number",
+      "defaultValue": 15
+    },
+    {
+      "name": "depth",
+      "description": "3D图形整体纵深厚度",
+      "label": "纵深厚度",
+      "control": "number",
+      "type": "number",
+      "defaultValue": 50
+    },
+    {
+      "name": "viewDistance",
+      "description": "相机与图表透视距离，影响视觉效果",
+      "label": "透视距离",
+      "control": "number",
+      "type": "number",
+      "defaultValue": 25
+    }
+  ],
+  "events": []
+}

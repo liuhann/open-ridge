@@ -131,6 +131,7 @@ const ComponentItemCard = ({ packageName, item, selected }) => {
         <div className={styles.renderContainer} ref={scaleRef}>
           <div ref={containerRef} style={{ position: 'absolute', top: 0, left: 0 }} />
         </div>
+        <div className={styles.renderMask} />
 
         <div className={styles.content}>
           <Text strong className={styles.name}>{displayName}</Text>

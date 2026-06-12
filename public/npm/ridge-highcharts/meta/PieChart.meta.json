@@ -1,0 +1,69 @@
+{
+  "name": "PieChart",
+  "title": "Highcharts饼图",
+  "icon": "svgs/pie-chart.svg",
+  "description": "基于Highcharts实现饼图，支持缩放、平移、数据标签、区块选中突出展示",
+  "tags": [
+    "图表",
+    "饼图",
+    "数据可视化",
+    "缩放",
+    "拖拽平移"
+  ],
+  "category": "数据可视化",
+  "version": "1.0.0",
+  "author": "LiuHan",
+  "visualConfig": {
+    "preferredWidth": 700,
+    "preferredHeight": 500,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "zoomEnabled",
+      "description": "是否开启图表缩放功能",
+      "label": "开启缩放",
+      "type": "boolean",
+      "defaultValue": true
+    },
+    {
+      "name": "seriesName",
+      "description": "数据系列名称，用于提示框展示",
+      "label": "系列名称",
+      "type": "string",
+      "defaultValue": "Percentage"
+    },
+    {
+      "name": "data",
+      "description": "饼图核心数据源，支持设置名称、数值、是否突出、是否选中",
+      "label": "图表数据",
+      "type": "object",
+      "defaultValue": [
+        {
+          "name": "Water",
+          "y": 55.02
+        },
+        {
+          "name": "Fat",
+          "sliced": true,
+          "selected": true,
+          "y": 26.71
+        },
+        {
+          "name": "Carbohydrates",
+          "y": 1.09
+        },
+        {
+          "name": "Protein",
+          "y": 15.5
+        },
+        {
+          "name": "Ash",
+          "y": 1.68
+        }
+      ]
+    }
+  ],
+  "events": []
+}
