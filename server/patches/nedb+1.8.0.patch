@@ -1,0 +1,37 @@
+diff --git a/node_modules/nedb/lib/datastore.js b/node_modules/nedb/lib/datastore.js
+index e179dcd..612ca0b 100644
+--- a/node_modules/nedb/lib/datastore.js
++++ b/node_modules/nedb/lib/datastore.js
+@@ -268,7 +268,7 @@ Datastore.prototype.getCandidates = function (query, dontExpireStaleDocs, callba
+     // For a basic match
+     usableQueryKeys = [];
+     Object.keys(query).forEach(function (k) {
+-      if (typeof query[k] === 'string' || typeof query[k] === 'number' || typeof query[k] === 'boolean' || util.isDate(query[k]) || query[k] === null) {
++      if (typeof query[k] === 'string' || typeof query[k] === 'number' || typeof query[k] === 'boolean' || Object.prototype.toString.call(query[k]) === '[object Date]' || query[k] === null) {
+         usableQueryKeys.push(k);
+       }
+     });
+diff --git a/node_modules/nedb/lib/model.js b/node_modules/nedb/lib/model.js
+index 0aa9e92..77e8936 100644
+--- a/node_modules/nedb/lib/model.js
++++ b/node_modules/nedb/lib/model.js
+@@ -113,7 +113,7 @@ function deepCopy (obj, strictKeys) {
+        typeof obj === 'number' ||
+        typeof obj === 'string' ||
+        obj === null ||
+-       (util.isDate(obj)) ) {
++       Object.prototype.toString.call(obj) === '[object Date]' ) {
+     return obj;
+   }
+ 
+@@ -146,8 +146,8 @@ function isPrimitiveType (obj) {
+        typeof obj === 'number' ||
+        typeof obj === 'string' ||
+        obj === null ||
+-       util.isDate(obj) ||
+-       util.isArray(obj));
++       Object.prototype.toString.call(obj) === '[object Date]' ||
++       Array.isArray(obj));
+ }
+ 
+ 

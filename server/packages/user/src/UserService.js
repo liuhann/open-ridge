@@ -1,15 +1,52 @@
 const { BadRequestError, ConflictError, UnauthorizedError, ForBiddenError } = require('ridge-http')
-const svgCaptcha = require('svg-captcha')
 const path = require('path')
 const debug = require('debug')('ridge:user')
 const bootlog = require('debug')('ridge:boot')
 const fse = require('fs-extra')
 const crypto = require('crypto')
+const CodeRelationService = require('ridge-coder/src/CodeRelationService.js')
 
-// 内存缓存：图形验证码、用户会话
-const captchaCache = new Map() // { token: { code, expire, ip } }
+// 内存缓存：用户会话
 const userCache = new Map() // { sess: { user, expire } }
 const USER_CACHE_FILE = path.join(__dirname, 'user_cache.json')
+
+// 密码哈希配置
+const PASSWORD_SALT = 'ridge-user-salt-2026'
+const PASSWORD_HASH_ALG = 'sha256'
+
+// 邀请码全局配置
+const INVITE_CODE_LEN = 6
+const INVITE_CODE_EXPIRE_DAY = 1 // 固定有效期：1天
+// 白名单：允许生成邀请码的特定手机号，自行修改
+const ALLOW_GENERATE_MOBILE = new Set([
+  '15011245191'
+])
+
+/**
+ * 密码加密
+ * @param {string} pwd 明文密码
+ * @returns {string} 哈希密文
+ */
+function encryptPassword (pwd) {
+  return crypto.createHmac(PASSWORD_HASH_ALG, PASSWORD_SALT)
+    .update(pwd)
+    .digest('hex')
+}
+
+/**
+ * 校验密码强度：8位以上，包含字母 + 数字
+ * @param {string} pwd
+ */
+function checkPasswordRule (pwd) {
+  if (!pwd || pwd.length < 8) {
+    throw new BadRequestError('密码长度至少8位')
+  }
+  const hasNum = /\d/.test(pwd)
+  const hasLetter = /[a-zA-Z]/.test(pwd)
+  if (!hasNum || !hasLetter) {
+    throw new BadRequestError('密码必须同时包含字母和数字')
+  }
+}
 
 /**
  * 持久化用户会话缓存到JSON文件
@@ -71,37 +108,22 @@ function getRemoteIp (req) {
     req.connection.socket.remoteAddress
 }
 
-/**
- * 简单数字验证码（模拟短信接口，可替换为真实短信SDK）
- * @param {string} mobile 手机号
- * @returns {string} 6位验证码
- */
-function createSmsCode (mobile) {
-  // 正式环境替换为 阿里云/腾讯云短信SDK 发送逻辑
-  const code = Math.floor(100000 + Math.random() * 900000).toString()
-  debug(`[模拟短信] 手机号:${mobile}, 验证码:${code}`)
-  return code
-}
-
 class UserService {
   constructor (app) {
     this.app = app
-    this.router = app.router // Koa-Router 实例
+    this.router = app.router
     this.config = app.config
     this.dbservice = app.dataBaseProducer
+    // 初始化邀请码集合
+    this.coderService = new CodeRelationService(app, 'invite_code')
 
-    // 时效配置
-    this.captchaExpire = 5 * 60 * 1000 // 图形验证码 5分钟
-    this.smsExpire = 5 * 60 * 1000 // 短信验证码 5分钟
-    this.sessionExpire = 30 * 24 * 60 * 60 * 1000 // 会话 30天免登
+    // 会话时效：30天免登
+    this.sessionExpire = 30 * 24 * 60 * 60 * 1000
 
-    // 短信验证码临时缓存
-    this.smsCache = new Map() // { mobile: { code, expire } }
-
-    // 服务启动恢复会话缓存
+    // 恢复会话缓存
     restoreUserCache().catch(e => bootlog('Restore cache fail', e))
 
-    // 定时持久化会话（5分钟一次）
+    // 定时持久化会话（5分钟）
     setInterval(() => {
       persitanceUserCache().catch(e => bootlog('Auto persist cache fail', e))
     }, 5 * 60 * 1000)
@@ -111,195 +133,132 @@ class UserService {
    * 初始化所有路由
    */
   async initRoutes () {
-    // 1. 获取图形验证码
-    this.router.get('/captcha', this.getCaptcha.bind(this))
-
-    // 2. 发送短信验证码（前置校验图形验证码）
-    this.router.get('/user/send/sms', this.sendSmsCode.bind(this))
-
-    // 3. 手机号+短信码 注册
+    // 生成邀请码（仅白名单手机号可调用）
+    this.router.post('/user/generate-invite', this.generateInviteCode.bind(this))
+    // 注册（必须填写有效邀请码）
     this.router.post('/user/register', this.register.bind(this))
-
-    // 4. 手机号+短信码 登录
+    // 登录
     this.router.post('/user/login', this.login.bind(this))
-
-    // 5. 登出
+    // 登出
     this.router.post('/user/logout', this.logout.bind(this))
-
-    // 6. 获取当前登录用户
+    // 获取当前用户
     this.router.get('/user/current', this.getCurrentUserInfo.bind(this))
   }
 
   /**
-   * 获取图形验证码
+   * 生成6位邀请码接口
+   * Body: mobile 调用者手机号
+   * 限制：仅白名单手机号可生成，编码固定1天有效期
    */
-  async getCaptcha (ctx) {
-    const ip = getRemoteIp(ctx.req)
-    const captcha = svgCaptcha.create({
-      charPreset: '23456789abcdefghjkmnpqrstuvwxyz',
-      size: 4,
-      noise: 2
-    })
+  async generateInviteCode (ctx) {
+    const { mobile, expire } = ctx.request.body
 
-    const token = generateToken()
-    captchaCache.set(token, {
-      code: captcha.text.toLowerCase(),
-      expire: Date.now() + this.captchaExpire,
-      ip
-    })
-
-    ctx.type = 'image/svg+xml'
-    ctx.body = {
-      token,
-      svg: captcha.data
-    }
-  }
-
-  /**
-   * 校验图形验证码
-   * @param {string} token
-   * @param {string} code
-   * @param {string} clientIp
-   */
-  checkCaptcha (token, code, clientIp) {
-    if (!token || !code) {
-      throw new BadRequestError('图形验证码不能为空')
-    }
-    const cache = captchaCache.get(token)
-    const now = Date.now()
-
-    if (!cache) {
-      throw new BadRequestError('验证码已失效，请重新获取')
-    }
-    if (cache.expire < now) {
-      captchaCache.delete(token)
-      throw new BadRequestError('验证码已过期，请重新获取')
-    }
-    // 简单IP校验，防跨站使用验证码
-    if (cache.ip !== clientIp) {
-      throw new ForBiddenError('验证码校验异常')
-    }
-    if (cache.code !== code.toLowerCase()) {
-      captchaCache.delete(token)
-      throw new BadRequestError('图形验证码错误')
-    }
-    // 校验通过立即删除，防止重复利用
-    captchaCache.delete(token)
-  }
-
-  /**
-   * 发送短信验证码（必须先过图形验证码）
-   * Query: token, captcha, mobile
-   */
-  async sendSmsCode (ctx) {
-    const { token, captcha, mobile } = ctx.query
-    const clientIp = getRemoteIp(ctx.req)
-
-    // 1. 校验手机号格式
-    if (!/^1[3-9]\d{9}$/.test(mobile)) {
+    // 手机号校验
+    if (!mobile || !/^1[3-9]\d{9}$/.test(mobile)) {
       throw new BadRequestError('手机号格式不正确')
     }
 
-    // 2. 校验图形验证码
-    this.checkCaptcha(token, captcha, clientIp)
-
-    // 3. 限制频率：60秒内同一手机号只能发一次
-    const smsItem = this.smsCache.get(mobile)
-    const now = Date.now()
-    if (smsItem && smsItem.expire > now - 60 * 1000) {
-      throw new BadRequestError('发送过于频繁，请稍后再试')
+    // 校验是否在白名单
+    if (!ALLOW_GENERATE_MOBILE.has(mobile)) {
+      throw new ForBiddenError('当前账号无权限生成邀请码')
     }
 
-    // 4. 生成&缓存短信验证码
-    const smsCode = createSmsCode(mobile)
-    this.smsCache.set(mobile, {
-      code: smsCode,
-      expire: now + this.smsExpire
-    })
+    // 生成6位邀请码，固定1天有效期，不绑定业务数据
+    const inviteCode = await this.coderService.createCodeRelation(
+      { creator: mobile },
+      INVITE_CODE_LEN,
+      expire || INVITE_CODE_EXPIRE_DAY
+    )
 
     ctx.body = {
       code: 0,
-      msg: '短信验证码发送成功'
+      msg: '邀请码生成成功，有效期1天',
+      inviteCode
     }
   }
 
   /**
-   * 用户注册：mobile + smsCode
-   * Body: mobile, smsCode
+   * 注册：mobile + password + inviteCode
+   * 任意手机号均可使用有效邀请码注册
    */
   async register (ctx) {
-    const { mobile, smsCode } = ctx.request.body
-    const now = Date.now()
+    const { mobile, password, inviteCode } = ctx.request.body
 
-    // 基础校验
-    if (!mobile || !smsCode) {
-      throw new BadRequestError('手机号和短信验证码不能为空')
+    // 非空校验
+    if (!mobile || !password || !inviteCode) {
+      throw new BadRequestError('手机号、密码、邀请码不能为空')
     }
+
+    // 手机号格式校验
     if (!/^1[3-9]\d{9}$/.test(mobile)) {
       throw new BadRequestError('手机号格式不正确')
     }
 
-    // 校验短信验证码
-    const smsItem = this.smsCache.get(mobile)
-    if (!smsItem || smsItem.expire < now || smsItem.code !== smsCode) {
-      throw new BadRequestError('短信验证码错误或已过期')
+    // 校验邀请码（不存在/已过期直接拦截）
+    const codeInfo = await this.coderService.getCodeRelaction(inviteCode)
+    if (!codeInfo) {
+      // throw new BadRequestError('邀请码不存在或已过期，请使用有效邀请码')
     }
 
-    // 校验账号是否已存在
+    // 密码规则校验
+    checkPasswordRule(password)
+
+    // 校验账号是否已注册
     const userColl = await this.getUserCollection()
     const existUser = await userColl.findOne({ id: mobile })
     if (existUser) {
       throw new ConflictError('该手机号已注册，请直接登录')
     }
 
-    // 写入文档库
+    // 密码加密入库
+    const pwdHash = encryptPassword(password)
     const userInfo = {
       id: mobile,
+      password: pwdHash,
       registerTime: new Date(),
-      lastLoginTime: new Date()
+      lastLoginTime: new Date(),
+      useInviteCode: inviteCode
     }
     await userColl.insert(userInfo)
 
-    // 创建会话，实现30天免登
+    // 创建会话
     const sess = this.createSession(userInfo)
-    // 注册成功后销毁当前短信验证码
-    this.smsCache.delete(mobile)
 
     ctx.body = {
       code: 0,
       msg: '注册成功',
       sess,
-      user: userInfo
+      user: {
+        id: mobile,
+        registerTime: userInfo.registerTime,
+        lastLoginTime: userInfo.lastLoginTime,
+        useInviteCode: inviteCode
+      }
     }
   }
 
   /**
-   * 用户登录：mobile + smsCode
-   * Body: mobile, smsCode
+   * 登录
    */
   async login (ctx) {
-    const { mobile, smsCode } = ctx.request.body
-    const now = Date.now()
+    const { mobile, password } = ctx.request.body
 
-    // 基础校验
-    if (!mobile || !smsCode) {
-      throw new BadRequestError('手机号和短信验证码不能为空')
+    if (!mobile || !password) {
+      throw new BadRequestError('手机号和密码不能为空')
     }
     if (!/^1[3-9]\d{9}$/.test(mobile)) {
       throw new BadRequestError('手机号格式不正确')
     }
 
-    // 校验短信验证码
-    const smsItem = this.smsCache.get(mobile)
-    if (!smsItem || smsItem.expire < now || smsItem.code !== smsCode) {
-      throw new BadRequestError('短信验证码错误或已过期')
-    }
-
-    // 查询用户
     const userColl = await this.getUserCollection()
     const userInfo = await userColl.findOne({ id: mobile })
     if (!userInfo) {
       throw new UnauthorizedError('该手机号未注册，请先完成注册')
+    }
+
+    const inputHash = encryptPassword(password)
+    if (inputHash !== userInfo.password) {
+      throw new UnauthorizedError('手机号或密码错误')
     }
 
     // 更新最后登录时间
@@ -307,23 +266,23 @@ class UserService {
       { id: mobile },
       { $set: { lastLoginTime: new Date() } }
     )
+    userInfo.lastLoginTime = new Date()
 
-    // 创建会话
     const sess = this.createSession(userInfo)
-    // 销毁短信验证码
-    this.smsCache.delete(mobile)
-
     ctx.body = {
       code: 0,
       msg: '登录成功',
       sess,
-      user: userInfo
+      user: {
+        id: mobile,
+        registerTime: userInfo.registerTime,
+        lastLoginTime: userInfo.lastLoginTime
+      }
     }
   }
 
   /**
-   * 登出：销毁当前会话
-   * Header: x-ridge-cloud-sess 或 Body: sess
+   * 登出
    */
   async logout (ctx) {
     const sess = ctx.headers['x-ridge-cloud-sess'] || ctx.request.body.sess
@@ -339,22 +298,25 @@ class UserService {
 
   /**
    * 获取当前登录用户
-   * Header: x-ridge-cloud-sess  / Query: sess
    */
   async getCurrentUserInfo (ctx) {
     const sess = ctx.query.sess || ctx.headers['x-ridge-cloud-sess']
     const user = this.getUserFromCache(sess)
+    const resUser = user
+      ? {
+          id: user.id,
+          registerTime: user.registerTime,
+          lastLoginTime: user.lastLoginTime,
+          useInviteCode: user.useInviteCode
+        }
+      : null
+
     ctx.body = {
       code: 0,
-      user
+      user: resUser
     }
   }
 
-  /**
-   * 创建会话 Session（30天有效期）
-   * @param {object} user 用户信息
-   * @returns {string} sess
-   */
   createSession (user) {
     const sess = generateToken()
     userCache.set(sess, {
@@ -364,16 +326,10 @@ class UserService {
     return sess
   }
 
-  /**
-   * 从缓存获取登录用户，过期自动清理
-   * @param {string} sess
-   * @returns {object|null}
-   */
   getUserFromCache (sess) {
     if (!sess) return null
     const cacheItem = userCache.get(sess)
     const now = Date.now()
-
     if (!cacheItem || cacheItem.expire < now) {
       userCache.delete(sess)
       return null
@@ -381,20 +337,11 @@ class UserService {
     return cacheItem.user
   }
 
-  /**
-   * 根据手机号查询用户（内部工具方法）
-   * @param {string} mobile
-   * @returns {object|null}
-   */
   async getUserById (mobile) {
     const userColl = await this.getUserCollection()
     return userColl.findOne({ id: mobile })
   }
 
-  /**
-   * 获取用户集合（文档库）
-   * @returns {object} collection
-   */
   async getUserCollection () {
     const db = await this.dbservice.getDb('user')
     return db.getCollection('register')

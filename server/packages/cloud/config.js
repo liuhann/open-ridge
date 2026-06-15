@@ -8,8 +8,6 @@ module.exports = {
   bootPath: path.resolve(__dirname), // config文件所在路径， 为避免麻烦 后续存储都以此为基准
   userRepoDir: path.resolve(__dirname, '../data/user'), // 用户repo目录，存放用户上传应用数据
   dbDataDir: path.resolve(__dirname, '../data/database'), // cloud 用户、注册、发布等库数据
-  npmAutoDelivery: true, // 当请求 /npm/xx时,如果本地不存在,是否去拉取
-  autoApproveCollect: true, // 请求收录时自动同意
   cors: {
     credentials: true,
     origin: '*'
@@ -33,7 +31,8 @@ module.exports = {
     // require('ridge-delivery'),
     // require('ridge-npm-service'), // npm 发布模块
     require('ridge-cloud-user'), // 用户管理 - Cloud
-    require('ridge-cloud-storage') // 用户存储管理 - Cloud
+    require('ridge-app-share') // 用户管理 - Cloud
+    // require('ridge-cloud-storage') // 用户存储管理 - Cloud
     // require('ridge-cloud-tools') // 转换服务
   ]
 }

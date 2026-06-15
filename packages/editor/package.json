@@ -24,6 +24,7 @@
     "@douyinfe/semi-ui": "^2.99.2",
     "@rollup/browser": "^4.59.0",
     "@uiw/react-codemirror": "^4.25.8",
+    "axios": "^1.18.0",
     "bootstrap-icons": "^1.13.1",
     "codemirror": "^6.65.7",
     "dayjs": "^1.11.20",
