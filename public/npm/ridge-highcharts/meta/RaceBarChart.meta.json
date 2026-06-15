@@ -14,8 +14,8 @@
   "version": "1.0.0",
   "author": "LiuHan",
   "visualConfig": {
-    "preferredWidth": 1000,
-    "preferredHeight": 600,
+    "preferredWidth": 400,
+    "preferredHeight": 300,
     "resizable": true,
     "aspectRatio": "no"
   },
@@ -34,6 +34,16 @@
         },
         "选手B": {
           "2020": 900,
+          "2021": 1300,
+          "2022": 1600
+        },
+        "选手C": {
+          "2020": 910,
+          "2021": 1300,
+          "2022": 1600
+        },
+        "选手D": {
+          "2020": 800,
           "2021": 1300,
           "2022": 1600
         }

@@ -277,19 +277,22 @@ class Composite extends BaseNode {
     this.el.setAttribute('composite-id', this.getCompositeId())
     if (this.config && this.config.style && this.el) {
       this.el.style.background = ''
-      if (this.config.style.autoWidth) {
-        this.el.style.width = '100%'
-      } else {
-        // 固定宽度则配置溢出隐藏
-        this.el.style.width = this.config.style.width + 'px'
-        this.el.style.overflowX = 'hidden'
-      }
-      if (this.config.style.autoHeight) {
-        this.el.style.height = '100%'
-      } else {
-        this.el.style.height = this.config.style.height + 'px'
-        this.el.style.overflowY = 'hidden'
-      }
+      /**
+       if (this.config.style.autoWidth) {
+         this.el.style.width = '100%'
+       } else {
+         // 固定宽度则配置溢出隐藏
+         this.el.style.width = this.config.style.width + 'px'
+         this.el.style.overflowX = 'hidden'
+       }
+       if (this.config.style.autoHeight) {
+         this.el.style.height = '100%'
+       } else {
+         this.el.style.height = this.config.style.height + 'px'
+         this.el.style.overflowY = 'hidden'
+       }
+       *
+       */
 
       // const classList = handleClassListPropValue(this.config.classList, this)
 

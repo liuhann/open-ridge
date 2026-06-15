@@ -6,7 +6,8 @@ import lodashSet from 'lodash/set'
 import { nanoid } from '../utils/string'
 import componentRegistry from '../service/ComponentRegistry'
 import merge from 'lodash/merge'
-import { getIconUrl } from '../panels/component/componentUtils'
+// import { getIconUrl } from '../panels/component/componentUtils'
+import { ICON_OUTLINE_NODE, FILE_FOLDER } from '../icons/icons'
 
 const defaultConfig = {
   styleEx: {},
@@ -199,7 +200,8 @@ export default class EditorElement extends Element {
   }
 
   getIcon () {
-    return <img className='outline-element-icon' src={getIconUrl(this.getComponentMeta())} />
+    // return <img className='outline-element-icon' src={getIconUrl(this.getComponentMeta())} />
+    return this.isContainer() ? FILE_FOLDER : ICON_OUTLINE_NODE
   }
 
   async loadMeta () {

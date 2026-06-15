@@ -1,7 +1,7 @@
 {
   "name": "ridge-highcharts",
   "schemaVersion": "2.0",
-  "lastUpdated": "2026-06-12T10:04:30.942Z",
+  "lastUpdated": "2026-06-15T01:32:13.021Z",
   "generatedBy": "ridge-ui-cli",
   "components": [
     {
@@ -19,8 +19,8 @@
       "version": "1.0.0",
       "author": "LiuHan",
       "visualConfig": {
-        "preferredWidth": 800,
-        "preferredHeight": 400,
+        "preferredWidth": 400,
+        "preferredHeight": 300,
         "resizable": true,
         "aspectRatio": "no"
       },
@@ -152,8 +152,8 @@
       "version": "1.0.0",
       "author": "LiuHan",
       "visualConfig": {
-        "preferredWidth": 800,
-        "preferredHeight": 400,
+        "preferredWidth": 400,
+        "preferredHeight": 300,
         "resizable": true,
         "aspectRatio": "no"
       },
@@ -254,8 +254,8 @@
       "version": "1.0.0",
       "author": "LiuHan",
       "visualConfig": {
-        "preferredWidth": 800,
-        "preferredHeight": 500,
+        "preferredWidth": 400,
+        "preferredHeight": 300,
         "resizable": true,
         "aspectRatio": "no"
       },
@@ -359,8 +359,8 @@
       "version": "1.0.0",
       "author": "LiuHan",
       "visualConfig": {
-        "preferredWidth": 700,
-        "preferredHeight": 500,
+        "preferredWidth": 400,
+        "preferredHeight": 300,
         "resizable": true,
         "aspectRatio": "no"
       },
@@ -429,8 +429,8 @@
       "version": "1.0.0",
       "author": "LiuHan",
       "visualConfig": {
-        "preferredWidth": 750,
-        "preferredHeight": 500,
+        "preferredWidth": 400,
+        "preferredHeight": 300,
         "resizable": true,
         "aspectRatio": "no"
       },
@@ -523,8 +523,8 @@
       "version": "1.0.0",
       "author": "LiuHan",
       "visualConfig": {
-        "preferredWidth": 800,
-        "preferredHeight": 500,
+        "preferredWidth": 400,
+        "preferredHeight": 300,
         "resizable": true,
         "aspectRatio": "no"
       },
@@ -653,8 +653,8 @@
       "version": "1.0.0",
       "author": "LiuHan",
       "visualConfig": {
-        "preferredWidth": 700,
-        "preferredHeight": 500,
+        "preferredWidth": 400,
+        "preferredHeight": 300,
         "resizable": true,
         "aspectRatio": "no"
       },
@@ -722,8 +722,8 @@
       "version": "1.0.0",
       "author": "LiuHan",
       "visualConfig": {
-        "preferredWidth": 1000,
-        "preferredHeight": 600,
+        "preferredWidth": 400,
+        "preferredHeight": 300,
         "resizable": true,
         "aspectRatio": "no"
       },
@@ -742,6 +742,16 @@
             },
             "选手B": {
               "2020": 900,
+              "2021": 1300,
+              "2022": 1600
+            },
+            "选手C": {
+              "2020": 910,
+              "2021": 1300,
+              "2022": 1600
+            },
+            "选手D": {
+              "2020": 800,
               "2021": 1300,
               "2022": 1600
             }

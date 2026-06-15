@@ -72,6 +72,10 @@ const Editor = () => {
     }
   }
 
+  const onDeviceChange = () => {
+
+  }
+
   return (
     <div className='editor-root'>
       <LeftNav active={currentPanel} onChange={val => setCurrentPanel(val)} onBack={confirmExitToAppList} />
@@ -178,7 +182,7 @@ const Editor = () => {
               display: currentPanel === 'preview' ? '' : 'none'
             }}
           >
-            <PreviewMenuBar />
+            <PreviewMenuBar onDeviceChange={onDeviceChange} />
             <div className='preview-space'>
               <div className='preview-view-port' />
             </div>
