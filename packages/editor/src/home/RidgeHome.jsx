@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Layout, Nav, Button, Typography, Avatar, Space } from '@douyinfe/semi-ui'
-import { ICON_COMMON_USER_PLUS, ICON_COMMON_HOME, ICON_MENU_STAR, FILE_FOLDER } from '../icons/icons.js'
+import { ICON_COMMON_USER_PLUS, ICON_COMMON_HOME, ICON_MENU_STAR, FILE_FOLDER, ICON_LOGOUT } from '../icons/icons.js'
 import AppListPanel from './AppListPanel.jsx'
 import RegisterDialog from './RegisterDialog.jsx'
 import LoginDialog from './LoginDialog.jsx'
@@ -25,7 +25,7 @@ const RidgeUHomePage = () => {
   // 页面挂载初始化登录态
   useEffect(() => {
     initCurrentLogon()
-  }, [initCurrentLogon])
+  }, [])
 
   const isLogin = !!logonUser
 
@@ -41,25 +41,21 @@ const RidgeUHomePage = () => {
             { itemKey: 'myApp', text: '我的应用', icon: FILE_FOLDER }
           ]}
           header={{
-            children: (
+            logo: <Avatar size='small' style={{ fontSize: 28 }}>{ICON_COMMON_USER_PLUS}</Avatar>,
+            text: (
               <div style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', gap: 8, padding: '0 8px' }}>
-                <Avatar size='small' style={{ fontSize: 28 }}>
-                  {ICON_COMMON_USER_PLUS}
-                </Avatar>
-                <Typography.Text strong>
-                  {isLogin ? '我的工作台' : '请登录'}
-                </Typography.Text>
-
+                {isLogin ? <Typography.Text strong> {logonUser?.id} </Typography.Text> : null}
                 {isLogin
                   ? (
                     <Button
+                      style={{
+                        fontSize: '18px'
+                      }}
+                      icon={ICON_LOGOUT}
                       size='small'
                       type='danger'
-                      style={{ marginLeft: 'auto' }}
                       onClick={logout}
-                    >
-                      退出登录
-                    </Button>
+                    />
                     )
                   : (
                     <Space style={{ marginLeft: 'auto' }} size={4}>

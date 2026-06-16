@@ -1,19 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react'
 import { Modal, Form, Toast } from '@douyinfe/semi-ui'
-import axios from 'axios'
+import userStore from '../store/user.store.js'
 
-const LoginDialog = ({
-  visible,
-  onCancel,
-  onSuccess
-}) => {
+const LoginDialog = ({ visible, onCancel, onSuccess }) => {
   const formApiRef = useRef(null)
-  const [loading, setLoading] = useState(false)
+  const loading = userStore(state => state.loading)
+  const login = userStore(state => state.login)
 
   useEffect(() => {
     if (!visible && formApiRef.current) {
-      formApiRef.current.resetFields()
-      setLoading(false)
+      formApiRef.current.reset()
     }
   }, [visible])
 
@@ -21,27 +17,17 @@ const LoginDialog = ({
     formApiRef.current = api
   }
 
-  // 提交登录
   const handleOk = async () => {
     try {
       await formApiRef.current.validate()
-      const values = formApiRef.current.getFormValues()
-      setLoading(true)
-
-      const res = await axios.post('/user/login', values)
-      if (res.data.code === 0) {
-        Toast.success('登录成功')
-        onSuccess?.(res.data)
+      const values = formApiRef.current.getValues()
+      const result = await login(values)
+      if (result) {
+        onSuccess?.()
         onCancel()
-      } else {
-        Toast.error(res.data.msg || '登录失败')
       }
     } catch (err) {
-      const msg = err?.response?.data?.msg || '请求异常'
-      Toast.error(msg)
       console.error('登录报错：', err)
-    } finally {
-      setLoading(false)
     }
   }
 
@@ -71,15 +57,12 @@ const LoginDialog = ({
             { pattern: /^1[3-9]\d{9}$/, message: '手机号格式不正确' }
           ]}
         />
-
         <Form.Input
           field='password'
           label='登录密码'
           placeholder='请输入密码'
           type='password'
-          rules={[
-            { required: true, message: '密码不能为空' }
-          ]}
+          rules={[{ required: true, message: '密码不能为空' }]}
         />
       </Form>
     </Modal>

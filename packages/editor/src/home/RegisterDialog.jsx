@@ -1,20 +1,15 @@
-import React, { useState, useRef, useEffect } from 'react'
-import { Modal, Form, Toast } from '@douyinfe/semi-ui'
-import axios from 'axios'
+import React, { useRef, useEffect } from 'react'
+import { Modal, Form } from '@douyinfe/semi-ui'
+import userStore from '../store/user.store.js'
 
-const RegisterDialog = ({
-  visible,
-  onCancel,
-  onSuccess
-}) => {
+const RegisterDialog = ({ visible, onCancel, onSuccess }) => {
   const formApiRef = useRef(null)
-  const [loading, setLoading] = useState(false)
+  const loading = userStore(state => state.loading)
+  const register = userStore(state => state.register)
 
-  // 弹窗关闭重置状态
   useEffect(() => {
     if (!visible && formApiRef.current) {
       formApiRef.current.reset()
-      setLoading(false)
     }
   }, [visible])
 
@@ -22,27 +17,17 @@ const RegisterDialog = ({
     formApiRef.current = api
   }
 
-  // 提交注册
   const handleOk = async () => {
     try {
       await formApiRef.current.validate()
       const values = formApiRef.current.getValues()
-      setLoading(true)
-
-      const res = await axios.post('/api/user/register', values)
-      if (res.data.code === 0) {
-        Toast.success('注册成功')
-        onSuccess?.(res.data)
+      const result = await register(values)
+      if (result) {
+        onSuccess?.()
         onCancel()
-      } else {
-        Toast.error(res.data.msg || '注册失败')
       }
     } catch (err) {
-      const msg = err?.response?.data?.msg || '请求异常'
-      Toast.error(msg)
-      console.error('注册报错：', err)
-    } finally {
-      setLoading(false)
+      console.log('表单校验失败', err)
     }
   }
 
@@ -72,7 +57,6 @@ const RegisterDialog = ({
             { pattern: /^1[3-9]\d{9}$/, message: '手机号格式不正确' }
           ]}
         />
-
         <Form.Input
           field='inviteCode'
           label='邀请码'
@@ -82,7 +66,6 @@ const RegisterDialog = ({
             { len: 6, message: '邀请码必须为6位数字' }
           ]}
         />
-
         <Form.Input
           field='password'
           label='登录密码'

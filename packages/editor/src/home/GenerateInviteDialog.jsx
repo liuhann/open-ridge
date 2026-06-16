@@ -1,23 +1,17 @@
 import React, { useState, useRef, useEffect } from 'react'
-import { Modal, Form, Toast, Typography, Space } from '@douyinfe/semi-ui'
-import axios from 'axios'
+import { Modal, Form, Typography, Space } from '@douyinfe/semi-ui'
+import userStore from '../store/user.store.js'
 
-const GenerateInviteDialog = ({
-  visible,
-  onCancel
-}) => {
+const GenerateInviteDialog = ({ visible, onCancel }) => {
   const formApiRef = useRef(null)
-  const [loading, setLoading] = useState(false)
+  const loading = userStore(state => state.loading)
+  const generateInviteCode = userStore(state => state.generateInviteCode)
   const [inviteCode, setInviteCode] = useState('')
 
-  // 关闭弹窗重置数据
   useEffect(() => {
     if (!visible) {
       setInviteCode('')
-      setLoading(false)
-      if (formApiRef.current) {
-        formApiRef.current.resetFields()
-      }
+      if (formApiRef.current) formApiRef.current.resetFields()
     }
   }, [visible])
 
@@ -25,26 +19,14 @@ const GenerateInviteDialog = ({
     formApiRef.current = api
   }
 
-  // 生成邀请码
   const handleOk = async () => {
     try {
       await formApiRef.current.validate()
       const { mobile } = formApiRef.current.getFormValues()
-      setLoading(true)
-
-      const res = await axios.post('/user/generate-invite', { mobile })
-      if (res.data.code === 0) {
-        setInviteCode(res.data.inviteCode)
-        Toast.success('邀请码生成成功，有效期1天')
-      } else {
-        Toast.error(res.data.msg || '生成失败')
-      }
+      const code = await generateInviteCode(mobile)
+      if (code) setInviteCode(code)
     } catch (err) {
-      const msg = err?.response?.data?.msg || '请求异常'
-      Toast.error(msg)
-      console.error('生成邀请码报错：', err)
-    } finally {
-      setLoading(false)
+      console.log('表单校验失败', err)
     }
   }
 
@@ -76,7 +58,6 @@ const GenerateInviteDialog = ({
         />
       </Form>
 
-      {/* 展示生成结果 */}
       {inviteCode && (
         <div style={{ marginTop: 20, padding: 16, background: '#f5f7fa', borderRadius: 6 }}>
           <Space vertical>
@@ -84,9 +65,7 @@ const GenerateInviteDialog = ({
             <Typography.Title heading={4} style={{ margin: 0, color: '#1890ff' }}>
               {inviteCode}
             </Typography.Title>
-            <Typography.Text type='secondary'>
-              该邀请码可被任意手机号用于账号注册
-            </Typography.Text>
+            <Typography.Text type='secondary'>该邀请码可被任意手机号用于账号注册</Typography.Text>
           </Space>
         </div>
       )}

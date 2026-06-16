@@ -1,4 +1,4 @@
-const NeDataStore = require('nedb')
+const NeDataStore = require('@seald-io/nedb')
 const debug = require('debug')('ridge:nedb')
 const fs = require('fs')
 const path = require('path')

@@ -21,10 +21,10 @@ const userStore = create((set, get) => ({
         return
       }
       // 根据 sess 查询用户信息
-      const res = await axios.get(`/user/current?sess=${sess}`)
-      if (res.data.code === 0 && res.data.user) {
+      const { data } = await axios.get(`/api/user/current?sess=${sess}`)
+      if (data.code === '0' && data.data.user) {
         set({
-          logonUser: res.data.user,
+          logonUser: data.data.user,
           sess
         })
       } else {
@@ -47,7 +47,7 @@ const userStore = create((set, get) => ({
     const { mobile, password } = params
     set({ loading: true })
     try {
-      const res = await axios.post('/user/login', { mobile, password })
+      const res = await axios.post('/api/user/login', { mobile, password })
       if (res.data.code === 0) {
         const { sess, user } = res.data
         // 本地存储会话
@@ -80,7 +80,7 @@ const userStore = create((set, get) => ({
     const { mobile, password, inviteCode } = params
     set({ loading: true })
     try {
-      const res = await axios.post('/user/register', { mobile, password, inviteCode })
+      const res = await axios.post('/api/user/register', { mobile, password, inviteCode })
       if (res.data.code === 0) {
         const { sess, user } = res.data
         localStorage.setItem('user_sess', sess)
@@ -111,7 +111,7 @@ const userStore = create((set, get) => ({
     const { sess } = get()
     set({ loading: true })
     try {
-      await axios.post('/user/logout', { sess })
+      await axios.post('/api/user/logout', { sess })
     } catch (err) {
       console.error('登出接口请求异常', err)
     } finally {

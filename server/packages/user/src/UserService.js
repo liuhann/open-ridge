@@ -262,7 +262,7 @@ class UserService {
     }
 
     // 更新最后登录时间
-    await userColl.updateOne(
+    await userColl.update(
       { id: mobile },
       { $set: { lastLoginTime: new Date() } }
     )

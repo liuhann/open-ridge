@@ -1,1 +1,69 @@
-[]
+[
+  {
+    "sess": "deedff9c1e4191323d34cdcb173be77fd00aa481ec4a618e7d3b9dedbcf03a33",
+    "user": {
+      "id": "15011245191",
+      "password": "74277485f6a30c81df6f06b84523de193b04ebae5adc8449528fa9bf66f59950",
+      "registerTime": "2026-06-15T10:33:15.039Z",
+      "lastLoginTime": "2026-06-15T10:33:15.039Z",
+      "useInviteCode": "123213"
+    },
+    "expire": 1784111595042
+  },
+  {
+    "sess": "379299044a08de157fb54ffcdc29320920fc2e8899b03556c9df0a8af9d40aff",
+    "user": {
+      "id": "15011245191",
+      "password": "74277485f6a30c81df6f06b84523de193b04ebae5adc8449528fa9bf66f59950",
+      "registerTime": "2026-06-15T10:33:15.039Z",
+      "lastLoginTime": "2026-06-16T01:18:16.952Z",
+      "useInviteCode": "123213",
+      "_id": "YUyEP0aFaFS3W2Xp",
+      "createdAt": "2026-06-15T10:33:15.040Z",
+      "updatedAt": "2026-06-15T10:57:22.623Z"
+    },
+    "expire": 1784164696952
+  },
+  {
+    "sess": "de91102b2862c2c6ecb16e85a98262e383711ededcd16842dcd293a4ca89a350",
+    "user": {
+      "id": "15011245191",
+      "password": "74277485f6a30c81df6f06b84523de193b04ebae5adc8449528fa9bf66f59950",
+      "registerTime": "2026-06-15T10:33:15.039Z",
+      "lastLoginTime": "2026-06-16T01:19:27.984Z",
+      "useInviteCode": "123213",
+      "_id": "YUyEP0aFaFS3W2Xp",
+      "createdAt": "2026-06-15T10:33:15.040Z",
+      "updatedAt": "2026-06-16T01:18:16.950Z"
+    },
+    "expire": 1784164767984
+  },
+  {
+    "sess": "5e7a0de1c6ecef423f0ca666c4ae9f02470deb618f9183471d90dfb14873a5bc",
+    "user": {
+      "id": "15011245191",
+      "password": "74277485f6a30c81df6f06b84523de193b04ebae5adc8449528fa9bf66f59950",
+      "registerTime": "2026-06-15T10:33:15.039Z",
+      "lastLoginTime": "2026-06-16T01:21:13.617Z",
+      "useInviteCode": "123213",
+      "_id": "YUyEP0aFaFS3W2Xp",
+      "createdAt": "2026-06-15T10:33:15.040Z",
+      "updatedAt": "2026-06-16T01:19:27.983Z"
+    },
+    "expire": 1784164873617
+  },
+  {
+    "sess": "e4bf96b9a6919955982223ddc14879b4941198c25c658259b793833046408985",
+    "user": {
+      "id": "15011245191",
+      "password": "74277485f6a30c81df6f06b84523de193b04ebae5adc8449528fa9bf66f59950",
+      "registerTime": "2026-06-15T10:33:15.039Z",
+      "lastLoginTime": "2026-06-16T01:30:22.269Z",
+      "useInviteCode": "123213",
+      "_id": "YUyEP0aFaFS3W2Xp",
+      "createdAt": "2026-06-15T10:33:15.040Z",
+      "updatedAt": "2026-06-16T01:21:50.195Z"
+    },
+    "expire": 1784165422269
+  }
+]
