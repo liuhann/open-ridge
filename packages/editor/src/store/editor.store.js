@@ -419,7 +419,7 @@ const editorStore = create((set, get) => ({
     shareInfo.iconUrl = ''
     shareInfo.iconFile = null
     if (packageJSON.icon) {
-      const iconFile = await appService.getFile(packageJSON.icon)
+      const iconFile = await appService.getFile('/' + packageJSON.icon)
       if (iconFile) {
         shareInfo.iconUrl = iconFile.url
         // 转Blob用于formData上传
@@ -429,7 +429,9 @@ const editorStore = create((set, get) => ({
 
     // 对齐弹窗所需字段
     shareInfo.appName = packageJSON.description || '未命名应用'
-    shareInfo.pageName = pageFile.json.title || '未命名页面'
+    shareInfo.appId = packageJSON.name
+    shareInfo.pageName = pageFile.json.title || pageFile.json.name || '未命名页面'
+    shareInfo.pagePath = pageFile.path
     shareInfo.pageDesc = pageFile.json.userPrompt || ''
     shareInfo.fileSize = exportedFileBlob.size
     // 此字段废弃，弹窗内部走接口实时查询 realIsShared

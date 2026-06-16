@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import { Modal, Form, Button, Input, Checkbox, Space, Typography, Toast, Avatar } from '@douyinfe/semi-ui'
+import React, { useState, useEffect, useCallback } from 'react'
+import { Modal, Button, Input, Checkbox, Space, Typography, Toast, Avatar } from '@douyinfe/semi-ui'
 import { IconUpload, IconCopy } from '@douyinfe/semi-icons'
 import { ShareEditApi } from '../../api/share-api.js'
 import editorStore from '../../store/editor.store.js'
@@ -9,8 +9,13 @@ const BASE_VISIT_URL = window.location.origin + '/app/share/info/'
 const MAX_SIZE = 1 * 1024 * 1024
 
 export default function AppShareModal ({ visible, onClose }) {
-  // 全局store取值函数
+  // Zustand 标准写法，必须放在组件顶层
   const getCurrentShareInfo = editorStore(state => state.getCurrentShareInfo)
+
+  // 稳定关闭回调
+  const stableOnClose = useCallback(() => {
+    onClose?.()
+  }, [onClose])
 
   // 弹窗内部业务状态
   const [loading, setLoading] = useState(false)
@@ -18,10 +23,15 @@ export default function AppShareModal ({ visible, onClose }) {
   const [shareCode, setShareCode] = useState('')
   const [showResult, setShowResult] = useState(false)
   const [checkLoading, setCheckLoading] = useState(false)
+  // 初始化锁，防止快速开关弹窗重复执行逻辑造成死循环
+  const [isInitLock, setIsInitLock] = useState(false)
+  // 标记是否未登录
+  const [isNoLogin, setIsNoLogin] = useState(false)
 
-  // 页面基础分享信息（内部维护，不再由父组件传入）
+  // 页面基础分享信息
   const [shareInfo, setShareInfo] = useState({
     appName: '',
+    appId: '',
     pageName: '',
     pageDesc: '',
     iconUrl: '',
@@ -29,20 +39,24 @@ export default function AppShareModal ({ visible, onClose }) {
     appFile: null,
     iconFile: null
   })
+  // 页面描述本地编辑缓存
+  const [editDesc, setEditDesc] = useState('')
   const [realIsShared, setRealIsShared] = useState(false)
 
-  // 弹窗打开时：拉取当前页面数据 + 校验是否已分享
   useEffect(() => {
+    // 弹窗关闭：重置所有状态，释放锁
     if (!visible) {
-      // 关闭重置所有状态
       setLoading(false)
       setCoverOld(true)
       setShareCode('')
       setShowResult(false)
       setCheckLoading(false)
       setRealIsShared(false)
+      setIsInitLock(false)
+      setIsNoLogin(false)
       setShareInfo({
         appName: '',
+        appId: '',
         pageName: '',
         pageDesc: '',
         iconUrl: '',
@@ -50,37 +64,54 @@ export default function AppShareModal ({ visible, onClose }) {
         appFile: null,
         iconFile: null
       })
+      setEditDesc('')
       return
     }
 
+    // 已有初始化正在执行，直接拦截，防止并发死循环
+    if (isInitLock || checkLoading) return
+
     const initModalData = async () => {
+      setIsInitLock(true)
       try {
         // 1. 从store获取当前页面完整分享信息
         const info = await getCurrentShareInfo()
         if (!info) {
           Toast.error('获取页面分享信息失败')
-          onClose()
           return
         }
         setShareInfo(info)
-        const { appName, pageName } = info
+        // 初始化可编辑描述
+        setEditDesc(info.pageDesc || '')
+        const { appId, pageName } = info
 
         // 2. 调用接口校验是否存在历史分享
         setCheckLoading(true)
-        const res = await ShareEditApi.checkShareExist(appName, pageName)
+        const res = await ShareEditApi.checkShareExist(appId, pageName)
+
+        if (res.code === '100401') {
+          // 未登录标记，不关闭弹窗
+          setIsNoLogin(true)
+          setRealIsShared(false)
+          return
+        }
+        setIsNoLogin(false)
         setRealIsShared(res.isShared)
       } catch (err) {
         Toast.warning('初始化分享弹窗失败：' + err.message)
       } finally {
         setCheckLoading(false)
+        setIsInitLock(false)
       }
     }
 
     initModalData()
-  }, [visible, getCurrentShareInfo, onClose])
+  }, [visible])
 
-  const { appName, pageName, pageDesc, iconUrl, fileSize, appFile, iconFile } = shareInfo
+  const { appName, pageName, iconUrl, fileSize, appFile, iconFile } = shareInfo
   const isOverLimit = fileSize > MAX_SIZE
+  // 分享按钮综合禁用条件：未登录 / 文件超限 / 无文件 / 校验加载中
+  const submitDisabled = isNoLogin || isOverLimit || !appFile || checkLoading
 
   // 格式化文件大小
   const formatSize = (byte) => {
@@ -91,6 +122,7 @@ export default function AppShareModal ({ visible, onClose }) {
 
   // 提交分享
   const handleSubmitShare = async () => {
+    if (isNoLogin) return
     if (!appFile) {
       Toast.warning('应用包文件不存在')
       return
@@ -105,7 +137,7 @@ export default function AppShareModal ({ visible, onClose }) {
       const extraData = {
         appName,
         pageName,
-        pageDesc,
+        pageDesc: editDesc,
         iconFile: ''
       }
       let res
@@ -137,22 +169,22 @@ export default function AppShareModal ({ visible, onClose }) {
     <Modal
       title='应用分享配置'
       visible={visible}
-      onCancel={onClose}
+      onCancel={stableOnClose}
       maskClosable={false}
       width={600}
       footer={
         showResult
           ? (
-            <Button onClick={onClose}>关闭</Button>
+            <Button onClick={stableOnClose}>关闭</Button>
             )
           : (
             <Space>
-              <Button onClick={onClose}>取消</Button>
+              <Button onClick={stableOnClose}>取消</Button>
               <Button
                 type='primary'
                 loading={loading || checkLoading}
                 onClick={handleSubmitShare}
-                disabled={isOverLimit || !appFile || checkLoading}
+                disabled={submitDisabled}
               >
                 {realIsShared && coverOld ? '覆盖分享' : '生成分享'}
               </Button>
@@ -163,31 +195,64 @@ export default function AppShareModal ({ visible, onClose }) {
       {!showResult
         ? (
           <>
-            <Form labelPosition='left' labelWidth={100}>
-              <Form.Item label='应用图标'>
+            <div style={{ marginTop: 12 }}>
+              {/* 应用图标 */}
+              <div style={{ display: 'flex', alignItems: 'center', marginBottom: 16 }}>
+                <div style={{ width: 100, flexShrink: 0 }}>
+                  <Text strong>应用图标</Text>
+                </div>
                 <Avatar
                   src={iconUrl}
                   size={64}
                   shape='square'
                   fallback={<IconUpload size={32} />}
                 />
-              </Form.Item>
-              <Form.Item label='应用名称'>
+              </div>
+
+              {/* 应用名称 */}
+              <div style={{ display: 'flex', alignItems: 'center', marginBottom: 8 }}>
+                <div style={{ width: 100, flexShrink: 0 }}>
+                  <Text strong>应用名称</Text>
+                </div>
                 <Text>{appName}</Text>
-              </Form.Item>
-              <Form.Item label='页面名称'>
+              </div>
+              {/* 提示：图标和名称修改位置 */}
+              <div style={{ marginLeft: 100, marginBottom: 16 }}>
+                <Text type='secondary'>图标、应用名称可在应用配置页面修改</Text>
+              </div>
+
+              {/* 页面名称 */}
+              <div style={{ display: 'flex', alignItems: 'center', marginBottom: 16 }}>
+                <div style={{ width: 100, flexShrink: 0 }}>
+                  <Text strong>页面名称</Text>
+                </div>
                 <Text>{pageName}</Text>
-              </Form.Item>
-              <Form.Item label='页面描述'>
-                <Text>{pageDesc || '无'}</Text>
-              </Form.Item>
-              <Form.Item label='应用包大小'>
+              </div>
+
+              {/* 页面描述 改为可编辑输入框 */}
+              <div style={{ display: 'flex', alignItems: 'flex-start', marginBottom: 16 }}>
+                <div style={{ width: 100, flexShrink: 0, paddingTop: 6 }}>
+                  <Text strong>页面描述</Text>
+                </div>
+                <Input
+                  value={editDesc}
+                  onChange={(v) => setEditDesc(v)}
+                  placeholder='请输入页面描述'
+                  style={{ flex: 1 }}
+                />
+              </div>
+
+              {/* 应用包大小 */}
+              <div style={{ display: 'flex', alignItems: 'center', marginBottom: 16 }}>
+                <div style={{ width: 100, flexShrink: 0 }}>
+                  <Text strong>应用包大小</Text>
+                </div>
                 <Text type={isOverLimit ? 'danger' : 'primary'}>
                   {formatSize(fileSize)}
                   {isOverLimit && <Text type='danger'>（超过1MB，无法分享）</Text>}
                 </Text>
-              </Form.Item>
-            </Form>
+              </div>
+            </div>
 
             {checkLoading
               ? (
@@ -203,11 +268,18 @@ export default function AppShareModal ({ visible, onClose }) {
                       覆盖该应用页面之前所有分享记录
                     </Checkbox>
                     <div>
-                      <Text type='secondary'>覆盖后旧分享码与文件将被删除，生成全新6位分享码</Text>
+                      <Text type='secondary'>覆盖后旧文件将被替换，本次分享编码保持不变</Text>
                     </div>
                   </div>
                   )
                 : null}
+
+            {/* 未登录底部红色提示文字 */}
+            {isNoLogin && (
+              <div style={{ marginTop: 20 }}>
+                <Text type='danger'>当前未登录，无法进行分享操作，请先登录</Text>
+              </div>
+            )}
           </>
           )
         : (

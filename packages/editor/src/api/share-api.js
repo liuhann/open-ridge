@@ -5,7 +5,7 @@ const SESS_KEY = 'ridge_sess'
 
 // 创建实例
 const http = axios.create({
-  baseURL: '/',
+  baseURL: '/api',
   timeout: 10000
 })
 
@@ -21,11 +21,7 @@ http.interceptors.request.use(config => {
 // 响应拦截器：统一业务错误处理
 http.interceptors.response.use(
   res => {
-    const data = res.data
-    if (data.code !== 0) {
-      throw new Error(data.msg || '操作失败')
-    }
-    return data.data
+    return res.data
   },
   err => {
     const msg = err.response?.data?.msg || err.message || '网络请求异常'
