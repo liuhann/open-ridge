@@ -3,6 +3,8 @@ import { localRepoService } from './app.store'
 
 import { cloneDeep } from 'ridgejs/src/utils/object'
 import { Composite, loader } from 'ridgejs'
+import { dataURLtoBlob } from '../utils/blob'
+import { ShareEditApi } from '../api/share-api.js'
 
 const editorStore = create((set, get) => ({
   // 页面编辑状态
@@ -393,6 +395,50 @@ const editorStore = create((set, get) => ({
     })
   },
 
+  getCurrentShareInfo: async () => {
+    const { currentOpenPageId, saveCurrentPage } = get()
+    // 先自动保存当前页面，保证导出包为最新内容
+    await saveCurrentPage()
+
+    const appService = localRepoService.getCurrentAppService()
+    // 无打开页面直接返回空
+    if (!currentOpenPageId) return null
+
+    const shareInfo = {}
+    // 获取当前页面json配置
+    const pageFile = await appService.getFile(currentOpenPageId)
+    if (!pageFile?.json) return null
+
+    // 应用包基础信息
+    const packageJSON = await appService.getAppPackageJSON()
+    // 打包后的完整应用包Blob（上传主文件）
+    const exportedFileBlob = await appService.getAppArchiveFileBlob()
+    if (!exportedFileBlob) return null
+
+    // 图标处理
+    shareInfo.iconUrl = ''
+    shareInfo.iconFile = null
+    if (packageJSON.icon) {
+      const iconFile = await appService.getFile(packageJSON.icon)
+      if (iconFile) {
+        shareInfo.iconUrl = iconFile.url
+        // 转Blob用于formData上传
+        shareInfo.iconFile = await dataURLtoBlob(iconFile.url)
+      }
+    }
+
+    // 对齐弹窗所需字段
+    shareInfo.appName = packageJSON.description || '未命名应用'
+    shareInfo.pageName = pageFile.json.title || '未命名页面'
+    shareInfo.pageDesc = pageFile.json.userPrompt || ''
+    shareInfo.fileSize = exportedFileBlob.size
+    // 此字段废弃，弹窗内部走接口实时查询 realIsShared
+    shareInfo.isShared = false
+    // 主上传文件Blob
+    shareInfo.appFile = exportedFileBlob
+
+    return shareInfo
+  },
   backToEdit: async (id) => {
     set({
       currentPanel: 'app'

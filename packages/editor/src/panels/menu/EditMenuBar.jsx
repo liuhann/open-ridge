@@ -1,23 +1,32 @@
 import React, { useState } from 'react'
-import { Button, Divider, HotKeys, confirm, Space, ButtonGroup, Modal, Dropdown, InputNumber, Tooltip, Tabs, TabPane, Popover } from '@douyinfe/semi-ui'
+import { Button, Divider, Space, Modal, Tooltip, Tabs, TabPane } from '@douyinfe/semi-ui'
 import './style.less'
-import { ICON_NAV_COMPONENTS, ICON_COMMON_DOT, ICON_NAV_RUN, ICON_COMMON_SAVE } from '../../icons/icons.js'
+import { ICON_COMMON_DOT, ICON_NAV_RUN, ICON_COMMON_SAVE } from '../../icons/icons.js'
 
 import editorStore from '../../store/editor.store.js'
 import ScaleController from './ScaleController.jsx'
+import ShareModal from '../share/ShareModal.jsx'
 
 const EditorMenuBar = () => {
+  // 仅保留弹窗显隐状态，移除所有modal业务数据
+  const [modalVisible, setModalVisible] = useState(false)
+
   const currentOpenPageId = editorStore(state => state.currentOpenPageId)
   const openedPages = editorStore(state => state.openedPages)
   const unsavedPages = editorStore(state => state.unsavedPages)
   const saveCurrentPage = editorStore(state => state.saveCurrentPage)
-  const workspaceControl = editorStore(state => state.workspaceControl)
 
   const zoom = editorStore(state => state.zoom)
   const setZoom = editorStore(state => state.setZoom)
   const closePage = editorStore(state => state.closePage)
   const switchPage = editorStore(state => state.switchPage)
   const previewPage = editorStore(state => state.previewPage)
+  // const getCurrentShareInfo = editorStore(state => state.getCurrentShareInfo)
+
+  // 打开分享弹窗，无需组装参数，弹窗内部自行拉取数据
+  const openShare = () => {
+    setModalVisible(true)
+  }
 
   const onTabClose = async tabKey => {
     if (unsavedPages.indexOf(tabKey) > -1) {
@@ -79,7 +88,20 @@ const EditorMenuBar = () => {
           >预览
           </Button>
         </Tooltip>
+        <Button
+          disabled={!currentOpenPageId}
+          style={{
+            flex: 1
+          }} colorful theme='solid' type='tertiary' onClick={openShare}
+        >分享
+        </Button>
+        {/* 只传递 visible、onClose，不再传递任何业务字段 */}
+        <ShareModal
+          visible={modalVisible}
+          onClose={() => setModalVisible(false)}
+        />
       </Space>
+
     </div>
   )
 }

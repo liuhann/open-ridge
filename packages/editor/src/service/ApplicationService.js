@@ -312,13 +312,19 @@ export default class ApplicationService {
     }
   }
 
-  async exportAppArchive () {
+  async getAppArchiveFileBlob () {
     const zip = new JSZip()
     const files = await this.getFiles()
     this.fileTree = getFileTree(files)
     await this.zipFolder(zip, this.fileTree)
+    return await zip.generateAsync({ type: 'blob' })
+    // saveAs(await zip.generateAsync({ type: 'blob' }), pjson.description || pjson.name + '.zip')
+  }
+
+  async exportAppArchive () {
+    const appArchiveBlob = await this.getAppArchiveFileBlob()
     const pjson = await this.getAppPackageJSON()
-    saveAs(await zip.generateAsync({ type: 'blob' }), pjson.description || pjson.name + '.zip')
+    saveAs(appArchiveBlob, pjson.description || pjson.name + '.zip')
   }
 
   async exportPage (id) {
