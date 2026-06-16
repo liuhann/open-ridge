@@ -1,7 +1,7 @@
 import axios from 'axios'
 
-// 会话存储 key
-const SESS_KEY = 'ridge_sess'
+// 会话存储 key，前后统一
+const SESS_KEY = 'user_sess'
 
 // 创建实例
 const http = axios.create({
@@ -13,6 +13,7 @@ const http = axios.create({
 http.interceptors.request.use(config => {
   const sess = localStorage.getItem(SESS_KEY)
   if (sess) {
+    // 标准小写header，后端完全匹配
     config.headers['x-ridge-cloud-sess'] = sess
   }
   return config
@@ -45,27 +46,25 @@ function buildShareFormData (mainFile, iconFile, extraData) {
 }
 
 export const ShareEditApi = {
-  // 新增：检查当前用户该应用页面是否已分享
-  checkShareExist (appName, pageName) {
+  // 检查当前用户该应用页面是否已分享（修复参数：appId 替换 appName）
+  checkShareExist (appId, pageName) {
     return http.get('/app/share/check-exist', {
-      params: { appName, pageName }
+      params: { appId, pageName }
     })
   },
 
   // 普通上传分享
   uploadShare (mainFile, iconFile, extraData) {
     const formData = buildShareFormData(mainFile, iconFile, extraData)
-    return http.post('/app/share', formData, {
-      headers: { 'Content-Type': 'multipart/form-data' }
-    })
+    // 移除手动 Content-Type，axios 自动携带带 boundary 的 multipart/form-data
+    return http.post('/app/share', formData)
   },
 
   // 覆盖上传分享
   coverUploadShare (mainFile, iconFile, extraData) {
     const formData = buildShareFormData(mainFile, iconFile, extraData)
-    return http.post('/app/share/cover', formData, {
-      headers: { 'Content-Type': 'multipart/form-data' }
-    })
+    // 移除手动 Content-Type
+    return http.post('/app/share/cover', formData)
   },
 
   // 获取当前用户全部分享列表

@@ -13,8 +13,10 @@ class AppShareService {
 
     this.coderService = new CodeRelationService(app, 'app_share_code')
 
-    // 配置项
+    // 静态文件根目录
     this.fileRootDir = path.resolve(__dirname, '../../static/app-share-files')
+    // 静态访问前缀，用于接口返回完整URL
+    this.staticPrefix = '/static/app-share-files'
     this.maxFileSize = 1 * 1024 * 1024
     this.codeLen = 6
     this.codeExpireDay = 1
@@ -24,8 +26,6 @@ class AppShareService {
 
   async initRoutes () {
     this.router.post('/app/share', this.uploadAndGenShareCode.bind(this))
-    this.router.post('/app/share/cover', this.coverUploadShare.bind(this))
-    // 新增：查询当前用户该应用页面是否已分享
     this.router.get('/app/share/check-exist', this.checkShareExist.bind(this))
     this.router.get('/app/share/:inviteCode', this.getFileByShareCode.bind(this))
     this.router.get('/app/share/info/:inviteCode', this.getShareInfoByCode.bind(this))
@@ -39,58 +39,74 @@ class AppShareService {
     const year = now.getFullYear()
     const month = String(now.getMonth() + 1).padStart(2, '0')
     const day = String(now.getDate()).padStart(2, '0')
-    const dateDir = path.join(this.fileRootDir, `${year}/${month}/${day}`)
-    fse.ensureDirSync(dateDir)
-    return dateDir
+    // 绝对目录，用于文件写入
+    const absDir = path.join(this.fileRootDir, `${year}/${month}/${day}`)
+    fse.ensureDirSync(absDir)
+    // 返回相对路径（存入数据库）
+    return `${year}/${month}/${day}`
+  }
+
+  // 根据库中存储的相对路径拼接真实绝对路径
+  getAbsFilePath (relativePath) {
+    return path.join(this.fileRootDir, relativePath)
+  }
+
+  // 根据相对路径拼接前端可访问静态URL
+  getStaticUrl (relativePath) {
+    return `${this.staticPrefix}/${relativePath.replace(/\\/g, '/')}`
   }
 
   async checkLogin (ctx) {
     const sess = ctx.headers['x-ridge-cloud-sess'] || ctx.request.body.sess || ctx.query.sess
     const user = this.userService.getUserFromCache(sess)
-    if (!user) throw new UnauthorizedError('请先登录后再进行分享操作')
+    if (!user) {
+      const err = new UnauthorizedError('请先登录后再进行分享操作')
+      err.code = '100401'
+      throw err
+    }
     return user
   }
 
-  /**
-   * 同步删除：主文件 + 图标文件
-   */
   async removeShareRecordAndFile (inviteCode) {
     const record = await this.coderService.getCodeRelaction(inviteCode)
     if (!record) return
-    const { filePath, iconFilePath } = record.info || {}
+    const { filePath, iconFilePath } = record
 
-    // 删除主包文件
-    if (filePath && await fse.pathExists(filePath)) {
-      await fse.remove(filePath)
+    // 拼接绝对路径删除文件
+    if (filePath) {
+      const absPath = this.getAbsFilePath(filePath)
+      if (await fse.pathExists(absPath)) {
+        await fse.remove(absPath)
+      }
     }
-    // 删除图标文件（存在才删）
-    if (iconFilePath && await fse.pathExists(iconFilePath)) {
-      await fse.remove(iconFilePath)
+    if (iconFilePath) {
+      const absIconPath = this.getAbsFilePath(iconFilePath)
+      if (await fse.pathExists(absIconPath)) {
+        await fse.remove(absIconPath)
+      }
     }
-    await this.coderService.deleteCodeRelation(inviteCode)
+
+    const coll = await this.coderService.getCRCollection()
+    await coll.remove({ code: String(inviteCode) })
   }
 
-  async getExactMatchShareByUser (userId, appName, pageName) {
-    const allRecords = await this.coderService.queryByFilter(item => {
-      const info = item.info || {}
-      const extra = info.extraData || {}
-      return info.uploadMobile === userId && extra.appName === appName && extra.pageName === pageName
-    })
-    return allRecords
+  async getExactMatchShareByUser (userId, appId, pageName) {
+    const queryCondition = {
+      uploadMobile: userId,
+      appId,
+      pageName
+    }
+    const matchList = await this.coderService.query(queryCondition)
+    return matchList
   }
 
-  /**
-   * 新增接口：GET /app/share/check-exist
-   * query参数：appName、pageName
-   * 返回是否存在该用户下同名应用页面分享
-   */
   async checkShareExist (ctx) {
     const loginUser = await this.checkLogin(ctx)
-    const { appName, pageName } = ctx.query
-    if (!appName || !pageName) {
-      throw new BadRequestError('appName、pageName 不能为空')
+    const { appId, pageName } = ctx.query
+    if (!appId || !pageName) {
+      throw new BadRequestError('appId、pageName 不能为空')
     }
-    const records = await this.getExactMatchShareByUser(loginUser.id, appName, pageName)
+    const records = await this.getExactMatchShareByUser(loginUser.id, appId, pageName)
     ctx.body = {
       code: 0,
       msg: '查询成功',
@@ -104,10 +120,8 @@ class AppShareService {
   async uploadAndGenShareCode (ctx) {
     const loginUser = await this.checkLogin(ctx)
     const files = ctx.request.files || {}
-    // 主文件必填
     const mainFile = files.file || ctx.request.body?.file
     if (!mainFile) throw new BadRequestError('请上传应用包文件')
-    // 图标可选
     const iconFile = files.icon
 
     const { size, filepath, originalname } = mainFile
@@ -115,7 +129,6 @@ class AppShareService {
       throw new BadRequestError(`文件过大，最大支持 ${(this.maxFileSize / 1024 / 1024).toFixed(0)}MB`)
     }
 
-    // 解析extraData
     let extraData = ctx.request.body.extraData || {}
     if (typeof extraData === 'string') {
       try {
@@ -124,43 +137,51 @@ class AppShareService {
         throw new BadRequestError('extraData 参数必须为合法JSON')
       }
     }
-    if (!extraData.appName || !extraData.pageName) {
-      throw new BadRequestError('extraData 必须包含 appName、pageName')
+
+    if (!extraData.appId || !extraData.pageName) {
+      throw new BadRequestError('extraData 必须包含 appId、pageName')
     }
 
-    const targetDir = this.getDateDirPath()
-    // 保存主文件
-    const mainSaveName = `${Date.now()}_${originalname}`
-    const mainFilePath = path.join(targetDir, mainSaveName)
-    await fse.move(filepath, mainFilePath, { overwrite: true })
+    // 自动清理同用户+appId+pageName旧记录
+    const oldMatchRecords = await this.getExactMatchShareByUser(loginUser.id, extraData.appId, extraData.pageName)
+    for (const record of oldMatchRecords) {
+      await this.removeShareRecordAndFile(record.code)
+    }
 
-    // 处理图标文件
+    const dateRelativeDir = this.getDateDirPath()
+    const mainSaveName = `${Date.now()}_${originalname}`
+    // 存入数据库的相对路径
+    const mainRelativePath = path.join(dateRelativeDir, mainSaveName)
+    // 真实绝对路径用于写入文件
+    const mainAbsPath = this.getAbsFilePath(mainRelativePath)
+    await fse.move(filepath, mainAbsPath, { overwrite: true })
+
     let iconSaveName = ''
-    let iconAbsPath = ''
+    let iconRelativePath = ''
     if (iconFile) {
       const iconOriginName = iconFile.originalname
       iconSaveName = `icon_${Date.now()}_${iconOriginName}`
-      iconAbsPath = path.join(targetDir, iconSaveName)
+      iconRelativePath = path.join(dateRelativeDir, iconSaveName)
+      const iconAbsPath = this.getAbsFilePath(iconRelativePath)
       await fse.move(iconFile.filepath, iconAbsPath, { overwrite: true })
     }
-    // 将图标文件名存入extraData
     extraData.iconFile = iconSaveName
 
-    // 入库信息增加图标绝对路径
-    const codeInfo = {
-      filePath: mainFilePath,
+    // 数据库只存相对路径
+    const flatInfo = {
+      filePath: mainRelativePath,
       fileName: originalname,
-      iconFilePath: iconAbsPath,
+      iconFilePath: iconRelativePath,
       iconFileName: iconSaveName,
       uploadMobile: loginUser.id,
       uploadTime: new Date(),
-      extraData
+      ...extraData
     }
-    const shareCode = await this.coderService.createCodeRelation(codeInfo, this.codeLen, this.codeExpireDay)
+    const shareCode = await this.coderService.createCodeRelation(flatInfo, this.codeLen, this.codeExpireDay)
 
     ctx.body = {
       code: 0,
-      msg: '应用分享成功',
+      msg: '应用分享成功，旧分享记录已自动覆盖清理',
       data: {
         shareCode,
         fileName: originalname,
@@ -171,94 +192,31 @@ class AppShareService {
     }
   }
 
-  async coverUploadShare (ctx) {
-    const loginUser = await this.checkLogin(ctx)
-    const files = ctx.request.files || {}
-    const mainFile = files.file || ctx.request.body?.file
-    if (!mainFile) throw new BadRequestError('请上传应用包文件')
-    const iconFile = files.icon
-
-    const { size, filepath, originalname } = mainFile
-    if (size > this.maxFileSize) {
-      throw new BadRequestError(`文件过大，最大支持 ${(this.maxFileSize / 1024 / 1024).toFixed(0)}MB`)
-    }
-
-    let extraData = ctx.request.body.extraData || {}
-    if (typeof extraData === 'string') {
-      try {
-        extraData = JSON.parse(extraData)
-      } catch {
-        throw new BadRequestError('extraData 参数必须为合法JSON')
-      }
-    }
-    const { appName, pageName } = extraData
-    if (!appName || !pageName) {
-      throw new BadRequestError('extraData 必须提供 appName、pageName 用于精准匹配覆盖')
-    }
-
-    // 精准查询并清理旧记录（同步删除旧主包+旧图标）
-    const oldMatchRecords = await this.getExactMatchShareByUser(loginUser.id, appName, pageName)
-    for (const record of oldMatchRecords) {
-      await this.removeShareRecordAndFile(record.code)
-    }
-
-    const targetDir = this.getDateDirPath()
-    // 保存新主文件
-    const mainSaveName = `${Date.now()}_${originalname}`
-    const mainFilePath = path.join(targetDir, mainSaveName)
-    await fse.move(filepath, mainFilePath, { overwrite: true })
-
-    // 处理新图标
-    let iconSaveName = ''
-    let iconAbsPath = ''
-    if (iconFile) {
-      const iconOriginName = iconFile.originalname
-      iconSaveName = `icon_${Date.now()}_${iconOriginName}`
-      iconAbsPath = path.join(targetDir, iconSaveName)
-      await fse.move(iconFile.filepath, iconAbsPath, { overwrite: true })
-    }
-    extraData.iconFile = iconSaveName
-
-    const codeInfo = {
-      filePath: mainFilePath,
-      fileName: originalname,
-      iconFilePath: iconAbsPath,
-      iconFileName: iconSaveName,
-      uploadMobile: loginUser.id,
-      uploadTime: new Date(),
-      extraData
-    }
-    const shareCode = await this.coderService.createCodeRelation(codeInfo, this.codeLen, this.codeExpireDay)
-
-    ctx.body = {
-      code: 0,
-      msg: '覆盖分享成功，匹配旧分享及图标已清理',
-      data: {
-        shareCode,
-        fileName: originalname,
-        iconFileName: iconSaveName,
-        expireDay: this.codeExpireDay,
-        extraData,
-        clearedCount: oldMatchRecords.length
-      }
-    }
-  }
-
   async queryUserAllShare (ctx) {
     const loginUser = await this.checkLogin(ctx)
-    const allRecords = await this.coderService.queryByFilter(item => {
-      return item.info?.uploadMobile === loginUser.id
+    const userRecords = await this.coderService.query({
+      uploadMobile: loginUser.id
     })
 
-    const list = allRecords.map(item => ({
+    const list = userRecords.map(item => ({
       shareCode: item.code,
-      uploadMobile: item.info.uploadMobile,
-      uploadTime: item.info.uploadTime,
-      fileName: item.info.fileName,
-      iconFileName: item.info.iconFileName || '',
-      filePath: item.info.filePath,
-      iconFilePath: item.info.iconFilePath || '',
-      extraData: item.info.extraData || {}
+      uploadMobile: item.uploadMobile,
+      uploadTime: item.uploadTime,
+      fileName: item.fileName,
+      iconFileName: item.iconFileName || '',
+      // 原始相对路径
+      filePath: item.filePath,
+      iconFilePath: item.iconFilePath || '',
+      // 前端可用完整静态地址
+      fileUrl: this.getStaticUrl(item.filePath),
+      iconUrl: item.iconFilePath ? this.getStaticUrl(item.iconFilePath) : '',
+      extraData: {
+        appId: item.appId,
+        appName: item.appName,
+        pageName: item.pageName,
+        pageDesc: item.pageDesc || '',
+        iconFile: item.iconFile || ''
+      }
     }))
 
     ctx.body = {
@@ -286,7 +244,7 @@ class AppShareService {
     const record = await this.coderService.getCodeRelaction(inviteCode)
 
     if (!record) throw new BadRequestError('分享码不存在或已过期')
-    if (record.info.uploadMobile !== loginUser.id) {
+    if (record.uploadMobile !== loginUser.id) {
       throw new UnauthorizedError('仅上传本人可撤销该分享')
     }
 
@@ -299,13 +257,13 @@ class AppShareService {
     const codeRecord = await this.coderService.getCodeRelaction(inviteCode)
     if (!codeRecord) throw new BadRequestError('分享码不存在或已过期')
 
-    const { filePath, fileName } = codeRecord.info
-    const isExist = await fse.pathExists(filePath)
+    const absPath = this.getAbsFilePath(codeRecord.filePath)
+    const isExist = await fse.pathExists(absPath)
     if (!isExist) throw new BadRequestError('文件已丢失')
 
-    ctx.set('Content-Disposition', `attachment; filename=${encodeURIComponent(fileName)}`)
+    ctx.set('Content-Disposition', `attachment; filename=${encodeURIComponent(codeRecord.fileName)}`)
     ctx.set('Content-Type', 'application/octet-stream')
-    ctx.body = fse.createReadStream(filePath)
+    ctx.body = fse.createReadStream(absPath)
   }
 
   async getShareInfoByCode (ctx) {
@@ -313,22 +271,35 @@ class AppShareService {
     const codeRecord = await this.coderService.getCodeRelaction(inviteCode)
     if (!codeRecord) throw new BadRequestError('分享码不存在或已过期')
 
-    const info = codeRecord.info
-    const fileExist = await fse.pathExists(info.filePath)
-    const iconExist = info.iconFilePath ? await fse.pathExists(info.iconFilePath) : false
+    const fileAbsPath = this.getAbsFilePath(codeRecord.filePath)
+    const fileExist = await fse.pathExists(fileAbsPath)
+    let iconExist = false
+    if (codeRecord.iconFilePath) {
+      const iconAbsPath = this.getAbsFilePath(codeRecord.iconFilePath)
+      iconExist = await fse.pathExists(iconAbsPath)
+    }
 
     ctx.body = {
       code: 0,
       msg: '查询成功',
       data: {
         shareCode: inviteCode,
-        fileName: info.fileName,
-        iconFileName: info.iconFileName || '',
-        uploadMobile: info.uploadMobile,
-        uploadTime: info.uploadTime,
-        extraData: info.extraData || {},
+        fileName: codeRecord.fileName,
+        iconFileName: codeRecord.iconFileName || '',
+        uploadMobile: codeRecord.uploadMobile,
+        uploadTime: codeRecord.uploadTime,
+        extraData: {
+          appId: codeRecord.appId,
+          appName: codeRecord.appName,
+          pageName: codeRecord.pageName,
+          pageDesc: codeRecord.pageDesc || '',
+          iconFile: codeRecord.iconFile || ''
+        },
         fileExist,
-        iconExist
+        iconExist,
+        // 前端展示完整访问地址
+        fileUrl: this.getStaticUrl(codeRecord.filePath),
+        iconUrl: codeRecord.iconFilePath ? this.getStaticUrl(codeRecord.iconFilePath) : ''
       }
     }
   }

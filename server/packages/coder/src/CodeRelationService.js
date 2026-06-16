@@ -53,8 +53,8 @@ class CodeRelationService {
 
     // 入库：新增 expireTime 过期时间字段
     const saveData = {
+      ...infomration,
       code,
-      info: infomration,
       createTime: new Date(),
       expireTime // 0 = 永久有效
     }
@@ -82,6 +82,12 @@ class CodeRelationService {
     }
 
     return doc
+  }
+
+  async query (query) {
+    const coll = await this.getCRCollection()
+    const docs = await coll.find(query)
+    return docs
   }
 
   /**

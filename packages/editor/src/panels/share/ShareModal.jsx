@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react'
-import { Modal, Button, Input, Checkbox, Space, Typography, Toast, Avatar } from '@douyinfe/semi-ui'
+import { Modal, Button, Input, Checkbox, Space, Typography, Toast, Avatar, TextArea } from '@douyinfe/semi-ui'
 import { IconUpload, IconCopy } from '@douyinfe/semi-icons'
 import { ShareEditApi } from '../../api/share-api.js'
 import editorStore from '../../store/editor.store.js'
@@ -19,7 +19,6 @@ export default function AppShareModal ({ visible, onClose }) {
 
   // 弹窗内部业务状态
   const [loading, setLoading] = useState(false)
-  const [coverOld, setCoverOld] = useState(true)
   const [shareCode, setShareCode] = useState('')
   const [showResult, setShowResult] = useState(false)
   const [checkLoading, setCheckLoading] = useState(false)
@@ -47,7 +46,6 @@ export default function AppShareModal ({ visible, onClose }) {
     // 弹窗关闭：重置所有状态，释放锁
     if (!visible) {
       setLoading(false)
-      setCoverOld(true)
       setShareCode('')
       setShowResult(false)
       setCheckLoading(false)
@@ -132,20 +130,20 @@ export default function AppShareModal ({ visible, onClose }) {
       return
     }
 
+    if (editDesc.length > 1000) {
+      Toast.error('页面描述不能超过1000个字符')
+      return
+    }
+
     setLoading(true)
     try {
       const extraData = {
-        appName,
+        appId: shareInfo.appId,
         pageName,
-        pageDesc: editDesc,
-        iconFile: ''
+        pageDesc: editDesc
       }
-      let res
-      if (realIsShared && coverOld) {
-        res = await ShareEditApi.coverUploadShare(appFile, iconFile, extraData)
-      } else {
-        res = await ShareEditApi.uploadShare(appFile, iconFile, extraData)
-      }
+      // 后端上传接口自动覆盖旧数据，统一只调用 uploadShare
+      const res = await ShareEditApi.uploadShare(appFile, iconFile, extraData)
       setShareCode(res.shareCode)
       setShowResult(true)
       Toast.success('分享操作完成')
@@ -186,7 +184,7 @@ export default function AppShareModal ({ visible, onClose }) {
                 onClick={handleSubmitShare}
                 disabled={submitDisabled}
               >
-                {realIsShared && coverOld ? '覆盖分享' : '生成分享'}
+                生成分享
               </Button>
             </Space>
             )
@@ -218,7 +216,7 @@ export default function AppShareModal ({ visible, onClose }) {
               </div>
               {/* 提示：图标和名称修改位置 */}
               <div style={{ marginLeft: 100, marginBottom: 16 }}>
-                <Text type='secondary'>图标、应用名称可在应用配置页面修改</Text>
+                <Text type='quaternary'>图标、应用名称可在应用配置页面修改</Text>
               </div>
 
               {/* 页面名称 */}
@@ -234,8 +232,9 @@ export default function AppShareModal ({ visible, onClose }) {
                 <div style={{ width: 100, flexShrink: 0, paddingTop: 6 }}>
                   <Text strong>页面描述</Text>
                 </div>
-                <Input
+                <TextArea
                   value={editDesc}
+                  maxCount={1000}
                   onChange={(v) => setEditDesc(v)}
                   placeholder='请输入页面描述'
                   style={{ flex: 1 }}
@@ -261,15 +260,9 @@ export default function AppShareModal ({ visible, onClose }) {
               : realIsShared
                 ? (
                   <div style={{ marginTop: 16 }}>
-                    <Checkbox
-                      checked={coverOld}
-                      onChange={(e) => setCoverOld(e.target.checked)}
-                    >
-                      覆盖该应用页面之前所有分享记录
-                    </Checkbox>
-                    <div>
-                      <Text type='secondary'>覆盖后旧文件将被替换，本次分享编码保持不变</Text>
-                    </div>
+                    <Text type='warning'>
+                      该页面已存在历史分享记录，提交后旧文件与记录将自动覆盖替换
+                    </Text>
                   </div>
                   )
                 : null}
