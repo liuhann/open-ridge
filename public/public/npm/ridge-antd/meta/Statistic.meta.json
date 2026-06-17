@@ -1,0 +1,74 @@
+{
+  "name": "Statistic",
+  "title": "统计数值",
+  "icon": "svgs/statistic.svg",
+  "description": "数据统计展示组件，用于展示关键数值，支持标题、前后缀、千分位、小数点、精度格式化、加载状态",
+  "tags": [
+    "统计",
+    "数值",
+    "数据展示",
+    "卡片数字",
+    "大屏数字"
+  ],
+  "category": "展示组件",
+  "version": "1.0.0",
+  "author": "ridge-antd",
+  "visualConfig": {
+    "preferredWidth": 77,
+    "preferredHeight": 63,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "title",
+      "label": "标题",
+      "type": "string",
+      "defaultValue": "统计数值"
+    },
+    {
+      "name": "value",
+      "label": "数值",
+      "type": "number",
+      "defaultValue": 12345
+    },
+    {
+      "name": "prefix",
+      "label": "前缀",
+      "type": "string",
+      "defaultValue": ""
+    },
+    {
+      "name": "suffix",
+      "label": "后缀",
+      "type": "string",
+      "defaultValue": ""
+    },
+    {
+      "name": "precision",
+      "label": "小数精度",
+      "type": "number",
+      "defaultValue": "2"
+    },
+    {
+      "name": "groupSeparator",
+      "label": "千分位分隔符",
+      "type": "string",
+      "defaultValue": ","
+    },
+    {
+      "name": "decimalSeparator",
+      "label": "小数点分隔符",
+      "type": "string",
+      "defaultValue": "."
+    },
+    {
+      "name": "loading",
+      "label": "加载中",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    }
+  ],
+  "events": []
+}

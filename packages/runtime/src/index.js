@@ -1,5 +1,6 @@
 import Composite from './node/Composite.js'
 import './style.css'
+import './normalize.css'
 import Element from './node/Element.js'
 import ValtioStore from './store/ValtioStore.js'
 import ReactComposite from './framework/ReactComposite.jsx'

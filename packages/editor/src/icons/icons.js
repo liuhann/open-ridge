@@ -49,6 +49,8 @@ const ICON_APP_DEFAULT = <svg xmlns='http://www.w3.org/2000/svg' width='1em' hei
 const ICON_LOGOUT = <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'><path fill='none' stroke='currentColor' strokeLinecap='round' strokeLinejoin='round' strokeWidth='1.5' d='M14.5 6c-.047-1.093-.185-1.79-.598-2.326a3 3 0 0 0-.554-.554c-.81-.62-1.985-.62-4.335-.62h-.501c-2.834 0-4.251 0-5.132.879c-.88.878-.88 2.293-.88 5.121v7c0 2.828 0 4.243.88 5.121s2.298.879 5.132.879h.5c2.351 0 3.526 0 4.336-.62q.314-.241.554-.554c.413-.536.551-1.233.598-2.326m6-6h-12m9.5 3.5s3.5-2.578 3.5-3.5S18 8.5 18 8.5' /></svg>
 const ICON_MENU_STAR = <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'><g fill='none' stroke='currentColor' strokeLinecap='round' strokeLinejoin='round' strokeWidth='1.5'><path d='M20 14.005v-3.344c0-.818 0-1.227-.152-1.595s-.441-.657-1.02-1.235l-4.736-4.739c-.499-.499-.748-.748-1.058-.896a2 2 0 0 0-.197-.082C12.514 2 12.161 2 11.456 2c-3.245 0-4.868 0-5.967.886a4 4 0 0 0-.603.604C4 4.59 4 6.213 4 9.46v4.545c0 3.773 0 5.66 1.172 6.832C6.115 21.78 7.52 21.964 10 22m3-19.5V3c0 2.83 0 4.245.879 5.124c.878.879 2.293.879 5.121.879h.5' /><path d='M15.509 14.822a.536.536 0 0 1 .982 0l.842 1.977l2.176.17a.522.522 0 0 1 .303.921l-1.655 1.386l.506 2.076c.111.453-.389.812-.793.57L16 20.807l-1.87 1.115c-.404.242-.904-.117-.794-.57l.507-2.076l-1.655-1.386a.522.522 0 0 1 .303-.92l2.176-.171z' /></g></svg>
 const ICON_DEVICE_ROTATE = <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'><path fill='none' stroke='currentColor' strokeLinecap='round' strokeWidth='1.5' d='M2 12c.131 3.194 2.198 9.442 9.3 9.978c.418.031.627.047.687-.08c.06-.126-.091-.273-.393-.567l-1.356-1.32M22 12c-.131-3.193-2.198-9.442-9.3-9.978c-.418-.031-.627-.047-.687.08c-.06.126.091.273.393.567l1.356 1.32m-5.686 9.457C6.713 12.083 6.03 11.4 6 10.585s.603-1.45 1.868-2.716c1.266-1.265 1.899-1.898 2.716-1.868c.816.03 1.498.712 2.86 2.075l2.48 2.478c1.362 1.363 2.044 2.045 2.074 2.862c.03.816-.603 1.449-1.868 2.715s-1.899 1.898-2.716 1.868c-.816-.03-1.498-.712-2.86-2.075z' /></svg>
+
+const ICON_FULL_HEIGHT = <svg xmlns='http://www.w3.org/2000/svg' width='1em' height='1em' viewBox='0 0 24 24'><path fill='currentColor' d='M4 22v-2h16v2zm8-3l-4-4l1.4-1.4l1.6 1.55v-6.3L9.4 10.4L8 9l4-4l4 4l-1.4 1.4L13 8.85v6.3l1.6-1.55L16 15zM4 4V2h16v2z' /></svg>
 export {
   ICON_COMMON_SEARCH,
   ICON_COMMON_USER_PLUS,
@@ -96,6 +98,7 @@ export {
   ICON_NAV_RUN,
 
   ICON_MENU_STAR,
+  ICON_FULL_HEIGHT,
 
   ICON_LOGOUT,
   ICON_APP_DEFAULT,

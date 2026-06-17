@@ -1,0 +1,77 @@
+{
+  "name": "AvatarGroup",
+  "title": "头像组",
+  "icon": "svgs/avatar-group.svg",
+  "description": "批量展示头像，支持图片URL、自定义文字+背景色，自动堆叠布局，适用于团队、成员、用户列表展示",
+  "tags": [
+    "头像",
+    "头像组",
+    "多头像",
+    "堆叠展示",
+    "用户"
+  ],
+  "category": "展示组件",
+  "version": "1.0.0",
+  "author": "ridge-antd",
+  "visualConfig": {
+    "preferredWidth": 109,
+    "preferredHeight": 38,
+    "resizable": true,
+    "aspectRatio": "auto"
+  },
+  "properties": [
+    {
+      "name": "srcList",
+      "label": "头像列表",
+      "description": "支持两种格式：图片URL字符串 / {text:'字符',color:'背景色'}",
+      "control": "json",
+      "type": "array",
+      "defaultValue": [
+          "https://api.dicebear.com/7.x/miniavs/svg?seed=1",
+          {
+            "text": "K",
+            "color": "#f56a00"
+          },
+          {
+            "text": "LH",
+            "color": "#f56a00"
+          },
+          {
+            "text": "UZ",
+            "color": "#f56a00"
+          }
+        ]
+    },
+    {
+      "name": "max",
+      "label": "最大显示数量",
+      "description": "最多显示几个头像，超出自动折叠为 +N",
+      "type": "number",
+      "defaultValue": 4
+    },
+    {
+      "name": "size",
+      "label": "头像大小",
+      "control": "select",
+      "type": "string",
+      "options": [
+        { "label": "小", "value": "small" },
+        { "label": "中", "value": "medium" },
+        { "label": "大", "value": "large" }
+      ],
+      "defaultValue": "medium"
+    },
+    {
+      "name": "shape",
+      "label": "头像形状",
+      "control": "select",
+      "type": "string",
+      "options": [
+        { "label": "圆形", "value": "circle" },
+        { "label": "方形", "value": "square" }
+      ],
+      "defaultValue": "circle"
+    }
+  ],
+  "events": []
+}

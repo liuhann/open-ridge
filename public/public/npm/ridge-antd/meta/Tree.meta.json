@@ -1,0 +1,85 @@
+{
+  "name": "Tree",
+  "title": "树形控件",
+  "icon": "svgs/tree.svg",
+  "description": "树形结构展示组件，支持层级目录、省市区选择、分类展示，仅提供基础单选、多选功能",
+  "tags": [
+    "树形",
+    "目录",
+    "层级",
+    "选择",
+    "省市区"
+  ],
+  "category": "展示组件",
+  "version": "1.0.0",
+  "author": "ridge-antd",
+  "visualConfig": {
+    "preferredWidth": 175,
+    "preferredHeight": 170,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "treeData",
+      "label": "树形数据",
+      "description": "格式：[{ title: '显示文字', key: '唯一值', children: [] }]",
+      "control": "json",
+      "type": "array",
+      "defaultValue": [
+        {
+          "title": "浙江省",
+          "key": "zj",
+          "children": [
+            { "title": "杭州市", "key": "hz" },
+            { "title": "宁波市", "key": "nb" }
+          ]
+        },
+        {
+          "title": "江苏省",
+          "key": "js",
+          "children": [
+            { "title": "南京市", "key": "nj" },
+            { "title": "苏州市", "key": "sz" }
+          ]
+        }
+      ]
+    },
+     {
+      "name": "selectedKeys",
+      "label": "选中节点",
+      "type": "array",
+      "inputEvent": "onSelect",
+      "defaultValue": []
+    },
+    {
+      "name": "multiple",
+      "label": "开启多选",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false,
+      "description": "true=多选，false=单选"
+    },
+    {
+      "name": "defaultExpandAll",
+      "label": "默认展开全部",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": true
+    },
+    {
+      "name": "showLine",
+      "label": "显示连接线",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": true
+    }
+  ],
+  "events": [
+    {
+      "name": "onSelect",
+      "label": "节点选择",
+      "description": "选中/取消选中节点时触发，返回选中的 keys"
+    }
+  ]
+}

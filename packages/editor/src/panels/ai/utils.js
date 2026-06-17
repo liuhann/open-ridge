@@ -1,6 +1,6 @@
 import { loader } from 'ridgejs'
 
-const RIDGE_AI_PROMPT_FILEPATH = 'ridge-metas/RidgeUI4AI.md'
+const RIDGE_AI_PROMPT_FILEPATH = 'ridge-metas/README.md'
 
 let ridgeUiAIPrompt = null
 const loadRidgeUIAIPrompt = async () => {
@@ -59,8 +59,7 @@ const generateAIPrompt = async (selectedComponents) => {
 
   // 拼接所有段落
   return ridgeAi + '\n\n\n下面是制作应用需要的组件：\n' + resultParts.join('\n\n\n\n') +
-`按照上述描述和相关组件，生成下面的应用， 包含JSON 配置和JS 脚本：（如果组件不够，可以先提示我缺失哪些组件）
-如果功能需要外部js库，请给我库的下载地址，并提醒我去另外下载，同时将库js文件名称附加到页面jsFiles上 `
+'按照上述描述和相关组件，生成下面的应用， 包含JSON 配置和JS 脚本：（如果组件不够，可以先提示我缺失哪些组件）'
 }
 
 export { generateAIPrompt }

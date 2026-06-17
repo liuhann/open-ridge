@@ -45,14 +45,10 @@ class Composite extends BaseNode {
   }
 
   // 首屏渲染，决定绘制时即计算，前提：必须加载页面配置文件， 尽最大可能绘制所有可用内容
-  firstPaint (el) {
-    debug('Page FirstPaint', el, this.appName, this.path)
+  firstPaint () {
+    debug('Page FirstPaint', this.appName, this.path)
     this.firstPainted = false
-    if (el) {
-      this.el = el
-    }
-    // 存储之前的类列表
-    this.initialClassList = Array.from(this.el.classList)
+
     this.updateStyle()
     this.initializeNodes()
     // 检测是否位于循环之中，避免上层组件已经是自身
@@ -172,25 +168,21 @@ class Composite extends BaseNode {
   }
 
   // 挂载
-  async mount (el, themeRoot) {
+  async mount (containerEl, themeRoot) {
     debug('Composite Mount: ', this.appName, this.path)
-    if (el) {
-      if (el.ridgeComposite) {
-        el.ridgeComposite.unmount()
+    if (containerEl) {
+      if (containerEl.ridgeComposite) {
+        containerEl.ridgeComposite.unmount()
       }
+      containerEl.ridgeComposite = this
+      const el = document.createElement('div')
       this.el = el
-      this.el.ridgeComposite = this
+      containerEl.appendChild(el)
     }
-
     if (!this.el) {
       return
     }
-    try {
-      this.beforeMount && this.beforeMount(el)
-    } catch (e) { }
     this.removeStatus()
-    // debug(this.packageName, this.compositePath, 'mounting')
-
     if (!this.config) {
       debug('Loading Config', this.appName, this.path)
       this.setStatus('Loading')
@@ -244,12 +236,6 @@ class Composite extends BaseNode {
   // 卸载
   unmount () {
     if (!this.el) return
-
-    if (this.initialClassList) {
-      this.el.className = this.initialClassList.join(' ')
-    }
-
-    this.el.removeAttribute('composite-id')
     // this.el.setAttribute('composite-id', this.getCompositeId())
     for (const childNode of this.children ?? []) {
       const el = childNode.el
@@ -266,36 +252,30 @@ class Composite extends BaseNode {
 
     this.el.removeEventListener('mouseover', this.handleMouseOver)
     this.el.removeEventListener('mouseout', this.handleMouseOut)
-    this.el.style.width = ''
-    this.el.style.height = ''
     this.firstPainted = false
-    delete this.el.ridgeComposite
+    delete this.el.parentElement.ridgeComposite
+    this.el.parentElement.removeChild(this.el)
   }
 
   // 更新自身样式
   updateStyle () {
     this.el.setAttribute('composite-id', this.getCompositeId())
     if (this.config && this.config.style && this.el) {
-      this.el.style.background = ''
-      /**
-       if (this.config.style.autoWidth) {
-         this.el.style.width = '100%'
-       } else {
-         // 固定宽度则配置溢出隐藏
-         this.el.style.width = this.config.style.width + 'px'
-         this.el.style.overflowX = 'hidden'
-       }
-       if (this.config.style.autoHeight) {
-         this.el.style.height = '100%'
-       } else {
-         this.el.style.height = this.config.style.height + 'px'
-         this.el.style.overflowY = 'hidden'
-       }
-       *
-       */
-
+      this.el.style.background = this.config.style.background
+      if (this.config.style.autoWidth) {
+        this.el.style.width = '100%'
+      } else {
+        // 固定宽度则配置溢出隐藏
+        this.el.style.width = this.config.style.width + 'px'
+        this.el.style.overflowX = 'hidden'
+      }
+      if (this.config.style.autoHeight) {
+        this.el.style.height = '100%'
+      } else {
+        this.el.style.height = this.config.style.height + 'px'
+        this.el.style.overflowY = 'hidden'
+      }
       // const classList = handleClassListPropValue(this.config.classList, this)
-
       this.el.classList.add('ridge-composite')
       // this.el.className = ['ridge-composite', ...this.CLASS_LIST].join(' ')
     }

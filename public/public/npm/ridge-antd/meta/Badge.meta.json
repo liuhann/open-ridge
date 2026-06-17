@@ -1,0 +1,89 @@
+{
+  "name": "Badge",
+  "title": "徽标",
+  "icon": "svgs/badge.svg",
+  "description": "数字角标、小红点、状态徽标，用于消息通知、数量标记、状态展示",
+  "tags": [
+    "徽标",
+    "角标",
+    "红点",
+    "消息",
+    "通知",
+    "状态"
+  ],
+  "category": "展示组件",
+  "version": "1.0.0",
+  "author": "ridge-antd",
+  "visualConfig": {
+    "preferredWidth": 40,
+    "preferredHeight": 28,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "count",
+      "label": "显示数字",
+      "description": "展示的数字，大于 overflowCount 时显示为 +",
+      "type": "number",
+      "defaultValue": 350
+    },
+    {
+      "name": "dot",
+      "label": "小红点模式",
+      "description": "不显示数字，只显示一个小圆点",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "status",
+      "label": "状态类型",
+      "control": "select",
+      "description": "设置为状态点样式",
+      "type": "string",
+      "options": [
+        { "label": "成功", "value": "success" },
+        { "label": "进行中", "value": "processing" },
+        { "label": "默认", "value": "default" },
+        { "label": "错误", "value": "error" },
+        { "label": "警告", "value": "warning" }
+      ],
+      "defaultValue": ""
+    },
+    {
+      "name": "color",
+      "label": "自定义颜色",
+      "description": "自定义徽标背景颜色，优先级高于 status",
+      "type": "string",
+      "defaultValue": ""
+    },
+    {
+      "name": "overflowCount",
+      "label": "最大显示数值",
+      "description": "超过此数值显示为 {count}+",
+      "type": "number",
+      "defaultValue": 99
+    },
+    {
+      "name": "showZero",
+      "label": "显示0",
+      "description": "数值为0时是否显示徽标",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "size",
+      "label": "徽标大小",
+      "control": "select",
+      "type": "string",
+      "options": [
+        { "label": "中等", "value": "medium" },
+        { "label": "小型", "value": "small" }
+      ],
+      "defaultValue": "medium"
+    }
+  ],
+  "events": []
+}

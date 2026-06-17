@@ -1,0 +1,132 @@
+{
+  "name": "InputNumber",
+  "title": "数字输入框",
+  "icon": "svgs/input-number.svg",
+  "description": "数字输入组件，支持加减、最大最小值、精度控制，用于数量、金额、年龄等数字输入场景",
+  "tags": [
+    "数字",
+    "输入",
+    "计数",
+    "表单"
+  ],
+  "category": "表单组件",
+  "version": "1.0.0",
+  "author": "ridge-antd",
+  "visualConfig": {
+    "preferredWidth": 92,
+    "preferredHeight": 33,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "value",
+      "label": "当前值",
+      "description": "数字输入框当前值",
+      "type": "number",
+      "defaultValue": null
+    },
+    {
+      "name": "placeholder",
+      "label": "提示文字",
+      "type": "string",
+      "defaultValue": "请输入数字"
+    },
+    {
+      "name": "min",
+      "label": "最小值",
+      "description": "可输入的最小数值",
+      "type": "number",
+      "defaultValue": 0
+    },
+    {
+      "name": "max",
+      "label": "最大值",
+      "description": "可输入的最大数值",
+      "type": "number",
+      "defaultValue": 99999
+    },
+    {
+      "name": "step",
+      "label": "每次增减步数",
+      "description": "点击上下箭头每次改变的数值",
+      "type": "number",
+      "defaultValue": 1
+    },
+    {
+      "name": "precision",
+      "label": "小数精度",
+      "description": "保留小数点后几位",
+      "type": "number"
+    },
+    {
+      "name": "controls",
+      "label": "显示增减按钮",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": true
+    },
+    {
+      "name": "disabled",
+      "label": "禁用",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "readOnly",
+      "label": "只读",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "size",
+      "label": "组件大小",
+      "control": "select",
+      "type": "string",
+      "options": [
+        { "label": "大", "value": "large" },
+        { "label": "中", "value": "medium" },
+        { "label": "小", "value": "small" }
+      ],
+      "defaultValue": "medium"
+    },
+    {
+      "name": "variant",
+      "label": "样式形态",
+      "control": "select",
+      "type": "string",
+      "options": [
+        { "label": "描边", "value": "outlined" },
+        { "label": "无边框", "value": "borderless" },
+        { "label": "填充", "value": "filled" },
+        { "label": "下划线", "value": "underlined" }
+      ],
+      "defaultValue": "outlined"
+    },
+    {
+      "name": "status",
+      "label": "校验状态",
+      "control": "select",
+      "type": "string",
+      "options": [
+        { "label": "错误", "value": "error" },
+        { "label": "警告", "value": "warning" }
+      ],
+      "defaultValue": ""
+    }
+  ],
+  "events": [
+    {
+      "name": "onChange",
+      "label": "数值变化",
+      "description": "数字发生改变时触发回调"
+    },
+    {
+      "name": "onPressEnter",
+      "label": "按下回车",
+      "description": "按下回车键时触发"
+    }
+  ]
+}

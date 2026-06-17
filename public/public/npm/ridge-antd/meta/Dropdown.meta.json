@@ -1,0 +1,104 @@
+{
+  "name": "Dropdown",
+  "title": "下拉菜单",
+  "icon": "svgs/dropdown.svg",
+  "description": "按钮触发下拉菜单，支持箭头显示、弹出位置、按钮样式、菜单项点击事件",
+  "tags": ["下拉", "菜单", "交互", "按钮"],
+  "category": "交互组件",
+  "version": "1.0.0",
+  "author": "ridge-antd",
+  "visualConfig": {
+    "preferredWidth": 90,
+    "preferredHeight": 34,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "buttonText",
+      "label": "按钮文字",
+      "type": "string",
+      "defaultValue": "下拉菜单"
+    },
+    {
+      "name": "type",
+      "label": "按钮类型",
+      "control": "select",
+      "type": "string",
+      "options": [
+        { "label": "默认", "value": "default" },
+        { "label": "主要", "value": "primary" },
+        { "label": "虚线", "value": "dashed" },
+        { "label": "文字", "value": "text" },
+        { "label": "链接", "value": "link" }
+      ],
+      "defaultValue": "primary"
+    },
+    {
+      "name": "size",
+      "label": "按钮尺寸",
+      "control": "select",
+      "type": "string",
+      "options": [
+        { "label": "大", "value": "large" },
+        { "label": "中", "value": "middle" },
+        { "label": "小", "value": "small" }
+      ],
+      "defaultValue": "middle"
+    },
+    {
+      "name": "arrow",
+      "label": "显示箭头",
+      "description": "下拉框是否显示箭头",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "placement",
+      "label": "弹出位置",
+      "control": "select",
+      "type": "string",
+      "options": [
+        { "label": "下左", "value": "bottomLeft" },
+        { "label": "下中", "value": "bottom" },
+        { "label": "下右", "value": "bottomRight" },
+        { "label": "上左", "value": "topLeft" },
+        { "label": "上中", "value": "top" },
+        { "label": "上右", "value": "topRight" }
+      ],
+      "defaultValue": "bottomLeft"
+    },
+    {
+      "name": "trigger",
+      "label": "触发方式",
+      "control": "select",
+      "type": "string",
+      "options": [
+        { "label": "悬浮", "value": "hover" },
+        { "label": "点击", "value": "click" }
+      ],
+      "defaultValue": "hover"
+    },
+    {
+      "name": "items",
+      "label": "菜单项",
+      "description": "下拉菜单配置项，支持label、disabled、danger、key",
+      "control": "json",
+      "type": "array",
+      "defaultValue": [
+        { "key": "1", "label": "选项一" },
+        { "key": "2", "label": "选项二" },
+        { "key": "3", "label": "禁用项", "disabled": true },
+        { "key": "4", "label": "危险操作", "danger": true }
+      ]
+    }
+  ],
+  "events": [
+    {
+      "name": "onItemClick",
+      "label": "菜单点击",
+      "description": "点击菜单项时触发，返回当前项完整对象"
+    }
+  ]
+}

@@ -29,6 +29,10 @@ const Editor = () => {
   const codeEditorRef = useRef(null)
 
   const [collapseLeft, setCollapseLeft] = useState(false)
+  const [previewSize, setPreviewSize] = useState({
+    width: '1920px',
+    height: '1080px'
+  })
   // const [currentPanel, setCurrentPanel] = useState('app')
   const [leftContentWidth, setLeftContentWidth] = useState(340) // 存储左侧宽度
 
@@ -72,8 +76,11 @@ const Editor = () => {
     }
   }
 
-  const onDeviceChange = () => {
-
+  const onDeviceChange = (width, height) => {
+    setPreviewSize({
+      width: width + 'px',
+      height: height + 'px'
+    })
   }
 
   return (
@@ -184,7 +191,7 @@ const Editor = () => {
           >
             <PreviewMenuBar onDeviceChange={onDeviceChange} />
             <div className='preview-space'>
-              <div className='preview-view-port' />
+              <div className='preview-view-port' style={previewSize} />
             </div>
           </div>
         </ResizeItem>

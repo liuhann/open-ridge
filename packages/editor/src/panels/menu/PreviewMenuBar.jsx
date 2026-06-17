@@ -7,6 +7,16 @@ import editorStore from '../../store/editor.store.js'
 // 设备数据：分类 + 选项(名称、宽、高)
 const deviceGroups = [
   {
+    groupName: '笔记本/PC',
+    list: [
+      { label: 'PC 1080P', w: 1920, h: 1080 },
+      { label: 'PC 2K', w: 2560, h: 1440 },
+      { label: '荣耀 MagicBook 16" 2.5K', w: 1600, h: 1000 },
+      { label: 'MacBook Air 13.6" 2025', w: 1280, h: 800 },
+      { label: 'MacBook Pro 14" 2025', w: 1440, h: 900 }
+    ]
+  },
+  {
     groupName: '旗舰手机',
     list: [
       { label: 'iPhone 17/17 Pro 6.3"', w: 402, h: 874 },
@@ -32,16 +42,6 @@ const deviceGroups = [
       { label: 'iPad Pro 13" 2025', w: 956, h: 1366 },
       { label: '华为 MatePad Pro 13.2"', w: 920, h: 1380 },
       { label: '小米 Pad 7 8.7"', w: 600, h: 960 }
-    ]
-  },
-  {
-    groupName: '笔记本/PC',
-    list: [
-      { label: 'MacBook Air 13.6" 2025', w: 1280, h: 800 },
-      { label: 'MacBook Pro 14" 2025', w: 1440, h: 900 },
-      { label: '荣耀 MagicBook 16" 2.5K', w: 1600, h: 1000 },
-      { label: 'PC 1080P', w: 1920, h: 1080 },
-      { label: 'PC 2K', w: 2560, h: 1440 }
     ]
   },
   {
@@ -150,14 +150,6 @@ const PreviewMenuBar = ({ onClose, onRefresh, onDeviceChange, onOpenNewWindow })
             icon={ICON_DEVICE_ROTATE} onClick={() => {
               handleTabChange(screenMode === 'vertical' ? 'horizontal' : 'vertical')
             }}
-          />
-          <Tabs
-            size='small'
-            activeKey={screenMode}
-            tabList={[
-              { tab: '竖屏', key: 'vertical' },
-              { tab: '横屏', key: 'horizontal' }
-            ]}
           />
         </Space>
       </Space>

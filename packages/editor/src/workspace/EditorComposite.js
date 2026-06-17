@@ -322,9 +322,7 @@ class EditorComposite extends Composite {
 
   async loadPageJSON (json) {
     await this.unmount()
-
     this.config = cloneDeep(json)
-
     await this.mount()
   }
 

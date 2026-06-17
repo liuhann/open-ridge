@@ -1,0 +1,112 @@
+{
+  "name": "Divider",
+  "title": "分割线",
+  "icon": "svgs/divider.svg",
+  "description": "用于区域、模块、列表之间的分隔，支持水平/垂直、实线/虚线/点线、带标题等样式",
+  "tags": [
+    "分割线",
+    "布局",
+    "装饰组件"
+  ],
+  "category": "布局组件",
+  "version": "1.0.0",
+  "author": "ridge-antd",
+  "visualConfig": {
+    "preferredWidth": 200,
+    "preferredHeight": 60,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "children",
+      "label": "标题内容",
+      "description": "分割线中间显示的标题",
+      "type": "string",
+      "defaultValue": "分割线"
+    },
+    {
+      "name": "variant",
+      "label": "线条样式",
+      "description": "设置分割线为虚线、点线还是实线",
+      "control": "select",
+      "type": "string",
+      "options": [
+        {
+          "label": "实线",
+          "value": "solid"
+        },
+        {
+          "label": "虚线",
+          "value": "dashed"
+        },
+        {
+          "label": "点线",
+          "value": "dotted"
+        }
+      ],
+      "defaultValue": "solid"
+    },
+    {
+      "name": "titlePlacement",
+      "label": "标题位置",
+      "description": "分割线标题的显示位置",
+      "control": "select",
+      "type": "string",
+      "options": [
+        {
+          "label": "居左",
+          "value": "start"
+        },
+        {
+          "label": "居中",
+          "value": "center"
+        },
+        {
+          "label": "居右",
+          "value": "end"
+        }
+      ],
+      "defaultValue": "center"
+    },
+    {
+      "name": "size",
+      "label": "间距大小",
+      "description": "间距大小，仅对水平布局有效",
+      "control": "select",
+      "type": "string",
+      "options": [
+        {
+          "label": "小",
+          "value": "small"
+        },
+        {
+          "label": "中",
+          "value": "medium"
+        },
+        {
+          "label": "大",
+          "value": "large"
+        }
+      ],
+      "defaultValue": ""
+    },
+    {
+      "name": "plain",
+      "label": "普通文字样式",
+      "description": "标题文字是否显示为普通正文样式",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "dashed",
+      "label": "虚线样式",
+      "description": "是否显示为虚线（兼容旧版）",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    }
+  ],
+  "events": []
+}

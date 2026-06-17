@@ -355,7 +355,7 @@ const editorStore = create((set, get) => ({
     }
   },
 
-  saveFile: async (fileId, content, doRefresh = true) => {
+  saveFile: async (fileId, content) => {
     const appService = localRepoService.getCurrentAppService()
     const { editorComposite, openedFileContentMap, currentOpenPageId, unsavedPages } = get()
 
@@ -371,11 +371,6 @@ const editorStore = create((set, get) => ({
 
         // 更新内存未保存缓存
         openedFileContentMap.set(fileId, jsonConfig)
-
-        // 保存时才刷新设计器
-        if (doRefresh && editorComposite && currentOpenPageId === fileId) {
-          editorComposite.loadPageJSON(jsonConfig)
-        }
       } catch (err) {
         console.error('JSON 格式错误', err)
         throw new Error('JSON 格式不正确：' + err.message)

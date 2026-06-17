@@ -1,0 +1,85 @@
+{
+  "name": "Rate",
+  "title": "评分",
+  "icon": "svgs/rate.svg",
+  "description": "星级评分组件，用于评价、打分、满意度反馈等场景，支持全星/半星选择",
+  "tags": [
+    "评分",
+    "星级",
+    "评价",
+    "表单"
+  ],
+  "category": "表单组件",
+  "version": "1.0.0",
+  "author": "ridge-antd",
+  "visualConfig": {
+    "preferredWidth": 140,
+    "preferredHeight": 32,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "value",
+      "label": "评分值",
+      "description": "当前选中的评分",
+      "type": "number",
+      "defaultValue": 3.5
+    },
+    {
+      "name": "count",
+      "label": "星星总数",
+      "description": "总共显示多少个星星",
+      "type": "number",
+      "defaultValue": 5
+    },
+    {
+      "name": "allowHalf",
+      "label": "允许半星",
+      "description": "是否可以选择 0.5 颗星",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": true
+    },
+    {
+      "name": "allowClear",
+      "label": "允许清除",
+      "description": "点击已选中星星是否清空评分",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": true
+    },
+    {
+      "name": "disabled",
+      "label": "禁用/只读",
+      "description": "是否禁用交互，仅用于展示",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "size",
+      "label": "星星大小",
+      "control": "select",
+      "type": "string",
+      "options": [
+        { "label": "小", "value": "small" },
+        { "label": "中", "value": "medium" },
+        { "label": "大", "value": "large" }
+      ],
+      "defaultValue": "medium"
+    }
+  ],
+  "events": [
+    {
+      "name": "onChange",
+      "label": "评分改变",
+      "description": "选择评分时触发，返回当前分数"
+    },
+    {
+      "name": "onHoverChange",
+      "label": "悬停变化",
+      "description": "鼠标悬停时触发，返回悬停分数"
+    }
+  ]
+}

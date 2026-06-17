@@ -1,0 +1,77 @@
+{
+  "name": "Slider",
+  "title": "滑动输入条",
+  "icon": "svgs/slider.svg",
+  "description": "滑动输入组件，支持单滑块/双滑块，用于数值范围选择、音量、进度调节等场景",
+  "tags": [
+    "滑动条",
+    "数值选择",
+    "范围选择",
+    "表单"
+  ],
+  "category": "表单组件",
+  "version": "1.0.0",
+  "author": "ridge-antd",
+  "visualConfig": {
+    "preferredWidth": 130,
+    "preferredHeight": 35,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "value",
+      "label": "当前值",
+      "description": "当前取值，单滑块为数字，双滑块为数组",
+      "type": "number",
+      "defaultValue": 36
+    },
+    {
+      "name": "min",
+      "label": "最小值",
+      "description": "可滑动的最小值",
+      "type": "number",
+      "defaultValue": 0
+    },
+    {
+      "name": "max",
+      "label": "最大值",
+      "description": "可滑动的最大值",
+      "type": "number",
+      "defaultValue": 100
+    },
+    {
+      "name": "step",
+      "label": "步长",
+      "description": "每次滑动变化的数值",
+      "type": "number",
+      "defaultValue": 1
+    },
+    {
+      "name": "disabled",
+      "label": "禁用",
+      "description": "是否禁用滑动条",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "orientation",
+      "label": "排列方向",
+      "control": "select",
+      "type": "string",
+      "options": [
+        { "label": "水平", "value": "horizontal" },
+        { "label": "垂直", "value": "vertical" }
+      ],
+      "defaultValue": "horizontal"
+    }
+  ],
+  "events": [
+    {
+      "name": "onChange",
+      "label": "值变化",
+      "description": "滑动过程中实时触发，返回当前值"
+    }
+  ]
+}

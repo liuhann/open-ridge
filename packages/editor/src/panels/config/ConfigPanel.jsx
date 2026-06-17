@@ -12,7 +12,7 @@ import editorStore from '../../store/editor.store.js'
 import componentRegistry from '../../service/ComponentRegistry.js'
 import { getCompositePropertiesDef, getCompositeEventsDef } from '../../workspace/editorUtils.js'
 
-import { ICON_RULER } from '../../icons/icons.js'
+import { ICON_FULL_HEIGHT } from '../../icons/icons.js'
 const trace = debug('editor:config-panel')
 
 const { Text } = Typography
@@ -91,44 +91,45 @@ const PAGE_FIELDS = [
     label: '宽度',
     control: 'number',
     width: '128px',
+    readonly: (config) => {
+      return config?.style.autoWidth
+    },
     field: 'style.width'
   }, {
     width: '24px',
     type: 'boolean',
     control: 'boolean',
-    prompt: '设置宽度为自动',
-    icon: ICON_RULER,
+    prompt: '设置宽度为填满整个空间（即横向自适应）',
+    icon: ICON_FULL_HEIGHT,
     field: 'style.autoWidth'
   }, {
     label: '高度',
     width: '128px',
+    readonly: (config) => {
+      return config?.style.autoHeight
+    },
     control: 'number',
     field: 'style.height'
   }, {
     width: '24px',
     type: 'boolean',
     control: 'boolean',
-    prompt: '设置高度为自动',
-    icon: ICON_RULER,
+    prompt: '设置高度为填满整个空间（即纵向自适应）',
+    icon: ICON_FULL_HEIGHT,
     field: 'style.autoHeight'
-  }, {
+  },
+  {
+    label: '背景颜色',
+    control: 'color',
+    field: 'style.background'
+  },
+  {
     field: 'jsFiles',
     label: '页面状态库',
     type: 'file',
     multiple: true,
     fileType: 'javascript',
     connect: false
-  }, {
-    label: '字体库',
-    field: 'fontFiles',
-    type: 'strings',
-    connect: false
-  }, {
-    field: 'classList',
-    label: '样式',
-    type: 'style',
-    connect: true,
-    value: []
   }
 ]
 

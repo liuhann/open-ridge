@@ -1,0 +1,57 @@
+{
+  "name": "Checkbox.Group",
+  "title": "多选框组",
+  "icon": "svgs/checkbox-group.svg",
+  "description": "多选框组，支持批量配置选项、多选、默认选中、全组禁用等功能",
+  "tags": [
+    "多选框",
+    "选择",
+    "表单",
+    "批量选择"
+  ],
+  "category": "表单组件",
+  "version": "1.0.0",
+  "author": "ridge-antd",
+  "visualConfig": {
+    "preferredWidth": 110,
+    "preferredHeight": 73,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "value",
+      "label": "选中值",
+      "description": "指定选中的选项",
+      "type": "array",
+      "defaultValue": []
+    },
+    {
+      "name": "options",
+      "label": "选项配置",
+      "description": "指定可选项，支持 label、value、disabled",
+      "control": "json",
+      "type": "array",
+      "defaultValue": [
+        { "label": "选项一", "value": "1" },
+        { "label": "选项二", "value": "2" },
+        { "label": "选项三", "value": "3", "disabled": true }
+      ]
+    },
+    {
+      "name": "disabled",
+      "label": "整组禁用",
+      "description": "是否整组失效",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    }
+  ],
+  "events": [
+    {
+      "name": "onChange",
+      "label": "选中项变化",
+      "description": "多选框组选中项改变时触发，返回选中值数组"
+    }
+  ]
+}

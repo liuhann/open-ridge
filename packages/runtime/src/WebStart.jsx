@@ -66,6 +66,19 @@ const ShareQueryPage = () => {
   const [errorMsg, setErrorMsg] = useState('')
   const inputRef = useRef(null)
 
+  const enterDisabled = loading || code.length !== 6 || info == null
+
+  const searchBtn = {
+    width: '100%',
+    height: '52px',
+    fontSize: '18px',
+    borderRadius: '10px',
+    border: 'none',
+    background: enterDisabled ? '#6b7785' : '#00b42a',
+    color: '#fff',
+    cursor: 'pointer'
+  }
+
   // 仅允许数字，限制6位
   const handleInputChange = (e) => {
     let val = e.target.value.replace(/\D/g, '') // 过滤非数字
@@ -189,7 +202,6 @@ const ShareQueryPage = () => {
     <div style={pageWrap}>
       <div style={container}>
         <h1 style={title}>输入6位分享校验码</h1>
-
         {/* 超大输入框 */}
         <input
           ref={inputRef}
@@ -204,11 +216,10 @@ const ShareQueryPage = () => {
 
         {/* 错误提示 */}
         {errorMsg && <p style={errorText}>{errorMsg}</p>}
-
         {/* 查询按钮 */}
         <button
-          onClick={handleSearch}
-          disabled={loading || code.length !== 6}
+          onClick={openApp}
+          disabled={enterDisabled}
           style={searchBtn}
         >
           {loading ? '查询中...' : '进入应用'}
@@ -228,36 +239,15 @@ const ShareQueryPage = () => {
 
             <div style={infoRow}>
               <span style={label}>分享编码：</span>
-              <span style={codeText}>{info.code}</span>
+              <span style={codeText}>{info.shareCode}</span>
             </div>
             <div style={infoRow}>
               <span style={label}>应用名称：</span>
               <span>{info.appName}</span>
             </div>
             <div style={infoRow}>
-              <span style={label}>页面名称：</span>
-              <span>{info.pageName}</span>
-            </div>
-            <div style={infoRow}>
               <span style={label}>页面描述：</span>
               <p style={descText}>{info.pageDesc || '无'}</p>
-            </div>
-            <div style={infoRow}>
-              <span style={label}>文件哈希：</span>
-              <span style={hashText}>{info.fileHash || '-'}</span>
-            </div>
-
-            <div style={btnGroup}>
-              <button
-                onClick={openApp}
-                disabled={fileLoading}
-                style={primaryBtn}
-              >
-                {fileLoading ? '资源加载中...' : '进入应用'}
-              </button>
-              <button onClick={copyUrl} style={lightBtn}>复制访问链接</button>
-              <button onClick={clearCurrentCodeCache} style={lightBtn}>清除当前编码缓存</button>
-              <button onClick={clearAllShareCache} style={lightBtn}>清空全部分享缓存</button>
             </div>
           </div>
         )}
@@ -280,6 +270,10 @@ const pageWrap = {
   fontFamily: 'system-ui, -apple-system, sans-serif'
 }
 const container = {
+  display: 'flex',
+  alignItems: 'stretch',
+  flexDirection: 'column',
+  gap: '20px',
   maxWidth: '600px',
   margin: '0 auto',
   width: '100%'
@@ -309,17 +303,7 @@ const errorText = {
   margin: '12px 0',
   fontSize: '16px'
 }
-const searchBtn = {
-  width: '100%',
-  height: '52px',
-  fontSize: '18px',
-  borderRadius: '10px',
-  border: 'none',
-  background: '#00b42a',
-  color: '#fff',
-  cursor: 'pointer',
-  marginTop: '8px'
-}
+
 const cardWrap = {
   marginTop: '32px',
   background: '#fff',
@@ -328,8 +312,8 @@ const cardWrap = {
   boxSizing: 'border-box'
 }
 const iconImg = {
-  width: '120px',
-  height: '120px',
+  width: '64px',
+  height: '64px',
   objectFit: 'contain',
   borderRadius: '8px',
   marginBottom: '16px'

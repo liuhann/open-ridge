@@ -1,0 +1,41 @@
+{
+  "name": "Breadcrumb",
+  "title": "面包屑",
+  "icon": "svgs/breadcrumb.svg",
+  "description": "用于展示当前页面路径层级，支持点击跳转、自定义路径项",
+  "tags": [
+    "导航",
+    "路径",
+    "布局组件"
+  ],
+  "category": "导航组件",
+  "version": "1.0.0",
+  "author": "ridge-antd",
+  "visualConfig": {
+    "preferredWidth": 156,
+    "preferredHeight": 27,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "items",
+      "label": "面包屑路径项",
+      "description": "配置面包屑导航路径",
+      "control": "json",
+      "type": "array",
+      "defaultValue": [
+        { "label": "首页", "href": "/" },
+        { "label": "列表页", "href": "/list" },
+        { "label": "详情页" }
+      ]
+    }
+  ],
+  "events": [
+    {
+      "name": "onClick",
+      "description": "点击面包屑项时触发",
+      "label": "点击事件"
+    }
+  ]
+}

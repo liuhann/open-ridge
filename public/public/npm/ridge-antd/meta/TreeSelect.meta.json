@@ -1,0 +1,144 @@
+{
+  "name": "TreeSelect",
+  "title": "树选择",
+  "icon": "svgs/tree-select.svg",
+  "description": "树形结构下拉选择器，支持层级选择、多选、搜索、清除，适用于部门、分类、层级数据选择",
+  "tags": [
+    "树选择",
+    "下拉选择",
+    "层级选择",
+    "表单"
+  ],
+  "category": "表单组件",
+  "version": "1.0.0",
+  "author": "ridge-antd",
+  "visualConfig": {
+    "preferredWidth": 280,
+    "preferredHeight": 36,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "value",
+      "label": "选中值",
+      "description": "当前选中的条目",
+      "type": "string",
+      "defaultValue": "1"
+    },
+    {
+      "name": "treeData",
+      "label": "树形数据",
+      "description": "树节点数据，包含 value、label、children",
+      "control": "json",
+      "type": "array",
+      "defaultValue": [
+        {
+          "value": "1",
+          "label": "选项一",
+          "children": [
+            { "value": "1-1", "label": "选项三" }
+          ]
+        },
+        { "value": "2", "label": "选项二" }
+      ]
+    },
+    {
+      "name": "placeholder",
+      "label": "提示文字",
+      "type": "string",
+      "defaultValue": "请选择"
+    },
+    {
+      "name": "allowClear",
+      "label": "允许清除",
+      "description": "是否显示清除按钮",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "showSearch",
+      "label": "支持搜索",
+      "description": "是否开启搜索过滤",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "treeCheckable",
+      "label": "显示复选框",
+      "description": "节点前显示 Checkbox",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "treeDefaultExpandAll",
+      "label": "默认展开全部",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "disabled",
+      "label": "禁用",
+      "description": "是否禁用选择器",
+      "control": "boolean",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "size",
+      "label": "组件大小",
+      "control": "select",
+      "type": "string",
+      "options": [
+        { "label": "大", "value": "large" },
+        { "label": "中", "value": "medium" },
+        { "label": "小", "value": "small" }
+      ],
+      "defaultValue": "medium"
+    },
+    {
+      "name": "variant",
+      "label": "样式形态",
+      "control": "select",
+      "type": "string",
+      "options": [
+        { "label": "描边", "value": "outlined" },
+        { "label": "无边框", "value": "borderless" },
+        { "label": "填充", "value": "filled" },
+        { "label": "下划线", "value": "underlined" }
+      ],
+      "defaultValue": "outlined"
+    },
+    {
+      "name": "status",
+      "label": "校验状态",
+      "control": "select",
+      "type": "string",
+      "options": [
+        { "label": "错误", "value": "error" },
+        { "label": "警告", "value": "warning" }
+      ],
+      "defaultValue": ""
+    },
+    {
+      "name": "style",
+      "label": "内联样式",
+      "description": "组件内联样式",
+      "type": "CSSProperties",
+      "defaultValue": {
+        "width": "100%"
+      }
+    }
+  ],
+  "events": [
+    {
+      "name": "onChange",
+      "label": "值变化",
+      "description": "选中树节点时触发，返回 value、label"
+    }
+  ]
+}
