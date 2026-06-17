@@ -1,70 +1,57 @@
 const path = require('path')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 module.exports = {
-  entry: {
-    webstart: './src/webStart.js',
-    ridge: './src/index.js'
-  },
+  entry: './src/WebStart.jsx',
   output: {
-    filename: '[name].min.js',
-    path: path.resolve(__dirname, 'build'),
-    clean: true,
-    publicPath: '/'
+    filename: 'share-query.[contenthash:6].js',
+    path: path.resolve(__dirname, 'dist'),
+    clean: true
   },
-  mode: 'development',
-  devtool: 'inline-source-map',
-  resolve: {
-    extensions: ['.tsx', '.ts', '.js', 'jsx']
-  },
-  plugins: [
-  ],
-  module: {
-    rules: [
-      // all files with a `.ts` or `.tsx` extension will be handled by `ts-loader`
+  devServer: {
+    static: {
+      directory: path.join(__dirname, '../../public')
+    },
+    proxy: [
       {
-        test: /\.(js|jsx)$/,
-        exclude: /node_modules/,
-        use: [{
-          loader: 'babel-loader',
-          options: {
-            cacheDirectory: true,
-            presets: [
-              [
-                '@babel/env',
-                { modules: false }
-              ],
-              '@babel/react'
-            ]
-          }
-        }]
-      },
-      {
-        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
-        // test: /\.svg$/,
-        include: [
-          /icons/
-        ],
-        use: [
-          '@svgr/webpack', 'url-loader'
-        ]
-      },
-      {
-        test: /\.css$/i,
-        use: ['style-loader', 'css-loader']
-      },
-      {
-        test: /\.less$/i,
-        use: [
-          // compiles Less to CSS
-          'style-loader',
-          'css-loader',
-          'less-loader'
-        ]
+        context: ['/api', '/static'],
+        target: 'http://localhost'
       }
-    ]
+    ],
+    hot: true,
+    compress: true,
+    port: 9001
   },
+  mode: process.env.NODE_ENV || 'production',
+  resolve: {
+    extensions: ['.js', '.jsx']
+  },
+  // 外部依赖，不打包进产物，通过CDN引入
   externals: {
     react: 'React',
     'react-dom': 'ReactDOM'
-  }
+  },
+  module: {
+    rules: [
+      {
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: [
+              ['@babel/preset-react', { runtime: 'classic' }]
+            ]
+          }
+        }
+      }
+    ]
+  },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+      filename: 'index.html',
+      minify: process.env.NODE_ENV === 'production' ? { collapseWhitespace: true } : false
+    })
+  ]
 }

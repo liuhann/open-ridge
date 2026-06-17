@@ -12,23 +12,12 @@ const VERSION = '2.0.0'
 const ridgeBaseUrl = window.RIDGEUI_BASE_URL || '/npm'
 
 // 应用内文件url统一前缀
-const IN_APP_FILE_PREFIEX = 'app://'
 const loader = new Loader(ridgeBaseUrl)
-window.RidgeUI = {
-  VERSION,
-  ridgeBaseUrl,
-  getLoader: baseUrl => {
-    return new Loader(baseUrl)
-  },
-  loader,
-  ReactComposite
-}
 
 export {
   loader,
   ridgeBaseUrl,
   VERSION,
-  IN_APP_FILE_PREFIEX,
   ELEMENT_SCHEMA_URL,
   COMPOSITE_SCHEMA_URL,
   Composite,

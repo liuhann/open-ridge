@@ -1,5 +1,6 @@
 const path = require('path')
 const fse = require('fs-extra')
+const crypto = require('crypto')
 const { BadRequestError, UnauthorizedError } = require('ridge-http')
 const CodeRelationService = require('ridge-coder/src/CodeRelationService.js')
 
@@ -29,11 +30,6 @@ class AppShareService {
     this.router.get('/app/share/check-exist', this.checkShareExist.bind(this))
     this.router.get('/app/share/list', this.queryUserAllShare.bind(this))
 
-    // 获取分享的下载和图片， 提供类似 file 下载的标准功能 （zip|png）
-    this.router.get('/app/share/app/:inviteCode', this.getFileByShareCode.bind(this))
-    this.router.get('/app/share/icon/:inviteCode', this.getFileByShareCode.bind(this))
-
-    //
     this.router.get('/app/share/info/:inviteCode', this.getShareInfoByCode.bind(this))
     this.router.get('/app/share/search', this.searchShareFuzzy.bind(this))
     this.router.delete('/app/share/code/:inviteCode', this.cancelShare.bind(this))
@@ -59,6 +55,17 @@ class AppShareService {
   // 根据相对路径拼接前端可访问静态URL
   getStaticUrl (relativePath) {
     return `${this.staticPrefix}/${relativePath.replace(/\\/g, '/')}`
+  }
+
+  // 新增：计算文件sha256哈希
+  async getFileHash (filePath) {
+    return new Promise((resolve, reject) => {
+      const hash = crypto.createHash('sha256')
+      const stream = fse.createReadStream(filePath)
+      stream.on('data', chunk => hash.update(chunk))
+      stream.on('end', () => resolve(hash.digest('hex')))
+      stream.on('error', err => reject(err))
+    })
   }
 
   async checkLogin (ctx) {
@@ -163,6 +170,9 @@ class AppShareService {
     const mainAbsPath = this.getAbsFilePath(mainRelativePath)
     await fse.move(filepath, mainAbsPath, { overwrite: true })
 
+    // 计算文件sha256哈希
+    const fileHash = await this.getFileHash(mainAbsPath)
+
     let iconSaveName = ''
     let iconRelativePath = ''
     if (iconFile) {
@@ -173,7 +183,7 @@ class AppShareService {
     }
     extraData.iconFile = iconSaveName
 
-    // 数据库只存相对路径
+    // 数据库只存相对路径 + 文件hash
     const flatInfo = {
       filePath: mainRelativePath,
       fileName: originalname,
@@ -182,6 +192,7 @@ class AppShareService {
       uploadMobile: loginUser.id,
       size,
       uploadTime: new Date(),
+      fileHash, // 新增文件哈希字段
       ...extraData
     }
     const shareCode = await this.coderService.createCodeRelation(flatInfo, this.codeLen, this.codeExpireDay, oldCode)
@@ -194,7 +205,8 @@ class AppShareService {
         fileName: originalname,
         iconFileName: iconSaveName,
         expireDay: this.codeExpireDay,
-        extraData
+        extraData,
+        fileHash // 返回哈希给前端
       }
     }
   }
@@ -212,18 +224,13 @@ class AppShareService {
       uploadTime: item.uploadTime,
       fileName: item.fileName,
       expireTime: item.expireTime,
-      // iconFileName: item.iconFileName || '',
-      // 原始相对路径
-      // filePath: item.filePath,
-      // iconFilePath: item.iconFilePath || '',
-      // 前端可用完整静态地址
+      fileHash: item.fileHash || '', // 透出哈希
       fileUrl: this.getStaticUrl(item.filePath),
       iconUrl: item.iconFilePath ? this.getStaticUrl(item.iconFilePath) : '',
       appId: item.appId,
       appName: item.appName,
       pageName: item.pageName,
       pageDesc: item.pageDesc || ''
-      // iconFile: item.iconFile || ''
     }))
 
     ctx.body = {
@@ -259,20 +266,6 @@ class AppShareService {
     ctx.body = { code: 0, msg: '撤销分享成功，应用包与图标文件已删除' }
   }
 
-  async getFileByShareCode (ctx) {
-    const { inviteCode } = ctx.params
-    const codeRecord = await this.coderService.getCodeRelaction(inviteCode)
-    if (!codeRecord) throw new BadRequestError('分享码不存在或已过期')
-
-    const absPath = this.getAbsFilePath(codeRecord.filePath)
-    const isExist = await fse.pathExists(absPath)
-    if (!isExist) throw new BadRequestError('文件已丢失')
-
-    ctx.set('Content-Disposition', `attachment; filename=${encodeURIComponent(codeRecord.fileName)}`)
-    ctx.set('Content-Type', 'application/octet-stream')
-    ctx.body = fse.createReadStream(absPath)
-  }
-
   async getShareInfoByCode (ctx) {
     const { inviteCode } = ctx.params
     const codeRecord = await this.coderService.getCodeRelaction(inviteCode)
@@ -295,13 +288,12 @@ class AppShareService {
         iconFileName: codeRecord.iconFileName || '',
         uploadMobile: codeRecord.uploadMobile,
         uploadTime: codeRecord.uploadTime,
-        extraData: {
-          appId: codeRecord.appId,
-          appName: codeRecord.appName,
-          pageName: codeRecord.pageName,
-          pageDesc: codeRecord.pageDesc || '',
-          iconFile: codeRecord.iconFile || ''
-        },
+        fileHash: codeRecord.fileHash || '', // 透出哈希
+        appId: codeRecord.appId,
+        appName: codeRecord.appName,
+        pageName: codeRecord.pageName,
+        pageDesc: codeRecord.pageDesc || '',
+        iconFile: codeRecord.iconFile || '',
         fileExist,
         iconExist,
         // 前端展示完整访问地址
