@@ -15,7 +15,7 @@ module.exports = {
     },
     proxy: [
       {
-        context: ['/api', '/avatar', '/avatar.svg', '/docs'],
+        context: ['/api', '/static'],
         target: 'http://localhost'
       }
     ],

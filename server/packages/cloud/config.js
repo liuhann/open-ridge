@@ -5,6 +5,7 @@ module.exports = {
   port: 80,
   httpsPort: 443,
   public: path.resolve(__dirname, '../public'), // 静态资源目录：选择服务器目录同级的public
+  // dataPath: path.resolve(__dirname, '../data'), // 静态资源目录：选择服务器目录同级的public
   bootPath: path.resolve(__dirname), // config文件所在路径， 为避免麻烦 后续存储都以此为基准
   userRepoDir: path.resolve(__dirname, '../data/user'), // 用户repo目录，存放用户上传应用数据
   dbDataDir: path.resolve(__dirname, '../data/database'), // cloud 用户、注册、发布等库数据

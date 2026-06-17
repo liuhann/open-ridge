@@ -14,7 +14,7 @@ class AppShareService {
     this.coderService = new CodeRelationService(app, 'app_share_code')
 
     // 静态文件根目录
-    this.fileRootDir = path.resolve(__dirname, '../../static/app-share-files')
+    this.fileRootDir = path.resolve(this.config.public, './static/app-share-files')
     // 静态访问前缀，用于接口返回完整URL
     this.staticPrefix = '/static/app-share-files'
     this.maxFileSize = 1 * 1024 * 1024
@@ -180,6 +180,7 @@ class AppShareService {
       iconFilePath: iconRelativePath,
       iconFileName: iconSaveName,
       uploadMobile: loginUser.id,
+      size,
       uploadTime: new Date(),
       ...extraData
     }
@@ -206,23 +207,23 @@ class AppShareService {
 
     const list = userRecords.map(item => ({
       shareCode: item.code,
+      size: item.size,
       uploadMobile: item.uploadMobile,
       uploadTime: item.uploadTime,
       fileName: item.fileName,
-      iconFileName: item.iconFileName || '',
+      expireTime: item.expireTime,
+      // iconFileName: item.iconFileName || '',
       // 原始相对路径
-      filePath: item.filePath,
-      iconFilePath: item.iconFilePath || '',
+      // filePath: item.filePath,
+      // iconFilePath: item.iconFilePath || '',
       // 前端可用完整静态地址
-      // fileUrl: this.getStaticUrl(item.filePath),
-      // iconUrl: item.iconFilePath ? this.getStaticUrl(item.iconFilePath) : '',
-      extraData: {
-        appId: item.appId,
-        appName: item.appName,
-        pageName: item.pageName,
-        pageDesc: item.pageDesc || '',
-        iconFile: item.iconFile || ''
-      }
+      fileUrl: this.getStaticUrl(item.filePath),
+      iconUrl: item.iconFilePath ? this.getStaticUrl(item.iconFilePath) : '',
+      appId: item.appId,
+      appName: item.appName,
+      pageName: item.pageName,
+      pageDesc: item.pageDesc || ''
+      // iconFile: item.iconFile || ''
     }))
 
     ctx.body = {

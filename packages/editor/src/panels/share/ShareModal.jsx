@@ -144,6 +144,7 @@ export default function AppShareModal ({ visible, onClose }) {
       const extraData = {
         iconFileName: shareInfo.iconFileName,
         appId: shareInfo.appId,
+        appName: shareInfo.appName,
         pageName,
         pageDesc: editDesc
       }

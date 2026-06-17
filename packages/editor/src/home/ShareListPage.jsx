@@ -1,28 +1,26 @@
 import React, { useState, useEffect } from 'react'
 import {
-  Table,
+  List,
+  Avatar,
+  ButtonGroup,
   Button,
   Space,
   Typography,
   Toast,
   Popconfirm,
   Modal,
-  Tooltip,
   Tag
 } from '@douyinfe/semi-ui'
-import { IconCopy, IconDelete, IconEyeOpened } from '@douyinfe/semi-icons'
+import { IconCopy, IconDelete, IconImage } from '@douyinfe/semi-icons'
 import { ShareEditApi } from '../api/share-api.js'
 
 const { Text, Title } = Typography
 const SHARE_INFO_BASE = window.location.origin + '/app/share/info/'
 
 const ShareListPage = () => {
-  // 表格数据、分页、加载
+  // 列表数据、加载态
   const [loading, setLoading] = useState(false)
   const [dataSource, setDataSource] = useState([])
-  const [page, setPage] = useState(1)
-  const [pageSize] = useState(10)
-  const [total, setTotal] = useState(0)
 
   // 预览弹窗
   const [previewVisible, setPreviewVisible] = useState(false)
@@ -36,14 +34,24 @@ const ShareListPage = () => {
     return (byte / 1024 / 1024).toFixed(2) + 'MB'
   }
 
+  // 格式化日期
+  const formatDate = (timeStr) => {
+    if (!timeStr) return '-'
+    return new Date(timeStr).toLocaleString()
+  }
+
+  // 判断是否过期
+  const isExpired = (expireTs) => {
+    if (!expireTs || expireTs === 0) return false
+    return Date.now() > expireTs
+  }
+
   // 加载列表
-  const fetchList = async (current = 1) => {
+  const fetchList = async () => {
     setLoading(true)
     try {
       const res = await ShareEditApi.getMyShareList()
-      setDataSource(res.data)
-      setTotal(res.data.length)
-      setPage(current)
+      setDataSource(res.data || [])
     } catch (err) {
       Toast.error(err.message || '获取分享列表失败')
     } finally {
@@ -52,187 +60,168 @@ const ShareListPage = () => {
   }
 
   useEffect(() => {
-    fetchList(1)
+    fetchList()
   }, [])
 
-  // 复制访问链接
-  const copyLink = async (code) => {
-    const url = SHARE_INFO_BASE + code
-    await navigator.clipboard.writeText(url)
-    Toast.success('分享链接已复制')
+  // 复制完整信息：访问链接、分享码、应用名、页面描述
+  const copyAllInfo = async (record) => {
+    const visitUrl = SHARE_INFO_BASE + record.shareCode
+    const copyText = `
+分享编码：${record.shareCode}
+访问地址：${visitUrl}
+应用名称：${record.appName}
+页面描述：${record.pageDesc || '无'}
+    `.trim()
+    await navigator.clipboard.writeText(copyText)
+    Toast.success('分享信息已全部复制')
   }
 
-  // 打开预览弹窗
+  // 打开详情预览弹窗
   const openPreview = (record) => {
     setPreviewRecord(record)
     setPreviewVisible(true)
   }
 
-  // 删除分享记录
+  // 删除分享
   const handleDelete = async (code) => {
     try {
       await ShareEditApi.cancelShare(code)
-      Toast.success('分享已撤销，文件已清理')
-      fetchList(page)
+      Toast.success('分享已撤销，文件同步清理完成')
+      fetchList()
     } catch (err) {
       Toast.error(err.message || '撤销失败')
     }
   }
 
-  // 表格列配置
-  const columns = [
-    {
-      title: '分享编码',
-      dataIndex: 'shareCode',
-      width: 120,
-      render: (val) => <Text code>{val}</Text>
-    },
-    {
-      title: '应用名称',
-      dataIndex: 'extraData',
-      width: 180,
-      render: (extra) => extra?.appName || '-'
-    },
-    {
-      title: '页面名称',
-      dataIndex: 'extraData',
-      width: 180,
-      render: (extra) => extra?.pageName || '-'
-    },
-    {
-      title: '页面描述',
-      dataIndex: 'extraData',
-      ellipsis: true,
-      render: (extra) => extra?.pageDesc || <Text type='secondary'>无</Text>
-    },
-    {
-      title: '包大小',
-      dataIndex: 'fileSize',
-      width: 110,
-      render: (_, record) => formatSize(record.fileSize)
-    },
-    {
-      title: '创建时间',
-      dataIndex: 'uploadTime',
-      width: 180,
-      render: (time) => new Date(time).toLocaleString()
-    },
-    {
-      title: '链接',
-      dataIndex: 'shareCode',
-      width: 120,
-      render: (code) => (
-        <Tooltip content='复制访问链接'>
-          <Button
-            icon={<IconCopy />}
-            size='small'
-            type='tertiary'
-            onClick={() => copyLink(code)}
-          >
-            复制链接
-          </Button>
-        </Tooltip>
-      )
-    },
-    {
-      title: '操作',
-      dataIndex: 'shareCode',
-      width: 160,
-      render: (_, record) => (
-        <Space size='small'>
-          <Button
-            icon={<IconEyeOpened />}
-            size='small'
-            type='tertiary'
-            onClick={() => openPreview(record)}
-          >
-            预览
-          </Button>
-          <Popconfirm
-            title='确认撤销该分享？'
-            content='撤销后对应文件与分享编码将永久删除，无法恢复'
-            onConfirm={() => handleDelete(record.shareCode)}
-          >
-            <Button icon={<IconDelete />} size='small' type='danger' tertiary>
-              撤销
-            </Button>
-          </Popconfirm>
-        </Space>
-      )
-    }
-  ]
-
   return (
     <div style={{ padding: 24 }}>
       <Title heading={4} style={{ marginBottom: 16 }}>我的应用分享记录</Title>
 
-      <Table
+      <List
         loading={loading}
-        columns={columns}
         dataSource={dataSource}
-        rowKey='shareCode'
-        pagination={{
-          current: page,
-          pageSize,
-          total,
-          onChange: (p) => fetchList(p)
-        }}
         emptyText='暂无任何分享记录'
+        renderItem={(record) => {
+          const expired = isExpired(record.expireTime)
+          const visitUrl = SHARE_INFO_BASE + record.shareCode
+          return (
+            <List.Item
+              // 左侧图标/预览图
+              header={
+                record.iconUrl
+                  ? (
+                    <Avatar
+                      size={64}
+                      shape='square'
+                      src={record.iconUrl}
+                      onClick={() => openPreview(record)}
+                      style={{ cursor: 'pointer' }}
+                    />
+                    )
+                  : (
+                    <Avatar size={64} shape='square' icon={<IconImage size={32} />} />
+                    )
+              }
+              // 中间主体内容
+              main={
+                <Space vertical align='start'>
+                  <Space>
+                    <Text strong style={{ fontSize: 16 }}>{record.appName}</Text>
+                    <Tag color={expired ? 'red' : 'cyan'}>
+                      {expired ? '已过期' : '有效'}
+                    </Tag>
+                    <Text code style={{ fontSize: 14 }}>编码：{record.shareCode}</Text>
+                  </Space>
+                  <Text type='secondary' ellipsis={{ rows: 2, expandable: true }} style={{ maxWidth: 700 }}>
+                    {record.pageDesc || '暂无页面描述'}
+                  </Text>
+                  <Space size='large'>
+                    <Text>包大小：{formatSize(record.size)}</Text>
+                    {record.expireTime > 0 && (
+                      <Text type={expired ? 'danger' : 'secondary'}>
+                        过期时间：{formatDate(record.expireTime)}
+                      </Text>
+                    )}
+                  </Space>
+                </Space>
+              }
+              // 右侧操作按钮组
+              extra={
+                <ButtonGroup theme='borderless'>
+                  <Button icon={<IconCopy />} onClick={() => copyAllInfo(record)}>复制信息</Button>
+                  <Button onClick={() => openPreview(record)}>查看详情</Button>
+                  <Popconfirm
+                    title='确认撤销该分享？'
+                    content='撤销后文件与分享编码永久删除，无法恢复'
+                    onConfirm={() => handleDelete(record.shareCode)}
+                  >
+                    <Button icon={<IconDelete />} type='danger' tertiary>撤销</Button>
+                  </Popconfirm>
+                </ButtonGroup>
+              }
+            />
+          )
+        }}
       />
 
       {/* 详情预览弹窗 */}
       <Modal
-        title='分享详情预览'
+        title='分享完整详情'
         visible={previewVisible}
         onCancel={() => setPreviewVisible(false)}
         footer={<Button onClick={() => setPreviewVisible(false)}>关闭</Button>}
-        width={520}
+        width={600}
       >
         {previewRecord && (
           <Space vertical style={{ width: '100%' }}>
+            {previewRecord.iconUrl && (
+              <div>
+                <Text strong>应用图标：</Text>
+                <div style={{ marginTop: 6 }}>
+                  <img src={previewRecord.iconUrl} alt='icon' style={{ width: 120, height: 120, objectFit: 'contain' }} />
+                </div>
+              </div>
+            )}
             <div>
               <Text strong>分享编码：</Text>
-              <Text code>{previewRecord.shareCode}</Text>
+              <Text code style={{ fontSize: 16 }}>{previewRecord.shareCode}</Text>
+            </div>
+            <div>
+              <Text strong>访问链接：</Text>
+              <Tag color='cyan'>{SHARE_INFO_BASE + previewRecord.shareCode}</Tag>
             </div>
             <div>
               <Text strong>应用名称：</Text>
-              <Text>{previewRecord.extraData?.appName || '-'}</Text>
+              <Text>{previewRecord.appName}</Text>
             </div>
             <div>
               <Text strong>页面名称：</Text>
-              <Text>{previewRecord.extraData?.pageName || '-'}</Text>
+              <Text>{previewRecord.pageName}</Text>
             </div>
             <div>
               <Text strong>页面描述：</Text>
               <div style={{ marginTop: 4 }}>
-                <Text>{previewRecord.extraData?.pageDesc || '无'}</Text>
+                <Text>{previewRecord.pageDesc || '无'}</Text>
               </div>
             </div>
             <div>
               <Text strong>文件大小：</Text>
-              <Text>{formatSize(previewRecord.fileSize)}</Text>
+              <Text>{formatSize(previewRecord.size)}</Text>
             </div>
             <div>
               <Text strong>创建时间：</Text>
-              <Text>{new Date(previewRecord.uploadTime).toLocaleString()}</Text>
+              <Text>{formatDate(previewRecord.uploadTime)}</Text>
             </div>
-            <div>
-              <Text strong>访问地址：</Text>
-              <div style={{ marginTop: 4 }}>
-                <Tag color='cyan'>{SHARE_INFO_BASE + previewRecord.shareCode}</Tag>
+            {previewRecord.expireTime > 0 && (
+              <div>
+                <Text strong>过期时间：</Text>
+                <Text type={isExpired(previewRecord.expireTime) ? 'danger' : undefined}>
+                  {formatDate(previewRecord.expireTime)}
+                </Text>
               </div>
-            </div>
-            <div style={{ marginTop: 8 }}>
-              <Text type='secondary'>
-                文件状态：
-                {previewRecord.fileExist
-                  ? (
-                    <Text type='success'> 文件正常存在</Text>
-                    )
-                  : (
-                    <Text type='danger'> 文件已丢失</Text>
-                    )}
-              </Text>
+            )}
+            <div style={{ marginTop: 10 }}>
+              <Button icon={<IconCopy />} onClick={() => copyAllInfo(previewRecord)}>一键复制全部分享信息</Button>
             </div>
           </Space>
         )}

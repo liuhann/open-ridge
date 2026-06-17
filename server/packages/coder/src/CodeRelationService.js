@@ -29,22 +29,23 @@ class CodeRelationService {
     }
 
     let code = existedCode
-    let retry = 0
 
-    // 循环生成随机编码 + 唯一性校验
-    while (retry < this.MAX_RETRY) {
-      const max = Math.pow(10, numberCount) - 1
-      const min = Math.pow(10, numberCount - 1)
-      const randomNum = crypto.randomInt(min, max)
-      code = String(randomNum)
+    if (!code) {
+      let retry = 0
+      // 循环生成随机编码 + 唯一性校验
+      while (retry < this.MAX_RETRY) {
+        const max = Math.pow(10, numberCount) - 1
+        const min = Math.pow(10, numberCount - 1)
+        const randomNum = crypto.randomInt(min, max)
+        code = String(randomNum)
+        const exists = await coll.exist({ code })
+        if (!exists) break
+        retry++
+      }
 
-      const exists = await coll.exist({ code })
-      if (!exists) break
-      retry++
-    }
-
-    if (retry >= this.MAX_RETRY) {
-      throw new Error('编码生成失败，可用编码已耗尽')
+      if (retry >= this.MAX_RETRY) {
+        throw new Error('编码生成失败，可用编码已耗尽')
+      }
     }
 
     const now = Date.now()
