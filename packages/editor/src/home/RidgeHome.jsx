@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { Layout, Nav, Button, Typography, Avatar, Space } from '@douyinfe/semi-ui'
 import { ICON_COMMON_USER_PLUS, ICON_COMMON_HOME, ICON_MENU_STAR, FILE_FOLDER, ICON_LOGOUT } from '../icons/icons.js'
 import AppListPanel from './AppListPanel.jsx'
+import ShareListPage from './ShareListPage.jsx'
 import RegisterDialog from './RegisterDialog.jsx'
 import LoginDialog from './LoginDialog.jsx'
 import GenerateInviteDialog from './GenerateInviteDialog.jsx'
@@ -16,6 +17,8 @@ const RidgeUHomePage = () => {
   const [registerVisible, setRegisterVisible] = useState(false)
   const [loginVisible, setLoginVisible] = useState(false)
   const [inviteVisible, setInviteVisible] = useState(false)
+
+  const [currentPage, setCurrentPage] = useState('home')
 
   // 从 store 获取登录状态 & 方法
   const logonUser = userStore(state => state.logonUser)
@@ -34,11 +37,13 @@ const RidgeUHomePage = () => {
       <Sider className='nav-sider' style={{ backgroundColor: 'var(--semi-color-bg-1)' }}>
         <Nav
           className='nav-sider-nav'
+          selectedKeys={[currentPage]}
           style={{ maxWidth: 220, height: '100%' }}
           items={[
             { itemKey: 'home', text: '首页', icon: ICON_COMMON_HOME },
             { itemKey: 'template', text: '模板', icon: ICON_MENU_STAR },
-            { itemKey: 'myApp', text: '我的应用', icon: FILE_FOLDER }
+            { itemKey: 'myApp', text: '我的应用', icon: FILE_FOLDER },
+            { itemKey: 'myShare', text: '我的分享', icon: FILE_FOLDER }
           ]}
           header={{
             logo: <Avatar size='small' style={{ fontSize: 28 }}>{ICON_COMMON_USER_PLUS}</Avatar>,
@@ -93,14 +98,17 @@ const RidgeUHomePage = () => {
               </Button>
             )
           }}
-          onSelect={(data) => console.log('选择菜单：', data)}
+          onSelect={(data) => {
+            setCurrentPage(data.itemKey)
+          }}
           onClick={(data) => console.log('点击菜单：', data)}
         />
       </Sider>
 
       <Layout>
         <Content style={{ background: 'var(--semi-color-bg-1)', overflow: 'auto' }}>
-          <AppListPanel />
+          {currentPage === 'home' ? <AppListPanel /> : null}
+          {currentPage === 'myShare' ? <ShareListPage /> : null}
         </Content>
       </Layout>
 

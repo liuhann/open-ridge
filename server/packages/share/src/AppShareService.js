@@ -27,11 +27,16 @@ class AppShareService {
   async initRoutes () {
     this.router.post('/app/share', this.uploadAndGenShareCode.bind(this))
     this.router.get('/app/share/check-exist', this.checkShareExist.bind(this))
-    this.router.get('/app/share/:inviteCode', this.getFileByShareCode.bind(this))
-    this.router.get('/app/share/info/:inviteCode', this.getShareInfoByCode.bind(this))
     this.router.get('/app/share/list', this.queryUserAllShare.bind(this))
+
+    // 获取分享的下载和图片， 提供类似 file 下载的标准功能 （zip|png）
+    this.router.get('/app/share/app/:inviteCode', this.getFileByShareCode.bind(this))
+    this.router.get('/app/share/icon/:inviteCode', this.getFileByShareCode.bind(this))
+
+    //
+    this.router.get('/app/share/info/:inviteCode', this.getShareInfoByCode.bind(this))
     this.router.get('/app/share/search', this.searchShareFuzzy.bind(this))
-    this.router.delete('/app/share/:inviteCode', this.cancelShare.bind(this))
+    this.router.delete('/app/share/code/:inviteCode', this.cancelShare.bind(this))
   }
 
   getDateDirPath () {
@@ -144,12 +149,14 @@ class AppShareService {
 
     // 自动清理同用户+appId+pageName旧记录
     const oldMatchRecords = await this.getExactMatchShareByUser(loginUser.id, extraData.appId, extraData.pageName)
+    let oldCode = ''
     for (const record of oldMatchRecords) {
+      oldCode = record.code
       await this.removeShareRecordAndFile(record.code)
     }
 
     const dateRelativeDir = this.getDateDirPath()
-    const mainSaveName = `${Date.now()}_${originalname}`
+    const mainSaveName = `${Date.now()}_${extraData.appId}.zip`
     // 存入数据库的相对路径
     const mainRelativePath = path.join(dateRelativeDir, mainSaveName)
     // 真实绝对路径用于写入文件
@@ -159,8 +166,7 @@ class AppShareService {
     let iconSaveName = ''
     let iconRelativePath = ''
     if (iconFile) {
-      const iconOriginName = iconFile.originalname
-      iconSaveName = `icon_${Date.now()}_${iconOriginName}`
+      iconSaveName = `icon_${Date.now()}_${extraData.iconFileName}`
       iconRelativePath = path.join(dateRelativeDir, iconSaveName)
       const iconAbsPath = this.getAbsFilePath(iconRelativePath)
       await fse.move(iconFile.filepath, iconAbsPath, { overwrite: true })
@@ -177,7 +183,7 @@ class AppShareService {
       uploadTime: new Date(),
       ...extraData
     }
-    const shareCode = await this.coderService.createCodeRelation(flatInfo, this.codeLen, this.codeExpireDay)
+    const shareCode = await this.coderService.createCodeRelation(flatInfo, this.codeLen, this.codeExpireDay, oldCode)
 
     ctx.body = {
       code: 0,
@@ -208,8 +214,8 @@ class AppShareService {
       filePath: item.filePath,
       iconFilePath: item.iconFilePath || '',
       // 前端可用完整静态地址
-      fileUrl: this.getStaticUrl(item.filePath),
-      iconUrl: item.iconFilePath ? this.getStaticUrl(item.iconFilePath) : '',
+      // fileUrl: this.getStaticUrl(item.filePath),
+      // iconUrl: item.iconFilePath ? this.getStaticUrl(item.iconFilePath) : '',
       extraData: {
         appId: item.appId,
         appName: item.appName,

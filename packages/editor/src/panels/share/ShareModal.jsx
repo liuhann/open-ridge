@@ -58,6 +58,7 @@ export default function AppShareModal ({ visible, onClose }) {
         pageName: '',
         pageDesc: '',
         iconUrl: '',
+        iconFileName: '',
         fileSize: 0,
         appFile: null,
         iconFile: null
@@ -93,8 +94,11 @@ export default function AppShareModal ({ visible, onClose }) {
           setRealIsShared(false)
           return
         }
+        // 查询存在时返回这个信息，请据此进行处理
+        // {"code":0,"msg":"查询成功","data":{"isShared":true,"shareCount":1}}
+
         setIsNoLogin(false)
-        setRealIsShared(res.isShared)
+        setRealIsShared(res.data.isShared)
       } catch (err) {
         Toast.warning('初始化分享弹窗失败：' + err.message)
       } finally {
@@ -138,15 +142,39 @@ export default function AppShareModal ({ visible, onClose }) {
     setLoading(true)
     try {
       const extraData = {
+        iconFileName: shareInfo.iconFileName,
         appId: shareInfo.appId,
         pageName,
         pageDesc: editDesc
       }
       // 后端上传接口自动覆盖旧数据，统一只调用 uploadShare
       const res = await ShareEditApi.uploadShare(appFile, iconFile, extraData)
-      setShareCode(res.shareCode)
-      setShowResult(true)
-      Toast.success('分享操作完成')
+
+      /**
+      res = {
+          "code": 0,
+          "msg": "应用分享成功，旧分享记录已自动覆盖清理",
+          "data": {
+              "shareCode": "140665",
+              "iconFileName": "icon_1781606170208_qr.png",
+              "expireDay": 1,
+              "extraData": {
+                  "iconFileName": "qr.png",
+                  "appId": "ridge-hecebxwn",
+                  "pageName": "AI-Generated",
+                  "pageDesc": "生成一个QRCode生成器， 允许用户输入一个字符串， 点击生成后， 生成二维码。 在下方提供下载按钮，可以将生成的二维码保存",
+                  "iconFile": "icon_1781606170208_qr.png"
+              }
+          }
+      }
+       */
+      if (res.code === 0) {
+        setShareCode(res.data.shareCode)
+        setShowResult(true)
+        Toast.success('分享操作完成')
+      } else {
+        Toast.error('分享异常, 返回码' + res.code + ':' + res.msg)
+      }
     } catch (err) {
       Toast.error(err.message || '分享失败')
     } finally {

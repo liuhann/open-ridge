@@ -432,6 +432,7 @@ const editorStore = create((set, get) => ({
     shareInfo.appId = packageJSON.name
     shareInfo.pageName = pageFile.json.title || pageFile.json.name || '未命名页面'
     shareInfo.pagePath = pageFile.path
+    shareInfo.iconFileName = packageJSON.icon
     shareInfo.pageDesc = pageFile.json.userPrompt || ''
     shareInfo.fileSize = exportedFileBlob.size
     // 此字段废弃，弹窗内部走接口实时查询 realIsShared

@@ -18,7 +18,7 @@ class CodeRelationService {
    * @param {number} expire 过期天数，不传/传0表示永久有效
    * @returns {Promise<string>} 数字编码
    */
-  async createCodeRelation (infomration, numberCount, expire = 0) {
+  async createCodeRelation (infomration, numberCount, expire = 0, existedCode) {
     const coll = await this.getCRCollection()
     if (!Number.isInteger(numberCount) || numberCount < 1) {
       throw new Error('编码位数必须为正整数')
@@ -28,7 +28,7 @@ class CodeRelationService {
       throw new Error('过期天数必须为非负整数')
     }
 
-    let code = ''
+    let code = existedCode
     let retry = 0
 
     // 循环生成随机编码 + 唯一性校验
