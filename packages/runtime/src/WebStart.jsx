@@ -1,5 +1,48 @@
 import React, { useState, useRef } from 'react'
 import { createRoot } from 'react-dom/client'
+import { loadPage } from './index.js'
+import Localforge from 'localforage'
+
+// 独立 IndexedDB 存储实例
+const store = Localforge.createInstance({ name: 'ridge-runtime-apps' })
+
+// 缓存工具：按邀请码隔离多应用缓存
+const fileCache = {
+  // 获取当前编码对应的缓存键前缀
+  getKeyPrefix: (code) => `share_${code}_`,
+  // 读取对应编码的文件hash
+  getHash: async (code) => {
+    const key = `${fileCache.getKeyPrefix(code)}hash`
+    return store.getItem(key)
+  },
+  // 读取对应编码的Blob包
+  getBlob: async (code) => {
+    const key = `${fileCache.getKeyPrefix(code)}blob`
+    return store.getItem(key)
+  },
+  // 保存当前编码的hash与blob
+  setCache: async (code, hash, blob) => {
+    const prefix = fileCache.getKeyPrefix(code)
+    await Promise.all([
+      store.setItem(`${prefix}hash`, hash),
+      store.setItem(`${prefix}blob`, blob)
+    ])
+  },
+  // 清空单个编码缓存
+  clearSingleCache: async (code) => {
+    const prefix = fileCache.getKeyPrefix(code)
+    await Promise.all([
+      store.removeItem(`${prefix}hash`),
+      store.removeItem(`${prefix}blob`)
+    ])
+  },
+  // 清空全部分享缓存（可选全局清理）
+  clearAllShareCache: async () => {
+    const keys = await store.keys()
+    const shareKeys = keys.filter(k => k.startsWith('share_'))
+    await Promise.all(shareKeys.map(k => store.removeItem(k)))
+  }
+}
 
 // 全局接口方法，对接后端 /app/share/info/:inviteCode
 const getShareInfoByCode = async (code) => {
@@ -7,10 +50,18 @@ const getShareInfoByCode = async (code) => {
   return res.json()
 }
 
+// 工具：下载文件二进制流返回Blob
+const downloadFileBlob = async (url) => {
+  const response = await fetch(url)
+  if (!response.ok) throw new Error(`文件下载失败，状态码：${response.status}`)
+  return response.blob()
+}
+
 const ShareQueryPage = () => {
   // 输入值、加载、分享详情、错误提示
   const [code, setCode] = useState('')
   const [loading, setLoading] = useState(false)
+  const [fileLoading, setFileLoading] = useState(false)
   const [info, setInfo] = useState(null)
   const [errorMsg, setErrorMsg] = useState('')
   const inputRef = useRef(null)
@@ -55,17 +106,83 @@ const ShareQueryPage = () => {
     fetchInfo(code)
   }
 
-  // 打开应用（预留空方法）
-  const openApp = () => {
-    // 业务逻辑自行填充
-    console.log('打开应用', info)
+  // 打开应用：按当前code独立读取缓存，多应用互不冲突
+  const openApp = async () => {
+    if (!info || !code) {
+      setErrorMsg('未查询到分享信息，请先查询')
+      return
+    }
+    const { fileHash, fileUrl, pageName } = info
+    if (!fileUrl) {
+      setErrorMsg('该分享无配套页面文件，无法进入应用')
+      return
+    }
+
+    if (fileLoading) return
+    setFileLoading(true)
+    setErrorMsg('')
+
+    try {
+      // 读取当前编码专属缓存
+      const cachedHash = await fileCache.getHash(code)
+      let fileZipBlob = null
+
+      if (cachedHash === fileHash) {
+        console.log(`编码${code}：哈希匹配，读取本地缓存Blob`)
+        fileZipBlob = await fileCache.getBlob(code)
+        // hash存在但blob丢失，清理当前编码缓存重新下载
+        if (!fileZipBlob) {
+          await fileCache.clearSingleCache(code)
+        }
+      }
+
+      // 无缓存/哈希变更/blob损坏，重新下载
+      if (!fileZipBlob) {
+        console.log(`编码${code}：资源更新或无缓存，重新下载`)
+        fileZipBlob = await downloadFileBlob(fileUrl)
+        // 存入当前编码独立缓存
+        await fileCache.setCache(code, fileHash, fileZipBlob)
+      }
+
+      const pagePath = `/${pageName}.json`
+      await loadPage('#app', fileZipBlob, pagePath)
+
+      document.getElementById('app').style.display = 'visible'
+      document.getElementById('root').style.display = 'none'
+      console.log('页面加载完成，应用已打开', info)
+    } catch (err) {
+      console.error('打开应用失败：', err)
+      setErrorMsg(`资源加载失败：${err.message || '未知错误'}`)
+      // 异常仅清理当前编码缓存，不影响其他应用缓存
+      await fileCache.clearSingleCache(code)
+    } finally {
+      setFileLoading(false)
+    }
   }
 
   // 复制链接
   const copyUrl = async () => {
     const url = window.location.origin + '/app/share/info/' + code
-    await navigator.clipboard.writeText(url)
-    alert('链接已复制')
+    try {
+      await navigator.clipboard.writeText(url)
+      alert('链接已复制到剪贴板')
+    } catch (err) {
+      setErrorMsg('复制失败，请手动复制链接')
+      console.error('复制链接异常', err)
+    }
+  }
+
+  // 清理当前编码缓存按钮方法
+  const clearCurrentCodeCache = async () => {
+    if (!code) return
+    await fileCache.clearSingleCache(code)
+    alert(`编码${code}本地缓存已清空`)
+  }
+
+  // 全局清空所有分享缓存（可选）
+  const clearAllShareCache = async () => {
+    await fileCache.clearAllShareCache()
+    alert('全部分享应用本地缓存已清空')
   }
 
   return (
@@ -94,7 +211,7 @@ const ShareQueryPage = () => {
           disabled={loading || code.length !== 6}
           style={searchBtn}
         >
-          {loading ? '查询中...' : '查询分享'}
+          {loading ? '查询中...' : '进入应用'}
         </button>
 
         {/* 分享详情卡片 */}
@@ -111,19 +228,19 @@ const ShareQueryPage = () => {
 
             <div style={infoRow}>
               <span style={label}>分享编码：</span>
-              <span style={codeText}>{code}</span>
+              <span style={codeText}>{info.code}</span>
             </div>
             <div style={infoRow}>
               <span style={label}>应用名称：</span>
-              <span>{info.extraData.appName}</span>
+              <span>{info.appName}</span>
             </div>
             <div style={infoRow}>
               <span style={label}>页面名称：</span>
-              <span>{info.extraData.pageName}</span>
+              <span>{info.pageName}</span>
             </div>
             <div style={infoRow}>
               <span style={label}>页面描述：</span>
-              <p style={descText}>{info.extraData.pageDesc || '无'}</p>
+              <p style={descText}>{info.pageDesc || '无'}</p>
             </div>
             <div style={infoRow}>
               <span style={label}>文件哈希：</span>
@@ -131,8 +248,16 @@ const ShareQueryPage = () => {
             </div>
 
             <div style={btnGroup}>
-              <button onClick={openApp} style={primaryBtn}>进入应用</button>
+              <button
+                onClick={openApp}
+                disabled={fileLoading}
+                style={primaryBtn}
+              >
+                {fileLoading ? '资源加载中...' : '进入应用'}
+              </button>
               <button onClick={copyUrl} style={lightBtn}>复制访问链接</button>
+              <button onClick={clearCurrentCodeCache} style={lightBtn}>清除当前编码缓存</button>
+              <button onClick={clearAllShareCache} style={lightBtn}>清空全部分享缓存</button>
             </div>
           </div>
         )}
@@ -190,7 +315,7 @@ const searchBtn = {
   fontSize: '18px',
   borderRadius: '10px',
   border: 'none',
-  background: '#4080ff',
+  background: '#00b42a',
   color: '#fff',
   cursor: 'pointer',
   marginTop: '8px'

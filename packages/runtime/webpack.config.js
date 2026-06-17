@@ -1,13 +1,20 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+
+const mode = process.env.NODE_ENV || 'production'
+const isProduction = mode === 'production'
+const styleLoader = isProduction ? MiniCssExtractPlugin.loader : 'style-loader'
 
 module.exports = {
+  mode,
   entry: './src/WebStart.jsx',
   output: {
     filename: 'share-query.[contenthash:6].js',
     path: path.resolve(__dirname, 'dist'),
     clean: true
   },
+  devtool: 'eval-source-map',
   devServer: {
     static: {
       directory: path.join(__dirname, '../../public')
@@ -22,7 +29,6 @@ module.exports = {
     compress: true,
     port: 9001
   },
-  mode: process.env.NODE_ENV || 'production',
   resolve: {
     extensions: ['.js', '.jsx']
   },
@@ -44,6 +50,10 @@ module.exports = {
             ]
           }
         }
+      },
+      {
+        test: /\.css$/i,
+        use: [styleLoader, 'css-loader']
       }
     ]
   },
@@ -52,6 +62,7 @@ module.exports = {
       template: './src/index.html',
       filename: 'index.html',
       minify: process.env.NODE_ENV === 'production' ? { collapseWhitespace: true } : false
-    })
+    }),
+    new MiniCssExtractPlugin()
   ]
 }

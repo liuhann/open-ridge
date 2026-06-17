@@ -2,7 +2,6 @@ import JSZip from 'jszip'
 import axios from 'axios'
 import { saveAs } from '../utils/blob.js'
 import { rollup } from '@rollup/browser'
-import { convertToValidVariableName } from 'ridgejs'
 
 export default class DistributionService {
   constructor (context) {
