@@ -53,6 +53,24 @@ disabled: boolean，默认false。true时禁用输入，无法操作。
 onChange: 输入内容修改触发，回调参数 (value, event)。
 
 
+ListGroup (列表组)
+用途：侧边导航、文字列表、分类选择，基于Bootstrap list-group交互按钮列表，仅支持纯字符串数组数据源。
+组件路径 (Path): ridge-modernize/ListGroup
+属性 (Props) 配置：
+dataSource: 字符串数组，默认["选项一","选项二","选项三"]。数组内每个字符串对应一条列表显示文本。
+value: string，默认空字符串。当前选中条目文本，完全匹配则条目高亮active。
+事件 (Events)：
+onChange: 点击列表条目触发，回调参数为点击条目的字符串文本。
+
+
+Progress (进度条)
+用途：数据进度可视化组件，用于加载进度、完成率、任务进度展示，基于Bootstrap progress样式，支持多主题色与自定义高度。
+组件路径 (Path): ridge-modernize/Progress
+属性 (Props) 配置：
+percent: number，默认0。取值范围0~100，代表当前进度百分比。
+事件 (Events)：无
+
+
 RadioGroup (单选框组)
 用途：表单单选场景，根据数据源生成一组彩色单选框，同一分组互斥仅能选择一项，返回单个value值，基于Bootstrap form-check样式，配套AdminMart后台主题。
 组件路径 (Path): ridge-modernize/RadioGroup
@@ -85,3 +103,13 @@ label: string，默认"开关"。开关右侧显示文本。
 disabled: boolean，默认false。true禁用开关，不可点击切换。
 事件 (Events)：
 onChange: 切换开关状态触发，回调参数 (checked布尔值, 原生event)。
+
+
+Typography (文本排版组件)
+用途：页面文字展示组件，统一封装Bootstrap标准文字样式，支持多级标题、大段落，单选选择单一文字修饰效果。
+组件路径 (Path): ridge-modernize/Typography
+属性 (Props) 配置：
+children: string，默认"文本内容"。组件展示文字。
+tag: string，默认"p"。可选h1/h2/h3/h4/h5/h6/p，控制DOM标签。
+style: CSSProperties，无默认值。行内样式对象。
+事件 (Events)：无

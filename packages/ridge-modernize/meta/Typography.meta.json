@@ -1,0 +1,75 @@
+{
+  "name": "Typography",
+  "title": "文本排版",
+  "icon": "svgs/typography.svg",
+  "description": "Bootstrap标准文字排版组件，支持h1~h6标题、大段落lead，单选选择文字修饰样式：高亮/删除/下划线/加粗/斜体等",
+  "tags": [
+    "文本",
+    "标题",
+    "排版",
+    "文字展示",
+    "Bootstrap"
+  ],
+  "category": "基础展示组件",
+  "version": "1.0.0",
+  "author": "LiuHan",
+  "visualConfig": {
+    "preferredWidth": 320,
+    "preferredHeight": 40,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "children",
+      "description": "展示的文字内容",
+      "label": "文本内容",
+      "type": "string",
+      "defaultValue": "文本内容"
+    },
+    {
+      "name": "tag",
+      "description": "渲染标签类型，标题或普通段落",
+      "label": "标签类型",
+      "control": "select",
+      "type": "string",
+      "options": [
+        { "label": "h1 一级标题", "value": "h1" },
+        { "label": "h2 二级标题", "value": "h2" },
+        { "label": "h3 三级标题", "value": "h3" },
+        { "label": "h4 四级标题", "value": "h4" },
+        { "label": "h5 五级标题", "value": "h5" },
+        { "label": "h6 六级标题", "value": "h6" },
+        { "label": "p 普通段落", "value": "p" }
+      ],
+      "defaultValue": "p"
+    },
+    {
+      "name": "lead",
+      "description": "大段落文本，突出显示",
+      "label": "Lead大段落",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "textStyle",
+      "description": "文字修饰样式，单选仅支持一种效果",
+      "label": "文字修饰样式",
+      "control": "select",
+      "type": "string",
+      "options": [
+        { "label": "普通无修饰", "value": "normal" },
+        { "label": "mark 高亮标记", "value": "mark" },
+        { "label": "del 删除线", "value": "del" },
+        { "label": "s 失效删除线", "value": "s" },
+        { "label": "ins 新增下划线", "value": "ins" },
+        { "label": "u 普通下划线", "value": "u" },
+        { "label": "small 小号文字", "value": "small" },
+        { "label": "strong 加粗", "value": "strong" },
+        { "label": "em 斜体", "value": "em" }
+      ],
+      "defaultValue": "normal"
+    }
+  ],
+  "events": []
+}

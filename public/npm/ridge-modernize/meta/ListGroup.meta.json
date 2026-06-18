@@ -1,0 +1,48 @@
+{
+  "name": "ListGroup",
+  "title": "列表组",
+  "icon": "svgs/list-group.svg",
+  "description": "Bootstrap list-group 交互文字列表，字符串数组渲染列表，支持选中高亮、点击切换选中值",
+  "tags": [
+    "列表",
+    "导航",
+    "单选列表",
+    "Bootstrap"
+  ],
+  "category": "基础组件",
+  "version": "1.0.0",
+  "author": "LiuHan",
+  "visualConfig": {
+    "preferredWidth": 220,
+    "preferredHeight": 260,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "dataSource",
+      "description": "字符串数组，每一项为列表展示文本",
+      "label": "列表数据源",
+      "type": "object",
+      "defaultValue": [
+        "选项一",
+        "选项二",
+        "选项三"
+      ]
+    },
+    {
+      "name": "value",
+      "description": "当前选中字符串，匹配列表项自动高亮active",
+      "label": "选中值",
+      "type": "string",
+      "defaultValue": ""
+    }
+  ],
+  "events": [
+    {
+      "name": "onChange",
+      "description": "点击列表项触发，回调参数为当前点击的字符串文本",
+      "label": "选中变更"
+    }
+  ]
+}

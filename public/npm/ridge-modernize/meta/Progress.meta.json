@@ -1,0 +1,81 @@
+{
+  "name": "Progress",
+  "title": "进度条",
+  "icon": "svgs/progress.svg",
+  "description": "基于Bootstrap progress封装进度条，支持多主题色、自定义高度、百分比进度",
+  "tags": [
+    "进度条",
+    "展示",
+    "数据可视化",
+    "Bootstrap"
+  ],
+  "category": "数据展示组件",
+  "version": "1.0.0",
+  "author": "LiuHan",
+  "visualConfig": {
+    "preferredWidth": 120,
+    "preferredHeight": 12,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "percent",
+      "description": "进度百分比 0~100",
+      "label": "进度百分比",
+      "control": "number",
+      "type": "number",
+      "min": 0,
+      "max": 100,
+      "defaultValue": 0
+    },
+    {
+      "name": "variant",
+      "description": "进度条主题色彩",
+      "label": "主题色",
+      "control": "select",
+      "type": "string",
+      "options": [
+        {
+          "label": "Primary主色",
+          "value": "primary"
+        },
+        {
+          "label": "Secondary次要",
+          "value": "secondary"
+        },
+        {
+          "label": "Success成功",
+          "value": "success"
+        },
+        {
+          "label": "Info信息",
+          "value": "info"
+        },
+        {
+          "label": "Warning警告",
+          "value": "warning"
+        },
+        {
+          "label": "Danger危险",
+          "value": "danger"
+        },
+        {
+          "label": "Inverse深色",
+          "value": "inverse"
+        }
+      ],
+      "defaultValue": "primary"
+    },
+    {
+      "name": "height",
+      "description": "进度条高度(px)",
+      "label": "条高度",
+      "control": "number",
+      "type": "number",
+      "min": 1,
+      "defaultValue": 6
+    }
+  ],
+  "events": []
+}

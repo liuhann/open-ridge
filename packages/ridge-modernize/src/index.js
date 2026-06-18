@@ -7,6 +7,8 @@ import RadioGroup from './RadioGroup'
 import Switch from './Switch'
 import Select from './Select'
 import Progress from './Progress'
+import Typography from './Typography'
+import ListGroup from './ListGroup'
 export {
   Input,
   DropDown,
@@ -16,5 +18,7 @@ export {
   RadioGroup,
   Switch,
   Select,
-  Progress
+  Progress,
+  Typography,
+  ListGroup
 }
