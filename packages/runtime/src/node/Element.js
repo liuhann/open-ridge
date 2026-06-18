@@ -251,40 +251,6 @@ export default class Element extends BaseNode {
     this.events = this.events || {} // 确保事件对象存在
 
     // ======================================================
-    // 【官方规范】处理双向绑定 meta.sync
-    // 格式：meta.sync = {
-    //   value: { source: 'onChange', path: 'target.value' }
-    // }
-    // ======================================================
-    const sync = this.config.meta?.sync
-    if (sync && typeof sync === 'object' && !Array.isArray(sync)) {
-    // 遍历所有需要双向绑定的属性
-      for (const [propName, syncRule] of Object.entries(sync)) {
-        const { source: eventName, path } = syncRule // source=事件名, path=取值路径
-        if (!eventName || !this.config.propEx[propName]) continue
-
-        // 注册事件：实现自动同步到状态
-        this.events[eventName] = (...payloadArgs) => {
-        // 第一步：按规则取事件值
-          let value = payloadArgs[0] // 默认取第一个参数
-          if (path && typeof value === 'object') {
-          // 按 path 如 target.value 取值
-            value = path.split('.').reduce((obj, key) => obj?.[key], value)
-          }
-
-          // 第二步：更新组件属性
-          this.setProperties({ [propName]: value })
-
-          // 第三步：同步到全局状态（propsEx绑定的路径）
-          const store = this.composite.store
-          if (store) {
-            store.dispatchChange(this.config.propEx[propName], value)
-          }
-        }
-      }
-    }
-
-    // ======================================================
     // 【官方规范】处理配置事件：elements[x].events.onClick = [...]
     // ======================================================
     for (const [eventName, actions] of Object.entries(events)) {
@@ -316,23 +282,42 @@ export default class Element extends BaseNode {
   initSubscription () {
     const store = this.composite.store
     if (!store) return
+
+    // 样式动态订阅
     Object.values(this.config.styleEx || {}).forEach(expr => {
       store.subscribe(expr, () => this.forceUpdateStyle())
     })
 
+    // 属性动态订阅
     Object.keys(this.config.propEx || {}).forEach(key => {
       const expr = this.config.propEx[key]
       store.subscribe(expr, () => this.forceUpdateProperty())
 
       if (key === 'value') {
-        // 注册事件：实现自动同步到状态
-        this.events.onChange = (payload) => {
+      // 1. 定义默认双向绑定核心逻辑（始终执行）
+        const defaultBindOnChange = (payload) => {
           let targetValue = payload
-          if (payload.target && payload.target.value != null) { // 处理Input原生
+          if (payload.target && payload.target.value != null) {
             targetValue = payload.target.value
           }
           this.properties.value = targetValue
           store.dispatchChange(expr, targetValue)
+        }
+
+        // 2. 获取用户已配置的自定义 onChange（来自 initializeEvents）
+        const userOnChange = this.events.onChange
+
+        if (userOnChange) {
+        // 3. 用户已自定义 onChange：链式执行，先同步状态，再触发用户动作
+          this.events.onChange = (...payloadArgs) => {
+          // 第一步：执行默认双向绑定，更新 state
+            defaultBindOnChange(...payloadArgs)
+            // 第二步：执行用户自定义的事件动作，此时 state 已是最新值
+            userOnChange(...payloadArgs)
+          }
+        } else {
+        // 4. 无自定义事件：直接使用默认双向绑定
+          this.events.onChange = defaultBindOnChange
         }
       }
     })
