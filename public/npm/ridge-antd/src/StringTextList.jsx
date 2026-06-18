@@ -33,8 +33,6 @@ const StringTextList = ({
         }}
         style={{
           cursor: 'pointer',
-          paddingLeft: '16px',
-          paddingRight: '16px',
           backgroundColor: isActive ? '#e6f7ff' : 'transparent',
           ...(isActive ? { borderLeft: '3px solid #1890ff' } : {})
         }}

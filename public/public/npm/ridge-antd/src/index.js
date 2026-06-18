@@ -51,6 +51,7 @@ import Upload from './RidgeUpload.jsx'
 import DatePicker from './RidgeDatePicker.jsx'
 import Table from './RidgeTable.jsx'
 import StringTextList from './StringTextList.jsx'
+import ComplexTextList from './ComplexTextList.jsx'
 
 export {
   Select,
@@ -95,6 +96,7 @@ export {
   Transfer,
   Tree,
   TreeSelect,
+  ComplexTextList,
   StringTextList,
   AvatarGroup,
   Breadcrumb,

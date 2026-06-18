@@ -1,7 +1,7 @@
 {
   "name": "ridge-antd",
   "schemaVersion": "2.0",
-  "lastUpdated": "2026-06-18T02:02:59.297Z",
+  "lastUpdated": "2026-06-18T02:28:33.700Z",
   "generatedBy": "ridge-ui-cli",
   "components": [
     {
@@ -1320,6 +1320,139 @@
           "name": "onChange",
           "label": "颜色变化",
           "description": "颜色值改变时触发，返回颜色对象和CSS字符串"
+        }
+      ]
+    },
+    {
+      "name": "ComplexTextList",
+      "title": "结构化复杂列表",
+      "description": "支持标题/描述/标签展示，单选/多选模式，基于下标的选择控制",
+      "tags": [
+        "列表",
+        "数据展示",
+        "单选",
+        "多选",
+        "标签"
+      ],
+      "category": "数据展示",
+      "version": "1.0.0",
+      "author": "LiuHan",
+      "visualConfig": {
+        "preferredWidth": 320,
+        "preferredHeight": 180,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "dataSource",
+          "description": "数据源，包含title/description/tags",
+          "label": "数据源",
+          "type": "object",
+          "defaultValue": [
+            {
+              "title": "标题",
+              "description": "描述",
+              "tags": [
+                "标签1",
+                "标签2"
+              ]
+            },
+            {
+              "title": "标题2",
+              "description": "描述2",
+              "tags": [
+                "标签1"
+              ]
+            }
+          ]
+        },
+        {
+          "name": "bordered",
+          "description": "显示外边框",
+          "label": "边框",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "size",
+          "description": "列表尺寸",
+          "label": "尺寸",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "小号",
+              "value": "small"
+            },
+            {
+              "label": "默认",
+              "value": "default"
+            },
+            {
+              "label": "大号",
+              "value": "large"
+            }
+          ],
+          "defaultValue": "default"
+        },
+        {
+          "name": "split",
+          "description": "显示项分割线",
+          "label": "分割线",
+          "type": "boolean",
+          "defaultValue": true
+        },
+        {
+          "name": "loading",
+          "description": "全局加载状态",
+          "label": "加载中",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "multiple",
+          "description": "开启多选模式(显示Checkbox)",
+          "label": "允许多选",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "selectedKeys",
+          "description": "已选中项下标数组",
+          "label": "选中下标",
+          "type": "object",
+          "defaultValue": []
+        },
+        {
+          "name": "itemLayout",
+          "description": "列表项布局",
+          "label": "布局",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "横向",
+              "value": "horizontal"
+            },
+            {
+              "label": "竖向",
+              "value": "vertical"
+            }
+          ],
+          "defaultValue": "horizontal"
+        }
+      ],
+      "events": [
+        {
+          "name": "onChangeSelect",
+          "description": "选中变更，返回下标数组",
+          "label": "选择变更"
+        },
+        {
+          "name": "onTagClick",
+          "description": "标签点击，返回行下标+标签文字",
+          "label": "标签点击"
         }
       ]
     },
@@ -3842,8 +3975,8 @@
       "version": "1.0.0",
       "author": "LiuHan",
       "visualConfig": {
-        "preferredWidth": 400,
-        "preferredHeight": 300,
+        "preferredWidth": 226,
+        "preferredHeight": 160,
         "resizable": true,
         "aspectRatio": "no"
       },
