@@ -126,6 +126,7 @@ class EditorComposite extends Composite {
 
       this.el.style.width = width + 'px'
       this.el.style.height = height + 'px'
+
       this.el.style.overflowX = 'initial'
       this.el.style.overflowY = 'initial'
     }

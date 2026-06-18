@@ -2,31 +2,11 @@ import React, { useRef, useState, forwardRef, useEffect, useImperativeHandle } f
 import { SideSheet, Spin, Tabs, TabPane, Modal, Toast, Typography, Button } from '@douyinfe/semi-ui'
 import editorStore from '../../store/editor.store.js'
 import { ICON_COMMON_CLOSE, ICON_COMMON_SAVE, ICON_COMMON_DOWNLOAD } from '../../icons/icons.js'
-// import context from '../../service/RidgeEditorContext.js'
 import CodeMirror from '@uiw/react-codemirror'
 
 const { Text } = Typography
 
-const config = {
-  // eslint configuration
-  languageOptions: {
-    globals: {
-    },
-    parserOptions: {
-      ecmaVersion: 2022,
-      sourceType: 'module'
-    }
-  },
-  rules: {
-    semi: ['error', 'never']
-  }
-}
-
-/**
- * 从剪贴板获取文本
- * @returns {Promise<string>} 剪贴板中的文本内容
- * @throws {Error} 获取失败时抛出错误（如用户拒绝权限、浏览器不支持）
- */
+// ---------- 工具函数：剪贴板、文件下载 ----------
 async function getTextFromClipboard () {
   try {
     // 方式1：使用现代剪贴板 API（推荐）
@@ -49,7 +29,6 @@ async function copyTextToClipboard (text) {
     console.error('复制失败：传入的内容不是字符串')
     return false
   }
-
   try {
     // 方式1：现代剪贴板 API（推荐）
     if (navigator.clipboard && window.isSecureContext) {
@@ -95,268 +74,261 @@ function downloadTextAsFile (text, filename = 'download.txt', charset = 'utf-8')
   }
 }
 
-// 使用示例
-// downloadTextAsFile('这是要下载的文本内容', '我的文本文件.txt');
+// ---------- 轻量 JS 语法检测（无额外依赖，仅检测语法错误） ----------
+function checkJsSyntax (code) {
+  try {
+    // 预处理兼容 ES Module 语法：移除 import/export 关键字后再做语法校验
+    const processedCode = code
+      .replace(/^import\s+.*?;?$/gm, '') // 移除 import 整行
+      .replace(/^export\s+default\s+/gm, 'return ') // 替换 export default 为 return
+      .replace(/^export\s+/gm, '') // 移除普通 export 前缀
+    new Function(processedCode)
+    return null
+  } catch (error) {
+    return error.message
+  }
+}
 
-export default forwardRef((props, pref) => {
+// CodeMirror 自定义 JS 语法 linter（仅抛语法错误）
+const simpleJsLinter = (view) => {
+  const code = view.state.doc.toString()
+  const errorMsg = checkJsSyntax(code)
+  if (!errorMsg) return []
+  return [
+    {
+      from: 0,
+      to: view.state.doc.length,
+      severity: 'error',
+      message: `语法错误: ${errorMsg}`
+    }
+  ]
+}
+
+// ---------- 组件主体 ----------
+export default forwardRef((props, ref) => {
   const [tabs, setTabs] = useState([])
   const [currentTab, setCurrentTab] = useState('')
-  const saveBtnRef = useRef(null)
+  // 仅存储保存函数，不绑定DOM，避免引用冲突
+  const saveFnRef = useRef(null)
 
   const [currentEditText, setCurrentEditText] = useState('')
   const [loading, setLoading] = useState(true)
   const [visible, setVisible] = useState(false)
 
-  const [contents, setContents] = useState({}) // 保存打开的多个Tabs内编辑的代码文本内容，用于切换时保存、切换回来时恢复
-  const [changes, setChanges] = useState({}) // 每个文档改动标记，用于标识当前文档是否有改动
+  // 多Tab内容缓存、修改标记
+  const [contents, setContents] = useState({})
+  const [changes, setChanges] = useState({})
 
   const saveFile = editorStore(state => state.saveFile)
+  const extensionsRef = useRef({})
 
-  const extensionsRef = useRef([])
-
-  // 根据当前打开文件id初始化文件内容
-  const loadExtensionsBackup = async () => {
-    const { tooltips, keymap } = await import(/* webpackChunkName: "codemirror-common" */ '@codemirror/view')
-    const { indentWithTab } = await import(/* webpackChunkName: "codemirror-common" */ '@codemirror/commands')
-
-    // 基础扩展
-    const base = [
-      keymap.of([
-        { key: 'Mod-s', run: () => saveBtnRef.current?.(), preventDefault: true },
-        indentWithTab
-      ]),
-      tooltips({ position: 'absolute' })
-    ]
-    // const { Linter } = await import(/* webpackChunkName: "codemirror-linter" */ 'eslint-linter-browserify')
-    // const { javascript, esLint } = await import(/* webpackChunkName: "codemirror-js" */ '@codemirror/lang-javascript')
-    // const { linter, lintGutter } = await import(/* webpackChunkName: "codemirror-js" */ '@codemirror/lint')
-    // extensions.push(javascript())
-    // extensions.push(lintGutter())
-    // extensions.push(linter(esLint(new Linter(), config)))
-
-    // const { json } = await import(/* webpackChunkName: "codemirror-json" */ '@codemirror/lang-json')
-    // extensions.push(json())
-    // const { markdown } = await import(/* webpackChunkName: "codemirror-json" */ '@codemirror/lang-markdown')
-    // extensions.push(markdown())
-
-    // 语言
-    const { javascript } = await import('@codemirror/lang-javascript')
-    const { json } = await import('@codemirror/lang-json')
-    const { markdown } = await import('@codemirror/lang-markdown')
-
-    // 真正的语法检查（必须加这个才有提示！）
-    const { lintGutter, javascript: jsLint } = await import('@codemirror/lint')
-    const { json: jsonLint } = await import('@codemirror/lang-json')
-
-    extensionsRef.current = {
-      js: [...base, javascript(), jsLint(), lintGutter()],
-      json: [...base, json(), jsonLint(), lintGutter()],
-      md: [...base, markdown()]
-    }
-
-    // 最终都是 一维数组，符合类型定义
-    extensionsRef.current = {
-      js: [...base, javascript(), lintGutter()],
-      json: [...base, json(), lintGutter()],
-      md: [...base, markdown()]
-    }
-  }
+  // 加载 CodeMirror 扩展（仅首次执行一次）
   const loadExtensions = async () => {
     const { tooltips, keymap } = await import(/* webpackChunkName: "codemirror-common" */ '@codemirror/view')
     const { indentWithTab } = await import(/* webpackChunkName: "codemirror-common" */ '@codemirror/commands')
-
-    // -------------- 语言包（单独分包）--------------
-    const { javascript, esLint } = await import(/* webpackChunkName: "codemirror-js" */ '@codemirror/lang-javascript')
+    const { javascript } = await import(/* webpackChunkName: "codemirror-js" */ '@codemirror/lang-javascript')
     const { json, jsonParseLinter } = await import(/* webpackChunkName: "codemirror-json" */ '@codemirror/lang-json')
     const { markdown } = await import(/* webpackChunkName: "codemirror-md" */ '@codemirror/lang-markdown')
-
-    // -------------- Lint 核心 --------------
     const { linter, lintGutter } = await import(/* webpackChunkName: "codemirror-linter" */ '@codemirror/lint')
 
-    // 基础配置
-    const base = [
+    // 基础通用扩展
+    const baseExtensions = [
       keymap.of([
-        { key: 'Mod-s', run: () => saveBtnRef.current?.(), preventDefault: true },
+        { key: 'Mod-s', run: () => saveFnRef.current?.(), preventDefault: true },
         indentWithTab
       ]),
-      tooltips({ position: 'absolute' })
+      tooltips({ position: 'absolute' }),
+      lintGutter()
     ]
-    const { Linter } = await import(/* webpackChunkName: "codemirror-linter" */ 'eslint-linter-browserify')
 
     extensionsRef.current = {
-    // JS：高亮 + ESLint 检查 + 错误栏
-      js: [...base, javascript(), linter(esLint(new Linter(), config)), lintGutter()],
-
-      // JSON：高亮 + 检查 + 错误栏
-      json: [...base, json(), linter(jsonParseLinter()), lintGutter()],
-
-      // MD：仅高亮
-      md: [...base, markdown()]
+      // JS：语法高亮 + 轻量语法错误检测
+      js: [...baseExtensions, javascript(), linter(simpleJsLinter)],
+      // JSON：语法高亮 + 官方原生语法检测
+      json: [...baseExtensions, json(), linter(jsonParseLinter())],
+      // MD：仅语法高亮
+      md: [...baseExtensions, markdown()]
     }
   }
 
-  // 点击保存事件
+  // 保存文件
   const handleSave = async () => {
+    if (!currentTab) return
     await saveFile(currentTab, currentEditText)
-
-    // 保存成功后，清除修改标记
-    setChanges(Object.assign({}, changes, {
-      [currentTab]: null
-    }))
+    // 函数式更新，避免闭包旧值
+    setChanges(prev => ({ ...prev, [currentTab]: null }))
     Toast.success('保存成功')
   }
 
+  // 保持保存函数引用始终为最新
   useEffect(() => {
-    saveBtnRef.current = handleSave
-  }, [handleSave]) // 依赖 handleSave，保证永远最新
+    saveFnRef.current = handleSave
+  }, [handleSave])
 
-  // 外部方法：打开文件
-  const openFile = async file => {
+  // 外部调用：打开文件
+  const openFile = async (file) => {
     setVisible(true)
-    const existed = tabs.find(tab => tab.id === file.id)
 
-    // 自动识别类型
+    // 识别文件类型
     let type = 'js'
     if (file.name.endsWith('.json')) type = 'json'
     else if (file.name.endsWith('.md')) type = 'md'
 
-    if (!existed) {
-      setTabs([...tabs, { id: file.id, name: file.name, file, type }])
-    }
+    // 函数式更新Tab：避免连续打开文件时闭包旧值覆盖
+    setTabs(prevTabs => {
+      const existed = prevTabs.find(tab => tab.id === file.id)
+      if (!existed) {
+        return [...prevTabs, { id: file.id, name: file.name, file, type }]
+      }
+      return prevTabs
+    })
 
     setCurrentTab(file.id)
+
+    // 仅首次加载编辑器扩展
     if (loading) {
       await loadExtensions()
+      setLoading(false)
     }
-    setLoading(false)
-    if (contents[file.id] && type !== 'json') {
-      setCurrentEditText(contents[file.id])
-    } else {
-      setContents({
-        ...contents,
-        [file.id]: file.textContent
-      })
+
+    // 统一规则：本地缓存优先，无缓存才用原始文件内容（全类型兼容）
+    setContents(prevContents => {
+      if (prevContents[file.id] !== undefined) {
+        setCurrentEditText(prevContents[file.id])
+        return prevContents
+      }
       setCurrentEditText(file.textContent)
-    }
+      return { ...prevContents, [file.id]: file.textContent }
+    })
   }
 
-  // 打开侧边栏时： 动效结束后初始化编辑
-  const visibleChange = async () => {
-    if (visible) {
-      const tab = tabs.find(tab => tab.id === currentTab)
-      if (tab) {
-        // await initEditor(tab.file)
-        setLoading(false)
-      }
-    }
-  }
-  useImperativeHandle(pref, () => {
-    return {
-      openFile
-    }
-  })
+  // 暴露给父组件的方法
+  useImperativeHandle(ref, () => ({
+    openFile
+  }))
 
-  // 关闭Tab事件
-  const doOnTabClose = key => {
-    const leftTabs = tabs.filter(tab => tab.id !== key)
-    setTabs(leftTabs)
-    setContents(Object.assign({ }, contents, { [key]: null }))
-    setChanges(Object.assign({ }, changes, { [key]: null }))
-    if (key === currentTab) {
-      if (leftTabs.length === 0) {
-        setCurrentEditText(null)
-      } else {
-        const current = leftTabs[leftTabs.length - 1]
-        setCurrentTab(current.id)
-        setCurrentEditText(contents[current.id])
-      }
-    }
-  }
-  // 页签关闭
-  const onTabClose = key => {
-    if (changes[key]) {
-      Modal.confirm(
-        {
-          title: '当前代码有修改，关闭将丢失保存，是否继续？',
-          content: '',
-          onOk: () => {
-            doOnTabClose(key)
-          }
+  // 执行关闭Tab
+  const doOnTabClose = (key) => {
+    setTabs(prevTabs => {
+      const leftTabs = prevTabs.filter(tab => tab.id !== key)
+      // 关闭当前Tab时自动切换到最后一个
+      if (key === currentTab) {
+        if (leftTabs.length === 0) {
+          setCurrentEditText(null)
+          setCurrentTab('')
+        } else {
+          const targetTab = leftTabs[leftTabs.length - 1]
+          setCurrentTab(targetTab.id)
+          setContents(prev => {
+            setCurrentEditText(prev[targetTab.id])
+            return prev
+          })
         }
-      )
+      }
+      return leftTabs
+    })
+
+    // 清理对应缓存
+    setContents(prev => ({ ...prev, [key]: null }))
+    setChanges(prev => ({ ...prev, [key]: null }))
+  }
+
+  // Tab关闭前确认
+  const onTabClose = (key) => {
+    if (changes[key]) {
+      Modal.confirm({
+        title: '当前代码有未保存修改，关闭后将丢失，是否继续？',
+        onOk: () => doOnTabClose(key)
+      })
     } else {
       doOnTabClose(key)
     }
   }
 
-  const onTabChange = key => {
+  // 切换Tab
+  const onTabChange = (key) => {
     setCurrentTab(key)
-    setCurrentEditText(contents[key])
+    // 从缓存恢复内容，函数式写法确保取到最新值
+    setContents(prev => {
+      setCurrentEditText(prev[key])
+      return prev
+    })
   }
 
-  const renderTab = tab => {
-    if (changes[tab.id]) {
-      return tab.name + '!'
-    } else {
-      return tab.name
-    }
+  // 渲染Tab标题（带修改标记）
+  const renderTab = (tab) => {
+    return changes[tab.id] ? `${tab.name} *` : tab.name
   }
 
   const hasOpenFile = tabs.length > 0
 
-  const onCodeChange = (val, viewUpdate) => {
+  // 代码变更回调
+  const onCodeChange = (val) => {
     setCurrentEditText(val)
-    setChanges(Object.assign({ ...changes, [currentTab]: true }))
-    setContents(Object.assign({}, contents, {
-      [currentTab]: val
-    }))
+    // 函数式更新：彻底解决频繁输入时的闭包覆盖问题
+    setChanges(prev => ({ ...prev, [currentTab]: true }))
+    setContents(prev => ({ ...prev, [currentTab]: val }))
   }
 
+  // 顶部标题栏
   const RenderTitle = () => {
     return (
       <div className='code-edit-title'>
         <Text className='flex-1'>代码编辑</Text>
         <Button
-          ref={saveBtnRef}
-          disabled={!hasOpenFile} icon={ICON_COMMON_SAVE} onClick={async () => {
-            handleSave()
-          }}
+          disabled={!hasOpenFile}
+          icon={ICON_COMMON_SAVE}
+          onClick={handleSave}
         >
           保存
         </Button>
         <Button
           disabled={!hasOpenFile}
-          icon={<i className='bi bi-copy' />} onClick={async () => {
+          icon={<i className='bi bi-copy' />}
+          onClick={async () => {
             const result = await copyTextToClipboard(currentEditText)
-            if (result) {
-              Toast.success('已经将代码复制到剪切板')
-            }
+            if (result) Toast.success('已经将代码复制到剪切板')
           }}
-        >复制
+        >
+          复制
         </Button>
         <Button
           disabled={!hasOpenFile}
-          type='tertiary' icon={<i className='bi bi-clipboard-check' />} onClick={async () => {
+          type='tertiary'
+          icon={<i className='bi bi-clipboard-check' />}
+          onClick={async () => {
             const text = await getTextFromClipboard()
             if (text) {
               setCurrentEditText(text)
+              setChanges(prev => ({ ...prev, [currentTab]: true }))
+              setContents(prev => ({ ...prev, [currentTab]: text }))
             }
           }}
-        >粘贴
+        >
+          粘贴
         </Button>
         <Button
-          disabled={!hasOpenFile} type='tertiary' icon={ICON_COMMON_DOWNLOAD}
-          onClick={async () => {
-            downloadTextAsFile(currentEditText, tabs.find(tab => tab.id === currentTab).name)
+          disabled={!hasOpenFile}
+          type='tertiary'
+          icon={ICON_COMMON_DOWNLOAD}
+          onClick={() => {
+            const currentTabInfo = tabs.find(tab => tab.id === currentTab)
+            if (currentTabInfo) downloadTextAsFile(currentEditText, currentTabInfo.name)
           }}
         />
         <Button
-          type='tertiary' icon={ICON_COMMON_CLOSE} onClick={() => {
-            setVisible(false)
-          }}
+          type='tertiary'
+          icon={ICON_COMMON_CLOSE}
+          onClick={() => setVisible(false)}
         />
       </div>
     )
+  }
+
+  // 获取当前文件对应的编辑器扩展
+  const getCurrentExtensions = () => {
+    const currentTabInfo = tabs.find(t => t.id === currentTab)
+    return extensionsRef.current[currentTabInfo?.type || 'js'] || []
   }
 
   return (
@@ -370,45 +342,67 @@ export default forwardRef((props, pref) => {
       closable={false}
       maskClosable={false}
       title={<RenderTitle />}
-      onClose={() => {
-        setVisible(false)
-      }}
+      onClose={() => setVisible(false)}
       visible={visible}
       footer={<div />}
       bodyStyle={{
         zIndex: 1001,
         overflow: 'hidden'
       }}
-      // afterVisibleChange={visibleChange}
     >
       <Spin
-        tip='正在下载代码编辑模块, 请稍候..' spinning={loading} style={{
-          height: '100%',
-          width: '100%'
-        }}
+        tip='正在加载代码编辑模块，请稍候..'
+        spinning={loading}
+        style={{ height: '100%', width: '100%' }}
       >
-        <Tabs type='card' collapsible activeKey={currentTab} onTabClose={onTabClose} onChange={onTabChange}>
+        <Tabs
+          type='card'
+          collapsible
+          activeKey={currentTab}
+          onTabClose={onTabClose}
+          onChange={onTabChange}
+        >
           {tabs.map(tab => (
-            <TabPane closable tab={renderTab(tab)} itemKey={tab.id} key={tab.id} />
+            <TabPane
+              closable
+              tab={renderTab(tab)}
+              itemKey={tab.id}
+              key={tab.id}
+            />
           ))}
         </Tabs>
-        <div style={{
-          height: 'calc(100% - 40px)',
-          overflow: 'auto'
-        }}
-        >
-          {!loading && currentEditText != null &&
-            <CodeMirror
-              value={currentEditText} basicSetup extensions={extensionsRef.current[
-                tabs.find(t => t.id === currentTab)?.type || 'js'
-              ]} onChange={onCodeChange}
-            />}
-        </div>
+
         <div
           style={{
-            visibility: hasOpenFile ? 'hidden' : 'visible'
-          }} className='no-open-script-file'
-        >暂无打开的脚本文件
+            height: 'calc(100% - 40px)',
+            overflow: 'auto',
+            display: 'flex',
+            flexDirection: 'column'
+          }}
+        >
+          {!loading && currentEditText != null && (
+            <CodeMirror
+              value={currentEditText}
+              basicSetup
+              extensions={getCurrentExtensions()}
+              onChange={onCodeChange}
+              style={{ flex: 1 }}
+            />
+          )}
+        </div>
+
+        <div
+          style={{
+            visibility: hasOpenFile ? 'hidden' : 'visible',
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            color: '#999'
+          }}
+          className='no-open-script-file'
+        >
+          暂无打开的脚本文件
         </div>
       </Spin>
     </SideSheet>

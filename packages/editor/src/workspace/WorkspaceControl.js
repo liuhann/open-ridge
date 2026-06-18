@@ -324,9 +324,9 @@ export default class WorkSpaceControl {
     this.moveable.on('dragGroupEnd', (payload) => {
       payload.events.forEach(({ target }) => {
         // TODO 目前仅支持根节点？？
-        if (target.ridgeNode.parent === this.currentComposit) {
+        if (target.ridgeNode.parent === this.currentComposite) {
           const bcr = target.getBoundingClientRect()
-          this.putElementToRoot(target, bcr.left + bcr.width / 2, bcr.top + bcr.height / 2)
+          sm.putElementToRoot(target, bcr.left + bcr.width / 2, bcr.top + bcr.height / 2)
         }
       })
     })

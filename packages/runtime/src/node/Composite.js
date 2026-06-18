@@ -261,7 +261,7 @@ class Composite extends BaseNode {
   updateStyle () {
     this.el.setAttribute('composite-id', this.getCompositeId())
     if (this.config && this.config.style && this.el) {
-      this.el.style.background = this.config.style.background
+      this.el.style.background = this.config.style.background || '#fff'
       if (this.config.style.autoWidth) {
         this.el.style.width = '100%'
       } else {

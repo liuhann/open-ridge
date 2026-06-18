@@ -18,9 +18,11 @@ export const PopColorPicker = ({
     <ColorPicker
       alpha
       usePopover
+      popoverProps={{
+        trigger: 'click'
+      }}
       value={val}
       onChange={newVal => {
-        console.log(newVal)
         input && input(newVal.hex)
         onChange && onChange(newVal.hex)
       }}
