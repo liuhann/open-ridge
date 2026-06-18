@@ -1,0 +1,744 @@
+{
+  "name": "ridge-modernize",
+  "schemaVersion": "2.0",
+  "lastUpdated": "2026-06-18T08:49:06.628Z",
+  "generatedBy": "ridge-ui-cli",
+  "components": [
+    {
+      "name": "BsButton",
+      "title": "Bootstrap按钮",
+      "icon": "svgs/button.svg",
+      "description": "基于Bootstrap5封装按钮，支持实心、浅底色、描边三种样式，多尺寸、多主题色，用于页面点击、表单提交等交互操作",
+      "tags": [
+        "按钮",
+        "交互",
+        "表单",
+        "Bootstrap"
+      ],
+      "category": "基础组件",
+      "version": "1.0.0",
+      "author": "LiuHan",
+      "visualConfig": {
+        "preferredWidth": 80,
+        "preferredHeight": 36,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "children",
+          "description": "按钮内部显示文本内容",
+          "label": "按钮文字",
+          "type": "string",
+          "defaultValue": "Button"
+        },
+        {
+          "name": "variant",
+          "description": "按钮主题色彩类型",
+          "label": "主题色",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "Primary主色",
+              "value": "primary"
+            },
+            {
+              "label": "Secondary次要",
+              "value": "secondary"
+            },
+            {
+              "label": "Success成功",
+              "value": "success"
+            },
+            {
+              "label": "Info信息",
+              "value": "info"
+            },
+            {
+              "label": "Warning警告",
+              "value": "warning"
+            },
+            {
+              "label": "Danger危险",
+              "value": "danger"
+            },
+            {
+              "label": "Light浅灰",
+              "value": "light"
+            },
+            {
+              "label": "Dark深色",
+              "value": "dark"
+            }
+          ],
+          "defaultValue": "primary"
+        },
+        {
+          "name": "mode",
+          "description": "按钮展示样式模式",
+          "label": "样式模式",
+          "control": "radiogroup",
+          "type": "string",
+          "options": [
+            {
+              "label": "Solid实心",
+              "value": "solid"
+            },
+            {
+              "label": "Subtle浅底色",
+              "value": "subtle"
+            },
+            {
+              "label": "Outline描边",
+              "value": "outline"
+            }
+          ],
+          "defaultValue": "solid"
+        },
+        {
+          "name": "size",
+          "description": "按钮尺寸大小",
+          "label": "按钮尺寸",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "Small小",
+              "value": "sm"
+            },
+            {
+              "label": "Medium中",
+              "value": "md"
+            },
+            {
+              "label": "Large大",
+              "value": "lg"
+            }
+          ],
+          "defaultValue": "md"
+        },
+        {
+          "name": "type",
+          "description": "原生按钮表单类型",
+          "label": "表单类型",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "普通按钮",
+              "value": "button"
+            },
+            {
+              "label": "提交按钮",
+              "value": "submit"
+            },
+            {
+              "label": "重置按钮",
+              "value": "reset"
+            }
+          ],
+          "defaultValue": "button"
+        },
+        {
+          "name": "disabled",
+          "description": "是否禁用按钮，禁用后无法点击",
+          "label": "禁用状态",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "block",
+          "description": "是否块级按钮，宽度铺满父容器",
+          "label": "块级铺满",
+          "type": "boolean",
+          "defaultValue": false
+        }
+      ],
+      "events": [
+        {
+          "name": "onClick",
+          "description": "点击按钮时触发回调函数",
+          "label": "点击事件"
+        }
+      ]
+    },
+    {
+      "name": "CheckBox",
+      "title": "复选框",
+      "description": "基于Bootstrap form-check封装彩色复选框，支持多主题色、行内/块级布局、禁用状态，绑定布尔值true/false",
+      "tags": [
+        "复选框",
+        "表单",
+        "选择",
+        "Bootstrap"
+      ],
+      "category": "表单组件",
+      "version": "1.0.0",
+      "author": "LiuHan",
+      "visualConfig": {
+        "preferredWidth": 100,
+        "preferredHeight": 26,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "checked",
+          "description": "是否勾选，true勾选、false未勾选，onChange实现双向绑定",
+          "label": "勾选状态",
+          "type": "boolean",
+          "defaultValue": true
+        },
+        {
+          "name": "label",
+          "description": "复选框右侧显示文字",
+          "label": "选项文字",
+          "type": "string",
+          "defaultValue": "切换选择"
+        },
+        {
+          "name": "variant",
+          "description": "复选框主题色彩",
+          "label": "主题色",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "Primary主色",
+              "value": "primary"
+            },
+            {
+              "label": "Secondary次要",
+              "value": "secondary"
+            },
+            {
+              "label": "Success成功",
+              "value": "success"
+            },
+            {
+              "label": "Warning警告",
+              "value": "warning"
+            },
+            {
+              "label": "Danger危险",
+              "value": "danger"
+            }
+          ],
+          "defaultValue": "primary"
+        },
+        {
+          "name": "inline",
+          "description": "行内并排显示；false独占一行",
+          "label": "行内布局",
+          "type": "boolean",
+          "defaultValue": true
+        },
+        {
+          "name": "disabled",
+          "description": "禁用复选框，不可点击切换状态",
+          "label": "禁用",
+          "type": "boolean",
+          "defaultValue": false
+        }
+      ],
+      "events": [
+        {
+          "name": "onChange",
+          "description": "勾选状态切换触发，第一个参数为布尔值checked，第二个为原生event",
+          "label": "状态变更"
+        }
+      ]
+    },
+    {
+      "name": "CheckBoxGroup",
+      "title": "复选框组",
+      "icon": "svgs/checkbox-group.svg",
+      "description": "批量多选复选框组件，通过数据源渲染多选项，绑定数组值，onChange返回选中值数组，支持多主题色、行内/垂直布局、全局禁用",
+      "tags": [
+        "复选框",
+        "多选",
+        "表单",
+        "Bootstrap"
+      ],
+      "category": "表单组件",
+      "version": "1.0.0",
+      "author": "LiuHan",
+      "visualConfig": {
+        "preferredWidth": 150,
+        "preferredHeight": 94,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "dataSource",
+          "description": "选项数据源数组，每项包含label展示文本、value绑定值",
+          "label": "选项数据源",
+          "type": "object",
+          "defaultValue": [
+            {
+              "label": "选项一",
+              "value": "1"
+            },
+            {
+              "label": "选项二",
+              "value": "2"
+            },
+            {
+              "label": "选项三",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "name": "value",
+          "description": "选中值数组，存储所有勾选项的value，onChange双向绑定",
+          "label": "选中值数组",
+          "type": "object",
+          "defaultValue": [
+            "1"
+          ]
+        },
+        {
+          "name": "variant",
+          "description": "复选框主题色彩",
+          "label": "主题色",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "Primary主色",
+              "value": "primary"
+            },
+            {
+              "label": "Secondary次要",
+              "value": "secondary"
+            },
+            {
+              "label": "Success成功",
+              "value": "success"
+            },
+            {
+              "label": "Warning警告",
+              "value": "warning"
+            },
+            {
+              "label": "Danger危险",
+              "value": "danger"
+            }
+          ],
+          "defaultValue": "primary"
+        },
+        {
+          "name": "inline",
+          "description": "true横向并排，false垂直分行排列",
+          "label": "行内横向布局",
+          "type": "boolean",
+          "defaultValue": true
+        },
+        {
+          "name": "disabled",
+          "description": "全局禁用全部复选框，不可勾选",
+          "label": "全局禁用",
+          "type": "boolean",
+          "defaultValue": false
+        }
+      ],
+      "events": [
+        {
+          "name": "onChange",
+          "description": "勾选状态变更触发，回调参数为更新后的选中值数组",
+          "label": "选中变更"
+        }
+      ]
+    },
+    {
+      "name": "DropDown",
+      "title": "拆分下拉按钮",
+      "description": "左右拆分样式下拉按钮，左侧主操作按钮，右侧下拉箭头展开菜单，支持多主题色、实心/浅底色/描边、多尺寸",
+      "tags": [
+        "下拉",
+        "按钮",
+        "菜单",
+        "Bootstrap"
+      ],
+      "category": "基础组件",
+      "version": "1.0.0",
+      "author": "LiuHan",
+      "visualConfig": {
+        "preferredWidth": 110,
+        "preferredHeight": 40,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "children",
+          "description": "左侧主按钮文字",
+          "label": "按钮文字",
+          "type": "string",
+          "defaultValue": "Action"
+        },
+        {
+          "name": "variant",
+          "description": "按钮主题色彩",
+          "label": "主题色",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "Primary主色",
+              "value": "primary"
+            },
+            {
+              "label": "Secondary次要",
+              "value": "secondary"
+            },
+            {
+              "label": "Success成功",
+              "value": "success"
+            },
+            {
+              "label": "Info信息",
+              "value": "info"
+            },
+            {
+              "label": "Warning警告",
+              "value": "warning"
+            },
+            {
+              "label": "Danger危险",
+              "value": "danger"
+            },
+            {
+              "label": "Light浅灰",
+              "value": "light"
+            },
+            {
+              "label": "Dark深色",
+              "value": "dark"
+            }
+          ],
+          "defaultValue": "primary"
+        },
+        {
+          "name": "mode",
+          "description": "按钮外观模式",
+          "label": "样式模式",
+          "control": "radiogroup",
+          "type": "string",
+          "options": [
+            {
+              "label": "Solid实心",
+              "value": "solid"
+            },
+            {
+              "label": "Subtle浅底色",
+              "value": "subtle"
+            },
+            {
+              "label": "Outline描边",
+              "value": "outline"
+            }
+          ],
+          "defaultValue": "solid"
+        },
+        {
+          "name": "size",
+          "description": "按钮尺寸",
+          "label": "尺寸",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "Small小",
+              "value": "sm"
+            },
+            {
+              "label": "Medium中",
+              "value": "md"
+            },
+            {
+              "label": "Large大",
+              "value": "lg"
+            }
+          ],
+          "defaultValue": "md"
+        },
+        {
+          "name": "disabled",
+          "description": "整体禁用按钮与下拉菜单",
+          "label": "禁用",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "block",
+          "description": "块级铺满父容器宽度",
+          "label": "块级铺满",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "menuItems",
+          "description": "下拉菜单配置数组，支持普通项、分割线、禁用项",
+          "label": "下拉菜单项",
+          "type": "object",
+          "defaultValue": [
+            {
+              "label": "Action"
+            },
+            {
+              "label": "Another action"
+            },
+            {
+              "label": "Something else here"
+            },
+            {
+              "divider": true
+            },
+            {
+              "label": "Separated link"
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "name": "onItemClick",
+          "description": "点击下拉菜单项触发，参数：item菜单项对象、index下标",
+          "label": "菜单项点击"
+        }
+      ]
+    },
+    {
+      "name": "Input",
+      "title": "输入框",
+      "icon": "svgs/input.svg",
+      "description": "基于Bootstrap form-control封装文本输入框，支持多尺寸、密码/数字/邮箱等类型、只读、禁用、纯文本模式",
+      "tags": [
+        "输入框",
+        "表单",
+        "文本",
+        "Bootstrap"
+      ],
+      "category": "表单组件",
+      "version": "1.0.0",
+      "author": "LiuHan",
+      "visualConfig": {
+        "preferredWidth": 136,
+        "preferredHeight": 38,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "value",
+          "description": "输入框绑定值，通过onChange实现双向绑定",
+          "label": "输入值",
+          "type": "string",
+          "defaultValue": ""
+        },
+        {
+          "name": "placeholder",
+          "description": "输入框空白提示文字",
+          "label": "占位提示",
+          "type": "string",
+          "defaultValue": "请输入内容"
+        },
+        {
+          "name": "type",
+          "description": "输入框类型",
+          "label": "输入类型",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "文本 text",
+              "value": "text"
+            },
+            {
+              "label": "密码 password",
+              "value": "password"
+            },
+            {
+              "label": "数字 number",
+              "value": "number"
+            },
+            {
+              "label": "邮箱 email",
+              "value": "email"
+            },
+            {
+              "label": "手机号 tel",
+              "value": "tel"
+            }
+          ],
+          "defaultValue": "text"
+        },
+        {
+          "name": "size",
+          "description": "输入框尺寸大小",
+          "label": "尺寸",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "小号 sm",
+              "value": "sm"
+            },
+            {
+              "label": "中号 md",
+              "value": "md"
+            },
+            {
+              "label": "大号 lg",
+              "value": "lg"
+            }
+          ],
+          "defaultValue": "md"
+        },
+        {
+          "name": "disabled",
+          "description": "是否禁用输入框，禁止编辑",
+          "label": "禁用",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "readOnly",
+          "description": "只读模式，可复制不可修改",
+          "label": "只读",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "plaintext",
+          "description": "纯文本模式，无边框背景，仅展示文字",
+          "label": "纯文本样式",
+          "type": "boolean",
+          "defaultValue": false
+        }
+      ],
+      "events": [
+        {
+          "name": "onChange",
+          "description": "输入内容变化时触发，参数：当前输入值、原生event",
+          "label": "值变更"
+        },
+        {
+          "name": "onFocus",
+          "description": "输入框获得焦点触发",
+          "label": "获得焦点"
+        },
+        {
+          "name": "onBlur",
+          "description": "输入框失去焦点触发",
+          "label": "失去焦点"
+        }
+      ]
+    },
+    {
+      "name": "RadioGroup",
+      "title": "单选框组",
+      "icon": "svgs/radiogroup.svg",
+      "description": "Bootstrap彩色单选框组件，数据源渲染单选选项，仅支持单一选中值，支持多主题色、行内/垂直布局、全局禁用",
+      "tags": [
+        "单选",
+        "单选框",
+        "表单",
+        "Bootstrap"
+      ],
+      "category": "表单组件",
+      "version": "1.0.0",
+      "author": "LiuHan",
+      "visualConfig": {
+        "preferredWidth": 150,
+        "preferredHeight": 94,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "dataSource",
+          "description": "选项数据源数组，每项包含label展示文本、value绑定值",
+          "label": "选项数据源",
+          "type": "object",
+          "defaultValue": [
+            {
+              "label": "选项一",
+              "value": "1"
+            },
+            {
+              "label": "选项二",
+              "value": "2"
+            },
+            {
+              "label": "选项三",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "name": "value",
+          "description": "当前选中单项的值，单选仅存单个值，onChange双向绑定",
+          "label": "选中值",
+          "type": "string",
+          "defaultValue": "2"
+        },
+        {
+          "name": "variant",
+          "description": "单选框主题色彩",
+          "label": "主题色",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "Primary主色",
+              "value": "primary"
+            },
+            {
+              "label": "Secondary次要",
+              "value": "secondary"
+            },
+            {
+              "label": "Success成功",
+              "value": "success"
+            },
+            {
+              "label": "Warning警告",
+              "value": "warning"
+            },
+            {
+              "label": "Danger危险",
+              "value": "danger"
+            }
+          ],
+          "defaultValue": "primary"
+        },
+        {
+          "name": "inline",
+          "description": "true横向并排，false垂直分行排列",
+          "label": "行内横向布局",
+          "type": "boolean",
+          "defaultValue": true
+        },
+        {
+          "name": "disabled",
+          "description": "全局禁用全部单选框，不可切换选择",
+          "label": "全局禁用",
+          "type": "boolean",
+          "defaultValue": false
+        }
+      ],
+      "events": [
+        {
+          "name": "onChange",
+          "description": "切换选中项触发，回调参数为当前选中单项value值",
+          "label": "选中变更"
+        }
+      ]
+    }
+  ]
+}

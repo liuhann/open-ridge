@@ -1,0 +1,87 @@
+{
+  "name": "CheckBox",
+  "title": "复选框",
+  "description": "基于Bootstrap form-check封装彩色复选框，支持多主题色、行内/块级布局、禁用状态，绑定布尔值true/false",
+  "tags": [
+    "复选框",
+    "表单",
+    "选择",
+    "Bootstrap"
+  ],
+  "category": "表单组件",
+  "version": "1.0.0",
+  "author": "LiuHan",
+  "visualConfig": {
+    "preferredWidth": 100,
+    "preferredHeight": 26,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "checked",
+      "description": "是否勾选，true勾选、false未勾选，onChange实现双向绑定",
+      "label": "勾选状态",
+      "type": "boolean",
+      "defaultValue": true
+    },
+    {
+      "name": "label",
+      "description": "复选框右侧显示文字",
+      "label": "选项文字",
+      "type": "string",
+      "defaultValue": "切换选择"
+    },
+    {
+      "name": "variant",
+      "description": "复选框主题色彩",
+      "label": "主题色",
+      "control": "select",
+      "type": "string",
+      "options": [
+        {
+          "label": "Primary主色",
+          "value": "primary"
+        },
+        {
+          "label": "Secondary次要",
+          "value": "secondary"
+        },
+        {
+          "label": "Success成功",
+          "value": "success"
+        },
+        {
+          "label": "Warning警告",
+          "value": "warning"
+        },
+        {
+          "label": "Danger危险",
+          "value": "danger"
+        }
+      ],
+      "defaultValue": "primary"
+    },
+    {
+      "name": "inline",
+      "description": "行内并排显示；false独占一行",
+      "label": "行内布局",
+      "type": "boolean",
+      "defaultValue": true
+    },
+    {
+      "name": "disabled",
+      "description": "禁用复选框，不可点击切换状态",
+      "label": "禁用",
+      "type": "boolean",
+      "defaultValue": false
+    }
+  ],
+  "events": [
+    {
+      "name": "onChange",
+      "description": "勾选状态切换触发，第一个参数为布尔值checked，第二个为原生event",
+      "label": "状态变更"
+    }
+  ]
+}

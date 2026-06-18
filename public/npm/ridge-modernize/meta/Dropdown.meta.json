@@ -1,0 +1,159 @@
+{
+  "name": "DropDown",
+  "title": "拆分下拉按钮",
+  "description": "左右拆分样式下拉按钮，左侧主操作按钮，右侧下拉箭头展开菜单，支持多主题色、实心/浅底色/描边、多尺寸",
+  "tags": [
+    "下拉",
+    "按钮",
+    "菜单",
+    "Bootstrap"
+  ],
+  "category": "基础组件",
+  "version": "1.0.0",
+  "author": "LiuHan",
+  "visualConfig": {
+    "preferredWidth": 110,
+    "preferredHeight": 40,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "children",
+      "description": "左侧主按钮文字",
+      "label": "按钮文字",
+      "type": "string",
+      "defaultValue": "Action"
+    },
+    {
+      "name": "variant",
+      "description": "按钮主题色彩",
+      "label": "主题色",
+      "control": "select",
+      "type": "string",
+      "options": [
+        {
+          "label": "Primary主色",
+          "value": "primary"
+        },
+        {
+          "label": "Secondary次要",
+          "value": "secondary"
+        },
+        {
+          "label": "Success成功",
+          "value": "success"
+        },
+        {
+          "label": "Info信息",
+          "value": "info"
+        },
+        {
+          "label": "Warning警告",
+          "value": "warning"
+        },
+        {
+          "label": "Danger危险",
+          "value": "danger"
+        },
+        {
+          "label": "Light浅灰",
+          "value": "light"
+        },
+        {
+          "label": "Dark深色",
+          "value": "dark"
+        }
+      ],
+      "defaultValue": "primary"
+    },
+    {
+      "name": "mode",
+      "description": "按钮外观模式",
+      "label": "样式模式",
+      "control": "radiogroup",
+      "type": "string",
+      "options": [
+        {
+          "label": "Solid实心",
+          "value": "solid"
+        },
+        {
+          "label": "Subtle浅底色",
+          "value": "subtle"
+        },
+        {
+          "label": "Outline描边",
+          "value": "outline"
+        }
+      ],
+      "defaultValue": "solid"
+    },
+    {
+      "name": "size",
+      "description": "按钮尺寸",
+      "label": "尺寸",
+      "control": "select",
+      "type": "string",
+      "options": [
+        {
+          "label": "Small小",
+          "value": "sm"
+        },
+        {
+          "label": "Medium中",
+          "value": "md"
+        },
+        {
+          "label": "Large大",
+          "value": "lg"
+        }
+      ],
+      "defaultValue": "md"
+    },
+    {
+      "name": "disabled",
+      "description": "整体禁用按钮与下拉菜单",
+      "label": "禁用",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "block",
+      "description": "块级铺满父容器宽度",
+      "label": "块级铺满",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "menuItems",
+      "description": "下拉菜单配置数组，支持普通项、分割线、禁用项",
+      "label": "下拉菜单项",
+      "type": "object",
+      "defaultValue": [
+        {
+          "label": "Action"
+        },
+        {
+          "label": "Another action"
+        },
+        {
+          "label": "Something else here"
+        },
+        {
+          "divider": true
+        },
+        {
+          "label": "Separated link"
+        }
+      ]
+    }
+  ],
+  "events": [
+    {
+      "name": "onItemClick",
+      "description": "点击下拉菜单项触发，参数：item菜单项对象、index下标",
+      "label": "菜单项点击"
+    }
+  ]
+}

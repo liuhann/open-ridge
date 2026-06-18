@@ -1,0 +1,92 @@
+{
+  "name": "RadioGroup",
+  "title": "单选框组",
+  "icon": "svgs/radiogroup.svg",
+  "description": "Bootstrap彩色单选框组件，数据源渲染单选选项，仅支持单一选中值，支持多主题色、行内/垂直布局、全局禁用",
+  "tags": [
+    "单选",
+    "单选框",
+    "表单",
+    "Bootstrap"
+  ],
+  "category": "表单组件",
+  "version": "1.0.0",
+  "author": "LiuHan",
+  "visualConfig": {
+    "preferredWidth": 150,
+    "preferredHeight": 94,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "dataSource",
+      "description": "选项数据源数组，每项包含label展示文本、value绑定值",
+      "label": "选项数据源",
+      "type": "object",
+      "defaultValue": [
+        { "label": "选项一", "value": "1" },
+        { "label": "选项二", "value": "2" },
+        { "label": "选项三", "value": "3" }
+      ]
+    },
+    {
+      "name": "value",
+      "description": "当前选中单项的值，单选仅存单个值，onChange双向绑定",
+      "label": "选中值",
+      "type": "string",
+      "defaultValue": "2"
+    },
+    {
+      "name": "variant",
+      "description": "单选框主题色彩",
+      "label": "主题色",
+      "control": "select",
+      "type": "string",
+      "options": [
+        {
+          "label": "Primary主色",
+          "value": "primary"
+        },
+        {
+          "label": "Secondary次要",
+          "value": "secondary"
+        },
+        {
+          "label": "Success成功",
+          "value": "success"
+        },
+        {
+          "label": "Warning警告",
+          "value": "warning"
+        },
+        {
+          "label": "Danger危险",
+          "value": "danger"
+        }
+      ],
+      "defaultValue": "primary"
+    },
+    {
+      "name": "inline",
+      "description": "true横向并排，false垂直分行排列",
+      "label": "行内横向布局",
+      "type": "boolean",
+      "defaultValue": true
+    },
+    {
+      "name": "disabled",
+      "description": "全局禁用全部单选框，不可切换选择",
+      "label": "全局禁用",
+      "type": "boolean",
+      "defaultValue": false
+    }
+  ],
+  "events": [
+    {
+      "name": "onChange",
+      "description": "切换选中项触发，回调参数为当前选中单项value值",
+      "label": "选中变更"
+    }
+  ]
+}

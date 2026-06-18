@@ -77,6 +77,20 @@
     "ai": "ridge-highcharts/AI.md"
   },
   {
+    "module": "ridge-modernize",
+    "version": "13.0.0",
+    "root": "RidgeBootStrapMod",
+    "title": "Modernize",
+    "icon": "favicon.ico",
+    "dependencies": ["react", "react-dom"],
+    "meta": "ridge-modernize/meta.json",
+    "dist": ["dist/ridge-modernize.min.js", "src/bootstrap.css"],
+    "category": "display",
+    "type": "ui",
+    "description": "Modernize:基于Bootstrap用于面向互联网应用的轻量UI组件",
+    "ai": "ridge-modernize/AI.md"
+  },
+  {
     "module": "@mui/material",
     "root": "MUI",
     "title": "Material UI",

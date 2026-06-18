@@ -1,0 +1,159 @@
+{
+  "name": "BsButton",
+  "title": "Bootstrap按钮",
+  "icon": "svgs/button.svg",
+  "description": "基于Bootstrap5封装按钮，支持实心、浅底色、描边三种样式，多尺寸、多主题色，用于页面点击、表单提交等交互操作",
+  "tags": [
+    "按钮",
+    "交互",
+    "表单",
+    "Bootstrap"
+  ],
+  "category": "基础组件",
+  "version": "1.0.0",
+  "author": "LiuHan",
+  "visualConfig": {
+    "preferredWidth": 80,
+    "preferredHeight": 36,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "children",
+      "description": "按钮内部显示文本内容",
+      "label": "按钮文字",
+      "type": "string",
+      "defaultValue": "Button"
+    },
+    {
+      "name": "variant",
+      "description": "按钮主题色彩类型",
+      "label": "主题色",
+      "control": "select",
+      "type": "string",
+      "options": [
+        {
+          "label": "Primary主色",
+          "value": "primary"
+        },
+        {
+          "label": "Secondary次要",
+          "value": "secondary"
+        },
+        {
+          "label": "Success成功",
+          "value": "success"
+        },
+        {
+          "label": "Info信息",
+          "value": "info"
+        },
+        {
+          "label": "Warning警告",
+          "value": "warning"
+        },
+        {
+          "label": "Danger危险",
+          "value": "danger"
+        },
+        {
+          "label": "Light浅灰",
+          "value": "light"
+        },
+        {
+          "label": "Dark深色",
+          "value": "dark"
+        }
+      ],
+      "defaultValue": "primary"
+    },
+    {
+      "name": "mode",
+      "description": "按钮展示样式模式",
+      "label": "样式模式",
+      "control": "radiogroup",
+      "type": "string",
+      "options": [
+        {
+          "label": "Solid实心",
+          "value": "solid"
+        },
+        {
+          "label": "Subtle浅底色",
+          "value": "subtle"
+        },
+        {
+          "label": "Outline描边",
+          "value": "outline"
+        }
+      ],
+      "defaultValue": "solid"
+    },
+    {
+      "name": "size",
+      "description": "按钮尺寸大小",
+      "label": "按钮尺寸",
+      "control": "select",
+      "type": "string",
+      "options": [
+        {
+          "label": "Small小",
+          "value": "sm"
+        },
+        {
+          "label": "Medium中",
+          "value": "md"
+        },
+        {
+          "label": "Large大",
+          "value": "lg"
+        }
+      ],
+      "defaultValue": "md"
+    },
+    {
+      "name": "type",
+      "description": "原生按钮表单类型",
+      "label": "表单类型",
+      "control": "select",
+      "type": "string",
+      "options": [
+        {
+          "label": "普通按钮",
+          "value": "button"
+        },
+        {
+          "label": "提交按钮",
+          "value": "submit"
+        },
+        {
+          "label": "重置按钮",
+          "value": "reset"
+        }
+      ],
+      "defaultValue": "button"
+    },
+    {
+      "name": "disabled",
+      "description": "是否禁用按钮，禁用后无法点击",
+      "label": "禁用状态",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "block",
+      "description": "是否块级按钮，宽度铺满父容器",
+      "label": "块级铺满",
+      "type": "boolean",
+      "defaultValue": false
+    }
+  ],
+  "events": [
+    {
+      "name": "onClick",
+      "description": "点击按钮时触发回调函数",
+      "label": "点击事件"
+    }
+  ]
+}
