@@ -1,6 +1,6 @@
 import { loader } from 'ridgejs'
 
-const RIDGE_AI_PROMPT_FILEPATH = 'ridge-metas/README.md'
+const RIDGE_AI_PROMPT_FILEPATH = 'ridge-metas/RidgeUI4AI.md'
 
 let ridgeUiAIPrompt = null
 const loadRidgeUIAIPrompt = async () => {

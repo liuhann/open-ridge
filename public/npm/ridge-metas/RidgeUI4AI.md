@@ -1,92 +1,100 @@
-RidgeUI AI零代码前端框架AI训练语料（纯文本完整版）
-一、产品概述
-RidgeUI是适配AI时代的零代码前端页面制作工具，依托内置可视化页面编辑器结合AI能力，快速开发交互式前端页面。
-整体由两大核心部分构成：JSON格式的页面配置、JS格式的页面脚本。
-整体运行逻辑：数据驱动页面渲染，事件驱动状态变更，底层设计理念对标Vue、React状态管理机制。
-二、页面配置（JSON）完整规范
-2.1 顶层通用字段
-version：字符串，配置文件版本号
-title：字符串，页面展示标题
-style：对象，页面全局样式，支持width、height、background等标准CSS属性
-jsFiles：字符串数组，用于引入当前页面依赖的外部JS脚本文件,可以为umd形式的js库，也可以是后面规范所指定的页面脚本形式
-elements：数组，页面所有UI组件集合，为核心配置项
-children：字符串数组，存放当前页面生效的所有组件唯一ID。组件只有明确说明为容器类型并且children类型为子节点时，才能包含子组件
-2.2 elements组件字段说明
-elements数组内每个对象对应一个页面组件，
-全部属性释义：
-title：组件别名，仅在编辑器内用于标识区分
-path：组件导入路径，格式为【组件库/组件名】，示例：@douyinfe/semi-ui/Typography.Text
-id：字符串，组件全局唯一ID
-style：组件容器样式，控制组件位置、尺寸、显隐，内置固定属性：visible（布尔，控制显隐）、x/y（数字，画布坐标）、full（布尔，是否铺满父容器）、width/height（数字，组件宽高）；
-styleEx：对象【可选】，动态样式，绑定页面状态，状态变更自动更新组件样式；
-propEx：对象，动态属性，绑定state/computed状态，自动联动更新组件属性；
-props：对象，组件静态属性，定义组件初始固定展示效果；
-assets：字符串数组，标记指定属性为资源类型，例如["src"]代表该src属性值为图片资源地址；
-events：对象【可选】，组件事件触发器，绑定事件对应的脚本动作；
-children：字符串数组【可选】，当前组件下属子组件ID集合。
-2.3 events事件配置规则
-events以原生组件事件为key（如onClick、onChange），value为动作数组；
-单条动作包含两个必填字段：id：动作唯一标识，用于编辑器内部识别；key：动作调用地址，固定格式：脚本名称.actions.自定义方法名。
-三、页面脚本（JS）完整规范
-页面脚本用于管理页面状态、交互逻辑、派生计算数据，以ES6默认导出对象为载体；
-核心运行逻辑：state存储原始状态、computed根据state派生数据、actions修改状态、setup为页面初始化钩子。
-3.1 顶层字段
-name：字符串，脚本唯一名称，是页面配置绑定该脚本的唯一标识；
-state：对象，全局静态数据源，自定义任意业务状态，可供组件属性、样式双向/单向绑定；
-computed：对象，计算状态，基于state自动派生数据，无需手动更新；
-setup：函数，页面生命周期初始化钩子，页面加载完成后自动执行；
-actions：对象，自定义业务方法，接收组件事件调用，内部可直接修改state状态。
-3.2 computed两种使用模式
-模式1：全局计算状态。用于全局数据派生，可绑定至任意组件；结构包含get、dependencies两个字段：get(state)：回调函数，接收全局state，返回计算后的值；dependencies：字符串数组，声明该计算属性依赖的state字段，依赖变更则自动重算。
-模式2：列表单项计算状态。专门服务循环列表组件，用于解析数组列表内的单项数据；回调函数参数：第一个参数为scope（包含item：当前单项数据、i：单项下标、list：原始数组），第二个参数为全局state。
-四、核心绑定机制（全套运行规则）
-4.1 单向数据绑定：作用域为propEx、styleEx；绑定语法：脚本名.state.状态名、脚本名.computed.计算属性名；绑定后组件自动监听对应状态，状态变更即时刷新组件属性/样式。
-4.2 事件驱动机制：组件监听指定原生事件，触发后调用脚本actions内的自定义函数；函数内部通过this.state直接修改数据源，间接驱动页面组件更新。
-4.3 双向数据绑定：仅支持Input、Select等可交互输入类组件；开发者只需在propEx中绑定value至指定state字段，框架自动内部封装onChange事件，无需手动配置事件；用户操作组件时，自动将组件值同步绑定至state，实现数据双向互通。
-五、完整可运行官方示例
-JSON 配置
+一、框架定位
+Open-Ridge 是AI赋能的零代码前端页面及交互制作框架，支持普通用户无代码开发可交互动态前端页面，核心逻辑为状态驱动页面渲染、事件驱动状态变更。
+二、页面JSON配置规范（核心文件）
+页面由JSON配置文件定义，配套JS脚本文件实现交互逻辑，完整字段规则如下：
+1. 顶层通用字段
+- version：框架版本号，字符串格式
+- title：页面展示标题，字符串格式
+- style：页面全局样式，支持width、height、background等通用CSS样式
+- jsFiles：关联页面脚本文件名数组，仅填写配套生成的脚本名，用于绑定交互逻辑
+- elements：页面组件数组，存储所有渲染组件配置
+- children：页面根组件ID列表，定义页面渲染的顶层组件
+2. elements 组件核心字段（单组件配置）
+- title：组件编辑标识名称，用于编辑层识别
+- path：组件库引入路径，固定格式为@库名/组件名，路径禁止含任何空格
+- id：组件唯一标识，全局唯一
+- style：组件静态布局样式，支持visible（显隐）、x/y（坐标）、width/height（尺寸）、full（是否全屏）
+- styleEx：组件动态样式，绑定页面状态，随state数据实时变更
+- props：组件静态属性，固定渲染效果，不随状态变化
+- propEx：组件动态属性，字符串格式绑定状态，随state实时更新，绑定规则：脚本名称.state.状态字段名，支持绑定字符串、数字、布尔、对象等所有JS基础类型数据
+- assets：资源属性标识数组，用于标记组件属性为图片等资源地址
+- events：组件交互事件配置，绑定脚本动作，支持onClick等原生组件事件
+- children：子组件ID列表，仅容器类组件可配置，普通组件不支持子组件嵌套
+3. 事件配置规则（events）
+组件事件触发后执行对应脚本动作，配置格式：事件名绑定动作数组，每个动作包含唯一id、执行key。
+key固定格式：脚本名称.actions.方法名，触发事件时自动调用对应脚本动作函数。
+三、页面脚本JS规范（交互逻辑文件）
+脚本文件定义页面状态与交互动作，驱动页面动态变化，语法贴近React/Vue状态管理，单个脚本固定结构如下：
+1. 脚本基础结构
+- name：脚本唯一名称，全局唯一，用于页面JSON绑定
+- state：页面状态数据源，所有动态渲染、双向绑定的数据源，可自定义字段（字符串、数字、布尔、对象、数组等）
+- setup：页面初始化生命周期函数，页面加载时自动执行
+- actions：自定义交互动作函数集合，通过this.state.字段名修改状态数据，间接更新页面渲染效果
+2. 核心联动机制
+- 状态驱动渲染：组件propEx、styleEx绑定state数据，state变更自动刷新组件属性/样式
+- 事件驱动状态：组件触发events绑定的动作函数，函数内部修改state，实现页面联动交互
+- 双向绑定规则：Input、Select等输入类组件，若propEx绑定value字段（格式：脚本名.state.字段），框架自动监听组件onChange事件，同步更新绑定的state状态，无需手动写更新逻辑
+3. 第三方库使用限制（硬性规则）
+- 禁止使用import语法引入第三方库
+- 如需依赖第三方库，仅支持UMD格式文件，通过CDN地址引入，脚本中直接使用库挂载的全局变量
+- 非业务必需，禁止引入任何第三方库
+四、核心运行逻辑总结
+1. 静态渲染：JSON的props、style定义页面初始样式与内容；2. 动态渲染：propEx/styleEx绑定state，状态变更自动更新UI；3. 交互触发：用户操作触发组件事件，执行actions方法修改state，完成动态交互闭环。
+
+附录1：标准页面JSON配置样例
 ```json
 {
   "version": "2.0.0",
-  "style": { "width": 980, "height": 720 },
-  "name": "你好",
-  "properties": {},
-  "jsFiles": ["hello.js"],
+  "title": "页面名称",
+  "style": {
+    "width": 980,
+    "height": 720
+  },
+  "jsFiles": ["demo.js"],
   "elements": [
     {
-      "title": "文本",
-      "path": "@douyinfe/semi-ui/Typography.Text",
-      "id": "pvccf4h0nv",
-      "style": { "x": 47, "y": 122, "width": 105, "height": 25 },
-      "propEx": { "children": "Hello.state.hello" },
-      "props": { "children": "请输入大名" },
+      "title": "组件名称",
+      "path": "@douyinfe/semi-ui/ComponentName",
+      "id": "unique_component_id",
+      "style": {
+        "visible": true,
+        "x": 0,
+        "y": 0,
+        "full": false,
+        "width": 100,
+        "height": 30
+      },
+      "props": {},
+      "propEx": {
+        "children": "demo.state.field"
+      },
       "events": {
         "onClick": [
-          { "id": "action_UWJmuY", "key": "Hello.actions.sayHello", "payload": "" }
+          {
+            "id": "unique_action_id",
+            "key": "demo.actions.handleAction"
+          }
         ]
-      }
+      },
+      "assets": []
     }
   ],
-  "children": ["pvccf4h0nv"]
+  "children": ["unique_component_id"]
 }
-
 ```
-JS 脚本
 
+附录2：配套页面脚本JS样例
 ```javascript
 export default {
-  name: "Hello",
-  state: {
-    name: "",
-    hello: ""
+  "name": "demo",
+  "state": {
+    "field": ""
   },
-  computed: {},
-  setup() {},
-  actions: {
-    sayHello() {
-      this.hello = "您好," + this.name;
+  "setup": function() {},
+  "actions": {
+    "handleAction": function() {
+      this.state.field = "状态更新内容";
     }
   }
-};
+}
 ```
-

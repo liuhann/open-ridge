@@ -50,6 +50,7 @@ import Carousel from './Carousel.jsx'
 import Upload from './RidgeUpload.jsx'
 import DatePicker from './RidgeDatePicker.jsx'
 import Table from './RidgeTable.jsx'
+import StringTextList from './StringTextList.jsx'
 
 export {
   Select,
@@ -94,6 +95,7 @@ export {
   Transfer,
   Tree,
   TreeSelect,
+  StringTextList,
   AvatarGroup,
   Breadcrumb,
   Carousel,

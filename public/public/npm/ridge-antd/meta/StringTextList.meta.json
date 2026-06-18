@@ -1,0 +1,136 @@
+{
+  "name": "StringTextList",
+  "title": "文字列表",
+  "icon": "svgs/text-list.svg",
+  "description": "纯字符串数组渲染的文本列表，支持序号展示、单项选中高亮，兼容Ant Design List基础配置",
+  "tags": [
+    "列表",
+    "文本展示",
+    "选择器",
+    "数据展示"
+  ],
+  "category": "数据展示",
+  "version": "1.0.0",
+  "author": "LiuHan",
+  "visualConfig": {
+    "preferredWidth": 400,
+    "preferredHeight": 300,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "dataSource",
+      "description": "列表数据源，纯字符串数组",
+      "label": "数据源",
+      "type": "object",
+      "defaultValue": ["示例文本1", "示例文本2", "示例文本3"]
+    },
+    {
+      "name": "bordered",
+      "description": "是否展示列表外边框",
+      "label": "显示边框",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "size",
+      "description": "列表尺寸规格",
+      "label": "列表尺寸",
+      "control": "select",
+      "type": "string",
+      "options": [
+        {
+          "label": "默认",
+          "value": "default"
+        },
+        {
+          "label": "小号",
+          "value": "small"
+        },
+        {
+          "label": "大号",
+          "value": "large"
+        }
+      ],
+      "defaultValue": "default"
+    },
+    {
+      "name": "split",
+      "description": "列表项之间是否显示分割线",
+      "label": "项分割线",
+      "type": "boolean",
+      "defaultValue": true
+    },
+    {
+      "name": "loading",
+      "description": "是否显示加载占位效果",
+      "label": "加载中",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "showIndex",
+      "description": "是否在每项前展示数字序号1、2、3",
+      "label": "显示序号",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "selectedIndex",
+      "description": "当前选中项下标，-1代表无选中项，用于双向绑定",
+      "label": "选中下标",
+      "control": "number",
+      "type": "number",
+      "min": -1,
+      "defaultValue": -1
+    },
+    {
+      "name": "header",
+      "description": "列表头部自定义内容，复杂渲染类型，可视化面板隐藏配置项",
+      "label": "列表头部",
+      "type": "string",
+      "hidden": true
+    },
+    {
+      "name": "footer",
+      "description": "列表底部自定义内容，复杂渲染类型，可视化面板隐藏配置项",
+      "label": "列表底部",
+      "type": "string",
+      "hidden": true
+    },
+    {
+      "name": "itemLayout",
+      "description": "列表项布局模式，仅支持横排/竖排",
+      "label": "项布局",
+      "control": "select",
+      "type": "string",
+      "options": [
+        {
+          "label": "横向",
+          "value": ""
+        },
+        {
+          "label": "竖向",
+          "value": "vertical"
+        }
+      ],
+      "defaultValue": ""
+    },
+    {
+      "name": "pagination",
+      "description": "分页配置，布尔值开启/关闭分页，对象为分页详细配置，可视化面板隐藏",
+      "label": "分页配置",
+      "type": "object",
+      "defaultValue": false,
+      "hidden": true
+    }
+  ],
+  "events": [
+    {
+      "name": "onSelect",
+      "description": "点击列表项选中时触发，回调参数：(index: number, text: string)",
+      "label": "选中项变更"
+    }
+  ]
+}

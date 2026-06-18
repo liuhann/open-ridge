@@ -1,200 +1,42 @@
-1. RidgeUI 框架概述
-
-RidgeUI 是 AI 驱动的零代码前端框架，采用数据驱动视图、事件驱动数据模式。页面由 JSON 配置 + JS 脚本 组成，静态值写属性、动态值绑定状态，交互触发事件、事件修改状态，支持组件双向绑定。
-
-2. 页面根配置（JSON）
-
-```json
-{
-  "version": "2.0.0",
-  "title": "",
-  "style": {},
-  "properties": {},
-  "jsFiles": [],
-  "elements": [],
-  "name": "页面名称",
-  "children": []
-}
-```
-
-字段说明
-version：固定为 2.0.0
-title: 页面标题，也作为文件名称，英文
-style：页面尺寸，width/height 固定宽高；autoWidth/autoHeight: true 自适应
-properties：字符串键值对，子页面由上级传参，独立访问可通过 URL query 传值
-jsFiles：页面依赖脚本，填写相对路径
-elements：页面内所有组件，列表形式，具体描述见后组件元素配置
-name：页面名称
-children：页面一级渲染节点，仅存放组件 id 数组
-
-
-3. 组件元素配置
-
-```json
-{
-  "id": "全局唯一ID",
-  "title": "组件名称",
-  "path": "组件引用路径",
-  "style": {},
-  "props": {},
-  "propEx": {},
-  "styleEx": {},
-  "events": {},
-  "meta": {},
-  "children": []
-}
-```
-
-字段说明
-id：每个组件拥有的全局唯一标识
-title：组件标识名
-path：组件库路径，例：@douyinfe/semi-ui/Input
-style：控制组件坐标 (x/y)、尺寸 (width/height)、显隐 (visible)、是否铺满 (full)
-props：静态属性，固定不变的值
-propEx：动态属性，绑定格式：脚本名.state.字段 / 脚本名.computed.计算字段，状态变更自动更新视图
-styleEx：动态样式，支持状态绑定
-events：组件交互事件配置
-meta：组件元信息，用于双向绑定
-children：容器子节点，仅存放组件 id 数组
-
-
-4. 节点渲染规则（children）
-页面、容器组件的 children 均为 id 数组，组件统一扁平存于 elements，不嵌套对象。
-渲染引擎根据 id 查找对应组件，交由父容器渲染。
-父容器负责子节点布局：读取组件style属性的x/y/width/height值；Flex 容器识别 flex 系列样式实现弹性布局。
-
-5. 页面脚本（JS）
-
-```javascript
-export default {
-  name: 'Hello',       // 脚本唯一标识名，用于页面配置引用
-  state: { ... },      // 响应式状态数据源
-  setup() { ... },     // 页面初始化钩子，加载时自动执行
-  computed: {          // 响应式计算属性
-    计算字段名: {
-      get() { /* 计算逻辑 */ },
-      dependencies: ["依赖state字段名"] // 依赖列表，依赖变化自动重算
-    }
-  },
-  actions: {           // 事件触发的动作方法集合
-    method() { 
-      this.state.xxx = yyy 
-    }
-  }
-}
-```
-字段说明
-name：脚本全局唯一名称，需与配置中引用名称保持一致
-state：响应式状态数据
-computed：计算属性，包含 get 计算函数、dependencies 依赖字段数组，依赖变化自动重算
-setup：页面初始化执行函数
-actions：事件触发的动作方法，可直接读写 this 访问状态
-
-setup和actions中， 通过this.state.xxx 去读取或者设置状态值
-
-6. 事件机制
-
-```json
-"events": {
-  "onClick": [
-    {
-      "id": "动作唯一ID",
-      "key": "脚本名.actions.方法名",
-      "payload": "自定义字符串"
-    }
-  ]
-}
-```
-核心规则
-- 组件自身会触发事件，并携带原生事件负载（如输入框内容、event 对象等），框架不做干预。
-- payload 是可选配置，仅在需要自定义传参时使用（如计算器按钮区分按键），大部分场景可以不配置。
-- 如果配置了 payload → 第一个参数是 payload，第二个及以后是组件原生事件负载
-- 如果没有配置 payload → 直接将组件原生事件负载作为第一个参数
-
-
-7. 双向绑定（meta.sync）
-```json
-"meta": {
-  "sync": {
-    "组件属性名": {
-      "source": "触发事件名",
-      "path": "事件参数取值路径"
-    }
-  }
-}
-```
-meta.sync 的内容不是生成的，而是来自相关【组件描述文档】
-组件描述中会写明支持双向绑定的属性、事件、返回值路径等信息，例如
-
-```text
-checked: boolean，默认值false。是否选中（支持双向绑定 onChange）。
-事件 (Events)：
-onChange: 选中状态变化时触发。
-Payload: target.checked(返回布尔值)。
-
-```
-必须完全照搬组件描述，不可自定义
-
-执行流程
-组件触发指定事件，框架按 path 从事件参数中取值，如不存在path字段，就直接取事件根参数
-将取出的值赋值给 sync 键名对应的组件属性；
-若该组件属性通过 propEx 绑定了脚本状态，则自动同步更新对应 state，完成视图与状态双向联动。
-
-8. 生成强制规则
-
-同时输出 页面 JSON + 对应 JS 脚本，字段完整不增删。
-静态值放 props，动态绑定放 propEx，二者严格分离。
-事件 key 格式固定：脚本名.actions.方法名。
-双向绑定必须配置 meta.sync，并搭配 propEx 状态绑定。
-所有 id 全局唯一，children 只存组件 id。
-计算属性必须配置 dependencies，脚本、事件、绑定路径名称统一。
-
-9. 完整示例
-
-JSON 配置
-```json
-{
-  "version": "2.0.0",
-  "style": { "width": 980, "height": 720 },
-  "title": "Hello Ridge",
-  "properties": {},
-  "jsFiles": ["hello.js"],
-  "elements": [
-    {
-      "title": "文本",
-      "path": "@douyinfe/semi-ui/Typography.Text",
-      "id": "pvccf4h0nv",
-      "style": { "x": 47, "y": 122, "width": 105, "height": 25 },
-      "propEx": { "children": "Hello.state.hello" },
-      "props": { "children": "请输入大名" },
-      "events": {
-        "onClick": [
-          { "id": "action_UWJmuY", "key": "Hello.actions.sayHello", "payload": "" }
-        ]
-      }
-    }
-  ],
-  "name": "你好",
-  "children": ["pvccf4h0nv"]
-}
-
-```
-JS 脚本
-
-```javascript
-export default {
-  name: "Hello",
-  state: {
-    name: "",
-    hello: ""
-  },
-  computed: {},
-  setup() {},
-  actions: {
-    sayHello() {
-      this.hello = "您好," + this.name;
-    }
-  }
-};
-```
-
+一、框架定位
+Open-Ridge 是AI赋能的零代码前端页面及交互制作框架，支持普通用户无代码开发可交互动态前端页面，核心逻辑为状态驱动页面渲染、事件驱动状态变更。
+二、页面JSON配置规范（核心文件）
+页面由JSON配置文件定义，配套JS脚本文件实现交互逻辑，完整字段规则如下：
+1. 顶层通用字段
+- version：框架版本号，字符串格式
+- title：页面展示标题，字符串格式
+- style：页面全局样式，支持width、height、background等通用CSS样式
+- jsFiles：关联页面脚本文件名数组，仅填写配套生成的脚本名，用于绑定交互逻辑
+- elements：页面组件数组，存储所有渲染组件配置
+- children：页面根组件ID列表，定义页面渲染的顶层组件
+2. elements 组件核心字段（单组件配置）
+- title：组件编辑标识名称，用于编辑层识别
+- path：组件库引入路径，格式为@库名/组件名，路径禁止含任何空格，示例：@douyinfe/semi-ui/Input
+- id：组件唯一标识，全局唯一
+- style：组件静态布局样式，支持visible（显隐）、x/y（坐标）、width/height（尺寸）、full（是否全屏）
+- styleEx：组件动态样式，绑定页面状态，随state数据实时变更
+- props：组件静态属性，固定渲染效果，不随状态变化
+- propEx：组件动态属性，字符串格式绑定状态，随state实时更新，绑定规则：脚本名称.state.状态字段名，支持绑定字符串、数字、布尔、对象等所有JS基础类型数据
+- assets：资源属性标识数组，如["src"]，标记对应属性为图片等资源地址
+- events：组件交互事件配置，绑定脚本动作，支持onClick等原生组件事件
+- children：子组件ID列表，仅容器类组件可配置，普通组件不支持子组件嵌套
+3. 事件配置规则（events）
+组件事件触发后执行对应脚本动作，配置格式：事件名绑定动作数组，每个动作包含唯一id、执行key。
+key固定格式：脚本名称.actions.方法名，触发事件时自动调用对应脚本动作函数。
+三、页面脚本JS规范（交互逻辑文件）
+脚本文件定义页面状态与交互动作，驱动页面动态变化，语法贴近React/Vue状态管理，单个脚本固定结构如下：
+1. 脚本基础结构
+- name：脚本唯一名称，全局唯一，用于页面JSON绑定
+- state：页面状态数据源，所有动态渲染、双向绑定的数据源，可自定义字段（字符串、数字、布尔、对象、数组等）
+- setup：页面初始化生命周期函数，页面加载时自动执行
+- actions：自定义交互动作函数集合，通过this.state.字段名修改状态数据，间接更新页面渲染效果
+2. 核心联动机制
+- 状态驱动渲染：组件propEx、styleEx绑定state数据，state变更自动刷新组件属性/样式
+- 事件驱动状态：组件触发events绑定的动作函数，函数内部修改state，实现页面联动交互
+- 双向绑定规则：Input、Select等输入类组件，若propEx绑定value字段（格式：脚本名.state.字段），框架自动监听组件onChange事件，同步更新绑定的state状态，无需手动写更新逻辑
+3. 第三方库使用限制（硬性规则）
+- 禁止使用import语法引入第三方库
+- 如需依赖第三方库，仅支持UMD格式文件，通过CDN地址引入，脚本中直接使用库挂载的全局变量
+- 非业务必需，禁止引入任何第三方库
+四、核心运行逻辑总结
+1. 静态渲染：JSON的props、style定义页面初始样式与内容；2. 动态渲染：propEx/styleEx绑定state，状态变更自动更新UI；3. 交互触发：用户操作触发组件事件，执行actions方法修改state，完成动态交互闭环。

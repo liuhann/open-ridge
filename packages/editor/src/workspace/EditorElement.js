@@ -153,8 +153,11 @@ export default class EditorElement extends Element {
   initPropsOnCreate () {
     for (const prop of this.getPropDefinations()) {
       if (!prop.name) continue
+      // 存在默认值 & 当前配置未赋值，则克隆默认值再填入，隔离原定义引用
       if (prop.defaultValue !== undefined && this.config.props[prop.name] === undefined) {
-        this.config.props[prop.name] = prop.defaultValue
+      // lodash cloneDeep 支持全类型深拷贝
+        const safeDefault = cloneDeep(prop.defaultValue)
+        this.config.props[prop.name] = safeDefault
       }
       if (prop.name === 'children' && prop.type === 'children') {
         this.config.props.children ||= []
