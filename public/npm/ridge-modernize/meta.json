@@ -1,7 +1,7 @@
 {
   "name": "ridge-modernize",
   "schemaVersion": "2.0",
-  "lastUpdated": "2026-06-18T08:49:06.628Z",
+  "lastUpdated": "2026-06-18T09:15:58.168Z",
   "generatedBy": "ridge-ui-cli",
   "components": [
     {
@@ -737,6 +737,180 @@
           "name": "onChange",
           "description": "切换选中项触发，回调参数为当前选中单项value值",
           "label": "选中变更"
+        }
+      ]
+    },
+    {
+      "name": "Select",
+      "title": "下拉选择框",
+      "icon": "svgs/select.svg",
+      "description": "基于Bootstrap form-select原生下拉组件，通过数据源渲染选项，支持多尺寸、禁用、占位提示，单选下拉选择",
+      "tags": [
+        "下拉",
+        "选择",
+        "表单",
+        "Bootstrap"
+      ],
+      "category": "表单组件",
+      "version": "1.0.0",
+      "author": "LiuHan",
+      "visualConfig": {
+        "preferredWidth": 140,
+        "preferredHeight": 38,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "dataSource",
+          "description": "下拉选项数据源数组，label展示文本，value绑定选中值",
+          "label": "选项数据源",
+          "type": "object",
+          "defaultValue": [
+            {
+              "label": "选项一",
+              "value": "1"
+            },
+            {
+              "label": "选项二",
+              "value": "2"
+            },
+            {
+              "label": "选项三",
+              "value": "3"
+            }
+          ]
+        },
+        {
+          "name": "value",
+          "description": "当前选中项value，onChange实现双向绑定",
+          "label": "选中值",
+          "type": "string",
+          "defaultValue": ""
+        },
+        {
+          "name": "placeholder",
+          "description": "未选择时显示占位提示文字",
+          "label": "占位提示",
+          "type": "string",
+          "defaultValue": "请选择"
+        },
+        {
+          "name": "size",
+          "description": "下拉框尺寸大小",
+          "label": "尺寸",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "小号 sm",
+              "value": "sm"
+            },
+            {
+              "label": "中号 md",
+              "value": "md"
+            },
+            {
+              "label": "大号 lg",
+              "value": "lg"
+            }
+          ],
+          "defaultValue": "md"
+        },
+        {
+          "name": "disabled",
+          "description": "禁用下拉框，无法展开选择",
+          "label": "禁用",
+          "type": "boolean",
+          "defaultValue": false
+        }
+      ],
+      "events": [
+        {
+          "name": "onChange",
+          "description": "切换下拉选项触发，参数(选中值,原生event)",
+          "label": "值变更"
+        }
+      ]
+    },
+    {
+      "name": "Switch",
+      "title": "开关组件",
+      "icon": "svgs/switch.svg",
+      "description": "基于Bootstrap form-switch实现彩色滑动开关，布尔受控值，支持多主题色、禁用状态",
+      "tags": [
+        "开关",
+        "表单",
+        "布尔选择",
+        "Bootstrap"
+      ],
+      "category": "表单组件",
+      "version": "1.0.0",
+      "author": "LiuHan",
+      "visualConfig": {
+        "preferredWidth": 130,
+        "preferredHeight": 36,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "checked",
+          "description": "开关开启状态，true开启 false关闭，onChange双向绑定",
+          "label": "开启状态",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "label",
+          "description": "开关右侧展示文字",
+          "label": "标签文字",
+          "type": "string",
+          "defaultValue": "开关"
+        },
+        {
+          "name": "variant",
+          "description": "开关主题色彩",
+          "label": "主题色",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "Primary主色",
+              "value": "primary"
+            },
+            {
+              "label": "Secondary次要",
+              "value": "secondary"
+            },
+            {
+              "label": "Success成功",
+              "value": "success"
+            },
+            {
+              "label": "Warning警告",
+              "value": "warning"
+            },
+            {
+              "label": "Danger危险",
+              "value": "danger"
+            }
+          ],
+          "defaultValue": "primary"
+        },
+        {
+          "name": "disabled",
+          "description": "禁用开关，无法切换状态",
+          "label": "禁用",
+          "type": "boolean",
+          "defaultValue": false
+        }
+      ],
+      "events": [
+        {
+          "name": "onChange",
+          "description": "开关状态切换触发，回调参数 (checked: boolean, event)",
+          "label": "状态变更"
         }
       ]
     }

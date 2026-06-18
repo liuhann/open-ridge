@@ -1,0 +1,81 @@
+{
+  "name": "Switch",
+  "title": "开关组件",
+  "icon": "svgs/switch.svg",
+  "description": "基于Bootstrap form-switch实现彩色滑动开关，布尔受控值，支持多主题色、禁用状态",
+  "tags": [
+    "开关",
+    "表单",
+    "布尔选择",
+    "Bootstrap"
+  ],
+  "category": "表单组件",
+  "version": "1.0.0",
+  "author": "LiuHan",
+  "visualConfig": {
+    "preferredWidth": 130,
+    "preferredHeight": 36,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "checked",
+      "description": "开关开启状态，true开启 false关闭，onChange双向绑定",
+      "label": "开启状态",
+      "type": "boolean",
+      "defaultValue": false
+    },
+    {
+      "name": "label",
+      "description": "开关右侧展示文字",
+      "label": "标签文字",
+      "type": "string",
+      "defaultValue": "开关"
+    },
+    {
+      "name": "variant",
+      "description": "开关主题色彩",
+      "label": "主题色",
+      "control": "select",
+      "type": "string",
+      "options": [
+        {
+          "label": "Primary主色",
+          "value": "primary"
+        },
+        {
+          "label": "Secondary次要",
+          "value": "secondary"
+        },
+        {
+          "label": "Success成功",
+          "value": "success"
+        },
+        {
+          "label": "Warning警告",
+          "value": "warning"
+        },
+        {
+          "label": "Danger危险",
+          "value": "danger"
+        }
+      ],
+      "defaultValue": "primary"
+    },
+    {
+      "name": "disabled",
+      "description": "禁用开关，无法切换状态",
+      "label": "禁用",
+      "type": "boolean",
+      "defaultValue": false
+    }
+  ],
+  "events": [
+    {
+      "name": "onChange",
+      "description": "开关状态切换触发，回调参数 (checked: boolean, event)",
+      "label": "状态变更"
+    }
+  ]
+}

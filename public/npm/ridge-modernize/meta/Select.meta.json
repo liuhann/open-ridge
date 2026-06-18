@@ -1,0 +1,84 @@
+{
+  "name": "Select",
+  "title": "下拉选择框",
+  "icon": "svgs/select.svg",
+  "description": "基于Bootstrap form-select原生下拉组件，通过数据源渲染选项，支持多尺寸、禁用、占位提示，单选下拉选择",
+  "tags": [
+    "下拉",
+    "选择",
+    "表单",
+    "Bootstrap"
+  ],
+  "category": "表单组件",
+  "version": "1.0.0",
+  "author": "LiuHan",
+  "visualConfig": {
+    "preferredWidth": 140,
+    "preferredHeight": 38,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "dataSource",
+      "description": "下拉选项数据源数组，label展示文本，value绑定选中值",
+      "label": "选项数据源",
+      "type": "object",
+      "defaultValue": [
+        { "label": "选项一", "value": "1" },
+        { "label": "选项二", "value": "2" },
+        { "label": "选项三", "value": "3" }
+      ]
+    },
+    {
+      "name": "value",
+      "description": "当前选中项value，onChange实现双向绑定",
+      "label": "选中值",
+      "type": "string",
+      "defaultValue": ""
+    },
+    {
+      "name": "placeholder",
+      "description": "未选择时显示占位提示文字",
+      "label": "占位提示",
+      "type": "string",
+      "defaultValue": "请选择"
+    },
+    {
+      "name": "size",
+      "description": "下拉框尺寸大小",
+      "label": "尺寸",
+      "control": "select",
+      "type": "string",
+      "options": [
+        {
+          "label": "小号 sm",
+          "value": "sm"
+        },
+        {
+          "label": "中号 md",
+          "value": "md"
+        },
+        {
+          "label": "大号 lg",
+          "value": "lg"
+        }
+      ],
+      "defaultValue": "md"
+    },
+    {
+      "name": "disabled",
+      "description": "禁用下拉框，无法展开选择",
+      "label": "禁用",
+      "type": "boolean",
+      "defaultValue": false
+    }
+  ],
+  "events": [
+    {
+      "name": "onChange",
+      "description": "切换下拉选项触发，参数(选中值,原生event)",
+      "label": "值变更"
+    }
+  ]
+}

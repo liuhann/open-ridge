@@ -5,6 +5,8 @@ import CheckBox from './CheckBox.jsx'
 import CheckBoxGroup from './CheckBoxGroup.jsx'
 import RadioGroup from './RadioGroup'
 import Switch from './Switch'
+import Select from './Select'
+import Progress from './Progress'
 export {
   Input,
   DropDown,
@@ -12,5 +14,7 @@ export {
   BsButton,
   CheckBoxGroup,
   RadioGroup,
-  Switch
+  Switch,
+  Select,
+  Progress
 }

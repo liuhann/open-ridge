@@ -62,3 +62,26 @@ value: string/数字，默认空字符串。当前选中选项的value，配合o
 disabled: boolean，默认false。true全局禁用所有单选框，无法切换。
 事件 (Events)：
 onChange: 切换单选选项时触发，回调参数为当前选中项的value。
+
+
+Select (下拉选择框)
+用途：表单单选下拉组件，用于固定选项选择场景，基于Bootstrap form-select原生样式，后台筛选、编辑表单通用。
+组件路径 (Path): ridge-modernize/Select
+属性 (Props) 配置：
+dataSource: object数组，默认[{label:"选项一",value:"1"},{label:"选项二",value:"2"},{label:"选项三",value:"3"}]。渲染下拉列表，label展示文字，value存储选中值。
+value: string/数字，默认空字符串。当前选中项的值，配合onChange双向绑定。
+placeholder: string，默认"请选择"。未选择时的灰色占位提示。
+disabled: boolean，默认false。true禁用下拉，不可展开选择。
+事件 (Events)：
+onChange: 切换下拉选项触发，回调参数 (value, event)。
+
+
+Switch (滑动开关)
+用途：表单布尔开关组件，用于启用/关闭功能配置，基于Bootstrap form-switch彩色开关样式，后台设置类页面常用。
+组件路径 (Path): ridge-modernize/Switch
+属性 (Props) 配置：
+checked: boolean，默认false。true为开启，false关闭，配合onChange双向绑定。
+label: string，默认"开关"。开关右侧显示文本。
+disabled: boolean，默认false。true禁用开关，不可点击切换。
+事件 (Events)：
+onChange: 切换开关状态触发，回调参数 (checked布尔值, 原生event)。
