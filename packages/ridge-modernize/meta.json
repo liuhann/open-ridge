@@ -1,9 +1,67 @@
 {
   "name": "ridge-modernize",
   "schemaVersion": "2.0",
-  "lastUpdated": "2026-06-22T01:31:32.177Z",
+  "lastUpdated": "2026-06-22T04:00:14.326Z",
   "generatedBy": "ridge-ui-cli",
   "components": [
+    {
+      "name": "BlogCard",
+      "title": "博客卡片",
+      "icon": "svgs/blog-card.svg",
+      "description": "图文博客展示卡片，支持自定义图片、标题、正文与操作按钮，可绑定按钮点击事件",
+      "tags": [
+        "卡片",
+        "博客",
+        "图文",
+        "内容展示"
+      ],
+      "category": "内容容器",
+      "version": "1.0.0",
+      "author": "LiuHan",
+      "visualConfig": {
+        "preferredWidth": 360,
+        "preferredHeight": 420,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "imgSrc",
+          "description": "卡片顶部图片资源地址",
+          "label": "图片地址",
+          "type": "image",
+          "defaultValue": ""
+        },
+        {
+          "name": "title",
+          "description": "卡片主标题文本",
+          "label": "卡片标题",
+          "type": "string",
+          "defaultValue": "Card title"
+        },
+        {
+          "name": "text",
+          "description": "卡片正文描述内容",
+          "label": "卡片正文",
+          "type": "string",
+          "defaultValue": "Some quick example text to build on the card title and make up the bulk of the card's content."
+        },
+        {
+          "name": "btnText",
+          "description": "底部操作按钮显示文字",
+          "label": "按钮文字",
+          "type": "string",
+          "defaultValue": "Go somewhere"
+        }
+      ],
+      "events": [
+        {
+          "name": "onBtnClick",
+          "description": "点击底部操作按钮时触发，会自动阻止a标签默认跳转行为",
+          "label": "按钮点击"
+        }
+      ]
+    },
     {
       "name": "BsButton",
       "title": "Bootstrap按钮",
@@ -354,6 +412,76 @@
       ]
     },
     {
+      "name": "CheckList",
+      "title": "选择列表",
+      "icon": "svgs/todo-task-list.svg",
+      "description": "包含选择功能的列表组件，支持开关复选框、单行标题+底部描述、右侧多标签Tag，勾选触发回调返回条目索引",
+      "tags": [
+        "待办",
+        "任务清单",
+        "列表",
+        "多选",
+        "标签"
+      ],
+      "category": "数据展示",
+      "version": "1.0.0",
+      "author": "LiuHan",
+      "visualConfig": {
+        "preferredWidth": 600,
+        "preferredHeight": 400,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "showCheckbox",
+          "description": "是否展示左侧复选框",
+          "label": "显示复选框",
+          "type": "boolean",
+          "defaultValue": true
+        },
+        {
+          "name": "dataSource",
+          "description": "任务数据源数组，单条结构 {title, desc, tags: [{label, theme}]}",
+          "label": "任务数据源",
+          "type": "object",
+          "defaultValue": [
+            {
+              "title": "Give purchase report to john",
+              "desc": "2 January 2024",
+              "tags": [
+                {
+                  "label": "Primary",
+                  "theme": "success"
+                },
+                {
+                  "label": "Social",
+                  "theme": "primary"
+                }
+              ]
+            },
+            {
+              "title": "Hit the gym",
+              "desc": "5 January 2024",
+              "tags": [
+                {
+                  "label": "Promotions",
+                  "theme": "warning"
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "events": [
+        {
+          "name": "onCheckChange",
+          "description": "复选框选中/取消时触发，参数(index, checked)，index为当前条目下标，checked为布尔选中状态",
+          "label": "勾选切换事件"
+        }
+      ]
+    },
+    {
       "name": "DropDown",
       "title": "拆分下拉按钮",
       "description": "左右拆分样式下拉按钮，左侧主操作按钮，右侧下拉箭头展开菜单，支持多主题色、实心/浅底色/描边、多尺寸",
@@ -509,6 +637,108 @@
           "name": "onItemClick",
           "description": "点击下拉菜单项触发，参数：item菜单项对象、index下标",
           "label": "菜单项点击"
+        }
+      ]
+    },
+    {
+      "name": "EmptyTipCard",
+      "title": "空状态占位提示卡片",
+      "icon": "svgs/empty-tip-card.svg",
+      "description": "通用占位提示组件，适用于页面出错、功能建设中、列表无数据等空场景，支持自定义插画、标题、描述、操作按钮与主题色",
+      "tags": [
+        "空状态",
+        "占位",
+        "错误提示",
+        "无数据",
+        "空白页"
+      ],
+      "category": "反馈提示",
+      "version": "1.0.0",
+      "author": "LiuHan",
+      "visualConfig": {
+        "preferredWidth": 460,
+        "preferredHeight": 360,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "imgSrc",
+          "description": "占位插画图片地址",
+          "label": "图片资源",
+          "type": "image",
+          "defaultValue": ""
+        },
+        {
+          "name": "imgWidth",
+          "description": "插画固定宽度（px）",
+          "label": "图片宽度",
+          "control": "number",
+          "type": "number",
+          "min": 80,
+          "defaultValue": 200
+        },
+        {
+          "name": "title",
+          "description": "提示主标题文本",
+          "label": "提示标题",
+          "type": "string",
+          "defaultValue": "Oops something went wrong!"
+        },
+        {
+          "name": "desc",
+          "description": "辅助说明描述文案",
+          "label": "描述内容",
+          "type": "string",
+          "defaultValue": "Trying again to bypasses these temporary error."
+        },
+        {
+          "name": "btnText",
+          "description": "底部操作按钮文字",
+          "label": "按钮文字",
+          "type": "string",
+          "defaultValue": "Retry"
+        },
+        {
+          "name": "btnTheme",
+          "description": "按钮主题配色，与全局组件色系统一",
+          "label": "按钮配色",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "蓝色 primary",
+              "value": "primary"
+            },
+            {
+              "label": "绿色 success",
+              "value": "success"
+            },
+            {
+              "label": "黄色 warning",
+              "value": "warning"
+            },
+            {
+              "label": "红色 danger",
+              "value": "danger"
+            },
+            {
+              "label": "青色 info",
+              "value": "info"
+            },
+            {
+              "label": "灰色 secondary",
+              "value": "secondary"
+            }
+          ],
+          "defaultValue": "danger"
+        }
+      ],
+      "events": [
+        {
+          "name": "onBtnClick",
+          "description": "点击底部操作按钮触发回调",
+          "label": "按钮点击事件"
         }
       ]
     },
@@ -851,6 +1081,142 @@
       "events": []
     },
     {
+      "name": "ProgressCard",
+      "title": "业务指标进度卡片",
+      "icon": "svgs/call-progress-card.svg",
+      "description": "带标题、涨跌趋势箭头、多维度统计数组、操作按钮、条纹动画进度条的数据看板卡片，上涨绿色向上箭头，下跌红色向下箭头，进度条统一6套主题配色",
+      "tags": [
+        "数据看板",
+        "指标卡片",
+        "进度条",
+        "统计",
+        "报表"
+      ],
+      "category": "数据展示",
+      "version": "1.0.0",
+      "author": "LiuHan",
+      "visualConfig": {
+        "preferredWidth": 300,
+        "preferredHeight": 200,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "title",
+          "description": "卡片主标题",
+          "label": "卡片标题",
+          "type": "string",
+          "defaultValue": "Outbound calls"
+        },
+        {
+          "name": "trendType",
+          "description": "趋势类型：up上涨(绿色上箭头) / down下跌(红色下箭头)",
+          "label": "涨跌类型",
+          "control": "radiogroup",
+          "type": "string",
+          "options": [
+            {
+              "label": "上涨 Up",
+              "value": "up"
+            },
+            {
+              "label": "下跌 Down",
+              "value": "down"
+            }
+          ],
+          "defaultValue": "down"
+        },
+        {
+          "name": "trendPercent",
+          "description": "趋势百分比数字，自动拼接展示文案",
+          "label": "涨跌百分比",
+          "control": "number",
+          "type": "number",
+          "min": 0,
+          "defaultValue": 18
+        },
+        {
+          "name": "dataList",
+          "description": "多维度统计数据数组，每项包含label维度名称、value对应数值",
+          "label": "分段统计数据",
+          "type": "object",
+          "defaultValue": [
+            {
+              "label": "Yearly",
+              "value": "80.40%"
+            },
+            {
+              "label": "Montly",
+              "value": "15.40%"
+            },
+            {
+              "label": "Day",
+              "value": "5.50%"
+            }
+          ]
+        },
+        {
+          "name": "progressValue",
+          "description": "进度条填充百分比，范围0-100",
+          "label": "进度百分比",
+          "control": "number",
+          "type": "number",
+          "min": 0,
+          "max": 100,
+          "defaultValue": 60
+        },
+        {
+          "name": "progressTheme",
+          "description": "进度条填充背景主题色",
+          "label": "进度条配色",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "蓝色 primary",
+              "value": "primary"
+            },
+            {
+              "label": "绿色 success",
+              "value": "success"
+            },
+            {
+              "label": "黄色 warning",
+              "value": "warning"
+            },
+            {
+              "label": "红色 danger",
+              "value": "danger"
+            },
+            {
+              "label": "青色 info",
+              "value": "info"
+            },
+            {
+              "label": "灰色 secondary",
+              "value": "secondary"
+            }
+          ],
+          "defaultValue": "primary"
+        },
+        {
+          "name": "btnText",
+          "description": "底部操作按钮文字",
+          "label": "按钮文字",
+          "type": "string",
+          "defaultValue": "Learn More"
+        }
+      ],
+      "events": [
+        {
+          "name": "onBtnClick",
+          "description": "点击底部Learn More按钮触发，自动阻止a标签默认跳转",
+          "label": "按钮点击"
+        }
+      ]
+    },
+    {
       "name": "RadioGroup",
       "title": "单选框组",
       "icon": "svgs/radiogroup.svg",
@@ -1043,6 +1409,178 @@
           "label": "值变更"
         }
       ]
+    },
+    {
+      "name": "SimpleProgressCard",
+      "title": "简易进度指标卡片",
+      "icon": "svgs/simple-progress-card.svg",
+      "description": "极简数据统计卡片，包含数值、标题、自定义图标与单条进度条，支持6套统一主题配色",
+      "tags": [
+        "数据卡片",
+        "进度条",
+        "指标",
+        "仪表盘",
+        "统计"
+      ],
+      "category": "数据展示",
+      "version": "1.0.0",
+      "author": "LiuHan",
+      "visualConfig": {
+        "preferredWidth": 280,
+        "preferredHeight": 180,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "value",
+          "description": "展示核心数值文本",
+          "label": "指标数值",
+          "type": "string",
+          "defaultValue": "86%"
+        },
+        {
+          "name": "title",
+          "description": "指标下方说明标题",
+          "label": "指标名称",
+          "type": "string",
+          "defaultValue": "Total Product"
+        },
+        {
+          "name": "icon",
+          "description": "Tabler图标后缀，仅传ti-后字符串，如ti-box传box",
+          "label": "图标名称",
+          "type": "string",
+          "control": "icon",
+          "iconLink": "",
+          "defaultValue": "ti-box"
+        },
+        {
+          "name": "progressPercent",
+          "description": "进度条填充百分比，0~100",
+          "label": "进度百分比",
+          "control": "number",
+          "type": "number",
+          "min": 0,
+          "max": 100,
+          "defaultValue": 85
+        },
+        {
+          "name": "theme",
+          "description": "图标与进度条统一主题配色",
+          "label": "主题配色",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "蓝色 primary",
+              "value": "primary"
+            },
+            {
+              "label": "绿色 success",
+              "value": "success"
+            },
+            {
+              "label": "黄色 warning",
+              "value": "warning"
+            },
+            {
+              "label": "红色 danger",
+              "value": "danger"
+            },
+            {
+              "label": "青色 info",
+              "value": "info"
+            },
+            {
+              "label": "灰色 secondary",
+              "value": "secondary"
+            }
+          ],
+          "defaultValue": "success"
+        }
+      ],
+      "events": []
+    },
+    {
+      "name": "StatCard",
+      "title": "数据统计卡片",
+      "icon": "svgs/stat-card.svg",
+      "description": "仪表盘数据指标卡片，内置图标、数值、说明文字，支持6种主题背景色",
+      "tags": [
+        "仪表盘",
+        "统计",
+        "指标",
+        "卡片",
+        "数据展示"
+      ],
+      "category": "数据展示",
+      "version": "1.0.0",
+      "author": "LiuHan",
+      "visualConfig": {
+        "preferredWidth": 220,
+        "preferredHeight": 180,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "bgType",
+          "description": "卡片背景主题配色",
+          "label": "背景配色",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "蓝色 primary",
+              "value": "primary"
+            },
+            {
+              "label": "绿色 success",
+              "value": "success"
+            },
+            {
+              "label": "黄色 warning",
+              "value": "warning"
+            },
+            {
+              "label": "红色 danger",
+              "value": "danger"
+            },
+            {
+              "label": "青色 info",
+              "value": "info"
+            },
+            {
+              "label": "灰色 secondary",
+              "value": "secondary"
+            }
+          ],
+          "defaultValue": "primary"
+        },
+        {
+          "name": "icon",
+          "description": "Tabler图标类名，无需前缀ti-",
+          "label": "图标名称",
+          "type": "string",
+          "defaultValue": "ti-layout-grid"
+        },
+        {
+          "name": "number",
+          "description": "卡片展示核心统计数值",
+          "label": "统计数值",
+          "type": "string",
+          "defaultValue": "450"
+        },
+        {
+          "name": "label",
+          "description": "数值下方说明文本",
+          "label": "指标名称",
+          "type": "string",
+          "defaultValue": "New Products"
+        }
+      ],
+      "events": []
     },
     {
       "name": "Switch",

@@ -1,0 +1,78 @@
+{
+  "name": "EmptyTipCard",
+  "title": "空状态占位提示卡片",
+  "icon": "svgs/empty-tip-card.svg",
+  "description": "通用占位提示组件，适用于页面出错、功能建设中、列表无数据等空场景，支持自定义插画、标题、描述、操作按钮与主题色",
+  "tags": ["空状态", "占位", "错误提示", "无数据", "空白页"],
+  "category": "反馈提示",
+  "version": "1.0.0",
+  "author": "LiuHan",
+  "visualConfig": {
+    "preferredWidth": 460,
+    "preferredHeight": 360,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "imgSrc",
+      "description": "占位插画图片地址",
+      "label": "图片资源",
+      "type": "image",
+      "defaultValue": ""
+    },
+    {
+      "name": "imgWidth",
+      "description": "插画固定宽度（px）",
+      "label": "图片宽度",
+      "control": "number",
+      "type": "number",
+      "min": 80,
+      "defaultValue": 200
+    },
+    {
+      "name": "title",
+      "description": "提示主标题文本",
+      "label": "提示标题",
+      "type": "string",
+      "defaultValue": "Oops something went wrong!"
+    },
+    {
+      "name": "desc",
+      "description": "辅助说明描述文案",
+      "label": "描述内容",
+      "type": "string",
+      "defaultValue": "Trying again to bypasses these temporary error."
+    },
+    {
+      "name": "btnText",
+      "description": "底部操作按钮文字",
+      "label": "按钮文字",
+      "type": "string",
+      "defaultValue": "Retry"
+    },
+    {
+      "name": "btnTheme",
+      "description": "按钮主题配色，与全局组件色系统一",
+      "label": "按钮配色",
+      "control": "select",
+      "type": "string",
+      "options": [
+        {"label":"蓝色 primary","value":"primary"},
+        {"label":"绿色 success","value":"success"},
+        {"label":"黄色 warning","value":"warning"},
+        {"label":"红色 danger","value":"danger"},
+        {"label":"青色 info","value":"info"},
+        {"label":"灰色 secondary","value":"secondary"}
+      ],
+      "defaultValue": "danger"
+    }
+  ],
+  "events": [
+    {
+      "name": "onBtnClick",
+      "description": "点击底部操作按钮触发回调",
+      "label": "按钮点击事件"
+    }
+  ]
+}

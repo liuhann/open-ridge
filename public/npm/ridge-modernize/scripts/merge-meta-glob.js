@@ -88,14 +88,14 @@ async function mergeMetaJsonWithGlob () {
  */
 function mergeAiFilesToRoot () {
   try {
-    console.log('\n📝 开始合并 ai/ 目录下的文档文件...')
+    console.log('\n📝 开始合并 prompt/ 目录下的文档文件...')
 
     // 扫描规则：当前目录下 ai 文件夹里所有子目录的 md、txt 文件
-    const aiPattern = path.join(process.cwd(), 'ai', '**', '*.{md,txt}')
+    const aiPattern = path.join(process.cwd(), 'prompt', '**', '*.{md,txt}')
     const files = glob.sync(aiPattern)
 
     if (files.length === 0) {
-      console.log('ℹ️ 未找到 ai/ 目录下的 md/txt 文件，跳过合并')
+      console.log('ℹ️ 未找到 prompt/ 目录下的 md/txt 文件，跳过合并')
       return
     }
 

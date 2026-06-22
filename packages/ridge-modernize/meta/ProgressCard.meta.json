@@ -1,0 +1,97 @@
+{
+  "name": "ProgressCard",
+  "title": "业务指标进度卡片",
+  "icon": "svgs/call-progress-card.svg",
+  "description": "带标题、涨跌趋势箭头、多维度统计数组、操作按钮、条纹动画进度条的数据看板卡片，上涨绿色向上箭头，下跌红色向下箭头，进度条统一6套主题配色",
+  "tags": ["数据看板", "指标卡片", "进度条", "统计", "报表"],
+  "category": "数据展示",
+  "version": "1.0.0",
+  "author": "LiuHan",
+  "visualConfig": {
+    "preferredWidth": 300,
+    "preferredHeight": 200,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "title",
+      "description": "卡片主标题",
+      "label": "卡片标题",
+      "type": "string",
+      "defaultValue": "Outbound calls"
+    },
+    {
+      "name": "trendType",
+      "description": "趋势类型：up上涨(绿色上箭头) / down下跌(红色下箭头)",
+      "label": "涨跌类型",
+      "control": "radiogroup",
+      "type": "string",
+      "options": [
+        {"label":"上涨 Up","value":"up"},
+        {"label":"下跌 Down","value":"down"}
+      ],
+      "defaultValue": "down"
+    },
+    {
+      "name": "trendPercent",
+      "description": "趋势百分比数字，自动拼接展示文案",
+      "label": "涨跌百分比",
+      "control": "number",
+      "type": "number",
+      "min": 0,
+      "defaultValue": 18
+    },
+    {
+      "name": "dataList",
+      "description": "多维度统计数据数组，每项包含label维度名称、value对应数值",
+      "label": "分段统计数据",
+      "type": "object",
+      "defaultValue": [
+        {"label":"Yearly","value":"80.40%"},
+        {"label":"Montly","value":"15.40%"},
+        {"label":"Day","value":"5.50%"}
+      ]
+    },
+    {
+      "name": "progressValue",
+      "description": "进度条填充百分比，范围0-100",
+      "label": "进度百分比",
+      "control": "number",
+      "type": "number",
+      "min": 0,
+      "max": 100,
+      "defaultValue": 60
+    },
+    {
+      "name": "progressTheme",
+      "description": "进度条填充背景主题色",
+      "label": "进度条配色",
+      "control": "select",
+      "type": "string",
+      "options": [
+        {"label":"蓝色 primary","value":"primary"},
+        {"label":"绿色 success","value":"success"},
+        {"label":"黄色 warning","value":"warning"},
+        {"label":"红色 danger","value":"danger"},
+        {"label":"青色 info","value":"info"},
+        {"label":"灰色 secondary","value":"secondary"}
+      ],
+      "defaultValue": "primary"
+    },
+    {
+      "name": "btnText",
+      "description": "底部操作按钮文字",
+      "label": "按钮文字",
+      "type": "string",
+      "defaultValue": "Learn More"
+    }
+  ],
+  "events": [
+    {
+      "name": "onBtnClick",
+      "description": "点击底部Learn More按钮触发，自动阻止a标签默认跳转",
+      "label": "按钮点击"
+    }
+  ]
+}

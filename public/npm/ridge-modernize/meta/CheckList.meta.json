@@ -1,0 +1,55 @@
+{
+  "name": "CheckList",
+  "title": "选择列表",
+  "icon": "svgs/todo-task-list.svg",
+  "description": "包含选择功能的列表组件，支持开关复选框、单行标题+底部描述、右侧多标签Tag，勾选触发回调返回条目索引",
+  "tags": ["待办", "任务清单", "列表", "多选", "标签"],
+  "category": "数据展示",
+  "version": "1.0.0",
+  "author": "LiuHan",
+  "visualConfig": {
+    "preferredWidth": 600,
+    "preferredHeight": 400,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "showCheckbox",
+      "description": "是否展示左侧复选框",
+      "label": "显示复选框",
+      "type": "boolean",
+      "defaultValue": true
+    },
+    {
+      "name": "dataSource",
+      "description": "任务数据源数组，单条结构 {title, desc, tags: [{label, theme}]}",
+      "label": "任务数据源",
+      "type": "object",
+      "defaultValue": [
+        {
+          "title": "Give purchase report to john",
+          "desc": "2 January 2024",
+          "tags": [
+            { "label": "Primary", "theme": "success" },
+            { "label": "Social", "theme": "primary" }
+          ]
+        },
+        {
+          "title": "Hit the gym",
+          "desc": "5 January 2024",
+          "tags": [
+            { "label": "Promotions", "theme": "warning" }
+          ]
+        }
+      ]
+    }
+  ],
+  "events": [
+    {
+      "name": "onCheckChange",
+      "description": "复选框选中/取消时触发，参数(index, checked)，index为当前条目下标，checked为布尔选中状态",
+      "label": "勾选切换事件"
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "name": "SimpleProgressCard",
+  "title": "简易进度指标卡片",
+  "icon": "svgs/simple-progress-card.svg",
+  "description": "极简数据统计卡片，包含数值、标题、自定义图标与单条进度条，支持6套统一主题配色",
+  "tags": ["数据卡片", "进度条", "指标", "仪表盘", "统计"],
+  "category": "数据展示",
+  "version": "1.0.0",
+  "author": "LiuHan",
+  "visualConfig": {
+    "preferredWidth": 280,
+    "preferredHeight": 180,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "value",
+      "description": "展示核心数值文本",
+      "label": "指标数值",
+      "type": "string",
+      "defaultValue": "86%"
+    },
+    {
+      "name": "title",
+      "description": "指标下方说明标题",
+      "label": "指标名称",
+      "type": "string",
+      "defaultValue": "Total Product"
+    },
+    {
+      "name": "icon",
+      "description": "Tabler图标后缀，仅传ti-后字符串，如ti-box传box",
+      "label": "图标名称",
+      "type": "string",
+      "control": "icon",
+      "iconLink": "",
+      "defaultValue": "ti-box"
+    },
+    {
+      "name": "progressPercent",
+      "description": "进度条填充百分比，0~100",
+      "label": "进度百分比",
+      "control": "number",
+      "type": "number",
+      "min": 0,
+      "max": 100,
+      "defaultValue": 85
+    },
+    {
+      "name": "theme",
+      "description": "图标与进度条统一主题配色",
+      "label": "主题配色",
+      "control": "select",
+      "type": "string",
+      "options": [
+        {"label":"蓝色 primary","value":"primary"},
+        {"label":"绿色 success","value":"success"},
+        {"label":"黄色 warning","value":"warning"},
+        {"label":"红色 danger","value":"danger"},
+        {"label":"青色 info","value":"info"},
+        {"label":"灰色 secondary","value":"secondary"}
+      ],
+      "defaultValue": "success"
+    }
+  ],
+  "events": []
+}

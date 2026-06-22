@@ -1,0 +1,58 @@
+{
+  "name": "BlogCard",
+  "title": "博客卡片",
+  "icon": "svgs/blog-card.svg",
+  "description": "图文博客展示卡片，支持自定义图片、标题、正文与操作按钮，可绑定按钮点击事件",
+  "tags": [
+    "卡片",
+    "博客",
+    "图文",
+    "内容展示"
+  ],
+  "category": "内容容器",
+  "version": "1.0.0",
+  "author": "LiuHan",
+  "visualConfig": {
+    "preferredWidth": 360,
+    "preferredHeight": 420,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "imgSrc",
+      "description": "卡片顶部图片资源地址",
+      "label": "图片地址",
+      "type": "image",
+      "defaultValue": ""
+    },
+    {
+      "name": "title",
+      "description": "卡片主标题文本",
+      "label": "卡片标题",
+      "type": "string",
+      "defaultValue": "Card title"
+    },
+    {
+      "name": "text",
+      "description": "卡片正文描述内容",
+      "label": "卡片正文",
+      "type": "string",
+      "defaultValue": "Some quick example text to build on the card title and make up the bulk of the card's content."
+    },
+    {
+      "name": "btnText",
+      "description": "底部操作按钮显示文字",
+      "label": "按钮文字",
+      "type": "string",
+      "defaultValue": "Go somewhere"
+    }
+  ],
+  "events": [
+    {
+      "name": "onBtnClick",
+      "description": "点击底部操作按钮时触发，会自动阻止a标签默认跳转行为",
+      "label": "按钮点击"
+    }
+  ]
+}

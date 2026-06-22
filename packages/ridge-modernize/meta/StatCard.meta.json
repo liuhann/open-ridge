@@ -1,0 +1,80 @@
+{
+  "name": "StatCard",
+  "title": "数据统计卡片",
+  "icon": "svgs/stat-card.svg",
+  "description": "仪表盘数据指标卡片，内置图标、数值、说明文字，支持6种主题背景色",
+  "tags": [
+    "仪表盘",
+    "统计",
+    "指标",
+    "卡片",
+    "数据展示"
+  ],
+  "category": "数据展示",
+  "version": "1.0.0",
+  "author": "LiuHan",
+  "visualConfig": {
+    "preferredWidth": 220,
+    "preferredHeight": 180,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "bgType",
+      "description": "卡片背景主题配色",
+      "label": "背景配色",
+      "control": "select",
+      "type": "string",
+      "options": [
+        {
+          "label": "蓝色 primary",
+          "value": "primary"
+        },
+        {
+          "label": "绿色 success",
+          "value": "success"
+        },
+        {
+          "label": "黄色 warning",
+          "value": "warning"
+        },
+        {
+          "label": "红色 danger",
+          "value": "danger"
+        },
+        {
+          "label": "青色 info",
+          "value": "info"
+        },
+        {
+          "label": "灰色 secondary",
+          "value": "secondary"
+        }
+      ],
+      "defaultValue": "primary"
+    },
+    {
+      "name": "icon",
+      "description": "Tabler图标类名，无需前缀ti-",
+      "label": "图标名称",
+      "type": "string",
+      "defaultValue": "ti-layout-grid"
+    },
+    {
+      "name": "number",
+      "description": "卡片展示核心统计数值",
+      "label": "统计数值",
+      "type": "string",
+      "defaultValue": "450"
+    },
+    {
+      "name": "label",
+      "description": "数值下方说明文本",
+      "label": "指标名称",
+      "type": "string",
+      "defaultValue": "New Products"
+    }
+  ],
+  "events": []
+}

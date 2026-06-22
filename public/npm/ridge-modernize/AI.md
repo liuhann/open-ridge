@@ -1,3 +1,15 @@
+BlogCard (博客卡片)
+用途：图文内容展示组件，用于博客、资讯、商品简介等图文卡片场景，内置图片、标题、正文、操作按钮结构，支持自定义素材与点击交互。
+组件路径 (Path): ridge-modernize/BlogCard
+属性 (Props) 配置：
+imgSrc: image，默认值"./assets/blog-img1.jpg"。卡片顶部展示图片的资源路径。
+title: string，卡片头部大标题文字。
+text: string，卡片正文描述文本。
+btnText: string，底部按钮展示文字。
+事件 (Events)：
+onBtnClick: 点击底部操作按钮触发，回调无参数
+
+
 BsButton (Bootstrap按钮)
 用途：页面交互基础组件，用于操作触发、表单提交、弹窗确认、数据新增删除等场景，兼容AdminMart Bootstrap后台模板样式，支持实心/浅底色/描边三种外观、多尺寸、多主题色。
 组件路径 (Path): ridge-modernize/BsButton
@@ -11,7 +23,7 @@ onClick: 鼠标点击按钮时触发，接收点击事件参数。
 
 CheckBox (复选框)
 用途：表单多选组件，用于布尔选择、多选项勾选，配套AdminMart彩色bootstrap复选框样式。
-组件路径 (Path): ./components/CheckBox
+组件路径 (Path): ridge-modernize/CheckBox
 属性 (Props) 配置：
 checked: boolean，默认false。true代表勾选，false未勾选，配合onChange双向绑定。
 label: string，默认值"Default"。复选框右侧展示文本。
@@ -31,6 +43,21 @@ disabled: boolean，默认false。true全局禁用所有复选框，无法切换
 onChange: 任意选项勾选/取消时触发，回调参数为最新的选中value数组。
 
 
+CheckList (可选择列表)
+用途：后台待办、任务管理、日程列表，支持复选框多选、每条标题+备注、右侧多色标签展示。
+组件路径 (Path): ridge-modernize/CheckList
+属性 (Props) 配置：
+showCheckbox: boolean，默认true。控制列表左侧复选框显示隐藏。
+dataSource: object数组，默认值包含两条任务数据。单条item结构：
+title: string 任务标题；
+desc: string 底部描述/日期；
+theme: string 条目复选框主题，可选primary/success/warning/danger/info/secondary；
+tags: 标签数组，单tag {label:string, theme:string}，支持0~N个标签。
+style: CSSProperties，无默认值。组件外层自定义行内样式。
+事件 (Events)：
+onCheckChange：复选框切换触发，回调参数(index, checked)；index为当前点击条目数组下标，checked为true选中/false取消。
+
+
 Dropdown (拆分下拉按钮)
 用途：操作按钮附带下拉菜单，左侧为主功能按钮，右侧拆分箭头展开更多操作菜单，后台管理系统批量操作、更多功能场景使用，兼容AdminMart Bootstrap后台样式。
 组件路径 (Path): ridge-modernize/Dropdown
@@ -40,6 +67,18 @@ disabled: boolean，默认false。true时按钮与下拉全部禁用，不可交
 menuItems: object数组，默认内置5条菜单（含分割线）。数组子项结构：{label:文字, href:跳转地址, disabled:是否禁用, divider:是否分割线}，用于配置下拉菜单内容。
 事件 (Events)：
 onItemClick: 点击下拉菜单条目触发，回调携带两个参数：当前菜单项item、菜单下标index。
+
+
+EmptyTipCard (空状态占位提示卡片)
+用途：页面异常报错、功能开发中、列表无数据、空白页面等场景的统一占位提示，带插画、标题说明与操作按钮。
+组件路径 (Path): ridge-modernize/EmptyTipCard
+属性 (Props) 配置：
+imgSrc: image 占位插画图片地址。
+title: string，提示大标题。
+desc: string，下方辅助说明文字。
+btnText: string，底部按钮展示文字。
+事件 (Events)：
+onBtnClick：点击底部操作按钮触发，无参数回调。
 
 
 FormFile (文件上传选择框)
@@ -86,6 +125,20 @@ percent: number，默认0。取值范围0~100，代表当前进度百分比。
 事件 (Events)：无
 
 
+ProgressCard (业务指标进度卡片)
+用途：后台数据仪表盘、呼叫中心、业务报表，展示标题、涨跌箭头、年/月/日多维度指标、操作按钮与条纹动画进度条。上涨自动展示绿色上箭头，下跌自动展示红色下箭头。
+组件路径 (Path): ridge-modernize/ProgressCard
+属性 (Props) 配置：
+title: string，默认值"Outbound calls"。卡片顶部主标题文本。
+trendType: string，默认值"down"。可选值 up / down；up=上涨绿色向上箭头，down=下跌红色向下箭头。
+trendPercent: number，默认值18，最小值0。趋势变化百分比数值，组件自动拼接展示文本。
+dataList: object数组，默认值[{"label":"Yearly","value":"80.40%"}, ..]。多维度统计数据，label为维度名称，value为展示数值。
+progressValue: number，默认值60，取值0~100。进度条填充占比。
+btnText: string，默认值"Learn More"。底部按钮展示文字。
+事件 (Events)：
+onBtnClick：点击底部操作按钮触发，回调无参数，内部自动执行e.preventDefault阻止链接跳转。
+
+
 RadioGroup (单选框组)
 用途：表单单选场景，根据数据源生成一组彩色单选框，同一分组互斥仅能选择一项，返回单个value值，基于Bootstrap form-check样式，配套AdminMart后台主题。
 组件路径 (Path): ridge-modernize/RadioGroup
@@ -107,6 +160,28 @@ placeholder: string，默认"请选择"。未选择时的灰色占位提示。
 disabled: boolean，默认false。true禁用下拉，不可展开选择。
 事件 (Events)：
 onChange: 切换下拉选项触发，回调参数 (value, event)。
+
+
+SimpleProgressCard (简易进度指标卡片)
+用途：后台仪表盘、首页数据概览，轻量化单指标展示，搭配图标与静态进度条。
+组件路径 (Path): ridge-modernize/SimpleProgressCard
+属性 (Props) 配置：
+value: string，默认值"86%"。卡片左侧大字体指标数值。
+title: string，默认值"Total Product"。数值下方小标题说明文本。
+progressPercent: number，默认值85，取值范围0~100。底部进度条填充宽度百分比。
+事件 (Events)：
+无交互事件，如需点击可在外层容器绑定点击事件。
+
+
+StatCard (数据统计卡片)
+用途：后台仪表盘、数据看板展示单一指标，包含图标、数字、指标描述，多套主题背景色，适合各类业务统计数据展示。
+组件路径 (Path): ridge-modernize/StatCard.jsx
+属性 (Props) 配置：
+bgType: string，默认值"primary"。可选配色：primary、success、warning、danger、info、secondary，控制卡片背景主题色。
+icon: string，默认值"ti-layout-grid"。Tabler图标后缀，自动拼接ti-类名。
+number: string，默认值"450"。卡片大字号统计数值，支持数字/字符串。
+label: string，默认值"New Products"。底部浅色说明文字，描述指标含义。
+事件 (Events)：
 
 
 Switch (滑动开关)
