@@ -13,8 +13,8 @@
   "version": "1.0.0",
   "author": "LiuHan",
   "visualConfig": {
-    "preferredWidth": 220,
-    "preferredHeight": 260,
+    "preferredWidth": 190,
+    "preferredHeight": 130,
     "resizable": true,
     "aspectRatio": "no"
   },
@@ -35,7 +35,7 @@
       "description": "当前选中字符串，匹配列表项自动高亮active",
       "label": "选中值",
       "type": "string",
-      "defaultValue": ""
+      "defaultValue": "选项一"
     }
   ],
   "events": [

@@ -1,7 +1,7 @@
 {
   "name": "ridge-modernize",
   "schemaVersion": "2.0",
-  "lastUpdated": "2026-06-18T10:01:57.628Z",
+  "lastUpdated": "2026-06-22T01:31:32.177Z",
   "generatedBy": "ridge-ui-cli",
   "components": [
     {
@@ -513,10 +513,83 @@
       ]
     },
     {
+      "name": "FormFile",
+      "title": "文件上传",
+      "icon": "svgs/file-input.svg",
+      "description": "Bootstrap 文件选择输入框，支持小/中/大尺寸、限制文件类型、多选文件，选中文件触发onChange返回File对象/File数组",
+      "tags": [
+        "文件上传",
+        "表单",
+        "文件选择",
+        "Bootstrap"
+      ],
+      "category": "表单组件",
+      "version": "1.0.0",
+      "author": "LiuHan",
+      "visualConfig": {
+        "preferredWidth": 320,
+        "preferredHeight": 38,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "size",
+          "description": "文件选择框尺寸",
+          "label": "尺寸",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "小号 sm",
+              "value": "sm"
+            },
+            {
+              "label": "中号 md",
+              "value": "md"
+            },
+            {
+              "label": "大号 lg",
+              "value": "lg"
+            }
+          ],
+          "defaultValue": "md"
+        },
+        {
+          "name": "disabled",
+          "description": "禁用文件选择框，无法打开文件弹窗",
+          "label": "禁用",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "accept",
+          "description": "限制可选择文件类型，如 .jpg,.png,.pdf",
+          "label": "文件类型过滤",
+          "type": "string",
+          "defaultValue": ""
+        },
+        {
+          "name": "multiple",
+          "description": "是否支持多选文件，true可同时选择多个文件",
+          "label": "多选文件",
+          "type": "boolean",
+          "defaultValue": false
+        }
+      ],
+      "events": [
+        {
+          "name": "onChange",
+          "description": "选中文件触发，单选返回File对象，多选返回File数组，第二个参数为原生event",
+          "label": "选择文件变更"
+        }
+      ]
+    },
+    {
       "name": "Input",
       "title": "输入框",
       "icon": "svgs/input.svg",
-      "description": "基于Bootstrap form-control封装文本输入框，支持多尺寸、密码/数字/邮箱等类型、只读、禁用、纯文本模式",
+      "description": "基于Bootstrap form-control封装文本输入框，支持全部HTML5原生输入类型、多尺寸、只读、禁用、纯文本模式",
       "tags": [
         "输入框",
         "表单",
@@ -527,8 +600,8 @@
       "version": "1.0.0",
       "author": "LiuHan",
       "visualConfig": {
-        "preferredWidth": 136,
-        "preferredHeight": 38,
+        "preferredWidth": 66,
+        "preferredHeight": 24,
         "resizable": true,
         "aspectRatio": "no"
       },
@@ -549,7 +622,7 @@
         },
         {
           "name": "type",
-          "description": "输入框类型",
+          "description": "HTML5原生input输入类型",
           "label": "输入类型",
           "control": "select",
           "type": "string",
@@ -567,12 +640,28 @@
               "value": "number"
             },
             {
-              "label": "邮箱 email",
-              "value": "email"
+              "label": "日期 date",
+              "value": "date"
             },
             {
-              "label": "手机号 tel",
-              "value": "tel"
+              "label": "本地日期时间",
+              "value": "datetime-local"
+            },
+            {
+              "label": "月份 month",
+              "value": "month"
+            },
+            {
+              "label": "周 week",
+              "value": "week"
+            },
+            {
+              "label": "时间 time",
+              "value": "time"
+            },
+            {
+              "label": "颜色 color",
+              "value": "color"
             }
           ],
           "defaultValue": "text"
@@ -612,13 +701,6 @@
           "label": "只读",
           "type": "boolean",
           "defaultValue": false
-        },
-        {
-          "name": "plaintext",
-          "description": "纯文本模式，无边框背景，仅展示文字",
-          "label": "纯文本样式",
-          "type": "boolean",
-          "defaultValue": false
         }
       ],
       "events": [
@@ -654,8 +736,8 @@
       "version": "1.0.0",
       "author": "LiuHan",
       "visualConfig": {
-        "preferredWidth": 220,
-        "preferredHeight": 260,
+        "preferredWidth": 190,
+        "preferredHeight": 130,
         "resizable": true,
         "aspectRatio": "no"
       },
@@ -676,7 +758,7 @@
           "description": "当前选中字符串，匹配列表项自动高亮active",
           "label": "选中值",
           "type": "string",
-          "defaultValue": ""
+          "defaultValue": "选项一"
         }
       ],
       "events": [
@@ -977,8 +1059,8 @@
       "version": "1.0.0",
       "author": "LiuHan",
       "visualConfig": {
-        "preferredWidth": 130,
-        "preferredHeight": 36,
+        "preferredWidth": 78,
+        "preferredHeight": 20,
         "resizable": true,
         "aspectRatio": "no"
       },
@@ -1040,6 +1122,80 @@
           "name": "onChange",
           "description": "开关状态切换触发，回调参数 (checked: boolean, event)",
           "label": "状态变更"
+        }
+      ]
+    },
+    {
+      "name": "Textarea",
+      "title": "文本域",
+      "icon": "svgs/textarea.svg",
+      "description": "基于Bootstrap form-control封装多行文本输入框，支持自定义行数、只读、禁用，开启fullHeight可自动填满父容器高度",
+      "tags": [
+        "文本域",
+        "多行输入",
+        "表单",
+        "Bootstrap"
+      ],
+      "category": "表单组件",
+      "version": "1.0.0",
+      "author": "LiuHan",
+      "visualConfig": {
+        "preferredWidth": 320,
+        "preferredHeight": 120,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "value",
+          "description": "文本域绑定值，通过onChange实现双向绑定",
+          "label": "输入内容",
+          "type": "string",
+          "defaultValue": ""
+        },
+        {
+          "name": "placeholder",
+          "description": "空白状态占位提示文字",
+          "label": "占位提示",
+          "type": "string",
+          "defaultValue": "Text Here..."
+        },
+        {
+          "name": "rows",
+          "description": "默认显示行数，开启填满高度后该参数失效",
+          "label": "行数",
+          "control": "number",
+          "type": "number",
+          "min": 1,
+          "defaultValue": 3
+        },
+        {
+          "name": "fullHeight",
+          "description": "是否填满父容器高度，开启后rows参数失效，高度100%自适应容器",
+          "label": "填满容器高度",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "disabled",
+          "description": "禁用文本域，无法编辑输入",
+          "label": "禁用",
+          "type": "boolean",
+          "defaultValue": false
+        },
+        {
+          "name": "readOnly",
+          "description": "只读模式，可复制文字不可修改",
+          "label": "只读",
+          "type": "boolean",
+          "defaultValue": false
+        }
+      ],
+      "events": [
+        {
+          "name": "onChange",
+          "description": "文本内容变更触发，参数(当前文本值,原生event)",
+          "label": "值变更"
         }
       ]
     },

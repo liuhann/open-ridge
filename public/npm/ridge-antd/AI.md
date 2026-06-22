@@ -81,14 +81,8 @@ Button (按钮)
 属性 (Props) 配置：
 children: string，默认按钮。按钮展示文本。
 type: string，默认default。按钮类型：default(默认)、primary(主要)、dashed(虚线)、link(链接)、text(文字)。
-variant: string，默认空。按钮变体样式：outlined、dashed、solid、filled、text、link。
-shape: string，默认default。按钮形状：default(默认)、circle(圆形)、round(圆角)。
-size: string，默认medium。按钮尺寸：large(大)、medium(中)、small(小)。
 disabled: boolean，默认false。是否禁用按钮。
-ghost: boolean，默认false。是否开启透明背景幽灵样式。
-block: boolean，默认false。是否宽度撑满父容器。
 loading: boolean，默认false。是否显示加载状态。
-danger: boolean，默认false。是否设为危险按钮样式。
 事件：
 onClick: 点击按钮时触发回调。
 
@@ -179,18 +173,6 @@ disabledAlpha: boolean，默认false。是否禁用透明度选择。
 size: string，默认medium。组件大小：large、medium、small。
 事件 (Events)：
 onChange: 颜色值发生变化时触发。
-
-
-ComplexTextList (复杂结构化列表)
-用途：展示包含标题、描述、多标签的结构化数据列表，支持单选 / 多选模式，单选点击行触发选择，多选显示复选框，标签支持点击事件，适用于后台管理、数据清单展示。
-组件路径 (Path): ridge-antd/ComplexTextList
-属性 (Props) 配置：
-dataSource: object，默认值 [{"title":"示例标题","description":"示例描述","tags":["标签 1","标签 2"]}]。列表数据源，数组元素包含 title/description/tags 字段。
-multiple: boolean，默认值 false。true = 多选 (显示 Checkbox)，false = 单选 (点击行选中)。
-selectedKeys: object，默认值 []。已选中项的下标数组，如 [0]、[1,2]。
-事件 (Events)：
-onChangeSelect: 选中状态变更时触发，回调参数 (selectedIndexs: number [])，返回选中项下标数组。
-onTagClick: 点击标签时触发，回调参数 (index: number, tagText: string)，分别为行下标、标签文字。
 
 
 DatePicker (日期选择器)
@@ -290,12 +272,7 @@ Input (输入框)
 组件路径 (Path): ridge-antd/Input
 属性 (Props) 配置：
 value: string，默认空。输入框内容。
-placeholder: string，默认“请输入”。输入框提示文字。
-allowClear: boolean，默认true。是否显示清除按钮。
-showCount: boolean，默认false。是否显示字数统计。
 disabled: boolean，默认false。是否禁用输入框。
-size: string，默认medium。组件大小：large、medium、small。
-variant: string，默认outlined。样式形态：outlined、borderless、filled、underlined。
 status: string，默认空。校验状态：error、warning。
 type: string，默认text。输入类型：text、password、number。
 事件 (Events)：
@@ -309,16 +286,8 @@ InputNumber (数字输入框)
 组件路径 (Path): ridge-antd/InputNumber
 属性 (Props) 配置：
 value: number，默认空。当前输入的数字值。
-placeholder: string，默认“请输入数字”。输入框提示文字。
-min: number，默认0。允许输入的最小值。
-max: number，默认99999。允许输入的最大值。
-step: number，默认1。点击增减按钮时的变化步长。
 precision: number，默认空。保留的小数位数。
-controls: boolean，默认true。是否显示上下增减按钮。
 disabled: boolean，默认false。是否禁用输入框。
-readOnly: boolean，默认false。是否只读不可编辑。
-size: string，默认medium。组件大小：large、medium、small。
-variant: string，默认outlined。样式形态：outlined、borderless、filled、underlined。
 status: string，默认空。校验状态：error、warning。
 事件 (Events)：
 onChange: 数字值发生变化时触发，返回最新数值。
@@ -472,6 +441,22 @@ percent: number | 'auto'，显示加载进度
 事件：无
 
 
+Statistic.Timer (计时/倒计时)
+用途：用于展示正计时或倒计时，支持自定义时间格式、标题、前后缀、数值样式，支持结束回调与实时变化回调，适用于活动倒计时、任务计时等场景。
+组件路径 (Path): ridge-antd/Statistic.Timer
+属性 (Props) 配置：
+type: string，默认countdown。计时类型：countdown(倒计时) / countup(正计时)
+value: number，默认0。时间值（倒计时=结束时间戳，正计时=开始时间戳）
+format: string，默认HH:mm:ss。时间格式化字符串 支持：D天H时m分s秒S毫秒
+title: string，默认空。组件标题
+prefix: string，默认空。时间前缀
+suffix: string，默认空。时间后缀
+valueStyle: CSSProperties，默认空。数值区域自定义样式
+事件：
+onFinish: 倒计时结束时触发（仅countdown有效）
+onChange: 时间数值每帧变化时触发
+
+
 Statistic (统计数值)
 用途：用于展示关键数据、统计数值、卡片数字，支持标题、前后缀、千分位、小数点、精度格式化，适用于数据面板、首页统计、大屏展示。
 组件路径 (Path): ridge-antd/Statistic
@@ -485,9 +470,6 @@ groupSeparator: string，默认,。千分位分隔符。
 decimalSeparator: string，默认.。小数点符号。
 loading: boolean，默认false。是否显示加载状态。
 事件：无
-示例：
-展示距离过年还有xx天， 设置title为“距离过年”，value为“xx” suffix为“天”
-展示发电量xx度： 设置title为“发电量”， value为“xx” suffix为“度”
 
 
 Steps (步骤条)
@@ -505,17 +487,6 @@ titlePlacement: string，默认值horizontal。标题位置：horizontal(右侧)
 size: string，默认值medium。尺寸：medium(标准)、small(迷你)。
 事件 (Events)：
 onChange: 点击步骤切换时触发，返回当前步骤序号 current。
-
-
-StringTextList (文字列表)
-用途：接收纯字符串数组渲染文本列表，支持展示数字序号、单项点击选中高亮，兼容 Ant Design List 原生基础配置，用于数据文本展示、单选选择场景。
-组件路径 (Path): ridge-antd/StringTextList
-属性 (Props) 配置：
-dataSource: object，默认值 ["示例文本 1", "示例文本 2", "示例文本 3"]。列表数据源，必须为纯字符串数组。
-showIndex: boolean，默认值 false。是否在每条文本前展示数字序号（1、2、3...）。
-selectedIndex: number，默认值 -1，最小值 -1。当前选中条目下标，-1 代表无选中项，用于双向绑定选中状态。
-事件 (Events)：
-onSelect: 点击列表条目选中时触发，回调参数 (index: number, text: string)，index 为选中下标，text 为当前选中文本。
 
 
 Switch (开关)
@@ -673,4 +644,4 @@ listType: string，默认text。展示样式：text(文本)、picture(图片)、
 accept: string，默认空。限制可选择的文件类型，如 .jpg,.png,.pdf,.docx。
 disabled: boolean，默认false。是否禁用组件。
 事件 (Events)：
-onChange: 当前选中文件变化时触发，参数为当前文件（file对象）
+onChange: 当前选中文件变化时触发，参数为当前选择的文件，注意这个文件时浏览器标准File Blob对象，可以直接使用File API进行操作

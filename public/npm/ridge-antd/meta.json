@@ -1,7 +1,7 @@
 {
   "name": "ridge-antd",
   "schemaVersion": "2.0",
-  "lastUpdated": "2026-06-18T02:28:33.700Z",
+  "lastUpdated": "2026-06-22T01:30:57.667Z",
   "generatedBy": "ridge-ui-cli",
   "components": [
     {
@@ -1320,139 +1320,6 @@
           "name": "onChange",
           "label": "颜色变化",
           "description": "颜色值改变时触发，返回颜色对象和CSS字符串"
-        }
-      ]
-    },
-    {
-      "name": "ComplexTextList",
-      "title": "结构化复杂列表",
-      "description": "支持标题/描述/标签展示，单选/多选模式，基于下标的选择控制",
-      "tags": [
-        "列表",
-        "数据展示",
-        "单选",
-        "多选",
-        "标签"
-      ],
-      "category": "数据展示",
-      "version": "1.0.0",
-      "author": "LiuHan",
-      "visualConfig": {
-        "preferredWidth": 320,
-        "preferredHeight": 180,
-        "resizable": true,
-        "aspectRatio": "no"
-      },
-      "properties": [
-        {
-          "name": "dataSource",
-          "description": "数据源，包含title/description/tags",
-          "label": "数据源",
-          "type": "object",
-          "defaultValue": [
-            {
-              "title": "标题",
-              "description": "描述",
-              "tags": [
-                "标签1",
-                "标签2"
-              ]
-            },
-            {
-              "title": "标题2",
-              "description": "描述2",
-              "tags": [
-                "标签1"
-              ]
-            }
-          ]
-        },
-        {
-          "name": "bordered",
-          "description": "显示外边框",
-          "label": "边框",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
-          "name": "size",
-          "description": "列表尺寸",
-          "label": "尺寸",
-          "control": "select",
-          "type": "string",
-          "options": [
-            {
-              "label": "小号",
-              "value": "small"
-            },
-            {
-              "label": "默认",
-              "value": "default"
-            },
-            {
-              "label": "大号",
-              "value": "large"
-            }
-          ],
-          "defaultValue": "default"
-        },
-        {
-          "name": "split",
-          "description": "显示项分割线",
-          "label": "分割线",
-          "type": "boolean",
-          "defaultValue": true
-        },
-        {
-          "name": "loading",
-          "description": "全局加载状态",
-          "label": "加载中",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
-          "name": "multiple",
-          "description": "开启多选模式(显示Checkbox)",
-          "label": "允许多选",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
-          "name": "selectedKeys",
-          "description": "已选中项下标数组",
-          "label": "选中下标",
-          "type": "object",
-          "defaultValue": []
-        },
-        {
-          "name": "itemLayout",
-          "description": "列表项布局",
-          "label": "布局",
-          "control": "select",
-          "type": "string",
-          "options": [
-            {
-              "label": "横向",
-              "value": "horizontal"
-            },
-            {
-              "label": "竖向",
-              "value": "vertical"
-            }
-          ],
-          "defaultValue": "horizontal"
-        }
-      ],
-      "events": [
-        {
-          "name": "onChangeSelect",
-          "description": "选中变更，返回下标数组",
-          "label": "选择变更"
-        },
-        {
-          "name": "onTagClick",
-          "description": "标签点击，返回行下标+标签文字",
-          "label": "标签点击"
         }
       ]
     },
@@ -3754,6 +3621,96 @@
       "events": []
     },
     {
+      "name": "Statistic.Timer",
+      "title": "计时",
+      "icon": "svgs/statistic-timer.svg",
+      "description": "倒计时/正计时组件，支持自定义格式、标题、前后缀、样式，支持完成回调与数值变化回调",
+      "tags": [
+        "计时",
+        "倒计时",
+        "正计时",
+        "定时器",
+        "时间展示"
+      ],
+      "category": "展示组件",
+      "version": "1.0.0",
+      "author": "ridge-antd",
+      "visualConfig": {
+        "preferredWidth": 164,
+        "preferredHeight": 72,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "type",
+          "label": "计时类型",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "倒计时",
+              "value": "countdown"
+            },
+            {
+              "label": "正计时",
+              "value": "countup"
+            }
+          ],
+          "defaultValue": "countdown"
+        },
+        {
+          "name": "value",
+          "label": "时间戳/毫秒数",
+          "description": "倒计时：结束时间戳 / 正计时：开始时间戳",
+          "type": "number",
+          "defaultValue": 1801411200000
+        },
+        {
+          "name": "format",
+          "label": "时间格式",
+          "type": "string",
+          "defaultValue": "D 天 H 小时"
+        },
+        {
+          "name": "title",
+          "label": "标题",
+          "type": "string",
+          "defaultValue": "距离春节还有"
+        },
+        {
+          "name": "prefix",
+          "label": "前缀",
+          "type": "string",
+          "defaultValue": ""
+        },
+        {
+          "name": "suffix",
+          "label": "后缀",
+          "type": "string",
+          "defaultValue": ""
+        },
+        {
+          "name": "valueStyle",
+          "label": "数值样式",
+          "type": "object",
+          "defaultValue": {}
+        }
+      ],
+      "events": [
+        {
+          "name": "onFinish",
+          "label": "倒计时结束",
+          "description": "倒计时完成时触发（正计时不生效）"
+        },
+        {
+          "name": "onChange",
+          "label": "时间变化",
+          "description": "时间数值变化时触发，返回当前毫秒数"
+        }
+      ]
+    },
+    {
       "name": "Steps",
       "title": "步骤条",
       "icon": "svgs/steps.svg",
@@ -3957,146 +3914,6 @@
           "name": "onChange",
           "label": "步骤切换",
           "description": "点击切换步骤时触发，返回当前步骤序号"
-        }
-      ]
-    },
-    {
-      "name": "StringTextList",
-      "title": "文字列表",
-      "icon": "svgs/text-list.svg",
-      "description": "纯字符串数组渲染的文本列表，支持序号展示、单项选中高亮，兼容Ant Design List基础配置",
-      "tags": [
-        "列表",
-        "文本展示",
-        "选择器",
-        "数据展示"
-      ],
-      "category": "数据展示",
-      "version": "1.0.0",
-      "author": "LiuHan",
-      "visualConfig": {
-        "preferredWidth": 226,
-        "preferredHeight": 160,
-        "resizable": true,
-        "aspectRatio": "no"
-      },
-      "properties": [
-        {
-          "name": "dataSource",
-          "description": "列表数据源，纯字符串数组",
-          "label": "数据源",
-          "type": "object",
-          "defaultValue": [
-            "示例文本1",
-            "示例文本2",
-            "示例文本3"
-          ]
-        },
-        {
-          "name": "bordered",
-          "description": "是否展示列表外边框",
-          "label": "显示边框",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
-          "name": "size",
-          "description": "列表尺寸规格",
-          "label": "列表尺寸",
-          "control": "select",
-          "type": "string",
-          "options": [
-            {
-              "label": "默认",
-              "value": "default"
-            },
-            {
-              "label": "小号",
-              "value": "small"
-            },
-            {
-              "label": "大号",
-              "value": "large"
-            }
-          ],
-          "defaultValue": "default"
-        },
-        {
-          "name": "split",
-          "description": "列表项之间是否显示分割线",
-          "label": "项分割线",
-          "type": "boolean",
-          "defaultValue": true
-        },
-        {
-          "name": "loading",
-          "description": "是否显示加载占位效果",
-          "label": "加载中",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
-          "name": "showIndex",
-          "description": "是否在每项前展示数字序号1、2、3",
-          "label": "显示序号",
-          "type": "boolean",
-          "defaultValue": false
-        },
-        {
-          "name": "selectedIndex",
-          "description": "当前选中项下标，-1代表无选中项，用于双向绑定",
-          "label": "选中下标",
-          "control": "number",
-          "type": "number",
-          "min": -1,
-          "defaultValue": -1
-        },
-        {
-          "name": "header",
-          "description": "列表头部自定义内容，复杂渲染类型，可视化面板隐藏配置项",
-          "label": "列表头部",
-          "type": "string",
-          "hidden": true
-        },
-        {
-          "name": "footer",
-          "description": "列表底部自定义内容，复杂渲染类型，可视化面板隐藏配置项",
-          "label": "列表底部",
-          "type": "string",
-          "hidden": true
-        },
-        {
-          "name": "itemLayout",
-          "description": "列表项布局模式，仅支持横排/竖排",
-          "label": "项布局",
-          "control": "select",
-          "type": "string",
-          "options": [
-            {
-              "label": "横向",
-              "value": ""
-            },
-            {
-              "label": "竖向",
-              "value": "vertical"
-            }
-          ],
-          "defaultValue": ""
-        },
-        {
-          "name": "pagination",
-          "description": "分页配置，布尔值开启/关闭分页，对象为分页详细配置，可视化面板隐藏",
-          "label": "分页配置",
-          "type": "object",
-          "defaultValue": false,
-          "hidden": true
-        }
-      ],
-      "events": [
-        {
-          "name": "onSelect",
-          "description": "点击列表项选中时触发，回调参数：(index: number, text: string)",
-          "label": "选中项变更"
         }
       ]
     },

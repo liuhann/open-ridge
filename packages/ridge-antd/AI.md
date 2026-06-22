@@ -81,14 +81,8 @@ Button (按钮)
 属性 (Props) 配置：
 children: string，默认按钮。按钮展示文本。
 type: string，默认default。按钮类型：default(默认)、primary(主要)、dashed(虚线)、link(链接)、text(文字)。
-variant: string，默认空。按钮变体样式：outlined、dashed、solid、filled、text、link。
-shape: string，默认default。按钮形状：default(默认)、circle(圆形)、round(圆角)。
-size: string，默认medium。按钮尺寸：large(大)、medium(中)、small(小)。
 disabled: boolean，默认false。是否禁用按钮。
-ghost: boolean，默认false。是否开启透明背景幽灵样式。
-block: boolean，默认false。是否宽度撑满父容器。
 loading: boolean，默认false。是否显示加载状态。
-danger: boolean，默认false。是否设为危险按钮样式。
 事件：
 onClick: 点击按钮时触发回调。
 
@@ -278,12 +272,7 @@ Input (输入框)
 组件路径 (Path): ridge-antd/Input
 属性 (Props) 配置：
 value: string，默认空。输入框内容。
-placeholder: string，默认“请输入”。输入框提示文字。
-allowClear: boolean，默认true。是否显示清除按钮。
-showCount: boolean，默认false。是否显示字数统计。
 disabled: boolean，默认false。是否禁用输入框。
-size: string，默认medium。组件大小：large、medium、small。
-variant: string，默认outlined。样式形态：outlined、borderless、filled、underlined。
 status: string，默认空。校验状态：error、warning。
 type: string，默认text。输入类型：text、password、number。
 事件 (Events)：
@@ -297,16 +286,8 @@ InputNumber (数字输入框)
 组件路径 (Path): ridge-antd/InputNumber
 属性 (Props) 配置：
 value: number，默认空。当前输入的数字值。
-placeholder: string，默认“请输入数字”。输入框提示文字。
-min: number，默认0。允许输入的最小值。
-max: number，默认99999。允许输入的最大值。
-step: number，默认1。点击增减按钮时的变化步长。
 precision: number，默认空。保留的小数位数。
-controls: boolean，默认true。是否显示上下增减按钮。
 disabled: boolean，默认false。是否禁用输入框。
-readOnly: boolean，默认false。是否只读不可编辑。
-size: string，默认medium。组件大小：large、medium、small。
-variant: string，默认outlined。样式形态：outlined、borderless、filled、underlined。
 status: string，默认空。校验状态：error、warning。
 事件 (Events)：
 onChange: 数字值发生变化时触发，返回最新数值。
@@ -663,4 +644,4 @@ listType: string，默认text。展示样式：text(文本)、picture(图片)、
 accept: string，默认空。限制可选择的文件类型，如 .jpg,.png,.pdf,.docx。
 disabled: boolean，默认false。是否禁用组件。
 事件 (Events)：
-onChange: 当前选中文件变化时触发，参数为当前文件（file对象）
+onChange: 当前选中文件变化时触发，参数为当前选择的文件，注意这个文件时浏览器标准File Blob对象，可以直接使用File API进行操作

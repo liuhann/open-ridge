@@ -11,6 +11,3 @@ groupSeparator: string，默认,。千分位分隔符。
 decimalSeparator: string，默认.。小数点符号。
 loading: boolean，默认false。是否显示加载状态。
 事件：无
-示例：
-展示距离过年还有xx天， 设置title为“距离过年”，value为“xx” suffix为“天”
-展示发电量xx度： 设置title为“发电量”， value为“xx” suffix为“度”

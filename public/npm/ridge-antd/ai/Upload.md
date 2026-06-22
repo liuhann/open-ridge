@@ -7,4 +7,4 @@ listType: string，默认text。展示样式：text(文本)、picture(图片)、
 accept: string，默认空。限制可选择的文件类型，如 .jpg,.png,.pdf,.docx。
 disabled: boolean，默认false。是否禁用组件。
 事件 (Events)：
-onChange: 当前选中文件变化时触发，参数为当前文件（file对象）
+onChange: 当前选中文件变化时触发，参数为当前选择的文件，注意这个文件时浏览器标准File Blob对象，可以直接使用File API进行操作
