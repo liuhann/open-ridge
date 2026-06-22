@@ -1,5 +1,5 @@
-Typography (文本排版组件)
-用途：页面文字展示组件，统一封装Bootstrap标准文字样式，支持多级标题、大段落，单选选择单一文字修饰效果。
+Typography (文本)
+用途：页面文字展示组件，支持多级标题、大段落，单选选择单一文字修饰效果。
 组件路径 (Path): ridge-modernize/Typography
 属性 (Props) 配置：
 children: string，默认"文本内容"。组件展示文字。

@@ -8,8 +8,8 @@
   "version": "1.0.0",
   "author": "LiuHan",
   "visualConfig": {
-    "preferredWidth": 600,
-    "preferredHeight": 400,
+    "preferredWidth": 390,
+    "preferredHeight": 135,
     "resizable": true,
     "aspectRatio": "no"
   },
@@ -30,26 +30,35 @@
         {
           "title": "Give purchase report to john",
           "desc": "2 January 2024",
+          "theme": "success",
           "tags": [
             { "label": "Primary", "theme": "success" },
             { "label": "Social", "theme": "primary" }
-          ]
+          ],
+          "menus": ["Edit", "Copy", "Delete"]
         },
         {
           "title": "Hit the gym",
           "desc": "5 January 2024",
+          "theme": "primary",
           "tags": [
             { "label": "Promotions", "theme": "warning" }
-          ]
+          ],
+          "menus": ["Edit", "Delete"]
         }
       ]
     }
   ],
   "events": [
-    {
+     {
       "name": "onCheckChange",
       "description": "复选框选中/取消时触发，参数(index, checked)，index为当前条目下标，checked为布尔选中状态",
       "label": "勾选切换事件"
+    },
+    {
+      "name": "onMenuClick",
+      "description": "右侧下拉菜单选项点击触发，参数(rowIndex, menuKey)，rowIndex为当前行下标，menuKey为menus数组内对应字符串标识",
+      "label": "下拉菜单点击事件"
     }
   ]
 }

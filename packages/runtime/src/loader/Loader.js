@@ -61,8 +61,11 @@ class Loader {
    * 另外，因为组件包有多个组件，组件包依赖只加载一次
    * @param {String} componentPath 组件路径
    */
-  async loadComponent (path) {
+  async loadComponent (oPath) {
     await this.confirmExternalsMemoized()
+
+    const path = oPath.replace(/ /g, '')
+
     const { packageName, componentPath } = extractPackageAndPath(path)
 
     const loaded = this.getComponentFromGlobalVar(packageName, componentPath)

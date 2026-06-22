@@ -1,0 +1,59 @@
+{
+  "name": "MetricGrowthStat",
+  "title": "趋势指标",
+  "icon": "svgs/metric-growth-stat.svg",
+  "description": "带标题、涨跌百分比、核心数值、底部说明文案的数据指标组件，上涨绿色，下跌红色",
+  "tags": ["仪表盘", "统计指标", "营收数据", "涨跌趋势", "财务卡片"],
+  "category": "数据展示",
+  "version": "1.0.0",
+  "author": "LiuHan",
+  "visualConfig": {
+    "preferredWidth": 300,
+    "preferredHeight": 160,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "title",
+      "description": "指标主标题",
+      "label": "指标标题",
+      "type": "string",
+      "defaultValue": "Total Revenue"
+    },
+    {
+      "name": "value",
+      "description": "核心展示数值，支持金额/数字文本",
+      "label": "指标数值",
+      "type": "string",
+      "defaultValue": "$8,240,00"
+    },
+    {
+      "name": "growthPercent",
+      "description": "涨跌百分比数字",
+      "label": "百分比数值",
+      "type": "string",
+      "defaultValue": "9.78"
+    },
+    {
+      "name": "trendType",
+      "description": "趋势类型 up上涨(绿色+号) / down下跌(红色-号)",
+      "label": "涨跌类型",
+      "control": "radiogroup",
+      "type": "string",
+      "options": [
+        {"label":"上涨 up","value":"up"},
+        {"label":"下跌 down","value":"down"}
+      ],
+      "defaultValue": "up"
+    },
+    {
+      "name": "descText",
+      "description": "底部辅助描述文本",
+      "label": "底部说明",
+      "type": "string",
+      "defaultValue": "Increased 15% from last month"
+    }
+  ],
+  "events": []
+}

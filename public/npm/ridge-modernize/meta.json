@@ -1,12 +1,12 @@
 {
   "name": "ridge-modernize",
   "schemaVersion": "2.0",
-  "lastUpdated": "2026-06-22T04:00:14.326Z",
+  "lastUpdated": "2026-06-22T09:28:41.459Z",
   "generatedBy": "ridge-ui-cli",
   "components": [
     {
       "name": "BlogCard",
-      "title": "博客卡片",
+      "title": "描述卡片",
       "icon": "svgs/blog-card.svg",
       "description": "图文博客展示卡片，支持自定义图片、标题、正文与操作按钮，可绑定按钮点击事件",
       "tags": [
@@ -20,7 +20,7 @@
       "author": "LiuHan",
       "visualConfig": {
         "preferredWidth": 360,
-        "preferredHeight": 420,
+        "preferredHeight": 228,
         "resizable": true,
         "aspectRatio": "no"
       },
@@ -63,10 +63,10 @@
       ]
     },
     {
-      "name": "BsButton",
-      "title": "Bootstrap按钮",
+      "name": "Button",
+      "title": "按钮",
       "icon": "svgs/button.svg",
-      "description": "基于Bootstrap5封装按钮，支持实心、浅底色、描边三种样式，多尺寸、多主题色，用于页面点击、表单提交等交互操作",
+      "description": "按钮，支持实心、浅底色、描边三种样式，多尺寸、多主题色，用于页面点击、表单提交等交互操作",
       "tags": [
         "按钮",
         "交互",
@@ -323,8 +323,8 @@
       "version": "1.0.0",
       "author": "LiuHan",
       "visualConfig": {
-        "preferredWidth": 150,
-        "preferredHeight": 94,
+        "preferredWidth": 106,
+        "preferredHeight": 80,
         "resizable": true,
         "aspectRatio": "no"
       },
@@ -427,8 +427,8 @@
       "version": "1.0.0",
       "author": "LiuHan",
       "visualConfig": {
-        "preferredWidth": 600,
-        "preferredHeight": 400,
+        "preferredWidth": 390,
+        "preferredHeight": 135,
         "resizable": true,
         "aspectRatio": "no"
       },
@@ -449,6 +449,7 @@
             {
               "title": "Give purchase report to john",
               "desc": "2 January 2024",
+              "theme": "success",
               "tags": [
                 {
                   "label": "Primary",
@@ -458,16 +459,26 @@
                   "label": "Social",
                   "theme": "primary"
                 }
+              ],
+              "menus": [
+                "Edit",
+                "Copy",
+                "Delete"
               ]
             },
             {
               "title": "Hit the gym",
               "desc": "5 January 2024",
+              "theme": "primary",
               "tags": [
                 {
                   "label": "Promotions",
                   "theme": "warning"
                 }
+              ],
+              "menus": [
+                "Edit",
+                "Delete"
               ]
             }
           ]
@@ -478,6 +489,11 @@
           "name": "onCheckChange",
           "description": "复选框选中/取消时触发，参数(index, checked)，index为当前条目下标，checked为布尔选中状态",
           "label": "勾选切换事件"
+        },
+        {
+          "name": "onMenuClick",
+          "description": "右侧下拉菜单选项点击触发，参数(rowIndex, menuKey)，rowIndex为当前行下标，menuKey为menus数组内对应字符串标识",
+          "label": "下拉菜单点击事件"
         }
       ]
     },
@@ -998,6 +1014,149 @@
           "label": "选中变更"
         }
       ]
+    },
+    {
+      "name": "MetricGrowthStat",
+      "title": "趋势指标",
+      "icon": "svgs/metric-growth-stat.svg",
+      "description": "带标题、涨跌百分比、核心数值、底部说明文案的数据指标组件，上涨绿色，下跌红色",
+      "tags": [
+        "仪表盘",
+        "统计指标",
+        "营收数据",
+        "涨跌趋势",
+        "财务卡片"
+      ],
+      "category": "数据展示",
+      "version": "1.0.0",
+      "author": "LiuHan",
+      "visualConfig": {
+        "preferredWidth": 300,
+        "preferredHeight": 160,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "title",
+          "description": "指标主标题",
+          "label": "指标标题",
+          "type": "string",
+          "defaultValue": "Total Revenue"
+        },
+        {
+          "name": "value",
+          "description": "核心展示数值，支持金额/数字文本",
+          "label": "指标数值",
+          "type": "string",
+          "defaultValue": "$8,240,00"
+        },
+        {
+          "name": "growthPercent",
+          "description": "涨跌百分比数字",
+          "label": "百分比数值",
+          "type": "string",
+          "defaultValue": "9.78"
+        },
+        {
+          "name": "trendType",
+          "description": "趋势类型 up上涨(绿色+号) / down下跌(红色-号)",
+          "label": "涨跌类型",
+          "control": "radiogroup",
+          "type": "string",
+          "options": [
+            {
+              "label": "上涨 up",
+              "value": "up"
+            },
+            {
+              "label": "下跌 down",
+              "value": "down"
+            }
+          ],
+          "defaultValue": "up"
+        },
+        {
+          "name": "descText",
+          "description": "底部辅助描述文本",
+          "label": "底部说明",
+          "type": "string",
+          "defaultValue": "Increased 15% from last month"
+        }
+      ],
+      "events": []
+    },
+    {
+      "name": "MetricStatItem",
+      "title": "圆点指标数据",
+      "icon": "svgs/metric-stat-item.svg",
+      "description": "带彩色圆点、分类标题与数值的单行指标展示组件",
+      "tags": [
+        "指标",
+        "统计",
+        "数值卡片",
+        "仪表盘"
+      ],
+      "category": "数据展示",
+      "version": "1.0.0",
+      "author": "LiuHan",
+      "visualConfig": {
+        "preferredWidth": 260,
+        "preferredHeight": 140,
+        "resizable": true,
+        "aspectRatio": "no"
+      },
+      "properties": [
+        {
+          "name": "label",
+          "description": "指标分类标题文本",
+          "label": "分类标题",
+          "type": "string",
+          "defaultValue": "Selling Product"
+        },
+        {
+          "name": "value",
+          "description": "展示核心数值，支持金额、数字等文本",
+          "label": "指标数值",
+          "type": "string",
+          "defaultValue": "$3,350,00"
+        },
+        {
+          "name": "colorTheme",
+          "description": "圆点与标题文字主题色，统一全局配色体系",
+          "label": "主题配色",
+          "control": "select",
+          "type": "string",
+          "options": [
+            {
+              "label": "蓝色 primary",
+              "value": "primary"
+            },
+            {
+              "label": "绿色 success",
+              "value": "success"
+            },
+            {
+              "label": "黄色 warning",
+              "value": "warning"
+            },
+            {
+              "label": "红色 danger",
+              "value": "danger"
+            },
+            {
+              "label": "青色 info",
+              "value": "info"
+            },
+            {
+              "label": "灰色 secondary",
+              "value": "secondary"
+            }
+          ],
+          "defaultValue": "danger"
+        }
+      ],
+      "events": []
     },
     {
       "name": "Progress",

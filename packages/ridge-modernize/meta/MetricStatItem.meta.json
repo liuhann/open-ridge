@@ -1,0 +1,49 @@
+{
+  "name": "MetricStatItem",
+  "title": "圆点指标数据",
+  "icon": "svgs/metric-stat-item.svg",
+  "description": "带彩色圆点、分类标题与数值的单行指标展示组件",
+  "tags": ["指标", "统计", "数值卡片", "仪表盘"],
+  "category": "数据展示",
+  "version": "1.0.0",
+  "author": "LiuHan",
+  "visualConfig": {
+    "preferredWidth": 260,
+    "preferredHeight": 140,
+    "resizable": true,
+    "aspectRatio": "no"
+  },
+  "properties": [
+    {
+      "name": "label",
+      "description": "指标分类标题文本",
+      "label": "分类标题",
+      "type": "string",
+      "defaultValue": "Selling Product"
+    },
+    {
+      "name": "value",
+      "description": "展示核心数值，支持金额、数字等文本",
+      "label": "指标数值",
+      "type": "string",
+      "defaultValue": "$3,350,00"
+    },
+    {
+      "name": "colorTheme",
+      "description": "圆点与标题文字主题色，统一全局配色体系",
+      "label": "主题配色",
+      "control": "select",
+      "type": "string",
+      "options": [
+        {"label":"蓝色 primary","value":"primary"},
+        {"label":"绿色 success","value":"success"},
+        {"label":"黄色 warning","value":"warning"},
+        {"label":"红色 danger","value":"danger"},
+        {"label":"青色 info","value":"info"},
+        {"label":"灰色 secondary","value":"secondary"}
+      ],
+      "defaultValue": "danger"
+    }
+  ],
+  "events": []
+}

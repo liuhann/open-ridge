@@ -1,6 +1,6 @@
 {
   "name": "BlogCard",
-  "title": "博客卡片",
+  "title": "描述卡片",
   "icon": "svgs/blog-card.svg",
   "description": "图文博客展示卡片，支持自定义图片、标题、正文与操作按钮，可绑定按钮点击事件",
   "tags": [
@@ -14,7 +14,7 @@
   "author": "LiuHan",
   "visualConfig": {
     "preferredWidth": 360,
-    "preferredHeight": 420,
+    "preferredHeight": 228,
     "resizable": true,
     "aspectRatio": "no"
   },

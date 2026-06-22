@@ -160,7 +160,7 @@ const ShareQueryPage = () => {
       const pagePath = `/${pageName}.json`
       await loadPage('#app', fileZipBlob, pagePath)
 
-      document.getElementById('app').style.display = 'visible'
+      document.getElementById('app').style.display = ''
       document.getElementById('root').style.display = 'none'
       console.log('页面加载完成，应用已打开', info)
     } catch (err) {

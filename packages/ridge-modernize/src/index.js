@@ -1,4 +1,4 @@
-import BsButton from './BsButton'
+import Button from './BsButton'
 import DropDown from './Dropdown.jsx'
 import Input from './Input.jsx'
 import CheckBox from './CheckBox.jsx'
@@ -17,12 +17,14 @@ import SimpleProgressCard from './SimpleProgressCard'
 import StatCard from './StatCard'
 import CheckList from './CheckList'
 import EmptyTipCard from './EmptyTipCard'
+import MetricStatItem from './MetricStatItem'
+import MetricGrowthStat from './MetricGrowthStat'
 
 export {
   Input,
   DropDown,
   CheckBox,
-  BsButton,
+  Button,
   CheckBoxGroup,
   RadioGroup,
   Switch,
@@ -37,5 +39,7 @@ export {
   CheckList,
   SimpleProgressCard,
   EmptyTipCard,
+  MetricGrowthStat,
+  MetricStatItem,
   StatCard
 }

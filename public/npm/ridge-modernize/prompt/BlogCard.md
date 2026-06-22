@@ -1,4 +1,4 @@
-BlogCard (博客卡片)
+BlogCard (描述卡片)
 用途：图文内容展示组件，用于博客、资讯、商品简介等图文卡片场景，内置图片、标题、正文、操作按钮结构，支持自定义素材与点击交互。
 组件路径 (Path): ridge-modernize/BlogCard
 属性 (Props) 配置：
