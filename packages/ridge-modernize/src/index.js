@@ -8,7 +8,9 @@ import Switch from './Switch'
 import Select from './Select'
 import Progress from './Progress'
 import Typography from './Typography'
+import Textarea from './Textarea'
 import ListGroup from './ListGroup'
+import FormFile from './FormFile'
 export {
   Input,
   DropDown,
@@ -20,5 +22,7 @@ export {
   Select,
   Progress,
   Typography,
-  ListGroup
+  ListGroup,
+  Textarea,
+  FormFile
 }
