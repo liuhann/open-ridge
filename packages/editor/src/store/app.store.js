@@ -108,12 +108,20 @@ const useStore = create((set, get) => ({
 
   importAppFile: async (file) => {
     try {
-      const newAppId = alphabetid(8)
+      const newAppId = alphabetid(18)
       const appService = new ApplicationService(newAppId)
 
-      const response = await fetch(file)
-      const blob = await response.blob()
+      let blob = null
 
+      if (file instanceof File) {
+        blob = file
+      } else if (typeof file === 'string') {
+        const response = await fetch(file)
+        blob = await response.blob()
+      }
+      if (!blob) {
+        return false
+      }
       await appService.importAppArchive(blob)
 
       const pkg = await appService.getAppPackageJSON()

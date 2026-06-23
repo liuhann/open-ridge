@@ -1,9 +1,11 @@
 import React, { useState } from 'react'
-import { Modal, Input, Button, Typography, Space, PinCode } from '@douyinfe/semi-ui'
+import { Modal, Upload, Button, Typography, Space, PinCode, Divider } from '@douyinfe/semi-ui'
 // import { IconLaptop, IconPlus } from '@douyinfe/semi-icons'
 import { ICON_AI_PEN } from '../icons/icons.js'
 import CardList from '../components/CardList/CardList.jsx'
 // import styles from './CreateAppDialog.module.less' // 如果你有样式文件
+import { ICON_COMMON_PLUS_SQUARE, ICON_COMMON_DOT_VERT, ICON_COMMON_PLUS } from '../icons/icons.js'
+import appStore from '../store/app.store.js'
 
 const { Title, Text } = Typography
 
@@ -14,6 +16,10 @@ const CreateAppDialog = ({
 }) => {
   // 8位应用编码
   const [appCode, setAppCode] = useState('')
+  const [dragOver, setDragOver] = useState(false)
+
+  const importAppFile = appStore((state) => state.importAppFile)
+  const openApp = appStore((state) => state.openApp)
 
   // 关闭
   const handleCancel = () => {
@@ -43,7 +49,7 @@ const CreateAppDialog = ({
               block colorful theme='solid' type='primary'
               icon={ICON_AI_PEN}
               size='large'
-              style={{ width: 300, height: 64, fontSize: 16 }}
+              style={{ width: 300, height: 64, fontSize: 18 }}
               onClick={() => onConfirm?.('ai_wizard')}
             >
               新增空白应用并打开AI向导
@@ -60,27 +66,32 @@ const CreateAppDialog = ({
           </Space>
         </div>
 
-        {/* ==================================
-         *  2. 输入8位编码 开始创建
-         * ================================== */}
         <div style={{ marginBottom: 32 }}>
           <Text strong style={{ fontSize: 15, marginBottom: 12, display: 'block' }}>
-            通过应用编码创建
+            已有制作好的应用包
           </Text>
-
-          <PinCode
-            count={6}
-            size='large'
-            value={appCode}
-            onChange={setAppCode}
+          <Upload
+            draggable
+            multiple={false}
+            onFileChange={async (files) => {
+              if (files.length > 0) {
+                const result = await importAppFile(files[0])
+                if (result) {
+                  // 提示成功  打开页面
+                  Modal.success({
+                    title: '应用已导入',
+                    content: '请点击确定打开您导入的应用',
+                    onOk: () => {
+                      openApp(result)
+                    }
+                  })
+                  onCancel()
+                }
+              }
+            }}
+            dragMainText='点击上传文件或拖拽文件到这里'
+            dragSubText='支持open-ridge zip应用包文件'
           />
-          <Button
-            style={{ marginLeft: 12, height: 44 }}
-            disabled={appCode.length !== 8}
-            onClick={() => onConfirm?.('code', appCode)}
-          >
-            从编码开始
-          </Button>
         </div>
 
         {/* ==================================

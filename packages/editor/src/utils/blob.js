@@ -24,11 +24,17 @@ const blobToDataUrl = async (file, mimeType) => {
   return new Promise((resolve) => {
     const reader = new FileReader()
 
+    // 🔥 如果 blob.type 为空，创建带正确 MIME 的新 Blob
+    let finalBlob = file
+
+    if (!file.type && mimeType) {
+      finalBlob = new Blob([file], { type: mimeType })
+    }
     reader.addEventListener('load', () => {
       // convert image file to base64 string
       resolve(reader.result)
     }, false)
-    reader.readAsDataURL(file, { type: mimeType })
+    reader.readAsDataURL(finalBlob)
   })
 }
 

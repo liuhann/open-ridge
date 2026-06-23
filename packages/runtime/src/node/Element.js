@@ -297,7 +297,7 @@ export default class Element extends BaseNode {
       // 1. 定义默认双向绑定核心逻辑（始终执行）
         const defaultBindOnChange = (payload) => {
           let targetValue = payload
-          if (payload.target && payload.target.value != null) {
+          if (payload && payload.target && payload.target.value != null) {
             targetValue = payload.target.value
           }
           this.properties.value = targetValue

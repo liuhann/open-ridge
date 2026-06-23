@@ -9,10 +9,8 @@ export default function AIGenerateWizard ({
 }) {
   // 当前步骤：0=第一步，1=第二步，2=第三步
   const [current, setCurrent] = useState(0)
-
   // 提示词
   const [prompt, setPrompt] = useState('')
-
   // 步骤标题
   const stepTitles = ['生成配置', 'AI 生成', '粘贴结果']
 

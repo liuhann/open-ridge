@@ -360,8 +360,13 @@ export default class ApplicationService {
 
     await this.updateAppFileTree()
     const pkg = await this.getAppPackageJSON()
-
-    if (!pkg || !pkg.name) {
+    if (pkg) {
+      this.appPackageJSONObject = Object.assign(pkg, {
+        name: 'ridge-' + this.appId,
+        ridgeid: this.appId
+      })
+      await this.updateAppPackageJSON(this.appPackageJSONObject)
+    } else {
       await this.updateAppPackageJSON({
         name: 'ridge-' + this.appId,
         version: '1.0.0',

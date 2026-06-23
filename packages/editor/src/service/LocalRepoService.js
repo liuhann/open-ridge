@@ -1,4 +1,3 @@
-import { ICON_APP_DEFAULT } from '../icons/icons.js'
 import ApplicationService from './ApplicationService.js'
 import NeCollection from './NeCollection.js'
 import Localforge from 'localforage'
@@ -140,7 +139,7 @@ export default class LocalRepoService {
     if (typeof iconUrl === 'string') {
       return <img src={iconUrl} />
     } else {
-      return ICON_APP_DEFAULT
+      return <img src='/ridge-logo.svg' />
     }
   }
 

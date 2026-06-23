@@ -142,3 +142,113 @@
     }
   }
 }
+
+.new-app-dialog {
+  /* ====== 拖拽导入区 - AI 渐变风格 ====== */
+
+.drop-zone {
+  width: 100%;
+  min-height: 80px;
+  margin: 12px 0 16px;
+  border: 2px dashed transparent;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  font-size: 24px;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+
+  /* AI 彩色渐变背景 */
+  background: linear-gradient(
+    135deg,
+    rgba(139, 92, 246, 0.08) 0%,    /* 紫 */
+    rgba(59, 130, 246, 0.08) 25%,   /* 蓝 */
+    rgba(16, 185, 129, 0.08) 50%,   /* 绿 */
+    rgba(245, 158, 11, 0.08) 75%,   /* 橙 */
+    rgba(239, 68, 68, 0.08) 100%    /* 红 */
+  );
+
+  border-style: dashed;
+
+  /* AI 彩色边框渐变 */
+  background-clip: padding-box;
+  border-image: linear-gradient(
+    135deg,
+    #8b5cf6,
+    #3b82f6,
+    #10b981,
+    #f59e0b,
+    #ef4444
+  ) 1;
+
+  .drop-zone-text {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 18px;
+    font-weight: 500;
+    background: linear-gradient(
+      135deg,
+      #8b5cf6,
+      #3b82f6 30%,
+      #10b981 60%,
+      #f59e0b 85%
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  /* 拖拽悬停状态 */
+  &.drop-zone-active {
+    border-style: solid;
+    border-image: linear-gradient(
+      135deg,
+      #8b5cf6,
+      #3b82f6,
+      #10b981,
+      #f59e0b,
+      #ef4444
+    ) 1;
+    background: linear-gradient(
+      135deg,
+      rgba(139, 92, 246, 0.15) 0%,
+      rgba(59, 130, 246, 0.15) 25%,
+      rgba(16, 185, 129, 0.15) 50%,
+      rgba(245, 158, 11, 0.15) 75%,
+      rgba(239, 68, 68, 0.15) 100%
+    );
+    box-shadow: 0 0 20px rgba(139, 92, 246, 0.2),
+                0 0 40px rgba(59, 130, 246, 0.15),
+                0 0 60px rgba(16, 185, 129, 0.1);
+    transform: scale(1.02);
+  }
+
+  /* 进入动画 */
+  @keyframes aiShimmer {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  &:hover {
+    border-style: solid;
+    background: linear-gradient(
+      135deg,
+      rgba(139, 92, 246, 0.12) 0%,
+      rgba(59, 130, 246, 0.12) 25%,
+      rgba(16, 185, 129, 0.12) 50%,
+      rgba(245, 158, 11, 0.12) 75%,
+      rgba(239, 68, 68, 0.12) 100%
+    );
+    background-size: 200% 200%;
+    animation: aiShimmer 3s ease infinite;
+  }
+}
+
+}

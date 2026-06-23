@@ -41,6 +41,7 @@ const AppListPanel = () => {
     <div className='app-list-panel'>
       {/* 顶部：开始创作（横贯式） */}
       <Button className='btn-add-full' onClick={() => setCreateDialogVisible(true)} icon={ICON_COMMON_PLUS_SQUARE} block colorful theme='solid' type='primary'>开始创作</Button>
+
       {/* 创建弹窗 */}
       <CreateAppDialog
         visible={createDialogVisible}

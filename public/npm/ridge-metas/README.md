@@ -147,4 +147,52 @@ export default {
 !!不能使用 import 语法来引入其他库，如果页面脚本执行需要依赖一些第三方库时，请给出第三方下载地址，（库必须是umd形式，在脚本中直接使用umd全局变量名称使用）
 非必要情况，请不要使用第三方库。
 
-4. 页面脚本只能读取和更新状态，禁止直接操作DOM。例如：通过styleEx的visible指定的状态 （true/false）来切换组件显隐
+5. 页面脚本只能读取和更新状态，禁止直接操作DOM。例如：通过styleEx的visible指定的状态 （true/false）来切换组件显隐
+
+
+## 组件
+
+制作应用时，用户会同时提供一系列应用需要的UI组件， 描述格式如下： 
+
+Button (按钮)
+用途：用于页面点击操作、提交表单、确认取消等交互场景。
+组件路径 (Path): @douyinfe/semi-ui/Button
+属性 (Props) 配置：
+children: string，默认值“按钮”。必填，按钮上显示的文字。
+block: boolean，默认值false。是否占满整行宽度。
+
+这样，通过组件路径、属性的描述，可以生成上面页面配置。 Open-Ridge平台组件非常多，需要用户即时提供以便达到最好的呈现效果
+
+## 应用目录
+
+上述前面的页面、页面脚本还有页面中可能使用的图片资源等信息，可以放置到相同目录， 同时提供package.json 文件描述应用。
+
+例如
+```json
+{
+  "name": "ridge-hecebxwn",
+  "version": "1.0.0",
+  "icon": "icon.png",
+  "description": "1—5月全国房地产市场数据概览"
+}
+```
+
+例如，最终目录结构如下：
+LogosAwsShield.svg
+package.json
+passwordGenerator.js
+PasswordGenerator.json
+prompt.md
+
+（组件运行文件在页面运行时会通过组件路径自动加载。不需要加入应用目录）
+
+最后整个目录需要打成zip包， 可以放到Open-Ridge编辑器中进一步调整， 或者放到运行时中直接执行
+
+Skill要求根据输入需求 + 提供的组件  完成上述zip包的输出
+
+## 举例
+
+
+
+
+

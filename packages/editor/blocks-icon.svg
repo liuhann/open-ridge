@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <g fill="">
+    <!-- 第1行（顶）: 1个菱形 -->
+    <polygon fill="#0069BB" points="50,20 60,30 50,40 40,30" />
+    <!-- 第2行: 左 + 右 -->
+    <polygon fill="#0043AF" points="38,32 48,42 38,52 28,42" />
+    <polygon fill="#0096D6" points="62,32 72,42 62,52 52,42" />
+    <!-- 第3行: 左 + 右 -->
+    <polygon fill="#3315A6"  points="26,44 36,54 26,64 16,54" />
+    <polygon fill="#0069BB" points="50,44 60,54 50,64 40,54" />
+    <!-- 第4行（底）: 1个 -->
+    <polygon fill="#00A7DF" points="74,44 84,54 74,64 64,54" />
+  </g>
+</svg>
